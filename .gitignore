@@ -10,7 +10,6 @@
 # IntelliJ
 *.iml
 .idea/
-*.classpath*
 
 bin/
 
