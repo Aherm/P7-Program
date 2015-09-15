@@ -4,9 +4,13 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
+
+# IntelliJ
+*.iml
+.idea/
+.classpath
 
 bin/
 
