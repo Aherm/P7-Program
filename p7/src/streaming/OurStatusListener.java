@@ -12,7 +12,8 @@ public class OurStatusListener implements StatusListener {
         GeoLocation geo = status.getGeoLocation();
 
         if (geo != null) {
-            if (containsKeywords(status.getText())) {
+        	List<String> matchedKeywords = containsKeywords(status.getText());
+            if (matchedKeywords.size() > 0) {
                 System.out.println("\n" + status.getUser().getScreenName() + " wrote: ");
                 System.out.println(status.getText());
 
@@ -63,9 +64,9 @@ public class OurStatusListener implements StatusListener {
     }
 
 
-    private boolean containsKeywords(String tweetText) {
+    private List<String> containsKeywords(String tweetText) {
         tweetText = tweetText.toLowerCase();
-
+        List<String> matchedKeys = new ArrayList<String>();
         List<String> keywords = new ArrayList<String>();
         keywords.add("food");
         keywords.add("poison");
@@ -85,12 +86,11 @@ public class OurStatusListener implements StatusListener {
         keywords.add("stomach pain");
         keywords.add("diarrhea");
         keywords.add("the shits");
-
         for (String keyword : keywords) {
             if (tweetText.contains(keyword))
-                return true;
+                matchedKeys.add(keyword);
         }
-        return false;
+        return matchedKeys;
     }
 
 }
