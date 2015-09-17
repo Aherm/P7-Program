@@ -5,6 +5,7 @@ import twitter4j.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.sql.Connection;
 
 public class OurStatusListener implements StatusListener {
 
