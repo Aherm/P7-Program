@@ -13,20 +13,21 @@ public class DBConnect {
     // Alternative for mysql: com.mysql.jdbc.Driver , provided that the driver is included within the project.
     private static final String driver = "org.postgresql.Driver";
 
+    private static final String urlLocal = "jdbc:postgresql://localhost/";
+
+
     // Specifies the address of the server and that the server uses postgresql.
     // Alternative for mysql: jdbc:mysql://localhost/
-    private static final String url = "jdbc:postgresql://172.25.23.162/";
+    //    private static final String url = "jdbc:postgresql://172.25.23.162/";
 
-    private static final String urlLocal = "jdbc:postgresql://localhost/";
-    
     // The name of the database
-    private static final String dbName = "gis";
+    //private static final String dbName = "gis";
 
     // The database user
-    private static final String userName = "gisuser";
+    //private static final String userName = "gisuser";
 
     // The database password
-    private static final String password = "42";
+    //private static final String password = "42";
 
     
     // Connects to the server
@@ -34,7 +35,7 @@ public class DBConnect {
 
     }
     
-    // new Connect 
+    /*
     public void connectTo(String dbname){
     	
     	try {
@@ -56,6 +57,7 @@ public class DBConnect {
              e.printStackTrace();
          }
     }
+    */
     
     public void connectToLocal(String dbname,String _userName, String _password){
     	
