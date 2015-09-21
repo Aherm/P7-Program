@@ -1,17 +1,22 @@
 package main;
 
+import dataAccessLayer.DBConnect;
+import dataAccessLayer.DBInsert;
+import modelLayer.Tweet;
 import streaming.OurStatusListener;
 import twitter4j.FilterQuery;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 
+import java.util.*;
+import java.util.concurrent.*;
+
 public class main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
+
 		OurStatusListener listener = new OurStatusListener();
-		TwitterStream stream = new TwitterStreamFactory().getInstance(); 
+		TwitterStream stream = new TwitterStreamFactory().getInstance();
 		stream.addListener(listener);
 		
 		//stream.sample();
@@ -26,5 +31,27 @@ public class main {
         //-74,40,-73,41
         stream.filter(query);
 
-	}
+
+
+        /*
+            Iterator itr = tweets.entrySet().iterator();
+        while(itr.hasNext()) {
+                Map.Entry pair = (Map.Entry)itr.next();
+                System.out.println(pair.getKey());
+
+        }
+        */
+
+            HashMap<String, Tweet> tweets = listener.getTweets();
+            DBConnect connection = new DBConnect();
+            connection.connectToLocal("postgres", "postgres", "21");
+
+            TimerTask task = new RunMeTask(tweets, connection);
+
+            Timer timer = new Timer();
+            timer.schedule(task, 1000, 60000);
+
+            //DBConnect.closeConnection();
+
+    }
 }

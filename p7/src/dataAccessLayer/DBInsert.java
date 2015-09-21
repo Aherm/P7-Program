@@ -1,5 +1,7 @@
 package dataAccessLayer;
 
+import modelLayer.Tweet;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +9,9 @@ import java.sql.Statement;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DBInsert {
 	DBConnect connection;
@@ -16,45 +21,85 @@ public class DBInsert {
 		this.connection = connection;
 	}
 	
-	public void Insert(int tweetID, int userID, int responseID, int retweetID, String tweet, Date date, double lat, double lon, String keywords)
+	public void insertTweet(HashMap<String, Tweet> tweets)
 	{
 		Connection con = connection.getInstance().getDBcon();
-		Timestamp timestamp = new Timestamp(date.getTime()); 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 		try {
-			
-			String insertSQL= "INSERT INTO tweets" +
-									"(tweetID, userID, responseID, retweetID, tweet, createAt, lat, lon, keywords) VALUES" +
-									"(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String insertSQL = "INSERT INTO tweets" +
+				"(tweetID, userID, responseID, retweetID, tweet, createAt, lat, lon) VALUES ";
+									//"(?, ?, ?, ?, ?, ?, ?, ?)";
+
+			for (Map.Entry<String, Tweet> entry : tweets.entrySet()) {
+				String key = entry.getKey();
+				Tweet value = entry.getValue();
+
+				Timestamp timestamp = new Timestamp(value.getCreatedAt().getTime());
+				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
+				insertSQL += "(" + value.getTweetID() + "," + value.getUserID() + "," + value.getResponseID() + "," + value.getRetweetID() + "," + "'" + value.getTweetText() + "'"  + "," +
+						"'" + value.getCreatedAt() + "'" + "," + value.getLat() + "," + value.getLon() + "),";
+			}
+
+			insertSQL = insertSQL.substring(0,insertSQL.length()-1);
+			insertSQL += ";";
+			System.out.println("query for insertTweets: " + insertSQL);
+
+
+			/*
 			PreparedStatement pst = con.prepareStatement(insertSQL);
 			pst.setInt(1, tweetID);
 			pst.setInt(2, userID);
 			pst.setInt(3, responseID);
 			pst.setInt(4, retweetID);
-			pst.setString(5, tweet);
+			pst.setString(5, tweetText);
 			pst.setString(6, sdf.format(timestamp));
 			pst.setDouble(7, lat);
 			pst.setDouble(8, lon);
-			pst.setString(9, keywords);
-			pst.executeUpdate();
+			*/
+			//pst.executeUpdate();
+
+			Statement statement = con.createStatement();
+
+			// insert the data
+			statement.executeUpdate(insertSQL);
+
+			// insert the keywords
+			insertKeywords(tweets);
 		}
 		catch(Exception E) {
-			System.out.println("Mads' mor");
+			System.out.println("problems in DBInsert");
 			E.printStackTrace();
 		}
-		DBConnect.closeConnection();
+	}
+
+	public void insertKeywords(HashMap<String, Tweet> tweets)
+	{
+		try{
+			Connection con = connection.getInstance().getDBcon();
+			String insertSQL = "INSERT INTO keywords" +
+					"(tweetID, keyword) VALUES ";
+
+			for (Map.Entry<String, Tweet> entry : tweets.entrySet()) {
+				String key = entry.getKey();
+				Tweet value = entry.getValue();
+
+				for (String kw : value.getKeywords()){
+					insertSQL += "(" + value.getTweetID() + "," + "'" + kw + "'" + ") , ";
+				}
+			}
+
+			insertSQL = insertSQL.substring(0, insertSQL.length() - 1);
+			insertSQL += ";";
+			System.out.println("query for insertKeywords: " + insertSQL);
+
+			Statement statement = con.createStatement();
+
+			// insert the data
+			statement.executeUpdate(insertSQL);
+		}
+		catch(Exception E) {
+			System.out.println("problems in DBInsert");
+			E.printStackTrace();
+		}
 	}
 }
-/*
-Statement st = con.createStatement();
-st.executeUpdate("INSERT INTO tweets VALUES (" + tweetID 				+ ", " 
-			  											  + userID 					+ ", " 
-														  + responseID 				+ ", " 
-														  + retweetID 				+ ", \'" 
-												 		  + tweet 					+ "\', \'" 
-														  + sdf.format(timestamp)	+ "\', " 
-														  + lat 					+ ", " 
-														  + lon 					+ ", \'" 
-														  + keywords + "\'"
-														  + ")");
-*/

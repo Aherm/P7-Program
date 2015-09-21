@@ -1,5 +1,6 @@
 package streaming;
 
+import modelLayer.Tweet;
 import twitter4j.*;
 
 import java.util.ArrayList;
@@ -9,17 +10,20 @@ import java.util.List;
 import java.sql.Connection;
 
 public class OurStatusListener implements StatusListener {
+    HashMap<String, Tweet> tweets = new HashMap<String, Tweet>();
 
     public void onStatus(Status status) {
         GeoLocation geo = status.getGeoLocation();
-        HashMap<String, String> tweets = new HashMap<String, String>();
 
         if (geo != null) {
         	List<String> matchedKeywords = containsKeywords(status.getText());
             if (matchedKeywords.size() > 0) {
                 System.out.println("\n" + status.getUser().getScreenName() + " wrote: ");
 
-                //tweets.put((String) status.getId(), status.getText());
+                tweets.put(java.lang.Long.toString(status.getId()),
+                        new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),
+                        status.getText(), status.getCreatedAt(), status.getGeoLocation().getLatitude(), status.getGeoLocation().getLongitude(), matchedKeywords));
+
                 System.out.println(status.getText());
 
                 if (status.getPlace() != null) {
@@ -41,14 +45,6 @@ public class OurStatusListener implements StatusListener {
                 System.out.println("Tweet: " + status.getId() + " removed");
             }
         }
-
-
-
-        /*
-        HashtagEntity[] array = status.getHashtagEntities();
-		if(array.length != 0)
-            System.out.println(array[0].getText());
-		*/
     }
 
     public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
@@ -91,11 +87,19 @@ public class OurStatusListener implements StatusListener {
         keywords.add("stomach pain");
         keywords.add("diarrhea");
         keywords.add("the shits");
+
+        //btc temp
+        keywords.add("the");
+
         for (String keyword : keywords) {
             if (tweetText.contains(keyword))
                 matchedKeys.add(keyword);
         }
         return matchedKeys;
+    }
+
+    public HashMap<String, Tweet> getTweets(){
+        return tweets;
     }
 
 }
