@@ -21,13 +21,10 @@ public class main {
                 {-73,41}
         };
 
-
         FilterQuery query = new FilterQuery();
-        //query.language("da");
         query.locations(locations);
         //-74,40,-73,41
         stream.filter(query);
 
 	}
-
 }

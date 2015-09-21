@@ -12,8 +12,16 @@ public class testDBMain {
 	{
 		DBConnect connection = new DBConnect();
 		connection.connectToLocal("postgres", "postgres", "21");
-		DBInsert dbInsert = new DBInsert(connection);
-		dbInsert.Insert(421, 1337, 0, 0, "Skrid mads omg", new Date(), 50.23, -23.21, "food, poison, sick");
 		DBConnect.closeConnection();
+	}
+
+
+	private void run(DBConnect connection){
+		try{
+			DBInsert dbInsert = new DBInsert(connection);
+			dbInsert.Insert(421, 1337, 0, 0, "Skrid mads omg", new Date(), 50.23, -23.21, "food, poison, sick");
+		} catch (Exception exh){
+			System.out.println(exh);
+		}
 	}
 }

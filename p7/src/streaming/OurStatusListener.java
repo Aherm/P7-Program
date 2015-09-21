@@ -4,6 +4,7 @@ import twitter4j.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.sql.Connection;
 
@@ -11,11 +12,14 @@ public class OurStatusListener implements StatusListener {
 
     public void onStatus(Status status) {
         GeoLocation geo = status.getGeoLocation();
+        HashMap<String, String> tweets = new HashMap<String, String>();
 
         if (geo != null) {
         	List<String> matchedKeywords = containsKeywords(status.getText());
             if (matchedKeywords.size() > 0) {
                 System.out.println("\n" + status.getUser().getScreenName() + " wrote: ");
+
+                //tweets.put((String) status.getId(), status.getText());
                 System.out.println(status.getText());
 
                 if (status.getPlace() != null) {
