@@ -25,7 +25,7 @@ public class RunMeTask extends TimerTask
             if (tweets.size() != 0) {
                 System.out.println("Inserting rows");
                 DBInsert dbInsert = new DBInsert(connection);
-                dbInsert.insertTweet(tweets);
+                dbInsert.insertTweetPreparedStatement(tweets);
 
                 // insert the keywords
                 dbInsert.insertKeywords(tweets);
