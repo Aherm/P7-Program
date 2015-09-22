@@ -25,9 +25,9 @@ public class DBInsert {
 	{
 		Connection con = connection.getInstance().getDBcon();
 		try{
-			String insertSQL= "INSERT INTO tweets" +
+			String insertSQL= "INSERT INTO tweets " +
 							  "(tweetID, userID, responseID, retweetID, tweet, createAt, " + 
-							  "lat, lon) VALUES" +
+							  "lat, lon)" + " VALUES " +
 							  "(?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement st = con.prepareStatement(insertSQL);

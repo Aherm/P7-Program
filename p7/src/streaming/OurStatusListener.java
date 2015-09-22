@@ -48,7 +48,7 @@ public class OurStatusListener implements StatusListener {
     }
 
     public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
-        System.out.println("User: " + statusDeletionNotice.getUserId() + " deleted");
+        //System.out.println("User: " + statusDeletionNotice.getUserId() + " deleted");
     }
 
     public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
@@ -90,6 +90,7 @@ public class OurStatusListener implements StatusListener {
 
         //btc temp
         keywords.add("the");
+        keywords.add("a");
 
         for (String keyword : keywords) {
             if (tweetText.contains(keyword))
