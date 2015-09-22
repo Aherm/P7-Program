@@ -62,9 +62,6 @@ public class DBInsert {
 
 			// insert the data
 			statement.executeUpdate(insertSQL);
-
-			// insert the keywords
-			insertKeywords(tweets);
 		}
 		catch(Exception E) {
 			System.out.println("problems in DBInsert");

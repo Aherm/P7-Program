@@ -49,7 +49,8 @@ public class main {
             TimerTask task = new RunMeTask(tweets, connection);
 
             Timer timer = new Timer();
-            timer.schedule(task, 1000, 60000);
+            timer.schedule(task, 1000, 3600000);
+            //A minute in ms: 60000
 
             //DBConnect.closeConnection();
 

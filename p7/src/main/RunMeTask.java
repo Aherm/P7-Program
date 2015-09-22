@@ -27,6 +27,9 @@ public class RunMeTask extends TimerTask
                 DBInsert dbInsert = new DBInsert(connection);
                 dbInsert.insertTweet(tweets);
 
+                // insert the keywords
+                dbInsert.insertKeywords(tweets);
+
                 // clear the hashmap
                 tweets.clear();
             }
