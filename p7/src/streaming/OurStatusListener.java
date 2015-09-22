@@ -89,8 +89,8 @@ public class OurStatusListener implements StatusListener {
         keywords.add("the shits");
 
         //btc temp
-        keywords.add("the");
-        keywords.add("a");
+        //keywords.add("the");
+        //keywords.add("a");
 
         for (String keyword : keywords) {
             if (tweetText.contains(keyword))

@@ -19,8 +19,8 @@ public class main {
 		TwitterStream stream = new TwitterStreamFactory().getInstance();
 		stream.addListener(listener);
 		
-		stream.sample();
-/*
+		//stream.sample();
+
         double[][] locations = new double[][]{
                 {-74,40},
                 {-73,41}
@@ -30,7 +30,7 @@ public class main {
         query.locations(locations);
         //-74,40,-73,41
         stream.filter(query);
-*/
+
 
 
         /*
@@ -49,7 +49,7 @@ public class main {
         TimerTask task = new RunMeTask(tweets, connection);
 
         Timer timer = new Timer();
-        timer.schedule(task, 30000, 30000);
+        timer.schedule(task, 1000, 3600000);
         //A minute in ms: 60000
         //An hour in ms: 3600000
 
