@@ -36,7 +36,8 @@ public class OurStatusListener implements StatusListener {
             System.out.println("latitude: " + latitude + " , " + "longitude: " + longitude);
     	}
     }
-    
+
+    /*
     public void onStatus2(Status status) {
         GeoLocation geo = status.getGeoLocation();
 
@@ -71,6 +72,7 @@ public class OurStatusListener implements StatusListener {
             }
         }
     }
+    */
 
     public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
         //System.out.println("User: " + statusDeletionNotice.getUserId() + " deleted");
@@ -112,6 +114,7 @@ public class OurStatusListener implements StatusListener {
         keywords.add("diarrhea");
         keywords.add("the shits");
 
+        // mads trollolol
         //btc temp
         //keywords.add("the");
         //keywords.add("a");
