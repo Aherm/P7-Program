@@ -47,7 +47,7 @@ public class main {
         DBConnect connection = new DBConnect();
         connection.connectToLocal("postgres", "postgres", "21");
 
-        TweetStorage tweets2 = new TweetStorage();
+        TweetStorage tweets2 = listener.getTweets2();
         
         TimerTask task = new RunMeTask(tweets2, connection);
 

@@ -32,6 +32,7 @@ public class RunMeTask extends TimerTask
 
         try {
             System.out.println("Run Me ~");
+            System.out.println("Hello world, this is my size " + tweets2.size());
             if (tweets2.size() != 0) {
                 System.out.println("Inserting rows");
                 DBInsert dbInsert = new DBInsert(connection);

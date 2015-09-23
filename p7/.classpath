@@ -12,5 +12,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/p7/libaries/joda-time-2.8.2-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="postgresql-9.4-1203.jdbc4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

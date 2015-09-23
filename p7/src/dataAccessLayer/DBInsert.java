@@ -22,6 +22,7 @@ public class DBInsert {
 	
 	public void insertTweetStorage(TweetStorage tweets, Date date) {
 		try{
+			System.out.println("Hello world, we are in inserts now");
 			Connection con = connection.getInstance().getDBcon();
 			String insertSQL= "INSERT INTO tweets " +
 							  "(tweetID, userID, responseID, retweetID, tweet, createAt, " + 
@@ -33,11 +34,13 @@ public class DBInsert {
 			
 			
 			for(int i = tweets.size() - 1; i >= 0; i--) {
+				System.out.println("Now we are looping " + i);
 				Tweet tweet = tweets.get(i);
 				if (tweet.getCreatedAt().before(date)) {
+					System.out.println("Hello world, now we are breaking " + i);
 					break;
 				}
-				
+				System.out.println("Hello world, this time we didnt break " + i);
 				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 				
 				st.setLong(1, tweet.getTweetID());
