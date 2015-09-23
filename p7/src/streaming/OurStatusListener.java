@@ -65,7 +65,7 @@ public class OurStatusListener implements StatusListener {
     }
 
 
-    private List<String> containsKeywords(String tweetText) {
+    public List<String> containsKeywords(String tweetText) {
         tweetText = tweetText.toLowerCase();
         List<String> matchedKeys = new ArrayList<String>();
         List<String> keywords = new ArrayList<String>();
