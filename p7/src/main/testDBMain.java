@@ -26,7 +26,7 @@ public class testDBMain {
 		System.out.println("tweetID: " + tweets.get(0).getTweetID());
 		for (String kw : containedKeywords)
 			System.out.println("contained keyword: " + kw);
-		
+
 		DBConnect.closeConnection();
 	}
 

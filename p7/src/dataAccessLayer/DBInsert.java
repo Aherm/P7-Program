@@ -1,16 +1,15 @@
 package dataAccessLayer;
 
 import modelLayer.Tweet;
+import modelLayer.TweetStorage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DBInsert {
@@ -19,6 +18,47 @@ public class DBInsert {
 	public DBInsert(DBConnect connection)
 	{
 		this.connection = connection;
+	}
+	
+	public void insertTweetStorage(TweetStorage tweets, Date date) {
+		try{
+			Connection con = connection.getInstance().getDBcon();
+			String insertSQL= "INSERT INTO tweets " +
+							  "(tweetID, userID, responseID, retweetID, tweet, createAt, " + 
+							  "lat, lon)" + " VALUES " +
+							  "(?, ?, ?, ?, ?, ?, ?, ?)";
+			
+			PreparedStatement st = con.prepareStatement(insertSQL);
+			//int i = 0;			Remove these comments, if performance issues become a problem
+			
+			
+			for(int i = tweets.size() - 1; i >= 0; i--) {
+				Tweet tweet = tweets.get(i);
+				if (tweet.getCreatedAt().before(date)) {
+					break;
+				}
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+				
+				st.setLong(1, tweet.getTweetID());
+				st.setLong(2, tweet.getUserID());
+				st.setLong(3, tweet.getResponseID());
+				st.setLong(4, tweet.getRetweetID());
+				st.setString(5, tweet.getTweetText());
+				st.setString(6, sdf.format(tweet.getCreatedAt()));
+				st.setDouble(7, tweet.getLat());
+				st.setDouble(8, tweet.getLon());
+				st.addBatch();
+				//i++;
+				//if(i % 1000 == 0 || i == tweets.size())
+				//		st.executeBatch();
+			}
+			st.executeBatch();		//comment this is above comments are removed
+			
+		} catch(Exception E) {
+			System.out.println("mads mor");
+			E.printStackTrace();
+		}
 	}
 	
 	public void insertTweetPreparedStatement(HashMap<String, Tweet> tweets)

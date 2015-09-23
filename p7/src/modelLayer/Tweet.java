@@ -3,6 +3,8 @@ package modelLayer;
 import java.util.Date;
 import java.util.List;
 
+import twitter4j.Status;
+
 public class Tweet {
 
     private long tweetID;
@@ -18,6 +20,17 @@ public class Tweet {
     public Tweet() {
     }
 
+    public Tweet(long tweetID, long userID, long responseID, long retweetID, String tweetText, Date createdAt, double lat, double lon) {
+    	this.tweetID = tweetID;
+        this.userID = userID;
+        this.responseID = responseID;
+        this.retweetID = retweetID;
+        this.tweetText = tweetText;
+        this.createdAt = createdAt;
+        this.lat = lat;
+        this.lon = lon;
+    }
+    
     public Tweet(long tweetID, long userID, long responseID, long retweetID, String tweetText, Date createdAt, double lat, double lon, List<String> keywords) {
         this.tweetID = tweetID;
         this.userID = userID;
@@ -30,6 +43,11 @@ public class Tweet {
         this.keywords = keywords;
     }
 
+    public static Tweet createTweet(Status status) {
+    	return new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),
+                status.getText(), status.getCreatedAt(), status.getGeoLocation().getLatitude(), status.getGeoLocation().getLongitude());
+    }
+    
     public long getTweetID() {
         return tweetID;
     }

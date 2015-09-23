@@ -1,18 +1,43 @@
 package streaming;
 
 import modelLayer.Tweet;
+import modelLayer.TweetStorage;
 import twitter4j.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.sql.Connection;
 
 public class OurStatusListener implements StatusListener {
     HashMap<String, Tweet> tweets = new HashMap<String, Tweet>();
+    TweetStorage tweets2 = new TweetStorage();
 
     public void onStatus(Status status) {
+    	GeoLocation geo = status.getGeoLocation();
+    	
+    	if (geo != null) {
+    		tweets2.add(Tweet.createTweet(status));
+    		// Removes tweets older than 3 days
+    		tweets2.removeOld(3);
+    		
+    		System.out.println("\n" + status.getUser().getScreenName() + " wrote: ");
+    		System.out.println(status.getText());
+    		
+    		if (status.getPlace() != null) {
+                System.out.println(status.getText());
+                System.out.println("Country: " + status.getPlace().getCountry());
+                System.out.println("Place: " + status.getPlace().getFullName());
+    		}
+    		
+    		double latitude = geo.getLatitude();
+            double longitude = geo.getLongitude();
+
+            System.out.println("location:");
+            System.out.println("latitude: " + latitude + " , " + "longitude: " + longitude);
+    	}
+    }
+    
+    public void onStatus2(Status status) {
         GeoLocation geo = status.getGeoLocation();
 
         if (geo != null) {
@@ -63,7 +88,6 @@ public class OurStatusListener implements StatusListener {
 
     public void onStallWarning(StallWarning warning) {
     }
-
 
     public List<String> containsKeywords(String tweetText) {
         tweetText = tweetText.toLowerCase();
