@@ -89,7 +89,6 @@ public class OurStatusListener implements StatusListener {
     public void onStallWarning(StallWarning warning) {
     }
 
-
     private List<String> containsKeywords(String tweetText) {
         tweetText = tweetText.toLowerCase();
         List<String> matchedKeys = new ArrayList<String>();
