@@ -3,6 +3,7 @@ package main;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBInsert;
 import modelLayer.Tweet;
+import modelLayer.TweetStorage;
 import streaming.OurStatusListener;
 import twitter4j.FilterQuery;
 import twitter4j.TwitterStream;
@@ -46,7 +47,9 @@ public class main {
         DBConnect connection = new DBConnect();
         connection.connectToLocal("postgres", "postgres", "21");
 
-        TimerTask task = new RunMeTask(tweets, connection);
+        TweetStorage tweets2 = new TweetStorage();
+        
+        TimerTask task = new RunMeTask(tweets2, connection);
 
         Timer timer = new Timer();
         timer.schedule(task, 1000, 3600000);
