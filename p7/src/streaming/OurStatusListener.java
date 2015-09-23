@@ -17,24 +17,14 @@ public class OurStatusListener implements StatusListener {
     	
     	if (geo != null) {
     		tweets2.add(Tweet.createTweet(status));
+    		System.out.println("Hello world, this is our size after adding " + tweets2.size());
     		// Removes tweets older than 3 days
     		tweets2.removeOld(3);
+    		System.out.println("Hello world, this is our size after revoming " + tweets2.size());
     		
     		System.out.println("\n" + status.getUser().getScreenName() + " wrote: ");
     		System.out.println(status.getText());
-    		
-    		if (status.getPlace() != null) {
-                System.out.println(status.getText());
-                System.out.println("Country: " + status.getPlace().getCountry());
-                System.out.println("Place: " + status.getPlace().getFullName());
-    		}
-    		
-    		double latitude = geo.getLatitude();
-            double longitude = geo.getLongitude();
-
-            System.out.println("location:");
-            System.out.println("latitude: " + latitude + " , " + "longitude: " + longitude);
-    	}
+       	}
     }
     
     public void onStatus2(Status status) {
@@ -125,6 +115,10 @@ public class OurStatusListener implements StatusListener {
 
     public HashMap<String, Tweet> getTweets(){
         return tweets;
+    }
+    
+    public TweetStorage getTweets2() {
+    	return tweets2;
     }
 
 }
