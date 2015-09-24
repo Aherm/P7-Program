@@ -4,6 +4,7 @@ import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBInsert;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
+import streaming.Oauth;
 import streaming.OurStatusListener;
 import twitter4j.FilterQuery;
 import twitter4j.TwitterStream;
@@ -16,9 +17,11 @@ public class main {
 
 	public static void main(String[] args) {
 
+		Oauth auth = new Oauth(); 
 		OurStatusListener listener = new OurStatusListener();
-		TwitterStream stream = new TwitterStreamFactory().getInstance();
-		stream.addListener(listener);
+		TwitterStreamFactory tsf = new TwitterStreamFactory(auth.createConfigBuilder().build());
+		TwitterStream stream = tsf.getInstance(); 
+		stream.addListener(listener);	
 		
 		//stream.sample();
 
