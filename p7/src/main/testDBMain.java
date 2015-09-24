@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.List;
 
+import businessLogicLayer.Filter;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetTweets;
 import dataAccessLayer.DBInsert;
@@ -19,9 +20,7 @@ public class TestDBMain {
 
 		DBGetTweets dbGetTweets = new DBGetTweets(connection);
 		List<Tweet> tweets = dbGetTweets.getTweets();
-
-		OurStatusListener statusListener = new OurStatusListener();
-		List<String> containedKeywords = statusListener.containsKeywords(tweets.get(0).getTweetText());
+		List<String> containedKeywords = Filter.containsKeywords(tweets.get(0).getTweetText());
 
 		System.out.println("tweetID: " + tweets.get(0).getTweetID());
 		for (String kw : containedKeywords)
