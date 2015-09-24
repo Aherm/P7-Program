@@ -11,7 +11,7 @@ import dataAccessLayer.DBInsert;
 import modelLayer.Tweet;
 import streaming.OurStatusListener;
 
-public class testDBMain {
+public class TestDBMain {
 	public static void main(String[] args) 
 	{
 		DBConnect connection = new DBConnect();

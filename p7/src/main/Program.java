@@ -13,7 +13,7 @@ import twitter4j.TwitterStreamFactory;
 import java.util.*;
 import java.util.concurrent.*;
 
-public class main {
+public class Program {
 
 	public static void main(String[] args) {
 
@@ -42,7 +42,7 @@ public class main {
         TimerTask task = new RunMeTask(tweets, connection);
 
         Timer timer = new Timer();
-        timer.schedule(task, 30000);
+        timer.schedule(task, 1000, 60000);
         //A minute in ms: 60000
         //An hour in ms: 3600000
 

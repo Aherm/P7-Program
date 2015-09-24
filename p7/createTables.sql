@@ -10,7 +10,6 @@
   	lon double precision NOT NULL
   );
 
-
 CREATE TABLE Keywords
   (
   	tweetid bigint REFERENCES tweets (tweetid),

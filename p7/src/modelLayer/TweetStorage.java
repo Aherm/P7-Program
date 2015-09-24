@@ -19,7 +19,7 @@ public class TweetStorage {
 		tweets.remove(t);
 	}
 	
-	public void removeOld(int days) {
+	public void removeOldTweets(int days) {
 		Date past = tweets.getFirst().getCreatedAt();
 		Date today = new Date();
 		
