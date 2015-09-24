@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Date;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
 public class TweetStorage {
 	private LinkedList<Tweet> tweets = new LinkedList<Tweet>();
@@ -21,8 +22,8 @@ public class TweetStorage {
 	public void removeOld(int days) {
 		Date past = tweets.getFirst().getCreatedAt();
 		Date today = new Date();
-		
-		while(Days.daysBetween(new DateTime(past), new DateTime(today)).getDays() >= days) {
+		System.out.println(Days.daysBetween(new LocalDate(past), new LocalDate(today)).getDays());
+		while(Math.abs(Days.daysBetween(new DateTime(past), new DateTime(today)).getDays()) >= days) {
 			remove(tweets.getFirst());
 			past = tweets.getFirst().getCreatedAt();
 		}
