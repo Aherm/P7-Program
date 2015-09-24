@@ -16,11 +16,9 @@ public class OurStatusListener implements StatusListener {
     	
     	if (geo != null) {
     		tweets.add(Tweet.createTweet(status));
-    		System.out.println("Hello world, this is our size after adding " + tweets.size());
     		// Removes tweets older than 3 days
     		tweets.removeOld(3);
-    		System.out.println("Hello world, this is our size after revoming " + tweets.size());
-    		
+    	
     		System.out.println("\n" + status.getUser().getScreenName() + " wrote: ");
     		System.out.println(status.getText());
        	}
