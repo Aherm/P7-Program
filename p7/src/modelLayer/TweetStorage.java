@@ -22,8 +22,8 @@ public class TweetStorage {
 	public void removeOld(int days) {
 		Date past = tweets.getFirst().getCreatedAt();
 		Date today = new Date();
-		System.out.println(Days.daysBetween(new LocalDate(past), new LocalDate(today)).getDays());
-		while(Math.abs(Days.daysBetween(new DateTime(past), new DateTime(today)).getDays()) >= days) {
+		
+		while(Days.daysBetween(new DateTime(past), new DateTime(today)).getDays() >= days) {
 			remove(tweets.getFirst());
 			past = tweets.getFirst().getCreatedAt();
 		}
