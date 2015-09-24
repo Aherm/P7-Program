@@ -12,37 +12,26 @@ import java.util.TimerTask;
 public class RunMeTask extends TimerTask
 {
     DBConnect connection;
-    HashMap<String, Tweet> tweets = new HashMap<String, Tweet>();
-    TweetStorage tweets2;
+    TweetStorage tweets;
     Date lastInserted;
-
-    public RunMeTask(HashMap<String, Tweet> tweets, DBConnect connection) {
-        this.tweets = tweets;
-        this.connection = connection;
-    }
     
     public RunMeTask(TweetStorage tweets, DBConnect connection) {
-    	this.tweets2 = tweets;
+    	this.tweets = tweets;
     	this.connection = connection;
     	lastInserted = new Date();
     }
 
     @Override
     public void run() {
-
         try {
             System.out.println("Run Me ~");
-            System.out.println("Hello world, this is my size " + tweets2.size());
-            if (tweets2.size() != 0) {
-                System.out.println("Inserting rows");
+            if (tweets.size() != 0) {
                 DBInsert dbInsert = new DBInsert(connection);
-                dbInsert.insertTweetStorage(tweets2, lastInserted);
+                dbInsert.insertTweet(tweets, lastInserted);
 
                 // insert the keywords
                 //dbInsert.insertKeywordsPreparedStatement(tweets);
 
-                // clear the hashmap
-                //tweets.clear();
                 lastInserted = new Date();
             }
         }

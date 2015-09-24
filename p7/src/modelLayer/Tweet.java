@@ -16,7 +16,6 @@ public class Tweet {
     private double lat, lon;
     private List<String> keywords;
 
-
     public Tweet() {
     }
 
@@ -119,6 +118,4 @@ public class Tweet {
     public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
     }
-
-
 }

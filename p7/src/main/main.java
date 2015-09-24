@@ -29,34 +29,20 @@ public class main {
 
         FilterQuery query = new FilterQuery();
         query.locations(locations);
-        //-74,40,-73,41
         stream.filter(query);
 
-
-
-        /*
-            Iterator itr = tweets.entrySet().iterator();
-        while(itr.hasNext()) {
-                Map.Entry pair = (Map.Entry)itr.next();
-                System.out.println(pair.getKey());
-
-        }
-        */
-
-        HashMap<String, Tweet> tweets = listener.getTweets();
         DBConnect connection = new DBConnect();
         connection.connectToLocal("postgres", "postgres", "21");
 
-        TweetStorage tweets2 = listener.getTweets2();
+        TweetStorage tweets = listener.getTweets();
         
-        TimerTask task = new RunMeTask(tweets2, connection);
+        TimerTask task = new RunMeTask(tweets, connection);
 
         Timer timer = new Timer();
-        timer.schedule(task, 1000, 3600000);
+        timer.schedule(task, 30000);
         //A minute in ms: 60000
         //An hour in ms: 3600000
 
         //DBConnect.closeConnection();
-
     }
 }

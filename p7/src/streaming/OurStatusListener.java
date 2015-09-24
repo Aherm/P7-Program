@@ -9,60 +9,22 @@ import java.util.HashMap;
 import java.util.List;
 
 public class OurStatusListener implements StatusListener {
-    HashMap<String, Tweet> tweets = new HashMap<String, Tweet>();
-    TweetStorage tweets2 = new TweetStorage();
+    TweetStorage tweets = new TweetStorage();
 
     public void onStatus(Status status) {
     	GeoLocation geo = status.getGeoLocation();
     	
     	if (geo != null) {
-    		tweets2.add(Tweet.createTweet(status));
-    		System.out.println("Hello world, this is our size after adding " + tweets2.size());
+    		tweets.add(Tweet.createTweet(status));
+    		System.out.println("Hello world, this is our size after adding " + tweets.size());
     		// Removes tweets older than 3 days
-    		tweets2.removeOld(3);
-    		System.out.println("Hello world, this is our size after revoming " + tweets2.size());
+    		tweets.removeOld(3);
+    		System.out.println("Hello world, this is our size after revoming " + tweets.size());
     		
     		System.out.println("\n" + status.getUser().getScreenName() + " wrote: ");
     		System.out.println(status.getText());
        	}
     }
-
-    /*
-    public void onStatus2(Status status) {
-        GeoLocation geo = status.getGeoLocation();
-
-        if (geo != null) {
-        	List<String> matchedKeywords = containsKeywords(status.getText());
-            if (matchedKeywords.size() > 0) {
-                System.out.println("\n" + status.getUser().getScreenName() + " wrote: ");
-
-                tweets.put(java.lang.Long.toString(status.getId()),
-                        new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),
-                        status.getText(), status.getCreatedAt(), status.getGeoLocation().getLatitude(), status.getGeoLocation().getLongitude(), matchedKeywords));
-
-                System.out.println(status.getText());
-
-                if (status.getPlace() != null) {
-                    if (status.getPlace().getFullName().equals("New York, NY")) {
-                        System.out.println(status.getText());
-                        System.out.println("Country: " + status.getPlace().getCountry());
-                        System.out.println("Place: " + status.getPlace().getFullName());
-                    }
-                }
-
-                double latitude = geo.getLatitude();
-                double longitude = geo.getLongitude();
-
-                //System.out.println("Place boundingbox " + status.getPlace().getBoundingBoxCoordinates());
-                System.out.println("location:");
-                System.out.println("latitude: " + latitude + " , " + "longitude: " + longitude);
-            }
-            else {
-                System.out.println("Tweet: " + status.getId() + " removed");
-            }
-        }
-    }
-    */
 
     public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
         //System.out.println("User: " + statusDeletionNotice.getUserId() + " deleted");
@@ -115,13 +77,8 @@ public class OurStatusListener implements StatusListener {
         }
         return matchedKeys;
     }
-
-    public HashMap<String, Tweet> getTweets(){
-        return tweets;
-    }
     
-    public TweetStorage getTweets2() {
-    	return tweets2;
+    public TweetStorage getTweets() {
+    	return tweets;
     }
-
 }
