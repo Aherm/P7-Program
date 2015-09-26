@@ -1,12 +1,10 @@
 package dataAccessLayer;
 
 import modelLayer.Tweet;
-
+import modelLayer.TweetStorage;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DBGetTweets {
 
@@ -31,8 +29,9 @@ public class DBGetTweets {
         return numTweets;
     }
 
-    public List<Tweet> getTweets() {
-        List<Tweet> tweets = new ArrayList<Tweet>();
+    public TweetStorage getTweets() {
+        TweetStorage tweets = new TweetStorage();
+        
         try {
         	Connection con = DBConnect.getInstance().getCon();
             String query = "SELECT * FROM tweets";
@@ -47,9 +46,8 @@ public class DBGetTweets {
         return tweets;
     }
 
-
-    private List<Tweet> initializeTweets(ResultSet res){
-        List<Tweet> tweets = new ArrayList<Tweet>();
+    private TweetStorage initializeTweets(ResultSet res){
+        TweetStorage tweets = new TweetStorage();
         try{
             while (res.next()) {
                 Tweet newTweet = new Tweet();
