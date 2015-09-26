@@ -4,9 +4,6 @@ import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 import twitter4j.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class OurStatusListener implements StatusListener {
     TweetStorage tweets = new TweetStorage();
 

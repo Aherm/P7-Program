@@ -1,17 +1,13 @@
 package main;
 
-import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBInsert;
-import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.TimerTask;
 
 public class RunMeTask extends TimerTask
 {
-    DBConnect connection;
     TweetStorage tweets;
     Date lastInserted;
     

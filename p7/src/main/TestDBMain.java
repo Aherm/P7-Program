@@ -1,16 +1,10 @@
 package main;
-import java.sql.Statement;
-import java.util.Date;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.util.List;
 
 import businessLogicLayer.Filter;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetTweets;
-import dataAccessLayer.DBInsert;
 import modelLayer.Tweet;
-import streaming.OurStatusListener;
+import java.util.List;
 
 public class TestDBMain {
 	public static void main(String[] args) 

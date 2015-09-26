@@ -1,9 +1,8 @@
 package streaming;
-import twitter4j.*;
+
 import twitter4j.conf.ConfigurationBuilder;
 
 public class Oauth {
-	
 	
 	public ConfigurationBuilder createConfigBuilder(){
 	 ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -14,7 +13,6 @@ public class Oauth {
 	  .setOAuthAccessToken("3619116801-YML3CKo04vM5JMt37eTYKsWwb8tWPbJN01RB2aa")
 	  .setOAuthAccessTokenSecret("zKp63ebQbiIyAFG1tdz3YC1JLfNQCy5UVqf14HQ5zMy41");
 	  
-	return cb; 
-
+	return cb;
 	}
 }
