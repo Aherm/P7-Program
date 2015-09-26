@@ -5,31 +5,24 @@ import modelLayer.TweetStorage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.Date;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DBInsert {
-	DBConnect connection;
 	
-	public DBInsert(DBConnect connection)
-	{
-		this.connection = connection;
-	}
+	public DBInsert(){}
 	
 	public void insertTweet(TweetStorage tweets, Date date) {
 		try{
-			Connection con = connection.getInstance().getCon();
+			Connection con = DBConnect.getInstance().getCon();
 			String insertSQL= "INSERT INTO tweets " +
 							  "(tweetID, userID, responseID, retweetID, tweetText, createdAt, " +
 							  "lat, lon)" + " VALUES " +
 							  "(?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement st = con.prepareStatement(insertSQL);
-			//int i = 0;			Remove these comments, if performance issues become a problem
+			// Remove the comments in this method if performance issues become a problem
+			//int i = 0;
 
 			for(int i = tweets.size() - 1; i >= 0; i--) {
 				Tweet tweet = tweets.get(i);
@@ -51,17 +44,18 @@ public class DBInsert {
 				//if(i % 1000 == 0 || i == tweets.size())
 				//		st.executeBatch();
 			}
-			st.executeBatch();		//comment this is above comments are removed
+			st.executeBatch();
 			
 		} catch(Exception E) {
 			E.printStackTrace();
 		}
 	}
 	
+	/*
 	public void insertKeywords(HashMap<String, Tweet> tweets)
 	{
 		try{
-			Connection con = connection.getInstance().getCon();
+			Connection con = DBConnect.getInstance().getCon();
 			String insertSQL = "INSERT INTO keywords " +
 					"(tweetID, keyword) VALUES " +
 					"(?, ?)";
@@ -85,4 +79,5 @@ public class DBInsert {
 			e.printStackTrace();
 		}
 	}
+	*/
 }

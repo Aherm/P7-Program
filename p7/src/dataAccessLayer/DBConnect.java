@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConnect {
 
-    private static Connection con;
+    private Connection con;
     private static DBConnect instance = null;
 
     // Specifies the address of the driver, located within the added postgressql libraries.
@@ -14,8 +14,16 @@ public class DBConnect {
     private static final String driver = "org.postgresql.Driver";
     private static final String url = "jdbc:postgresql://localhost/";
 
-    public DBConnect(){
-
+    protected DBConnect(){
+    	// Exists only to defeat instantiation.
+    }
+    
+    // Use this instead of the constructor to instantiate
+    public static DBConnect getInstance(){
+        if (instance == null){
+            instance = new DBConnect();
+        }
+        return instance;
     }
     
     public void connectTo(String dbname,String _userName, String _password){
@@ -40,24 +48,17 @@ public class DBConnect {
          }	
     }    
 
-    // Getter function for other database classes to fetch the connection object
-    public Connection getCon(){
-        return con;
-    }
-
-    public static DBConnect getInstance(){
-        if (instance == null){
-            instance = new DBConnect();
-        }
-        return instance;
-    }
-
-    public static void closeConnection(){
+    public void closeConnection(){
         try{
             con.close();
             System.out.println("The connection is closed");
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+    
+    // Getter function for other database classes to fetch the connection object
+    public Connection getCon(){
+        return con;
     }
 }

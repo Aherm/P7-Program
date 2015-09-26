@@ -15,10 +15,10 @@ import streaming.OurStatusListener;
 public class TestDBMain {
 	public static void main(String[] args) 
 	{
-		DBConnect connection = new DBConnect();
+		DBConnect connection = DBConnect.getInstance();
 		connection.connectTo("postgres", "postgres", "21");
 
-		DBGetTweets dbGetTweets = new DBGetTweets(connection);
+		DBGetTweets dbGetTweets = new DBGetTweets();
 		List<Tweet> tweets = dbGetTweets.getTweets();
 		List<String> containedKeywords = Filter.containsKeywords(tweets.get(0).getTweetText());
 
@@ -26,7 +26,7 @@ public class TestDBMain {
 		for (String kw : containedKeywords)
 			System.out.println("contained keyword: " + kw);
 
-		DBConnect.closeConnection();
+		connection.closeConnection();
 	}
 
 }

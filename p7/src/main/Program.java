@@ -34,12 +34,12 @@ public class Program {
         query.locations(locations);
         stream.filter(query);
 
-        DBConnect connection = new DBConnect();
+        DBConnect connection = DBConnect.getInstance();
         connection.connectTo("postgres", "postgres", "21");
 
         TweetStorage tweets = listener.getTweets();
         
-        TimerTask task = new RunMeTask(tweets, connection);
+        TimerTask task = new RunMeTask(tweets);
 
         Timer timer = new Timer();
         timer.schedule(task, 1000, 60000);
