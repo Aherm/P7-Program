@@ -16,7 +16,7 @@ public class TestDBMain {
 	public static void main(String[] args) 
 	{
 		DBConnect connection = new DBConnect();
-		connection.connectToLocal("postgres", "postgres", "21");
+		connection.connectTo("postgres", "postgres", "21");
 
 		DBGetTweets dbGetTweets = new DBGetTweets(connection);
 		List<Tweet> tweets = dbGetTweets.getTweets();

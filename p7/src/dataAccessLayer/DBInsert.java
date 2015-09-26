@@ -22,7 +22,7 @@ public class DBInsert {
 	
 	public void insertTweet(TweetStorage tweets, Date date) {
 		try{
-			Connection con = connection.getInstance().getDBcon();
+			Connection con = connection.getInstance().getCon();
 			String insertSQL= "INSERT INTO tweets " +
 							  "(tweetID, userID, responseID, retweetID, tweetText, createdAt, " +
 							  "lat, lon)" + " VALUES " +
@@ -61,7 +61,7 @@ public class DBInsert {
 	public void insertKeywords(HashMap<String, Tweet> tweets)
 	{
 		try{
-			Connection con = connection.getInstance().getDBcon();
+			Connection con = connection.getInstance().getCon();
 			String insertSQL = "INSERT INTO keywords " +
 					"(tweetID, keyword) VALUES " +
 					"(?, ?)";

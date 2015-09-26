@@ -35,7 +35,7 @@ public class Program {
         stream.filter(query);
 
         DBConnect connection = new DBConnect();
-        connection.connectToLocal("postgres", "postgres", "21");
+        connection.connectTo("postgres", "postgres", "21");
 
         TweetStorage tweets = listener.getTweets();
         

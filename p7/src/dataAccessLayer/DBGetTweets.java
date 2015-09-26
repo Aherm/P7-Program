@@ -24,7 +24,7 @@ public class DBGetTweets {
         long numTweets = 0;
 
         try {
-            Connection con = connection.getInstance().getDBcon();
+            Connection con = connection.getInstance().getCon();
             String query = "SELECT count(*) AS count FROM tweets";
 
             Statement stmt = con.createStatement();
@@ -42,7 +42,7 @@ public class DBGetTweets {
     public List<Tweet> getTweets() {
         List<Tweet> tweets = new ArrayList<Tweet>();
         try {
-            Connection con = connection.getInstance().getDBcon();
+            Connection con = connection.getInstance().getCon();
             String query = "SELECT * FROM tweets";
 
             Statement stmt = con.createStatement();
