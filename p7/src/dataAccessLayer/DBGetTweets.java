@@ -1,30 +1,20 @@
 package dataAccessLayer;
 
 import modelLayer.Tweet;
-
+import modelLayer.TweetStorage;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Created by madjen12 on 23-09-2015.
- */
 public class DBGetTweets {
 
-    DBConnect connection;
-
-    public DBGetTweets(DBConnect connection) {
-        this.connection = connection;
-    }
-
+    public DBGetTweets() {}
 
     public long getNumTweets() {
         long numTweets = 0;
 
         try {
-            Connection con = connection.getInstance().getDBcon();
+        	Connection con = DBConnect.getInstance().getCon();
             String query = "SELECT count(*) AS count FROM tweets";
 
             Statement stmt = con.createStatement();
@@ -39,10 +29,11 @@ public class DBGetTweets {
         return numTweets;
     }
 
-    public List<Tweet> getTweets() {
-        List<Tweet> tweets = new ArrayList<Tweet>();
+    public TweetStorage getTweets() {
+        TweetStorage tweets = new TweetStorage();
+        
         try {
-            Connection con = connection.getInstance().getDBcon();
+        	Connection con = DBConnect.getInstance().getCon();
             String query = "SELECT * FROM tweets";
 
             Statement stmt = con.createStatement();
@@ -55,9 +46,8 @@ public class DBGetTweets {
         return tweets;
     }
 
-
-    private List<Tweet> initializeTweets(ResultSet res){
-        List<Tweet> tweets = new ArrayList<Tweet>();
+    private TweetStorage initializeTweets(ResultSet res){
+        TweetStorage tweets = new TweetStorage();
         try{
             while (res.next()) {
                 Tweet newTweet = new Tweet();

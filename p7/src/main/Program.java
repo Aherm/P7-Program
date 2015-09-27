@@ -1,17 +1,17 @@
 package main;
 
 import dataAccessLayer.DBConnect;
-import dataAccessLayer.DBInsert;
-import modelLayer.Tweet;
 import modelLayer.TweetStorage;
+
 import streaming.Oauth;
 import streaming.OurStatusListener;
+
 import twitter4j.FilterQuery;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Program {
 
@@ -21,7 +21,7 @@ public class Program {
 		OurStatusListener listener = new OurStatusListener();
 		TwitterStreamFactory tsf = new TwitterStreamFactory(auth.createConfigBuilder().build());
 		TwitterStream stream = tsf.getInstance(); 
-		stream.addListener(listener);	
+		stream.addListener(listener);
 		
 		//stream.sample();
 
@@ -34,18 +34,18 @@ public class Program {
         query.locations(locations);
         stream.filter(query);
 
-        DBConnect connection = new DBConnect();
-        connection.connectToLocal("postgres", "postgres", "21");
+        DBConnect connection = DBConnect.getInstance();
+        connection.connectTo("postgres", "postgres", "21");
 
         TweetStorage tweets = listener.getTweets();
         
-        TimerTask task = new RunMeTask(tweets, connection);
+        TimerTask task = new RunMeTask(tweets);
 
         Timer timer = new Timer();
         timer.schedule(task, 1000, 60000);
         //A minute in ms: 60000
         //An hour in ms: 3600000
 
-        //DBConnect.closeConnection();
+        //connection.closeConnection();
     }
 }
