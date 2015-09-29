@@ -13,6 +13,8 @@ import twitter4j.TwitterStreamFactory;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import businessLogicLayer.TweetQueryThread;
+
 public class Program {
 
 	public static void main(String[] args) {
@@ -43,6 +45,9 @@ public class Program {
 
         Timer timer = new Timer();
         timer.schedule(task, 1000, 60000);
+        
+        TweetQueryThread t = new TweetQueryThread(tweets);
+        t.start();
         //A minute in ms: 60000
         //An hour in ms: 3600000
 
