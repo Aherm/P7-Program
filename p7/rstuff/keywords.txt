@@ -1,1 +1,1 @@
-sick,food,stomach,pain,https
+food,poison,restaurant,sick,soup,drink,bed,hungry,soda,chinese food,chipotle,mcdonald,burgerking,"stomach pain", diarrhea
