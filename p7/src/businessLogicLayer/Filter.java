@@ -7,6 +7,7 @@ import modelLayer.Tweet;
 
 public class Filter {
 
+	private static String newTweetText = "";
     public static List<String> containsKeywords(String tweetText) {
         tweetText = tweetText.toLowerCase();
         List<String> matchedKeys = new ArrayList<String>();
