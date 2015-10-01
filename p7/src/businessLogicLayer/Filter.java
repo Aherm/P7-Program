@@ -3,6 +3,8 @@ package businessLogicLayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelLayer.Tweet;
+
 public class Filter {
 
     public static List<String> containsKeywords(String tweetText) {
@@ -33,5 +35,24 @@ public class Filter {
                 matchedKeys.add(keyword);
         }
         return matchedKeys;
+    }
+    
+    public static void filterTweet(Tweet tweet)
+    {
+    	String[] text = tweet.getTweetText().split(" ");
+    	String newTweetText = "";
+    	for(String s : text)
+    	{
+    		for(int i = 0; i < s.length(); i++)
+    		{
+    			if(Character.isLetter(s.charAt(i)) || Character.isDigit(s.charAt(i)))
+    			{
+    				newTweetText += s.charAt(i);
+    			}
+    		}
+    		newTweetText += " ";
+    	}
+    	
+    	tweet.setTweetText(newTweetText);
     }
 }
