@@ -15,12 +15,12 @@ public class TestDBMain {
 
 		DBGetTweets dbGetTweets = new DBGetTweets();
 		TweetStorage tweets = dbGetTweets.getTweets();
-		List<String> containedKeywords = Filter.containsKeywords(tweets.get(0).getTweetText());
+		/*List<String> containedKeywords = Filter.containsKeywords(tweets.get(0).getTweetText());
 
 		System.out.println("tweetID: " + tweets.get(0).getTweetID());
 		for (String kw : containedKeywords)
 			System.out.println("contained keyword: " + kw);
-
+		*/
 		connection.closeConnection();
 	}
 
