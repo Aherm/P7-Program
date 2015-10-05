@@ -15,6 +15,7 @@ public class Filter {
         
         keywords.add(new Keyword("food", 1));
         keywords.add(new Keyword("poison", 1));
+        keywords.add(new Keyword("food poison", 10));
         keywords.add(new Keyword("restaurant", 1));
         keywords.add(new Keyword("sick", 1));
         keywords.add(new Keyword("soup", 1));
@@ -45,6 +46,7 @@ public class Filter {
         keywords.add(new Keyword("disease", 2));
         keywords.add(new Keyword("headache", 1));
         keywords.add(new Keyword("confusion", 1));
+        keywords.add(new Keyword("stomach flu", 5));
         
         int score = 0;
         
