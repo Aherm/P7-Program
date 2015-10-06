@@ -14,6 +14,7 @@ public class Tweet {
     private String tweetText;
     private Date createdAt;
     private double lat, lon;
+    private int score = -1;
     private List<String> keywords;
 
     public Tweet() {
@@ -111,6 +112,14 @@ public class Tweet {
         this.lon = lon;
     }
 
+    public int getScore() {
+    	return score;
+    }
+    
+    public void setScore(int score) {
+    	this.score = score;
+    }
+    
     public List<String> getKeywords() {
         return keywords;
     }
