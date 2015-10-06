@@ -11,10 +11,10 @@ import modelLayer.Tweet;
 public class Filter {
 
     //public static List<String> containsKeywords(String tweetText) {
-	public static void containsKeywords(Tweet tweet) {
-		String tweetText = tweet.getTweetText().toLowerCase();
+    public static void containsKeywords(Tweet tweet) {
+        String tweetText = tweet.getTweetText().toLowerCase();
         List<Keyword> keywords = new ArrayList<Keyword>();
-        
+
         keywords.add(new Keyword("food", 1));
         keywords.add(new Keyword("poison", 1));
         keywords.add(new Keyword("food poison", 10));
@@ -49,29 +49,31 @@ public class Filter {
         keywords.add(new Keyword("headache", 1));
         keywords.add(new Keyword("confusion", 1));
         keywords.add(new Keyword("stomach flu", 5));
-        
+
         int score = 0;
-        
+
         for (Keyword keyword : keywords) {
             if (tweetText.contains(keyword.getName()))
                 score += keyword.getWeight();
         }
-        
+
         tweet.setScore(score);
     }
-	
-	public static void filterTweets(Tweet tweet)
-	{
-		System.out.println(tweet.getTweetText().toLowerCase());
-		//Pattern p = Pattern.compile("\\w*mads\\w*");
-		//Matcher m = p.matcher(tweet.getTweetText().toLowerCase());
-		if(Pattern.matches("[a-z]*", tweet.getTweetText()))
-		{
-			System.out.println("madsen mor");
-		}
-		else
-		{
-			System.out.print("ikke nogen madser mor :((");
-		}
-	}
+
+    public static boolean filterTweet(Tweet tweet) {
+        if (tweet.getTweetText().toLowerCase().matches("[\\w|\\s]*"))
+            return true;
+
+        return false;
+    }
+
+    public static boolean filterTweetFromPatterns(Tweet tweet, List<String> patterns) {
+        for (String pattern : patterns) {
+            if (tweet.getTweetText().toLowerCase().matches(pattern)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

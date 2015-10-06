@@ -1,5 +1,6 @@
 package main;
 
+import businessLogicLayer.Filter;
 import dataAccessLayer.DBConnect;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
@@ -11,38 +12,42 @@ import twitter4j.FilterQuery;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import businessLogicLayer.Preprocessor;
 import businessLogicLayer.TweetQueryThread;
 
 public class Program {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		/*
-		Tweet tweet1 = new Tweet(0, 2, 3, 4, "tweet1 Mads er diarrhea,:-: @food @urdad lol headache!! http://t.co/urmom hhah l0l n1..", new Date(), 0.2, 0.5);
-		System.out.println("Original Tweet1: " + tweet1.getTweetText());
-		Preprocessor.processTweetLinks(tweet1);
-		System.out.println("Links Processed Tweet1: " + tweet1.getTweetText());
-		Preprocessor.processTweetMentions(tweet1);
-		System.out.println("Mentions Processed Tweet1: " + tweet1.getTweetText());
-		Preprocessor.processTweetSymbols(tweet1);
-		System.out.println("Symbols Processed Tweet1: " + tweet1.getTweetText() + "\n");
-		
-		Tweet tweet2 = new Tweet(0, 2, 3, 4, "tweet2 Mads er diarrhea,:-: @food @urdad lol headache!! http://t.co/urmom hhah l0l n1..", new Date(), 0.2, 0.5);
-		System.out.println("Original Tweet2: " + tweet2.getTweetText());
-		Preprocessor.processWholeTweet(tweet2);
-		System.out.println("Whole Processed Tweet2: " + tweet2.getTweetText() + "\n");
-	
-		Tweet tweet3 = new Tweet(0, 2, 3, 4, "tweet3 Mads er diarrhea,:-: @food @urdad lol headache!! http://t.co/urmom hhah l0l n1..", new Date(), 0.2, 0.5);
-		System.out.println("Original Tweet3: " + tweet3.getTweetText());
-		Preprocessor.processTweet(tweet3);;
-		System.out.println("Whole Processed Tweet3: " + tweet3.getTweetText());
-		*/
-		
+
+        Tweet tweet1 = new Tweet(0, 2, 3, 4, "asfafas f463t fsahe8Mads90ath9", new Date(), 0.2, 0.5);
+        Tweet tweet2 = new Tweet(0, 2, 3, 4, "asfafas Mathias f463t fssafasfasfahe890ath9", new Date(), 0.2, 0.5);
+        List<Tweet> tweets = new ArrayList<Tweet>();
+        tweets.add(tweet1);
+        tweets.add(tweet2);
+
+
+        List<String> patterns = new ArrayList<String>();
+        //patterns.add("[\\w*mads\\w*]");
+        patterns.add("(\\w|\\s)*(Mathias)(\\w|\\s)*");
+
+        for (Tweet tweet : tweets) {
+            Preprocessor.processTweet(tweet);
+
+            if (Filter.filterTweetFromPatterns(tweet, patterns))
+            {
+                System.out.println(tweet.getTweetText() + " is approved");
+            }
+            else {
+                System.out.println(tweet.getTweetText() + " is not approved");
+            }
+        }
+
+
+        //connection to twitters streaming api
+        /*
 		Oauth auth = new Oauth(); 
 		OurStatusListener listener = new OurStatusListener();
 		TwitterStreamFactory tsf = new TwitterStreamFactory(auth.createConfigBuilder().build());
@@ -74,7 +79,7 @@ public class Program {
         t.start();
         //A minute in ms: 60000
         //An hour in ms: 3600000
-
+		*/
         //connection.closeConnection();
     }
 }
