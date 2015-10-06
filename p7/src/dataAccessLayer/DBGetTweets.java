@@ -10,6 +10,23 @@ public class DBGetTweets {
 
     public DBGetTweets() {}
 
+    public TweetStorage getKTweets (int k) {
+    	TweetStorage tweets = new TweetStorage();
+        
+        try {
+        	Connection con = DBConnect.getInstance().getCon();
+            String query = "SELECT * FROM tweets LIMIT " + k;
+
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+
+            tweets = initializeTweets(res);
+        } catch (Exception exh) {
+            System.out.println(exh);
+        }
+        return tweets;
+    }
+    
     public long getNumTweets() {
         long numTweets = 0;
 
@@ -55,7 +72,7 @@ public class DBGetTweets {
                 newTweet.setUserID(res.getLong("userid"));
                 newTweet.setResponseID(res.getLong("responseid"));
                 newTweet.setRetweetID(res.getLong("retweetid"));
-                newTweet.setTweetText(res.getString("tweet"));
+                newTweet.setTweetText(res.getString("tweetText"));
                 //newTweet.setCreatedAt(res.getDate("createdat"));
                 newTweet.setLat(res.getDouble("lat"));
                 newTweet.setLon(res.getDouble("lon"));
