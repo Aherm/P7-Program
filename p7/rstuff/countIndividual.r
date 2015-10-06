@@ -1,4 +1,4 @@
-source("dbcon.r")
+
 helper = function(x,keyword){
 	grepl(keyword,x)
 }
@@ -8,21 +8,28 @@ seperateKeywords = function(keywords,textTable){
 	for(i in 1:length(keywords)){
 		answerTable = table(sapply(textTable,helper,keyword = keywords[i]))
 		nrTable = answerTable[names(answerTable) == TRUE]
-		if(0 == length(nrTable))
-			z[i] = 0
+		if(length(nrTable) == 0)
+		  z[i] = 0
 		else{
-			nr = nrTable[[1]]
-			z[i] = nr
+		  nr = nrTable[[1]]
+	  	z[i] = nr
 		}
+		
 	}
 	z	
 }
 
-onlyText = sqldf("SELECT tweettext FROM tweets")
+onlyText = sqldf("SELECT tweettext FROM tweets ")
 onlyTextVector = as.vector(onlyText[[1]])
-keywords = scan("eh.txt",what="",sep=",")
+keywords = scan('~/GitHub/P7-Program/p7/rstuff/keywords.txt',what="",sep=",")
 
-tester = seperateKeywords(keywords,onlyTextVector)  
-barplot(tester,names.arg = keywords)
 
+tester = seperateKeywords(keywords,onlyTextVector) 
+tester = sort(tester,decreasing = TRUE)
+verticalMax = max(tester) + (10 - (max(tester) %% 10))
+z = barplot(tester,names.arg = keywords,ylim = c(0,verticalMax),xpd = FALSE,yaxt="n")
+yaxe = seq(0,verticalMax,50)
+yaxe[length(yaxe) + 1] = verticalMax
+axis(2,at =yaxe)
+framer = data.frame(keywords,tester)
 dbDisconnect(con)

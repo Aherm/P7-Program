@@ -1,4 +1,3 @@
-source("dbcon.r")
 
 checkIfKeywordInString = function(string,nr,keywords){
 	if(is.na(keywords[nr]))
@@ -22,6 +21,6 @@ keywords = scan("keywords.txt",what="",sep = ",")
 
 resultTable = table(sapply(onlyTextVector, myFun,keywords = keywords))
 
-barplot(resultTable)
+barplot(resultTable,names.arg = c("No Keywords","Minimum one keyword"))
 
 dbDisconnect(con)
