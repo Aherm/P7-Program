@@ -2,6 +2,8 @@ package businessLogicLayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import modelLayer.Keyword;
 import modelLayer.Tweet;
@@ -57,23 +59,19 @@ public class Filter {
         
         tweet.setScore(score);
     }
-    
-    public static void filterTweet(Tweet tweet)
-    {
-    	String[] text = tweet.getTweetText().split(" ");
-    	String newTweetText = "";
-    	for(String s : text)
-    	{
-    		for(int i = 0; i < s.length(); i++)
-    		{
-    			if(Character.isLetter(s.charAt(i)) || Character.isDigit(s.charAt(i)))
-    			{
-    				newTweetText += s.charAt(i);
-    			}
-    		}
-    		newTweetText += " ";
-    	}
-    	
-    	tweet.setTweetText(newTweetText);
-    }
+	
+	public static void filterTweets(Tweet tweet)
+	{
+		System.out.println(tweet.getTweetText().toLowerCase());
+		//Pattern p = Pattern.compile("\\w*mads\\w*");
+		//Matcher m = p.matcher(tweet.getTweetText().toLowerCase());
+		if(Pattern.matches("[a-z]*", tweet.getTweetText()))
+		{
+			System.out.println("madsen mor");
+		}
+		else
+		{
+			System.out.print("ikke nogen madser mor :((");
+		}
+	}
 }
