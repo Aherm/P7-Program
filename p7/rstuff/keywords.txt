@@ -1,1 +1,3 @@
-food,poison,restaurant,sick,soup,drink,bed,hungry,soda,chinese food,chipotle,mcdonald,burgerking,"stomach pain", diarrhea
+food,poison,food poison,resaurant,sick,soup,drink,bed,hungry,soda,chinese food, chipotle,mcdonald
+,mc donald,bugerking,burger king,stomach pain,diarrhea,the shits,dehydration,salmonella,nausea,
+vomit,cramps,pain,fever,ill,sick,infection,hygiene,disease,headache,confusion,stomach flu

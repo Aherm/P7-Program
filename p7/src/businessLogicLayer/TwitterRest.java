@@ -1,53 +1,74 @@
 package businessLogicLayer;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import twitter4j.*;
+import modelLayer.Tweet;
+import modelLayer.TweetStorage;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
+import streaming.Oauth;
+import twitter4j.Paging;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-import org.joda.time.*;
-
-import modelLayer.TweetStorage;
-import streaming.Oauth;
-
 //Created by Mads on 07-10-2015
-
 
 public class TwitterRest {
 
 	private int totalcalls = 0; // holds nr of times we use the twitter api
-	private Twitter twitter; 
-	
-	public TwitterRest(){
-		
+	private Twitter twitter;
+
+	public TwitterRest() {
+
 		ConfigurationBuilder cb = new Oauth().createConfigBuilder();
 		TwitterFactory factory = new TwitterFactory(cb.build());
 		twitter = factory.getInstance();
 	}
+
+	//currently assumes that the list is sorted from newest to oldest 
+	public TweetStorage getUserTimeline3days(long userId, Date startDate) {
 	
-	
-	public TweetStorage getUserTimeline3days(long userId, Date startDate){
-		
-		Paging page = new Paging(1,100);  
+		TweetStorage tweets = new TweetStorage();		
 		
 		try {
-			List<Status> userTimeline = twitter.getUserTimeline(userId, page);
-			
-			Date lastDate = userTimeline.get(userTimeline.size() -1 ).getCreatedAt();
-			
-			}
-		
-		 catch (TwitterException e) {
+			int pagenr = 1;
+			Paging page = new Paging(pagenr, 300);
+			List<Status> userTimeline = new ArrayList<>();
+			do {	
+				totalcalls++; 
+				if(totalcalls == 280) // makes sure we do not reach our limit 
+					break;
+				
+				userTimeline = twitter.getUserTimeline(userId, page);
+				Date lastDate = userTimeline.get(userTimeline.size() - 1).getCreatedAt();
+				
+				// adds all tweets that are no more than 3 days old 
+				for (int i = 0; i < userTimeline.size(); i++) {
+					Date today = userTimeline.get(i).getCreatedAt();
+					if (Days.daysBetween(new DateTime(today),new DateTime(startDate)).getDays() <= 3) {
+						tweets.add(Tweet.createTweet(userTimeline.get(i)));
+					}
+					else break;
+				}
+
+				pagenr++;
+				page.setPage(pagenr);
+			} while (Days.daysBetween(new DateTime(userTimeline.get(userTimeline.size() -1).getCreatedAt()), new DateTime(startDate)).getDays() <= 3);
+
+		}
+		catch (TwitterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		return new TweetStorage(); 
-		
+
+		return tweets; 
+
 	}
-	
-	
-	
 }
