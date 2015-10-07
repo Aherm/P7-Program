@@ -12,7 +12,7 @@ public class DBConnect {
     // Specifies the address of the driver, located within the added postgressql libraries.
     // Alternative for mysql: com.mysql.jdbc.Driver , provided that the driver is included within the project.
     private static final String driver = "org.postgresql.Driver";
-    private static final String url = "jdbc:postgresql://localhost/";
+    //private static final String url = "jdbc:postgresql://localhost/";
 
     protected DBConnect(){
     	// Exists only to defeat instantiation.
@@ -26,26 +26,29 @@ public class DBConnect {
         return instance;
     }
     
-    public void connectTo(String dbname,String _userName, String _password){
-    	
+    public void connectToServer(String url, String dbname, String _userName, String _password) {
     	try {
-             // Specifies driver details
-             Class.forName(driver).newInstance();
+            // Specifies driver details
+            Class.forName(driver).newInstance();
 
-             System.out.println("Connecting to database");
+            System.out.println("Connecting to database");
 
-             // Specifies connection details
-             con = DriverManager.getConnection(url + dbname, _userName, _password);
+            // Specifies connection details
+            con = DriverManager.getConnection(url + dbname, _userName, _password);
 
-             System.out.println("Connected" + " " + dbname);
-         }
-         catch (SQLException se){
-             System.out.println(se);
-             se.printStackTrace();
-         }
-         catch (Exception e){
-             e.printStackTrace();
-         }	
+            System.out.println("Connected" + " " + dbname);
+        }
+        catch (SQLException se){
+            System.out.println(se);
+            se.printStackTrace();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }	
+    }
+    
+    public void connectTo(String dbname,String _userName, String _password){
+    	connectToServer ("jdbc:postgresql://localhost/", dbname, _userName, _password);
     }    
 
     public void closeConnection(){

@@ -16,6 +16,23 @@ public class DBGetTweets {
     public DBGetTweets() {
     }
 
+    public TweetStorage getKTweets (int k) {
+    	TweetStorage tweets = new TweetStorage();
+        
+        try {
+        	Connection con = DBConnect.getInstance().getCon();
+            String query = "SELECT * FROM tweets LIMIT " + k;
+
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+
+            tweets = initializeTweets(res);
+        } catch (Exception exh) {
+            System.out.println(exh);
+        }
+        return tweets;
+    }
+    
     public long getNumTweets() {
         long numTweets = 0;
 
