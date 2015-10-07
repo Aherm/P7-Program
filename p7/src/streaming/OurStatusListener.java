@@ -9,8 +9,9 @@ public class OurStatusListener implements StatusListener {
 
     public void onStatus(Status status) {
     	GeoLocation geo = status.getGeoLocation();
-    	
-    	if (geo != null) {
+        //status.isRetweet()
+
+    	if (geo != null && status.getRetweetedStatus() == null) {
     		tweets.add(Tweet.createTweet(status));
     		// Removes tweets older than 3 days
     		tweets.removeOldTweets(3);

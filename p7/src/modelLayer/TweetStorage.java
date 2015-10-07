@@ -43,4 +43,10 @@ public class TweetStorage {
 	public Tweet get(int n) {
 		return tweets.get(n);
 	}
+
+	public void displayTweets(){
+		for (Tweet tweet : tweets){
+			System.out.println("time: " + tweet.getCreatedAt());
+		}
+	}
 }

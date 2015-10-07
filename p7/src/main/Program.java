@@ -2,6 +2,7 @@ package main;
 
 import businessLogicLayer.Filter;
 import dataAccessLayer.DBConnect;
+import dataAccessLayer.DBGetTweets;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
@@ -22,7 +23,7 @@ public class Program {
     public static void main(String[] args) {
 
 
-        Tweet tweet1 = new Tweet(0, 2, 3, 4, "asfafas f463t fsahe8Mads90ath9", new Date(), 0.2, 0.5);
+        /*Tweet tweet1 = new Tweet(0, 2, 3, 4, "asfafas f463t fsahe8Mads90ath9", new Date(), 0.2, 0.5);
         Tweet tweet2 = new Tweet(0, 2, 3, 4, "asfafas Mathias f463t fssafasfasfahe890ath9", new Date(), 0.2, 0.5);
         List<Tweet> tweets = new ArrayList<Tweet>();
         tweets.add(tweet1);
@@ -31,7 +32,8 @@ public class Program {
 
         List<String> patterns = new ArrayList<String>();
         //patterns.add("[\\w*mads\\w*]");
-        patterns.add("(\\w|\\s)*(Mathias)(\\w|\\s)*");
+        patterns.add("(.*)Mathias(.*)");
+        //patterns.add(".*\\Mathias\\b.*");
 
         for (Tweet tweet : tweets) {
             Preprocessor.processTweet(tweet);
@@ -45,9 +47,9 @@ public class Program {
             }
         }
 
+*/
 
         //connection to twitters streaming api
-        /*
 		Oauth auth = new Oauth(); 
 		OurStatusListener listener = new OurStatusListener();
 		TwitterStreamFactory tsf = new TwitterStreamFactory(auth.createConfigBuilder().build());
@@ -79,7 +81,7 @@ public class Program {
         t.start();
         //A minute in ms: 60000
         //An hour in ms: 3600000
-		*/
+        
         //connection.closeConnection();
     }
 }
