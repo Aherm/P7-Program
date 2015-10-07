@@ -1,26 +1,31 @@
 package main;
 
-import businessLogicLayer.Filter;
+import businessLogicLayer.Clustering;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetTweets;
+import modelLayer.Tweet;
 import modelLayer.TweetStorage;
-
-import java.util.List;
 
 public class TestDBMain {
 	public static void main(String[] args) 
 	{
 		DBConnect connection = DBConnect.getInstance();
-		connection.connectTo("postgres", "postgres", "21");
+		connection.connectToServer("jdbc:postgresql://172.25.26.208/", "postgres", "guest", "42");
 
 		DBGetTweets dbGetTweets = new DBGetTweets();
-		TweetStorage tweets = dbGetTweets.getTweets();
-		/*List<String> containedKeywords = Filter.containsKeywords(tweets.get(0).getTweetText());
+		TweetStorage tweets = dbGetTweets.getKTweets(1000);
 
-		System.out.println("tweetID: " + tweets.get(0).getTweetID());
-		for (String kw : containedKeywords)
-			System.out.println("contained keyword: " + kw);
-		*/
+		System.out.println("Amount of tweets: " + tweets.size());
+		Tweet t1 = tweets.get(0);
+		Tweet t2 = tweets.get(1);
+		System.out.println("Distance: " + Clustering.getDist(t1, t2));
+		
+		Clustering c = new Clustering();
+		tweets = c.initialSolution(tweets, 0.04);
+		
+		
+		System.out.println("Cluster size: " + tweets.size());
+		
 		connection.closeConnection();
 	}
 
