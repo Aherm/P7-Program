@@ -1,5 +1,8 @@
 package main;
 
+import java.util.List;
+
+import businessLogicLayer.Cluster;
 import businessLogicLayer.Clustering;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetTweets;
@@ -21,10 +24,10 @@ public class TestDBMain {
 		System.out.println("Distance: " + Clustering.getDist(t1, t2));
 		
 		Clustering c = new Clustering();
-		tweets = c.initialSolution(tweets, 0.04);
+		List<Cluster> clusters = c.initialSolution(tweets, 0.04);
 		
 		
-		System.out.println("Cluster size: " + tweets.size());
+		System.out.println("Cluster size: " + clusters.size());
 		
 		connection.closeConnection();
 	}

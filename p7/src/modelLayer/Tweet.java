@@ -3,6 +3,7 @@ package modelLayer;
 import java.util.Date;
 import java.util.List;
 
+import businessLogicLayer.Cluster;
 import twitter4j.Status;
 
 public class Tweet {
@@ -16,6 +17,8 @@ public class Tweet {
     private double lat, lon;
     private int score = -1;
     private List<String> keywords;
+    
+    Cluster assignedCluster = null;
 
     public Tweet() {
     }
@@ -126,5 +129,13 @@ public class Tweet {
 
     public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
+    }
+    
+    public void setCluster (Cluster c) {
+    	this.assignedCluster = c;
+    }
+    
+    public Cluster getCluster() {
+    	return this.assignedCluster;
     }
 }
