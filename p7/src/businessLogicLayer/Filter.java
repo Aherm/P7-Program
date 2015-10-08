@@ -10,46 +10,6 @@ import modelLayer.Tweet;
 
 public class Filter {
 
-    //public static List<String> containsKeywords(String tweetText) {
-    public static void containsKeywords(Tweet tweet) {
-        String tweetText = tweet.getTweetText().toLowerCase();
-        List<Keyword> keywords = new ArrayList<Keyword>();
-
-        keywords.add(new Keyword("food poison", 10));
-        keywords.add(new Keyword("sick", 1));
-        keywords.add(new Keyword("stomach pain", 2));
-        keywords.add(new Keyword("diarrhea", 5));
-        keywords.add(new Keyword("dehydration", 5));
-        keywords.add(new Keyword("salmonella", 5));
-        keywords.add(new Keyword("nausea", 4));
-        keywords.add(new Keyword("vomit", 5));
-        keywords.add(new Keyword("cramps", 2));
-        keywords.add(new Keyword("pain", 1));
-        keywords.add(new Keyword("fever", 1));
-        keywords.add(new Keyword("ill", 1));
-        keywords.add(new Keyword("infection", 1));
-        keywords.add(new Keyword("disease", 2));
-        keywords.add(new Keyword("headache", 1));
-        keywords.add(new Keyword("stomach flu", 5));
-        //pepto bismal
-        //throwing up
-        //throw up
-        //bad stomach
-        //on the toilet
-        //toilet
-        //upset stomach
-        
-        
-        int score = 0;
-
-        for (Keyword keyword : keywords) {
-            if (tweetText.contains(keyword.getName()))
-                score += keyword.getWeight();
-        }
-
-        tweet.setScore(score);
-    }
-
     public static boolean filterTweet(Tweet tweet)
 	{
     	List<String> regs = getRegularExpressions();
