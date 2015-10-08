@@ -33,9 +33,9 @@ public class Cluster {
 	}
 	
 	public Cluster clone() {
-		Cluster c = new Cluster(this.center);
-		c.setTweets(tweets.clone());
-		for (Tweet t : tweets) {
+		Cluster c = new Cluster(this.center.clone());
+		c.setTweets(this.tweets.clone());
+		for (Tweet t : c.getTweets()) {
 			t.setCluster(c);
 		}
 		
