@@ -1,6 +1,7 @@
 package modelLayer;
 
 import java.util.LinkedList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -29,6 +30,28 @@ public class TweetStorage implements Iterable<Tweet> {
 			past = tweets.getFirst().getCreatedAt();
 		}
 	}
+	
+	public TweetStorage clone(){
+		
+		TweetStorage clone = new TweetStorage();
+		for(Tweet t : this){
+			clone.add(t);
+		}
+		return clone;
+	}
+	
+	public TweetStorage getRandomizedCopy(){
+		TweetStorage copy = this.clone();
+		copy.randomize();
+		
+		return copy;
+	}
+	
+	//should only be used in getRandomizedCopy
+	private void randomize(){
+		Collections.shuffle(tweets);
+	}
+	
 	
 	public Iterator<Tweet> iterator(){
 		return tweets.iterator();
