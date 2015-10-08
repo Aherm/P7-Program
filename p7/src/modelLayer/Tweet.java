@@ -8,17 +8,13 @@ import twitter4j.Status;
 
 public class Tweet {
 
-    private long tweetID;
-    private long userID;
-    private long responseID;
-    private long retweetID;
+    private long tweetID, userID, responseID, retweetID;
     private String tweetText;
     private Date createdAt;
     private double lat, lon;
     private int score = -1;
-    private List<String> keywords;
-    
-    Cluster assignedCluster = null;
+    private List<String> keywords;    
+    private Cluster assignedCluster = null;
 
     public Tweet() {
     }
@@ -49,7 +45,7 @@ public class Tweet {
             return new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),
                     status.getText(), status.getCreatedAt());
         }
-    	return new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),
+        else return new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),
                 status.getText(), status.getCreatedAt(), status.getGeoLocation().getLatitude(), status.getGeoLocation().getLongitude());
     }
     
@@ -133,16 +129,19 @@ public class Tweet {
         this.keywords = keywords;
     }
     
-    public void setCluster (Cluster c) {
-    	this.assignedCluster = c;
-    }
-    
     public Cluster getCluster() {
     	return this.assignedCluster;
     }
     
+    public void setCluster (Cluster c) {
+    	this.assignedCluster = c;
+    }
+    
     public Tweet clone() {
-    	return new Tweet(this.tweetID, this.userID, this.responseID, this.retweetID, this.tweetText, this.createdAt,
+    	Tweet t = new Tweet(this.tweetID, this.userID, this.responseID, this.retweetID, this.tweetText, this.createdAt,
     			this.lat, this.lon, this.keywords);
+    	t.setCluster(this.getCluster());
+    	t.setScore(this.getScore());
+    	return t;
     }
 }
