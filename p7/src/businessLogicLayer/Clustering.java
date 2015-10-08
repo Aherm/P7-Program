@@ -17,26 +17,24 @@ public class Clustering {
 		// TODO I'm not sure if it's log of cluster size or tweets size. The paper didn't make this clear.
 		for (int i = 0; i < Math.log(clusters.size()); i++) {
 			// TODO tweets.randomize();
-			for (int j = 0; j < tweets.size(); j++) {
-				checkGainAndReassign(tweets.get(j), clusters, tweets, facilityCost);
+			for (Tweet t : tweets) {
+				checkGainAndReassign(t, clusters, tweets, facilityCost);
 			}
 		}
 		
 		return clusters;
 	}
 	
-	public List<Cluster> initialSolution (TweetStorage tweets, double facilityCost) {		
+	public List<Cluster> initialSolution (TweetStorage tweets, double facilityCost) {
 		// TODO tweets.randomize();
+		Random rand = new Random();
 		List<Cluster> clusters = new ArrayList<Cluster>();
-		Tweet tweet = tweets.getFirst();
 		
-		Cluster cluster = createCluster(tweet);		
+		Cluster cluster = createCluster(tweets.getFirst());
 		clusters.add(cluster);
 		
-		Random rand = new Random();
-		
 		for (int i = 1; i < tweets.size(); i++) {
-			tweet = tweets.get(i);
+			Tweet tweet = tweets.get(i);
 			
 			double dist = getNearestCluster(clusters, tweet);
 			double prob = dist / facilityCost;			
@@ -55,14 +53,16 @@ public class Clustering {
 		double cost = -facilityCost;
 		TweetStorage reassignmentList = new TweetStorage();
 		
-		for (int i = 0; i < tweets.size(); i++) {
-			Tweet t = tweets.get(i);
+		for (Tweet t : tweets) {
 			double dist = getDist(t, t.getCluster().getCenter()) - getDist(t, tweet);
 			if (dist > 0) {
 				cost += dist;
 				reassignmentList.add(t);
 			}
 		}
+		
+		
+		
 		// TODO Needs to take into consideration that some empty clusters must be removed
 		
 		// TODO Perform reassignments and closures
@@ -72,11 +72,18 @@ public class Clustering {
 		return cost;
 	}
 	
+	public void reassignTweet(Tweet t, Cluster c) {
+		if (t.getCluster() != null) {
+			t.getCluster().removeTweet(t);
+		}
+		t.setCluster(c);
+		c.addTweet(t);
+	}
+	
 	private static double getNearestCluster(List<Cluster> clusters, Tweet tweet) {
 		double dist = Double.POSITIVE_INFINITY;
 		
-		for (int i = 0; i < clusters.size(); i++) {
-			Cluster cluster = clusters.get(i);
+		for (Cluster cluster : clusters) {
 			Double currentDist = getDist(cluster.getCenter(), tweet);
 			if (currentDist < dist) {
 				dist = currentDist;
@@ -89,7 +96,6 @@ public class Clustering {
 		return dist;
 	}
 	
-	//TODO Maybe convert to meter. Currently uses Manhattan distance.
 	public static double getDist(Tweet t1, Tweet t2) {
 		double R = 6371;	//Earths radius
 		double deltaLat = toRadians(t2.getLat() - t1.getLat());
@@ -120,10 +126,10 @@ public class Clustering {
 		if (center.getCluster() != null) {
 			center.getCluster().removeTweet(center);
 		}		
-		Cluster c = new Cluster(center);
-		center.setCluster(c);
-		c.addTweet(center);
+		Cluster cluster = new Cluster(center);
+		center.setCluster(cluster);
+		cluster.addTweet(center);
 		
-		return c;
+		return cluster;
 	}
 }
