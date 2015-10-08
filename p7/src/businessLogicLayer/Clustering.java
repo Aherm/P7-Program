@@ -18,12 +18,7 @@ public class Clustering {
 		for (int i = 0; i < Math.log(clusters.size()); i++) {
 			// TODO tweets.randomize();
 			for (int j = 0; j < tweets.size(); j++) {
-				double gain = getGainAndReassign(tweets.get(j), clusters, tweets, facilityCost);
-				if (gain > 0) {
-					clusters.add(createCluster(tweets.get(j)));
-					
-					
-				}
+				checkGainAndReassign(tweets.get(j), clusters, tweets, facilityCost);
 			}
 		}
 		
@@ -56,16 +51,16 @@ public class Clustering {
 	}
 	
 	// The gain is the largest decrease in facility + service costs if we add the tweet as a facility
-	private static double getGainAndReassign(Tweet tweet, List<Cluster> clusters, TweetStorage tweets, double facilityCost) {
+	private static double checkGainAndReassign(Tweet tweet, List<Cluster> clusters, TweetStorage tweets, double facilityCost) {
 		double cost = -facilityCost;
-		TweetStorage rl = new TweetStorage(); // Reassignment list
+		TweetStorage reassignmentList = new TweetStorage();
 		
 		for (int i = 0; i < tweets.size(); i++) {
 			Tweet t = tweets.get(i);
 			double dist = getDist(t, t.getCluster().getCenter()) - getDist(t, tweet);
 			if (dist > 0) {
 				cost += dist;
-				rl.add(t);
+				reassignmentList.add(t);
 			}
 		}
 		// TODO Needs to take into consideration that some empty clusters must be removed
