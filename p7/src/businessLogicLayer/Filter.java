@@ -56,7 +56,7 @@ public class Filter {
     	String reg1 = ".*";				//Any character 0-many times
     	String reg2 = "\\s@?";			//space followed by a @ zero or one time
     	String reg3 = "";				//Any of the regular expressions in regs(list of regular expressions)
-    	String reg4 = "\\w?\\s";		//Any letter or digit zero or one time followed by a space
+    	String reg4 = "\\w?\\s?";		//Any letter or digit zero or one time followed by a space
     	for(String reg : regs)
     	{
     		reg3 = reg;
