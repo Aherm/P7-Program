@@ -2,10 +2,12 @@ package modelLayer;
 
 import java.util.LinkedList;
 import java.util.Date;
+import java.util.Iterator;
+
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-public class TweetStorage {
+public class TweetStorage implements Iterable<Tweet> {
 	private LinkedList<Tweet> tweets = new LinkedList<Tweet>();
 	
 	public TweetStorage() {}
@@ -26,6 +28,10 @@ public class TweetStorage {
 			remove(tweets.getFirst());
 			past = tweets.getFirst().getCreatedAt();
 		}
+	}
+	
+	public Iterator<Tweet> iterator(){
+		return tweets.iterator();
 	}
 	
 	public int size() {
