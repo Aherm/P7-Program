@@ -85,7 +85,7 @@ public class Filter {
     	regs.add("nausea");
     	regs.add("vom(it|mit)");
     	regs.add("throw(ing|)\\s?(u|o)p");
-    	regs.add("pe(p|b)to bi(s|ss)mal");
+    	regs.add("pe(p|b)to\\s?bi(s|ss)mal");
     	regs.add("(on\\s?the\\s?)?toilet");
     	regs.add("(c|k)ram(p|b)s");
     	regs.add("infe(c|k)(t|s)ion");
