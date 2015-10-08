@@ -15,25 +15,10 @@ public class Filter {
         String tweetText = tweet.getTweetText().toLowerCase();
         List<Keyword> keywords = new ArrayList<Keyword>();
 
-        keywords.add(new Keyword("food", 1));
-        keywords.add(new Keyword("poison", 1));
         keywords.add(new Keyword("food poison", 10));
-        keywords.add(new Keyword("restaurant", 1));
         keywords.add(new Keyword("sick", 1));
-        keywords.add(new Keyword("soup", 1));
-        keywords.add(new Keyword("drink", 1));
-        keywords.add(new Keyword("bed", 1));
-        keywords.add(new Keyword("hungry", 1));
-        keywords.add(new Keyword("soda", 1));
-        keywords.add(new Keyword("chinese food", 1));
-        keywords.add(new Keyword("chipotle", 1));
-        keywords.add(new Keyword("mcdonald", 1));
-        keywords.add(new Keyword("mc donald", 1));
-        keywords.add(new Keyword("burgerking", 1));
-        keywords.add(new Keyword("burger king", 1));
         keywords.add(new Keyword("stomach pain", 2));
         keywords.add(new Keyword("diarrhea", 5));
-        keywords.add(new Keyword("the shits", 2));
         keywords.add(new Keyword("dehydration", 5));
         keywords.add(new Keyword("salmonella", 5));
         keywords.add(new Keyword("nausea", 4));
@@ -42,14 +27,19 @@ public class Filter {
         keywords.add(new Keyword("pain", 1));
         keywords.add(new Keyword("fever", 1));
         keywords.add(new Keyword("ill", 1));
-        keywords.add(new Keyword("sick", 1));
         keywords.add(new Keyword("infection", 1));
-        keywords.add(new Keyword("hygiene", 2));
         keywords.add(new Keyword("disease", 2));
         keywords.add(new Keyword("headache", 1));
-        keywords.add(new Keyword("confusion", 1));
         keywords.add(new Keyword("stomach flu", 5));
-
+        //pepto bismal
+        //throwing up
+        //throw up
+        //bad stomach
+        //on the toilet
+        //toilet
+        //upset stomach
+        
+        
         int score = 0;
 
         for (Keyword keyword : keywords) {
@@ -60,20 +50,41 @@ public class Filter {
         tweet.setScore(score);
     }
 
-    public static boolean filterTweet(Tweet tweet) {
-        if (tweet.getTweetText().toLowerCase().matches("[\\w|\\s]*"))
-            return true;
-
-        return false;
+    public static boolean filterTweet(Tweet tweet)
+	{
+    	List<String> regs = getRegularExpressions();
+    	String reg1 = ".*";				//Any character 0-many times
+    	String reg2 = "\\s@?";			//space followed by a @ zero or one time
+    	String reg3 = "";				//Any of the regular expressions in regs(list of regular expressions)
+    	String reg4 = "\\w?\\s";		//Any letter or digit zero or one time followed by a space
+    	for(String reg : regs)
+    	{
+    		reg3 = reg;
+    		//Full Regex Example: ".*\\s@?fo(od|d|ood|ods|odd)\\w?\\s"
+    		Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+    		Matcher m = p.matcher(tweet.getTweetText());
+    		if(m.find())
+    		{
+    			return true;
+    		}
+    	}
+    
+    	return false;
+	}
+    
+    static private List<String> getRegularExpressions()
+    {
+    	List<String> regs = new ArrayList<String>();
+    	regs.add("fo(od|d|ood|ods|odd)");
+    	regs.add("poi(son|sons|sen|sens|sn)");
+    	regs.add("fo(od|d|ood|ods|odd)\\s?poi(son|sons|sen|sens|sn)");
+    	regs.add("si(ck|k)");
+    	regs.add("stoma(ch|k)\\s?(pain|flu)");
+    	regs.add("dia(rrhea|rria|rhea|ria|hrrhea|hrhea)");
+    	regs.add("de(hy|hi)dra(tion|sion)"); 
+    	regs.add("salmonel(la|a)");
+    	regs.add("nausea");
+    	
+    	return regs;
     }
-
-    public static boolean filterTweetFromPatterns(Tweet tweet, List<String> patterns) {
-        for (String pattern : patterns) {
-            if (tweet.getTweetText().toLowerCase().matches(pattern)){
-                return true;
-            }
-        }
-        return false;
-    }
-
 }
