@@ -60,7 +60,7 @@ public class Filter {
     	for(String reg : regs)
     	{
     		reg3 = reg;
-    		//Full Regex Example: ".*\\s@?fo(od|d|ood|ods|odd)\\w?\\s"
+    		//Full Regex Example: ".*\\s@?(bad?\\s?|upset?\\s?)?stoma(ch|k)\\s?(pain?|flu?|flue?|)\\w?\\s"
     		Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
     		Matcher m = p.matcher(tweet.getTweetText());
     		if(m.find())
@@ -75,15 +75,22 @@ public class Filter {
     static private List<String> getRegularExpressions()
     {
     	List<String> regs = new ArrayList<String>();
-    	regs.add("fo(od|d|ood|ods|odd)");
-    	regs.add("poi(son|sons|sen|sens|sn)");
     	regs.add("fo(od|d|ood|ods|odd)\\s?poi(son|sons|sen|sens|sn)");
     	regs.add("si(ck|k)");
-    	regs.add("stoma(ch|k)\\s?(pain|flu)");
+    	regs.add("(ill|il|fever|pain)");
+    	regs.add("(bad?\\s?|upset?\\s?)?stoma(ch|k)\\s?(pain?|flu?|flue?|)");
     	regs.add("dia(rrhea|rria|rhea|ria|hrrhea|hrhea)");
     	regs.add("de(hy|hi)dra(tion|sion)"); 
     	regs.add("salmonel(la|a)");
     	regs.add("nausea");
+    	regs.add("vom(it|mit)");
+    	regs.add("throw(ing|)\\s?(u|o)p");
+    	regs.add("pe(p|b)to bi(s|ss)mal");
+    	regs.add("(on\\s?the\\s?)?toilet");
+    	regs.add("(c|k)ram(p|b)s");
+    	regs.add("infe(c|k)(t|s)ion");
+    	regs.add("d(i|e)sease");
+    	regs.add("head(a|e)(che|k)");
     	
     	return regs;
     }
