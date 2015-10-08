@@ -137,4 +137,9 @@ public class Tweet {
     public Cluster getCluster() {
     	return this.assignedCluster;
     }
+    
+    public Tweet clone() {
+    	return new Tweet(this.tweetID, this.userID, this.responseID, this.retweetID, this.tweetText, this.createdAt,
+    			this.lat, this.lon, this.keywords);
+    }
 }

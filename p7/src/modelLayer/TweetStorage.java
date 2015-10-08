@@ -35,7 +35,7 @@ public class TweetStorage implements Iterable<Tweet> {
 		
 		TweetStorage clone = new TweetStorage();
 		for(Tweet t : this){
-			clone.add(t);
+			clone.add(t.clone());
 		}
 		return clone;
 	}

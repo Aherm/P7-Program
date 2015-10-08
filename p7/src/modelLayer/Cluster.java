@@ -31,4 +31,14 @@ public class Cluster {
 	public void removeTweet(Tweet tweet) {
 		tweets.remove(tweet);
 	}
+	
+	public Cluster clone() {
+		Cluster c = new Cluster(this.center);
+		c.setTweets(tweets.clone());
+		for (Tweet t : tweets) {
+			t.setCluster(c);
+		}
+		
+		return c;
+	}
 }

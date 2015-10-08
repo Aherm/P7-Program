@@ -50,29 +50,57 @@ public class Clustering {
 	
 	// The gain is the largest decrease in facility + service costs if we add the tweet as a facility
 	private static double checkGainAndReassign(Tweet tweet, List<Cluster> clusters, TweetStorage tweets, double facilityCost) {
-		double cost = -facilityCost;
+		List<Cluster> clustersCopy = new ArrayList<Cluster>();
+		for (Cluster c : clusters) {
+			clustersCopy.add(c.clone());
+		}
+		
+		TweetStorage tweetsCopy = new TweetStorage();
+		for (Cluster c : clustersCopy) {
+			for (Tweet t : c.getTweets()){
+				tweetsCopy.add(t);
+			}
+		}
+		
+		Tweet tweetCopy = tweet.clone();
+		
+		// Done with copying here
+		
+		double gain = -facilityCost;
 		TweetStorage reassignmentList = new TweetStorage();
 		
-		for (Tweet t : tweets) {
-			double dist = getDist(t, t.getCluster().getCenter()) - getDist(t, tweet);
+		for (Tweet t : tweetsCopy) {
+			double dist = getDist(t, t.getCluster().getCenter()) - getDist(t, tweetCopy);
 			if (dist > 0) {
-				cost += dist;
+				gain += dist;
 				reassignmentList.add(t);
 			}
 		}
 		
+		Cluster cluster = new Cluster(tweetCopy);
+		clustersCopy.add(cluster);
 		
+		for (Tweet t : reassignmentList) {
+			reassignTweet(t, cluster);
+		}
 		
-		// TODO Needs to take into consideration that some empty clusters must be removed
+		for (int i = 0; i < clustersCopy.size(); i++) {
+			if (clustersCopy.get(i).getTweets().size() <= 1) {
+				gain += facilityCost;
+				clustersCopy.remove(i);
+			}
+		}
 		
-		// TODO Perform reassignments and closures
-		// Assign nodes to cluster j if their distance to it is closer than the distance to their currently assigned cluster
-		// Remove clusters from the solution if it no longer has any tweets assigned to it
+		if (gain > 0) {
+			tweet = tweetCopy;
+			clusters = clustersCopy;
+			tweets = tweetsCopy;
+		}
 		
-		return cost;
+		return gain;
 	}
 	
-	public void reassignTweet(Tweet t, Cluster c) {
+	public static void reassignTweet(Tweet t, Cluster c) {
 		if (t.getCluster() != null) {
 			t.getCluster().removeTweet(t);
 		}
