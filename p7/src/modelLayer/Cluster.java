@@ -1,7 +1,4 @@
-package businessLogicLayer;
-
-import modelLayer.Tweet;
-import modelLayer.TweetStorage;
+package modelLayer;
 
 public class Cluster {
 	private Tweet center;
