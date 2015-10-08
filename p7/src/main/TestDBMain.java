@@ -2,10 +2,10 @@ package main;
 
 import java.util.List;
 
-import businessLogicLayer.Cluster;
 import businessLogicLayer.Clustering;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetTweets;
+import modelLayer.Cluster;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
