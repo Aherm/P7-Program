@@ -4,31 +4,31 @@ public class Cluster {
 	private Tweet center;
 	private TweetStorage tweets;
 	
-	public Cluster(Tweet c) {
-		this.center = c;
+	public Cluster(Tweet center) {
+		this.center = center;
 	}
 	
-	public void setCenter(Tweet t) {
-		this.center = t;
+	public void setCenter(Tweet tweet) {
+		this.center = tweet;
 	}
 	
 	public Tweet getCenter() {
 		return center;
 	}
 	
-	public void setTweets(TweetStorage t) {
-		this.tweets = t;
+	public void setTweets(TweetStorage tweets) {
+		this.tweets = tweets;
 	}
 	
 	public TweetStorage getTweets() {
 		return tweets;
 	}
 	
-	public void addTweet(Tweet t) {
-		tweets.add(t);
+	public void addTweet(Tweet tweet) {
+		tweets.add(tweet);
 	}
 	
-	public void removeTweet(Tweet t) {
-		tweets.remove(t);
+	public void removeTweet(Tweet tweet) {
+		tweets.remove(tweet);
 	}
 }
