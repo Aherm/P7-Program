@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import businessLogicLayer.Cluster;
 import twitter4j.Status;
 
 public class Tweet {
