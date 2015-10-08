@@ -91,12 +91,29 @@ public class Clustering {
 	
 	//TODO Maybe convert to meter. Currently uses Manhattan distance.
 	public static double getDist(Tweet t1, Tweet t2) {
+		double R = 6371;	//Earths radius
+		double deltaLat = toRadians(t2.getLat() - t1.getLat());
+		double deltaLon = toRadians(t2.getLon() - t1.getLon());
+		double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+				Math.cos(toRadians(t1.getLat())) * Math.cos(toRadians(t2.getLat())) *
+				Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+		
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		return (R * c) * 1000;
+		
+		/*
 		double x1 = t1.getLon();
 		double x2 = t2.getLon();
 		double y1 = t1.getLat();
 		double y2 = t2.getLat();
 		
 		return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+		*/
+	}
+	
+	private static double toRadians(double degree)
+	{
+		return degree * Math.PI / 180;
 	}
 	
 	public Cluster createCluster(Tweet center) {
