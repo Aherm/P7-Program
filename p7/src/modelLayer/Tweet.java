@@ -136,12 +136,4 @@ public class Tweet {
     public void setCluster (Cluster c) {
     	this.assignedCluster = c;
     }
-    
-    public Tweet clone() {
-    	Tweet t = new Tweet(this.tweetID, this.userID, this.responseID, this.retweetID, this.tweetText, this.createdAt,
-    			this.lat, this.lon, this.keywords);
-    	t.setCluster(this.getCluster());
-    	t.setScore(this.getScore());
-    	return t;
-    }
 }

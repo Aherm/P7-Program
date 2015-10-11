@@ -31,14 +31,23 @@ public class Cluster {
 	public void removeTweet(Tweet tweet) {
 		tweets.remove(tweet);
 	}
-	
-	public Cluster clone() {
-		Cluster c = new Cluster(this.center.clone());
-		c.setTweets(this.tweets.clone());
-		for (Tweet t : c.getTweets()) {
-			t.setCluster(c);
+
+	public static void reassignTweet(Tweet t, Cluster c) {
+		if (t.getCluster() != null) {
+			t.getCluster().removeTweet(t);
 		}
+		t.setCluster(c);
+		c.addTweet(t);
+	}
+
+	public static Cluster createCluster(Tweet centerTweet) {
+		if (centerTweet.getCluster() != null) {
+			centerTweet.getCluster().removeTweet(centerTweet);
+		}		
+		Cluster cluster = new Cluster(centerTweet);
+		centerTweet.setCluster(cluster);
+		cluster.addTweet(centerTweet);
 		
-		return c;
+		return cluster;
 	}
 }

@@ -100,14 +100,6 @@ public class Clustering {
 		return gain;
 	}
 	
-	public static void reassignTweet(Tweet t, Cluster c) {
-		if (t.getCluster() != null) {
-			t.getCluster().removeTweet(t);
-		}
-		t.setCluster(c);
-		c.addTweet(t);
-	}
-	
 	private static double getNearestCluster(List<Cluster> clusters, Tweet tweet) {
 		double dist = Double.POSITIVE_INFINITY;
 		
@@ -148,16 +140,5 @@ public class Clustering {
 	private static double toRadians(double degree)
 	{
 		return degree * Math.PI / 180;
-	}
-	
-	public Cluster createCluster(Tweet center) {
-		if (center.getCluster() != null) {
-			center.getCluster().removeTweet(center);
-		}		
-		Cluster cluster = new Cluster(center);
-		center.setCluster(cluster);
-		cluster.addTweet(center);
-		
-		return cluster;
 	}
 }
