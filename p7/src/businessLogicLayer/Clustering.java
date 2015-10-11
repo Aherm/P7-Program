@@ -12,91 +12,85 @@ public class Clustering {
 	
 	public List<Cluster> tweetClustering (TweetStorage tweets, double facilityCost) {
 		List<Cluster> clusters = new ArrayList<Cluster>();
+		
 		clusters = initialSolution(tweets, facilityCost);
 		
-		// TODO I'm not sure if it's log of cluster size or tweets size. The paper didn't make this clear.
+		// TODO I'm not sure if it's log of cluster size or clonedTweets size. The paper didn't make this clear.
 		for (int i = 0; i < Math.log(clusters.size()); i++) {
-			// TODO tweets.randomize();
-			for (Tweet t : tweets) {
-				checkGainAndReassign(t, clusters, tweets, facilityCost);
+			TweetStorage randomizedTweets = tweets.getRandomizedCopy();
+			for (Tweet t : randomizedTweets) {
+				checkGainAndReassign(t, clusters, randomizedTweets, facilityCost);
 			}
 		}
 		
 		return clusters;
 	}
 	
+	// Gets an initial cluster. Assigns a tweet to the nearest cluster, and randomly creates new clusters based on distance.
 	public List<Cluster> initialSolution (TweetStorage tweets, double facilityCost) {
-		// TODO tweets.randomize();
+		TweetStorage randomizedTweets = tweets.getRandomizedCopy();
 		Random rand = new Random();
 		List<Cluster> clusters = new ArrayList<Cluster>();
 		
-		Cluster cluster = createCluster(tweets.getFirst());
+		Cluster cluster = Cluster.createCluster(randomizedTweets.getFirst());
 		clusters.add(cluster);
 		
-		for (int i = 1; i < tweets.size(); i++) {
-			Tweet tweet = tweets.get(i);
+		for (int i = 1; i < randomizedTweets.size(); i++) {
+			Tweet tweet = randomizedTweets.get(i);
 			
 			double dist = getNearestCluster(clusters, tweet);
 			double prob = dist / facilityCost;			
 			
 			double r = rand.nextDouble();
 			if (r >= prob) {
-				cluster = createCluster(tweet);
+				cluster = Cluster.createCluster(tweet);
 				clusters.add(cluster);
 			}
 		}
 		return clusters;
 	}
 	
-	// The gain is the largest decrease in facility + service costs if we add the tweet as a facility
+	// Check the gain for creating a new cluster with a center at tweet, and reassigning all other tweets.
+	// Gain is based on the cost of creating a new cluster and total distance from tweets to their cluster.
 	private static double checkGainAndReassign(Tweet tweet, List<Cluster> clusters, TweetStorage tweets, double facilityCost) {
-		List<Cluster> clustersCopy = new ArrayList<Cluster>();
-		for (Cluster c : clusters) {
-			clustersCopy.add(c.clone());
-		}
-		
-		TweetStorage tweetsCopy = new TweetStorage();
-		for (Cluster c : clustersCopy) {
-			for (Tweet t : c.getTweets()){
-				tweetsCopy.add(t);
-			}
-		}
-		
-		Tweet tweetCopy = tweet.clone();
-		
-		// Done with copying here
-		
-		double gain = -facilityCost;
+
+		// The gain from creating a new cluster with tweet as center is the sum of distance-decreases after
+		// reassigning tweets that are closer to tweet than their cluster, minus the facility cost.		
 		TweetStorage reassignmentList = new TweetStorage();
+		List<Cluster> removalList = new ArrayList<Cluster>();
+		double gain = -facilityCost;
 		
-		for (Tweet t : tweetsCopy) {
-			double dist = getDist(t, t.getCluster().getCenter()) - getDist(t, tweetCopy);
+		for (Tweet t : tweets) {
+			double dist = getDist(t, t.getCluster().getCenter()) - getDist(t, tweet);
 			if (dist > 0) {
 				gain += dist;
 				reassignmentList.add(t);
 			}
 		}
 		
-		Cluster cluster = new Cluster(tweetCopy);
-		clustersCopy.add(cluster);
-		
-		for (Tweet t : reassignmentList) {
-			reassignTweet(t, cluster);
-		}
-		
-		for (int i = 0; i < clustersCopy.size(); i++) {
-			if (clustersCopy.get(i).getTweets().size() <= 1) {
-				gain += facilityCost;
-				clustersCopy.remove(i);
+		// It may increase gain to remove some clusters as well
+		for (Cluster c : clusters) {
+			double removalGain = facilityCost;
+			for (Tweet t : c.getTweets().getDifference(reassignmentList)) {
+				removalGain += getDist(t, t.getCluster().getCenter()) - getDist(t, tweet);
+			}
+			if (removalGain > 0) {
+				gain += removalGain;
+				removalList.add(c);
+				reassignmentList.add(c.getTweets());
 			}
 		}
 		
+		// If gain is greater than 0, reassign all tweets to the new cluster and remove some clusters
 		if (gain > 0) {
-			tweet = tweetCopy;
-			clusters = clustersCopy;
-			tweets = tweetsCopy;
+			Cluster c = Cluster.createCluster(tweet);
+			for (Tweet t : reassignmentList) {
+				Cluster.reassignTweet(t, c);
+			}
+			clusters.removeAll(removalList);
+			clusters.add(c);
 		}
-		
+
 		return gain;
 	}
 	
