@@ -24,10 +24,16 @@ public class RunMeTask extends TimerTask
         try {
             System.out.println("Run Me ~");
             if (tweets.size() != 0) {
+            	/*
+            	 if (tweet.getCreatedAt().before(date)) {
+					break;
+				}
+            	 */
                 DBInsert dbInsert = new DBInsert();
                 dbInsert.insertTweet(tweets, lastInserted);
                 //Preprocessor.processTweet(tweets, lastInserted);
                 //tweets = Filter.filterTweet(tweets, lastInserted);
+                //Create or add to cluster
                 
                 lastInserted = new Date();
             }
