@@ -94,7 +94,7 @@ public class Clustering {
 		return gain;
 	}
 	
-	private static double getNearestCluster(List<Cluster> clusters, Tweet tweet) {
+	public static double getNearestCluster(List<Cluster> clusters, Tweet tweet) {
 		double dist = Double.POSITIVE_INFINITY;
 		
 		for (Cluster cluster : clusters) {
