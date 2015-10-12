@@ -6,6 +6,9 @@ import modelLayer.TweetStorage;
 import java.util.Date;
 import java.util.TimerTask;
 
+import businessLogicLayer.Filter;
+import businessLogicLayer.Preprocessor;
+
 public class RunMeTask extends TimerTask
 {
     TweetStorage tweets;
@@ -21,12 +24,17 @@ public class RunMeTask extends TimerTask
         try {
             System.out.println("Run Me ~");
             if (tweets.size() != 0) {
+            	/*
+            	 if (tweet.getCreatedAt().before(date)) {
+					break;
+				}
+            	 */
                 DBInsert dbInsert = new DBInsert();
                 dbInsert.insertTweet(tweets, lastInserted);
-
-                // insert the keywords
-                //dbInsert.insertKeywordsPreparedStatement(tweets);
-
+                //Preprocessor.processTweet(tweets, lastInserted);
+                //tweets = Filter.filterTweet(tweets, lastInserted);
+                //Create or add to cluster
+                
                 lastInserted = new Date();
             }
         }
