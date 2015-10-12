@@ -1,5 +1,7 @@
 package streaming;
 
+import businessLogicLayer.Filter;
+import businessLogicLayer.Preprocessor;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 import twitter4j.*;
@@ -8,9 +10,17 @@ public class OurStatusListener implements StatusListener {
     TweetStorage tweets = new TweetStorage();
 
     public void onStatus(Status status) {
-        tweets.add(Tweet.createTweet(status));
+        Tweet tweet = Tweet.createTweet(status);
+    	//Insert raw tweet into DB?
+        Preprocessor.processTweet(tweet);
+    	if(Filter.filterTweet(tweet))
+    	{
+    		tweets.add(tweet);
+    	}
+    	
+    	//tweets.add(tweet);
         // Removes tweets older than 3 days
-        tweets.removeOldTweets(3);
+        //tweets.removeOldTweets(3);
 
         /*
         System.out.println("\n" + status.getUser().getScreenName() + " wrote: ");
