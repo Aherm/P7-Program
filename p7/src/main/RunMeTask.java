@@ -31,10 +31,9 @@ public class RunMeTask extends TimerTask
                 dbInsert.insertTweet(tweets, lastInserted);
                 Preprocessor.processTweets(tweets, lastInserted);
                 tweets = Filter.filterTweets(tweets, lastInserted);
-                //Create or add to cluster
                 List<Cluster> clusters = Clustering.tweetClustering(tweets, 0.2);
-                tweets.removeOldTweets(3);
-                //tweets.removeOldTweets(3, clusters);
+                tweets.removeOldTweets(3, clusters);
+                //weight clusters or patternmatching
                 lastInserted = new Date();
             }
         }
