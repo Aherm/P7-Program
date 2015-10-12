@@ -1,8 +1,6 @@
 package businessLogicLayer;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,6 +36,32 @@ public class Filter {
 		}
 		return newTweetStorage;
 	}
+
+	public static Map<String, Integer> countOccurances(TweetStorage tweets){
+		Map<String, Integer> counters = new HashMap<String, Integer>();
+		List<String> regularExpressions = getRegularExpressions();
+
+		String reg1 = ".*"; 		// Any character 0-many times
+		String reg2 = "\\s@?"; 		// space followed by a @ zero or one time
+		String reg3 = ""; 			// Any of the regular expressions in regs(list of regular expressions)
+		String reg4 = "\\w?\\s?"; 	// Any letter or digit zero or one time followed by a space
+		for (int i = tweets.size() - 1; i >= 0; i--) {
+			Tweet tweet = tweets.get(i);
+			for (String reg : regularExpressions) {
+				reg3 = reg;
+				// Full Regex Example:
+				// ".*\\s@?(bad?\\s?|upset?\\s?)?stoma(ch|k)\\s?(pain?|flu?|flue?|)\\w?\\s"
+				Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+				Matcher m = p.matcher(tweet.getTweetText());
+				if (m.find()) {
+					// do counter work here
+				}
+			}
+		}
+
+		return counters;
+	}
+
 
 	static private List<String> getRegularExpressions() {
 		List<String> regs = new ArrayList<String>();
