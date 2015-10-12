@@ -3,6 +3,7 @@ package main;
 import businessLogicLayer.Filter;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetTweets;
+import dataAccessLayer.DBInsert;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
@@ -55,25 +56,30 @@ public class Program {
 		TwitterStreamFactory tsf = new TwitterStreamFactory(auth.createConfigBuilder().build());
 		TwitterStream stream = tsf.getInstance(); 
 		stream.addListener(listener);
-		
 		//stream.sample();
 
+        //boudning box for the whole of us
         double[][] locations = new double[][]{
-                {-74,40},
-                {-73,41}
+                {-167.276413, 5.49955},
+                {-52.23304, 83.162102}
         };
 
+        //bounding box for new york
+        //{-74,40},
+        //{-73,41}
+
+
         FilterQuery query = new FilterQuery();
+        //query.language("en");
         query.locations(locations);
         stream.filter(query);
 
         DBConnect connection = DBConnect.getInstance();
-        connection.connectTo("postgres", "postgres", "21");
+        connection.connectTo("world", "postgres", "21");
 
         TweetStorage tweets = listener.getTweets();
-        
-        TimerTask task = new RunMeTask(tweets);
 
+        TimerTask task = new RunMeTask(tweets);
         Timer timer = new Timer();
         timer.schedule(task, 1000, 60000);
         

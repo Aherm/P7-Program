@@ -17,6 +17,10 @@ public class TweetStorage implements Iterable<Tweet> {
 		tweets.addLast(t);
 	}
 	
+	public void add(TweetStorage ts) {
+		tweets.addAll(ts.tweets);
+	}
+	
 	public void remove(Tweet t) {
 		tweets.remove(t);
 	}
@@ -77,5 +81,13 @@ public class TweetStorage implements Iterable<Tweet> {
 		for (Tweet tweet : tweets){
 			System.out.println("time: " + tweet.getCreatedAt());
 		}
+	}
+	
+	public TweetStorage getDifference(TweetStorage ts) {
+		TweetStorage res = new TweetStorage();
+		res = this.clone();
+		res.tweets.removeAll(ts.tweets);
+		
+		return res;
 	}
 }

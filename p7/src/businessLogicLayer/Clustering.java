@@ -12,72 +12,86 @@ public class Clustering {
 	
 	public List<Cluster> tweetClustering (TweetStorage tweets, double facilityCost) {
 		List<Cluster> clusters = new ArrayList<Cluster>();
+		
 		clusters = initialSolution(tweets, facilityCost);
 		
-		// TODO I'm not sure if it's log of cluster size or tweets size. The paper didn't make this clear.
+		// TODO I'm not sure if it's log of cluster size or clonedTweets size. The paper didn't make this clear.
 		for (int i = 0; i < Math.log(clusters.size()); i++) {
-			// TODO tweets.randomize();
-			for (Tweet t : tweets) {
-				checkGainAndReassign(t, clusters, tweets, facilityCost);
+			TweetStorage randomizedTweets = tweets.getRandomizedCopy();
+			for (Tweet t : randomizedTweets) {
+				checkGainAndReassign(t, clusters, randomizedTweets, facilityCost);
 			}
 		}
 		
 		return clusters;
 	}
 	
+	// Gets an initial cluster. Assigns a tweet to the nearest cluster, and randomly creates new clusters based on distance.
 	public List<Cluster> initialSolution (TweetStorage tweets, double facilityCost) {
-		// TODO tweets.randomize();
+		TweetStorage randomizedTweets = tweets.getRandomizedCopy();
 		Random rand = new Random();
 		List<Cluster> clusters = new ArrayList<Cluster>();
 		
-		Cluster cluster = createCluster(tweets.getFirst());
+		Cluster cluster = Cluster.createCluster(randomizedTweets.getFirst());
 		clusters.add(cluster);
 		
-		for (int i = 1; i < tweets.size(); i++) {
-			Tweet tweet = tweets.get(i);
+		for (int i = 1; i < randomizedTweets.size(); i++) {
+			Tweet tweet = randomizedTweets.get(i);
 			
 			double dist = getNearestCluster(clusters, tweet);
 			double prob = dist / facilityCost;			
 			
 			double r = rand.nextDouble();
 			if (r >= prob) {
-				cluster = createCluster(tweet);
+				cluster = Cluster.createCluster(tweet);
 				clusters.add(cluster);
 			}
 		}
 		return clusters;
 	}
 	
-	// The gain is the largest decrease in facility + service costs if we add the tweet as a facility
+	// Check the gain for creating a new cluster with a center at tweet, and reassigning all other tweets.
+	// Gain is based on the cost of creating a new cluster and total distance from tweets to their cluster.
 	private static double checkGainAndReassign(Tweet tweet, List<Cluster> clusters, TweetStorage tweets, double facilityCost) {
-		double cost = -facilityCost;
+
+		// The gain from creating a new cluster with tweet as center is the sum of distance-decreases after
+		// reassigning tweets that are closer to tweet than their cluster, minus the facility cost.		
 		TweetStorage reassignmentList = new TweetStorage();
+		List<Cluster> removalList = new ArrayList<Cluster>();
+		double gain = -facilityCost;
 		
 		for (Tweet t : tweets) {
 			double dist = getDist(t, t.getCluster().getCenter()) - getDist(t, tweet);
 			if (dist > 0) {
-				cost += dist;
+				gain += dist;
 				reassignmentList.add(t);
 			}
 		}
 		
-		
-		
-		// TODO Needs to take into consideration that some empty clusters must be removed
-		
-		// TODO Perform reassignments and closures
-		// Assign nodes to cluster j if their distance to it is closer than the distance to their currently assigned cluster
-		// Remove clusters from the solution if it no longer has any tweets assigned to it
-		
-		return cost;
-	}
-	
-	public void reassignTweet(Tweet t, Cluster c) {
-		if (t.getCluster() != null) {
-			t.getCluster().removeTweet(t);
+		// It may increase gain to remove some clusters as well
+		for (Cluster c : clusters) {
+			double removalGain = facilityCost;
+			for (Tweet t : c.getTweets().getDifference(reassignmentList)) {
+				removalGain += getDist(t, t.getCluster().getCenter()) - getDist(t, tweet);
+			}
+			if (removalGain > 0) {
+				gain += removalGain;
+				removalList.add(c);
+				reassignmentList.add(c.getTweets());
+			}
 		}
-		t.setCluster(c);
-		c.addTweet(t);
+		
+		// If gain is greater than 0, reassign all tweets to the new cluster and remove some clusters
+		if (gain > 0) {
+			Cluster c = Cluster.createCluster(tweet);
+			for (Tweet t : reassignmentList) {
+				Cluster.reassignTweet(t, c);
+			}
+			clusters.removeAll(removalList);
+			clusters.add(c);
+		}
+
+		return gain;
 	}
 	
 	private static double getNearestCluster(List<Cluster> clusters, Tweet tweet) {
@@ -120,16 +134,5 @@ public class Clustering {
 	private static double toRadians(double degree)
 	{
 		return degree * Math.PI / 180;
-	}
-	
-	public Cluster createCluster(Tweet center) {
-		if (center.getCluster() != null) {
-			center.getCluster().removeTweet(center);
-		}		
-		Cluster cluster = new Cluster(center);
-		center.setCluster(cluster);
-		cluster.addTweet(center);
-		
-		return cluster;
 	}
 }

@@ -1,5 +1,6 @@
 package modelLayer;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,30 +8,23 @@ import twitter4j.Status;
 
 public class Tweet {
 
-    private long tweetID;
-    private long userID;
-    private long responseID;
-    private long retweetID;
+    private long tweetID, userID, responseID, retweetID;
     private String tweetText;
     private Date createdAt;
     private double lat, lon;
     private int score = -1;
-    private List<String> keywords;
-    
-    Cluster assignedCluster = null;
+    private List<String> keywords;    
+    private Cluster assignedCluster = null;
 
     public Tweet() {
     }
 
+    public Tweet(long tweetID, long userID, long responseID, long retweetID, String tweetText, Date createdAt) {
+        this(tweetID, userID, responseID, retweetID, tweetText, createdAt, 0.0, 0.0);
+    }
+
     public Tweet(long tweetID, long userID, long responseID, long retweetID, String tweetText, Date createdAt, double lat, double lon) {
-    	this.tweetID = tweetID;
-        this.userID = userID;
-        this.responseID = responseID;
-        this.retweetID = retweetID;
-        this.tweetText = tweetText;
-        this.createdAt = createdAt;
-        this.lat = lat;
-        this.lon = lon;
+        this(tweetID, userID, responseID, retweetID, tweetText, createdAt, lat, lon, new ArrayList<String>());
     }
     
     public Tweet(long tweetID, long userID, long responseID, long retweetID, String tweetText, Date createdAt, double lat, double lon, List<String> keywords) {
@@ -46,7 +40,12 @@ public class Tweet {
     }
 
     public static Tweet createTweet(Status status) {
-    	return new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),
+        //In case the tweet is not geotagged
+        if (status.getGeoLocation() == null){
+            return new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),
+                    status.getText(), status.getCreatedAt());
+        }
+        else return new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),
                 status.getText(), status.getCreatedAt(), status.getGeoLocation().getLatitude(), status.getGeoLocation().getLongitude());
     }
     
@@ -130,11 +129,11 @@ public class Tweet {
         this.keywords = keywords;
     }
     
-    public void setCluster (Cluster c) {
-    	this.assignedCluster = c;
-    }
-    
     public Cluster getCluster() {
     	return this.assignedCluster;
+    }
+    
+    public void setCluster (Cluster c) {
+    	this.assignedCluster = c;
     }
 }

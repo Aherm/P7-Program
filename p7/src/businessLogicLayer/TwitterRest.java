@@ -41,6 +41,7 @@ public class TwitterRest {
 		
 		try {
 			int pagenr = 1;
+
 			Paging page = new Paging(pagenr, 500);
 			List<Status> userTimeline = new ArrayList<>();
 			do {	

@@ -6,8 +6,8 @@
   	retweetid bigint NOT NULL,
   	tweettext varchar(140) NOT NULL,
   	createdat varchar(50) NOT NULL,
-  	lat double precision NOT NULL,
-  	lon double precision NOT NULL
+  	lat double precision,
+  	lon double precision
   );
 
 CREATE TABLE Keywords
