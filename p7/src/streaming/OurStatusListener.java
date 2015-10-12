@@ -12,20 +12,13 @@ public class OurStatusListener implements StatusListener {
     public void onStatus(Status status) {
         Tweet tweet = Tweet.createTweet(status);
     	//Insert raw tweet into DB?
-        Preprocessor.processTweet(tweet);
-    	if(Filter.filterTweet(tweet))
-    	{
-    		tweets.add(tweet);
-    	}
+        //Preprocessor.processTweet(tweet);
+    	//if(Filter.filterTweet(tweet))
+    	//{
+    	//	tweets.add(tweet);
+    	//}
     	
-    	//tweets.add(tweet);
-        // Removes tweets older than 3 days
-        //tweets.removeOldTweets(3);
-
-        /*
-        System.out.println("\n" + status.getUser().getScreenName() + " wrote: ");
-        System.out.println(status.getText() + "\n");
-        */
+    	tweets.add(tweet);
     }
 
     public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {

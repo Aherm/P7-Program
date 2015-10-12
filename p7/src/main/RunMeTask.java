@@ -1,11 +1,14 @@
 package main;
 
 import dataAccessLayer.DBInsert;
+import modelLayer.Cluster;
 import modelLayer.TweetStorage;
 
 import java.util.Date;
+import java.util.List;
 import java.util.TimerTask;
 
+import businessLogicLayer.Clustering;
 import businessLogicLayer.Filter;
 import businessLogicLayer.Preprocessor;
 
@@ -24,17 +27,14 @@ public class RunMeTask extends TimerTask
         try {
             System.out.println("Run Me ~");
             if (tweets.size() != 0) {
-            	/*
-            	 if (tweet.getCreatedAt().before(date)) {
-					break;
-				}
-            	 */
                 DBInsert dbInsert = new DBInsert();
                 dbInsert.insertTweet(tweets, lastInserted);
-                //Preprocessor.processTweet(tweets, lastInserted);
-                //tweets = Filter.filterTweet(tweets, lastInserted);
+                Preprocessor.processTweets(tweets, lastInserted);
+                tweets = Filter.filterTweets(tweets, lastInserted);
                 //Create or add to cluster
-                
+                List<Cluster> clusters = Clustering.tweetClustering(tweets, 0.2);
+                tweets.removeOldTweets(3);
+                //tweets.removeOldTweets(3, clusters);
                 lastInserted = new Date();
             }
         }
