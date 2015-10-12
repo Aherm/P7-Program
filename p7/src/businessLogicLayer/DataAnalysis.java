@@ -14,6 +14,7 @@ public class DataAnalysis {
 		this.storage = storage;
 	}
 	
+
 	public long nrGeotagged(){
 		long amount = 0; 
 		
@@ -23,8 +24,8 @@ public class DataAnalysis {
 		}
 		
 		return amount; 
-		
 	}
+
 	
 	public void printStatistics(){
 		System.out.println("Total tweets: " + storage.size() + "\n" +
