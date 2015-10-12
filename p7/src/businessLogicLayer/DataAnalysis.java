@@ -14,7 +14,7 @@ public class DataAnalysis {
 	}
 	
 	public int nrTweetsAfterFilter(){
-		return Filter.filterTweet(storage, new Date()).size(); 
+		return Filter.filterTweets(storage, new Date()).size(); 
 	}
 	
 	
