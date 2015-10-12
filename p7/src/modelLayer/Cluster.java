@@ -2,7 +2,7 @@ package modelLayer;
 
 public class Cluster {
 	private Tweet center;
-	private TweetStorage tweets;
+	private TweetStorage tweets = new TweetStorage();
 	
 	public Cluster(Tweet center) {
 		this.center = center;
