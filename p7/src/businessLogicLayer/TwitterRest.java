@@ -23,6 +23,8 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterRest {
 
 	private int totalcalls = 0; // holds nr of times we use the twitter api
+	private long startTime;
+	private long endTime;
 	private Twitter twitter;
 
 	public TwitterRest() {
@@ -39,10 +41,10 @@ public class TwitterRest {
 		
 		try {
 			int pagenr = 1;
-			Paging page = new Paging(pagenr, 300);
+			Paging page = new Paging(pagenr, 500);
 			List<Status> userTimeline = new ArrayList<>();
 			do {	
-				totalcalls++; 
+				rateLimiter();
 				if(totalcalls == 280) // makes sure we do not reach our limit 
 					break;
 				
@@ -69,6 +71,18 @@ public class TwitterRest {
 		}
 
 		return tweets; 
+	}
+	
+	private void rateLimiter(){
+		
+		if(totalcalls == 0){
+			startTime = System.nanoTime();
+			totalcalls++;
+		}
 
+		if(System.nanoTime() - startTime > 900000000000L){// 15 minutes
+			totalcalls = 1; 
+			startTime = System.nanoTime();
+		}
 	}
 }
