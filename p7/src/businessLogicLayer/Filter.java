@@ -97,8 +97,10 @@ public class Filter {
 							// regular expressions)
 		String reg4 = "\\w?\\s?"; // Any letter or digit zero or one time
 									// followed by a space
-		for (String reg : regs) {
-			reg3 = reg;
+		
+		for (Map.Entry<String, String> entry : regs.entrySet())
+		{
+			reg3 = entry.getValue();
 			// Full Regex Example:
 			// ".*\\s@?(bad?\\s?|upset?\\s?)?stoma(ch|k)\\s?(pain?|flu?|flue?|)\\w?\\s"
 			Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
@@ -107,7 +109,7 @@ public class Filter {
 				return true;
 			}
 		}
-		
+			
 		return false;
 	}
 }
