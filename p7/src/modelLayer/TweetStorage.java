@@ -1,12 +1,15 @@
 package modelLayer;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+
+import businessLogicLayer.Clustering;
 
 public class TweetStorage implements Iterable<Tweet> {
 	private LinkedList<Tweet> tweets = new LinkedList<Tweet>();
@@ -26,12 +29,25 @@ public class TweetStorage implements Iterable<Tweet> {
 	}
 	
 	public void removeOldTweets(int days) {
-		Date past = tweets.getFirst().getCreatedAt();
+		removeOldTweets(days, null);
+	}
+	
+	public void removeOldTweets(int days, List<Cluster> clusters) {
+		Tweet tweet = tweets.getFirst();
 		Date today = new Date();
 		
-		while(Days.daysBetween(new DateTime(past), new DateTime(today)).getDays() >= days) {
-			remove(tweets.getFirst());
-			past = tweets.getFirst().getCreatedAt();
+		while(Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays() >= days) {
+			if (clusters != null) {
+				Cluster c = tweet.getCluster();
+				if (c.getCenter() == tweet) {
+					clusters.remove(c);
+					for (Tweet t : c.getTweets()) {
+						Clustering.getNearestCluster(clusters, t);
+					}
+				}
+			}
+			remove(tweet);
+			tweet = tweets.getFirst();
 		}
 	}
 	
