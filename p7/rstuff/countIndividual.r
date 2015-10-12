@@ -20,7 +20,7 @@ seperateKeywords = function(keywords,textTable){
 
 onlyText = sqldf("SELECT tweettext FROM tweets ")
 onlyTextVector = as.vector(onlyText[[1]])
-keywords = scan('keywords.txt',what="",sep=",")
+keywords = scan('keywordsv3.txt',what="",sep=",")
 
 tester = seperateKeywords(keywords,onlyTextVector) 
 tester = sort(tester,decreasing = TRUE)
