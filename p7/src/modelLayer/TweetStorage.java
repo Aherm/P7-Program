@@ -67,6 +67,18 @@ public class TweetStorage implements Iterable<Tweet> {
 		return copy;
 	}
 	
+	public TweetStorage getReverseCopy(){
+		TweetStorage copy = this.clone();
+		copy.reverse();
+		
+		return copy;
+	}
+	
+	private void reverse(){
+		Collections.reverse(tweets);
+	}
+	
+	
 	//should only be used in getRandomizedCopy
 	private void randomize(){
 		Collections.shuffle(tweets);

@@ -136,4 +136,11 @@ public class Tweet {
     public void setCluster (Cluster c) {
     	this.assignedCluster = c;
     }
+    
+    public boolean isGeotagged(){
+    	if(lat == 0 && lon == 0)
+    		return false; 
+    	else 
+    		return true; 
+    }
 }
