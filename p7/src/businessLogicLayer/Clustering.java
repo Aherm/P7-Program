@@ -11,19 +11,27 @@ import modelLayer.TweetStorage;
 public class Clustering {
 	
 	public static List<Cluster> tweetClustering (TweetStorage tweets, double facilityCost) {
-		List<Cluster> clusters = new ArrayList<Cluster>();
-		
-		clusters = initialSolution(tweets, facilityCost);
-		
-		// TODO I'm not sure if it's log of cluster size or clonedTweets size. The paper didn't make this clear.
-		for (int i = 0; i < Math.log(clusters.size()); i++) {
-			TweetStorage randomizedTweets = tweets.getRandomizedCopy();
-			for (Tweet t : randomizedTweets) {
-				checkGainAndReassign(t, clusters, randomizedTweets, facilityCost);
-			}
-		}
+		List<Cluster> clusters = initialSolution(tweets, facilityCost);		
+		refineClusters(tweets, tweets, facilityCost, clusters);
 		
 		return clusters;
+	}
+
+	public static void updateClusters (List<Cluster> clusters, TweetStorage newTweets, TweetStorage tweets, double facilityCost) {
+		for (Tweet t : newTweets) {
+			getNearestCluster(clusters, t);
+		}
+		refineClusters(newTweets, tweets, facilityCost, clusters);
+	}
+	
+	private static void refineClusters(TweetStorage newTweets, TweetStorage allTweets, double facilityCost, List<Cluster> clusters) {
+		// TODO I'm not sure if it's log of cluster size or clonedTweets size. The paper didn't make this clear.
+		for (int i = 0; i < Math.log(clusters.size()); i++) {
+			// Checks for all new tweets if the solution would be better if a new cluster was made there.
+			for (Tweet t : newTweets.getRandomizedCopy()) {
+				checkGainAndReassign(t, clusters, allTweets, facilityCost);
+			}
+		}
 	}
 	
 	// Gets an initial cluster. Assigns a tweet to the nearest cluster, and randomly creates new clusters based on distance.

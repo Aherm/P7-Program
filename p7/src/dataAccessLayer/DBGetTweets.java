@@ -32,6 +32,24 @@ public class DBGetTweets {
         return tweets;
     }
     
+    public TweetStorage getKLastTweets (int k) {
+    	TweetStorage tweets = new TweetStorage();
+    	
+    	try {
+    		Connection con = DBConnect.getInstance().getCon();
+    		String query = "SELECT * FROM tweets ORDER BY tweetid DESC LIMIT " + k;
+    		
+    		Statement stmt = con.createStatement();
+    		ResultSet res = stmt.executeQuery(query);
+    		
+    		tweets = initializeTweets(res);
+    	} catch (Exception exh) {
+    		System.out.println(exh);
+    	}
+    	
+    	return tweets;
+    }
+    
     public long getNumTweets() {
         long numTweets = 0;
 
