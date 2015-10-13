@@ -121,6 +121,7 @@ public class Tweet {
 
     public double getScore()
     {
+    	score = 0;
     	for(Keyword keyword : matchedKeywords)
     	{
     		this.score += keyword.getWeight();
@@ -131,7 +132,7 @@ public class Tweet {
     
     public void resetScore()
     {
-    	score = 0;
+    	score = -1;
     }
     
     public void setScore(int score) {
