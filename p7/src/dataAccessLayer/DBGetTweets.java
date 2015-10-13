@@ -32,6 +32,7 @@ public class DBGetTweets {
         return tweets;
     }
     
+
     public TweetStorage getKTweets (int k) {
     	return tsQuery("SELECT * FROM tweets LIMIT " + k);
     }
@@ -40,8 +41,12 @@ public class DBGetTweets {
         return tsQuery("SELECT * FROM tweets");
     }
     
+    public TweetStorage getKLastTweets(int k){
+    	return tsQuery("SELECT * FROM tweets ORDER BY tweetid DESC LIMIT " + k);
+    }
+    
     public long countQuery(String query){
-    	long numTweets = 0;
+        long numTweets = 0;
 
         try {
             Connection con = DBConnect.getInstance().getCon();

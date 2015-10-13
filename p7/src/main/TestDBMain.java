@@ -23,8 +23,14 @@ public class TestDBMain {
 		Tweet t2 = tweets.get(1);
 		System.out.println("Distance: " + Clustering.getDist(t1, t2));
 		
-		List<Cluster> clusters = Clustering.tweetClustering(tweets, 5000);
+		List<Cluster> clusters = Clustering.tweetClustering(tweets, 5000);		
 		
+		System.out.println("Cluster size: " + clusters.size());
+		
+		TweetStorage newTweets = dbGetTweets.getKLastTweets(1000);
+		tweets.add(newTweets);
+		
+		Clustering.updateClusters(clusters, newTweets, tweets, 5000);
 		
 		System.out.println("Cluster size: " + clusters.size());
 		
