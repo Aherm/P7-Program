@@ -94,7 +94,7 @@ public class DBGetTweets {
         try {
             DateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
             date = format.parse(string);
-            System.out.println(date); // Sat Jan 02 00:00:00 GMT 2010
+            //System.out.println(date); // Sat Jan 02 00:00:00 GMT 2010
         } catch (Exception ex){
             System.out.println(ex);
         }

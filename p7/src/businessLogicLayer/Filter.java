@@ -12,15 +12,15 @@ public class Filter {
 	public static TweetStorage filterTweets(TweetStorage tweets, Date date) {
 		TweetStorage newTweetStorage = new TweetStorage();
 		Map<String,String> regs = getRegularExpressions();
-		String reg1 = ".*"; 		// Any character 0-many times
-		String reg2 = "\\s@?"; 		// space followed by a @ zero or one time
+		String reg1 = "[.*]?"; 		// Any character 0-many times
+		String reg2 = "[\\s@?]?"; 		// space followed by a @ zero or one time
 		String reg3 = ""; 			// Any of the regular expressions in regs(list of regular expressions)					
-		String reg4 = "\\w?\\s?"; 	// Any letter or digit zero or one time followed by a space
+		String reg4 = "[\\w?\\s?]?"; 	// Any letter or digit zero or one time followed by a space
 
 		for (int i = tweets.size() - 1; i >= 0; i--) {
 			Tweet tweet = tweets.get(i);
 			if (tweet.getCreatedAt().before(date)) {
-				break;
+				continue;
 			}
 
 			for (Map.Entry<String, String> entry : regs.entrySet())
@@ -32,10 +32,11 @@ public class Filter {
 				Matcher m = p.matcher(tweet.getTweetText());
 				if (m.find()) {
 					newTweetStorage.add(tweet);
+					break;
 				}
 			}
 		}
-		return newTweetStorage;
+		return newTweetStorage.getReverseCopy();
 	}
 
 	public static Map<String, Integer> countOccurances(TweetStorage tweets){

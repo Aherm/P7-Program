@@ -23,13 +23,11 @@ public class TestDBMain {
 		Tweet t2 = tweets.get(1);
 		System.out.println("Distance: " + Clustering.getDist(t1, t2));
 		
-		Clustering c = new Clustering();
-		List<Cluster> clusters = c.initialSolution(tweets, 0.04);
+		List<Cluster> clusters = Clustering.tweetClustering(tweets, 5000);
 		
 		
 		System.out.println("Cluster size: " + clusters.size());
 		
 		connection.closeConnection();
 	}
-
 }

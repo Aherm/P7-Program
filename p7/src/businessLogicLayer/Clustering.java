@@ -10,7 +10,7 @@ import modelLayer.TweetStorage;
 
 public class Clustering {
 	
-	public List<Cluster> tweetClustering (TweetStorage tweets, double facilityCost) {
+	public static List<Cluster> tweetClustering (TweetStorage tweets, double facilityCost) {
 		List<Cluster> clusters = new ArrayList<Cluster>();
 		
 		clusters = initialSolution(tweets, facilityCost);
@@ -27,7 +27,7 @@ public class Clustering {
 	}
 	
 	// Gets an initial cluster. Assigns a tweet to the nearest cluster, and randomly creates new clusters based on distance.
-	public List<Cluster> initialSolution (TweetStorage tweets, double facilityCost) {
+	public static List<Cluster> initialSolution (TweetStorage tweets, double facilityCost) {
 		TweetStorage randomizedTweets = tweets.getRandomizedCopy();
 		Random rand = new Random();
 		List<Cluster> clusters = new ArrayList<Cluster>();
@@ -39,10 +39,10 @@ public class Clustering {
 			Tweet tweet = randomizedTweets.get(i);
 			
 			double dist = getNearestCluster(clusters, tweet);
-			double prob = dist / facilityCost;			
+			double prob = dist / facilityCost;
 			
 			double r = rand.nextDouble();
-			if (r >= prob) {
+			if (r <= prob) {
 				cluster = Cluster.createCluster(tweet);
 				clusters.add(cluster);
 			}
@@ -98,7 +98,7 @@ public class Clustering {
 		double dist = Double.POSITIVE_INFINITY;
 		
 		for (Cluster cluster : clusters) {
-			Double currentDist = getDist(cluster.getCenter(), tweet);
+			double currentDist = getDist(cluster.getCenter(), tweet);
 			if (currentDist < dist) {
 				dist = currentDist;
 				tweet.setCluster(cluster);
