@@ -43,7 +43,7 @@ public class TwitterRest {
 			int pagenr = 1;
 
 			Paging page = new Paging(pagenr, 500);
-			List<Status> userTimeline = new ArrayList<>();
+			List<Status> userTimeline = new ArrayList<Status>();
 			do {	
 				rateLimiter();
 				if(totalcalls == 280) // makes sure we do not reach our limit 

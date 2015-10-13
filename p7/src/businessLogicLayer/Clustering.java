@@ -39,10 +39,10 @@ public class Clustering {
 			Tweet tweet = randomizedTweets.get(i);
 			
 			double dist = getNearestCluster(clusters, tweet);
-			double prob = dist / facilityCost;			
+			double prob = dist / facilityCost;
 			
 			double r = rand.nextDouble();
-			if (r >= prob) {
+			if (r <= prob) {
 				cluster = Cluster.createCluster(tweet);
 				clusters.add(cluster);
 			}
@@ -98,7 +98,7 @@ public class Clustering {
 		double dist = Double.POSITIVE_INFINITY;
 		
 		for (Cluster cluster : clusters) {
-			Double currentDist = getDist(cluster.getCenter(), tweet);
+			double currentDist = getDist(cluster.getCenter(), tweet);
 			if (currentDist < dist) {
 				dist = currentDist;
 				tweet.setCluster(cluster);
