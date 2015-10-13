@@ -23,6 +23,7 @@ public class RunMeTask extends TimerTask
     public void run() {
         try {
             System.out.println("Run Me ~");
+
             if (tweets.size() != 0) {
             	/*
             	 if (tweet.getCreatedAt().before(date)) {
