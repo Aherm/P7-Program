@@ -13,7 +13,8 @@ public class Tweet {
     private Date createdAt;
     private double lat, lon;
     private int score = -1;
-    private List<String> keywords;    
+    private int counter = 0;
+    private List<String> matchedKeywords;    
     private Cluster assignedCluster = null;
 
     public Tweet() {
@@ -36,7 +37,7 @@ public class Tweet {
         this.createdAt = createdAt;
         this.lat = lat;
         this.lon = lon;
-        this.keywords = keywords;
+        this.matchedKeywords = matchedKeywords;
     }
 
     public static Tweet createTweet(Status status) {
@@ -122,11 +123,11 @@ public class Tweet {
     }
     
     public List<String> getKeywords() {
-        return keywords;
+        return matchedKeywords;
     }
 
-    public void setKeywords(List<String> keywords) {
-        this.keywords = keywords;
+    public void setKeywords(List<String> matchedKeywords) {
+        this.matchedKeywords = matchedKeywords;
     }
     
     public Cluster getCluster() {
