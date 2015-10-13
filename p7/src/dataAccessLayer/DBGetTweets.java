@@ -15,12 +15,12 @@ public class DBGetTweets {
     public DBGetTweets() {
     }
 
-    public TweetStorage getKTweets (int k) {
+    public TweetStorage tsQuery(String query){
+    	
     	TweetStorage tweets = new TweetStorage();
         
         try {
         	Connection con = DBConnect.getInstance().getCon();
-            String query = "SELECT * FROM tweets LIMIT " + k;
 
             Statement stmt = con.createStatement();
             ResultSet res = stmt.executeQuery(query);
@@ -32,31 +32,25 @@ public class DBGetTweets {
         return tweets;
     }
     
-    public TweetStorage getKLastTweets (int k) {
-    	TweetStorage tweets = new TweetStorage();
-    	
-    	try {
-    		Connection con = DBConnect.getInstance().getCon();
-    		String query = "SELECT * FROM tweets ORDER BY tweetid DESC LIMIT " + k;
-    		
-    		Statement stmt = con.createStatement();
-    		ResultSet res = stmt.executeQuery(query);
-    		
-    		tweets = initializeTweets(res);
-    	} catch (Exception exh) {
-    		System.out.println(exh);
-    	}
-    	
-    	return tweets;
+
+    public TweetStorage getKTweets (int k) {
+    	return tsQuery("SELECT * FROM tweets LIMIT " + k);
     }
     
-    public long getNumTweets() {
+    public TweetStorage getTweets() {
+        return tsQuery("SELECT * FROM tweets");
+    }
+    
+    public TweetStorage getKLastTweets(int k){
+    	return tsQuery("SELECT * FROM tweets ORDER BY tweetid DESC LIMIT " + k);
+    }
+    
+    public long countQuery(String query){
         long numTweets = 0;
 
         try {
             Connection con = DBConnect.getInstance().getCon();
-            String query = "SELECT count(*) AS count FROM tweets";
-
+            
             Statement stmt = con.createStatement();
             ResultSet res = stmt.executeQuery(query);
 
@@ -68,24 +62,11 @@ public class DBGetTweets {
         }
         return numTweets;
     }
-
-    public TweetStorage getTweets() {
-        TweetStorage tweets = new TweetStorage();
-
-        try {
-            Connection con = DBConnect.getInstance().getCon();
-            String query = "SELECT * FROM tweets";
-
-            Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery(query);
-
-            tweets = initializeTweets(res);
-        } catch (Exception exh) {
-            System.out.println(exh);
-        }
-        return tweets;
+    
+    public long getNumTweets() {
+       return countQuery("SELECT count(*) FROM tweets");
     }
-
+    
     private TweetStorage initializeTweets(ResultSet res) {
         TweetStorage tweets = new TweetStorage();
         try {

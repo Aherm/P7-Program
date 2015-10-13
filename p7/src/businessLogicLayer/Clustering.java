@@ -11,8 +11,13 @@ import modelLayer.TweetStorage;
 public class Clustering {
 	
 	public static List<Cluster> tweetClustering (TweetStorage tweets, double facilityCost) {
-		List<Cluster> clusters = initialSolution(tweets, facilityCost);		
-		refineClusters(tweets, tweets, facilityCost, clusters);
+		List<Cluster> clusters = initialSolution(tweets, facilityCost);
+		
+		// TODO I'm not sure if it's log of cluster size or clonedTweets size. The paper didn't make this clear.
+		// Maybe move this to refineClusters. More accurate updates of clusters, but worse performance.
+		for (int i = 0; i < Math.log(clusters.size()); i++) {
+			refineClusters(tweets, tweets, facilityCost, clusters);
+		}
 		
 		return clusters;
 	}
@@ -25,12 +30,10 @@ public class Clustering {
 	}
 	
 	private static void refineClusters(TweetStorage newTweets, TweetStorage allTweets, double facilityCost, List<Cluster> clusters) {
-		// TODO I'm not sure if it's log of cluster size or clonedTweets size. The paper didn't make this clear.
-		for (int i = 0; i < Math.log(clusters.size()); i++) {
-			// Checks for all new tweets if the solution would be better if a new cluster was made there.
-			for (Tweet t : newTweets.getRandomizedCopy()) {
-				checkGainAndReassign(t, clusters, allTweets, facilityCost);
-			}
+		
+		// Checks for all new tweets if the solution would be better if a new cluster was made there.
+		for (Tweet t : newTweets.getRandomizedCopy()) {
+			checkGainAndReassign(t, clusters, allTweets, facilityCost);
 		}
 	}
 	
