@@ -33,7 +33,7 @@ public class Filter {
                 Matcher m = p.matcher(tweet.getTweetText());
                 if (m.find()) {
                     newTweetStorage.add(tweet);
-                    break;
+                    tweet.add(keyword);
                 }
             }
         }
@@ -51,6 +51,7 @@ public class Filter {
             Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
             Matcher m = p.matcher(tweet.getTweetText());
             if (m.find()) {
+            	tweet.add(keyword);
                 return true;
             }
         }
