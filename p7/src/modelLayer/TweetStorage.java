@@ -118,4 +118,8 @@ public class TweetStorage implements Iterable<Tweet> {
 		
 		return res;
 	}
+	
+	public void clear() {
+		this.tweets.clear();
+	}
 }
