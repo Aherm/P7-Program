@@ -1,24 +1,30 @@
 package streaming;
 
+import java.util.List;
+
 import businessLogicLayer.Filter;
 import businessLogicLayer.Preprocessor;
+import modelLayer.Cluster;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 import twitter4j.*;
 
 public class OurStatusListener implements StatusListener {
-    TweetStorage tweets = new TweetStorage();
+    TweetStorage newTweets = new TweetStorage();
+    TweetStorage allTweets = new TweetStorage();
+    List<Cluster> clusters = null;
 
     public void onStatus(Status status) {
         Tweet tweet = Tweet.createTweet(status);
-    	//Insert raw tweet into DB?
-        //Preprocessor.processTweet(tweet);
-    	//if(Filter.filterTweet(tweet))
-    	//{
-    	//	tweets.add(tweet);
-    	//}
-    	
-    	tweets.add(tweet);
+        newTweets.add(tweet);
+        
+        tweet = tweet.clone();
+        Preprocessor.processTweet(tweet);
+    	if(Filter.filterTweet(tweet))
+    	{
+    		allTweets.add(tweet);
+    	}
+    	allTweets.removeOldTweets(3, clusters);
     }
 
     public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
@@ -38,7 +44,15 @@ public class OurStatusListener implements StatusListener {
     public void onStallWarning(StallWarning warning) {
     }
 
-    public TweetStorage getTweets() {
-        return tweets;
+    public TweetStorage getNewTweets() {
+        return newTweets;
+    }
+    
+    public TweetStorage getAllTweets() {
+    	return allTweets;
+    }
+    
+    public void setClusters(List<Cluster> clusters) {
+    	this.clusters = clusters;
     }
 }
