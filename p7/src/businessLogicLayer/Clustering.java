@@ -20,7 +20,7 @@ public class Clustering {
 		double iterations = Math.log(clusters.size());
 		for (int i = 0; i < iterations; i++) {
 			refineClusters(tweets, tweets, facilityCost, clusters);
-			System.out.println("Refinement step " + i + " of " + iterations + " done.");
+			System.out.println("Refinement step " + i + " of " + (int)iterations + " done.");
 		}
 		System.out.println("Clustering done.");
 		return clusters;
