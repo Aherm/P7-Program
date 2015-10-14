@@ -44,6 +44,9 @@ public class DBGetTweets {
     public TweetStorage getKLastTweets(int k){
     	return tsQuery("SELECT * FROM tweets ORDER BY tweetid DESC LIMIT " + k);
     }
+    public TweetStorage getInterval(int start,int size){
+    	return tsQuery("SELECT * FROM tweets ORDER BY id LIMIT " + size +" OFFSET " + start);
+    }
     
     public long countQuery(String query){
         long numTweets = 0;
@@ -87,6 +90,9 @@ public class DBGetTweets {
         }
         return tweets;
     }
+
+    //New select query
+    //SELECT * FROM tweets Order By id LIMIT 9000 OFFSET 4000
 
     private static Date convertStringToDate(String string) {
         Date date = new Date();

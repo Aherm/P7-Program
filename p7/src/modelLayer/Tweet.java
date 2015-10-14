@@ -15,6 +15,7 @@ public class Tweet {
     private double score = -1;
     private List<Keyword> matchedKeywords = new ArrayList<Keyword>();    
     private Cluster assignedCluster = null;
+    private boolean addedToStorage = false;
 
     public Tweet() {
     }
@@ -158,5 +159,13 @@ public class Tweet {
     	res.setCluster(assignedCluster);
     	res.setScore(score);
     	return res;
+    }
+
+    public boolean isAddedToStorage() {
+        return addedToStorage;
+    }
+
+    public void setAddedToStorage(boolean addedToStorage) {
+        this.addedToStorage = addedToStorage;
     }
 }

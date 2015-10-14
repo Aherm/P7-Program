@@ -7,7 +7,8 @@
   	tweettext varchar(140) NOT NULL,
   	createdat varchar(50) NOT NULL,
   	lat double precision,
-  	lon double precision
+  	lon double precision,
+  	id BIGSERIAL
   );
 
 CREATE TABLE Keywords

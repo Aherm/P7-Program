@@ -28,7 +28,7 @@ public class TestDBMain {
 		System.out.println("Cluster size: " + clusters.size());
 		
 		TweetStorage newTweets = dbGetTweets.getKLastTweets(1000);
-		tweets.add(newTweets);
+		tweets.addAll(newTweets);
 		
 		Clustering.updateClusters(clusters, newTweets, tweets, 5000);
 		

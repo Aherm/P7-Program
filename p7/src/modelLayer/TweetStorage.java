@@ -20,12 +20,16 @@ public class TweetStorage implements Iterable<Tweet> {
 		tweets.addLast(t);
 	}
 	
-	public void add(TweetStorage ts) {
+	public void addAll(TweetStorage ts) {
 		tweets.addAll(ts.tweets);
 	}
 	
 	public void remove(Tweet t) {
 		tweets.remove(t);
+	}
+	
+	public boolean isEmpty(){
+		return tweets.isEmpty();
 	}
 	
 	public void removeOldTweets(int days) {
