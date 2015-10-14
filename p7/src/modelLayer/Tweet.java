@@ -16,6 +16,7 @@ public class Tweet {
     private int counter = 0;
     private List<Keyword> matchedKeywords = new ArrayList<Keyword>();    
     private Cluster assignedCluster = null;
+    private boolean addedToStorage = false;
 
     public Tweet() {
     }
@@ -152,5 +153,13 @@ public class Tweet {
     		return false; 
     	else 
     		return true; 
+    }
+
+    public boolean isAddedToStorage() {
+        return addedToStorage;
+    }
+
+    public void setAddedToStorage(boolean addedToStorage) {
+        this.addedToStorage = addedToStorage;
     }
 }
