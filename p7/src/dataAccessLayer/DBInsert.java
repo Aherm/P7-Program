@@ -5,14 +5,13 @@ import modelLayer.TweetStorage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class DBInsert {
 	
 	public DBInsert(){}
 	
-	public void insertTweet(TweetStorage tweets, Date date) {
+	public static void insertTweets(TweetStorage tweets) {
 		try{
 			Connection con = DBConnect.getInstance().getCon();
 			String insertSQL= "INSERT INTO tweets " +
@@ -24,11 +23,9 @@ public class DBInsert {
 			// Remove the comments in this method if performance issues become a problem
 			//int i = 0;
 
-			for(int i = tweets.size() - 1; i >= 0; i--) {
+			for(int i = 0; i < tweets.size(); i++) {
 				Tweet tweet = tweets.get(i);
-				if (tweet.getCreatedAt().before(date)) {
-					break;
-				}
+
 				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 				
 				st.setLong(1, tweet.getTweetID());
