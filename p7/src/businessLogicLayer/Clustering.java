@@ -11,14 +11,18 @@ import modelLayer.TweetStorage;
 public class Clustering {
 	
 	public static List<Cluster> tweetClustering (TweetStorage tweets, double facilityCost) {
-		List<Cluster> clusters = initialSolution(tweets, facilityCost);
+		System.out.println("Start of clustering. Doing initial solution.");
+		List<Cluster> clusters = initialSolution(tweets, facilityCost);		
+		System.out.println("Initial solution done. Starting refinement process.");
 		
 		// TODO I'm not sure if it's log of cluster size or clonedTweets size. The paper didn't make this clear.
-		// Maybe move this to refineClusters. More accurate updates of clusters, but worse performance.
-		for (int i = 0; i < Math.log(clusters.size()); i++) {
+		// Maybe move this loop to refineClusters. More accurate updates of clusters, but worse performance.
+		double iterations = Math.log(clusters.size());
+		for (int i = 0; i < iterations; i++) {
 			refineClusters(tweets, tweets, facilityCost, clusters);
+			System.out.println("Refinement step " + i + " of " + iterations + " done.");
 		}
-		
+		System.out.println("Clustering done.");
 		return clusters;
 	}
 
