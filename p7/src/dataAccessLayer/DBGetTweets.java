@@ -44,6 +44,9 @@ public class DBGetTweets {
     public TweetStorage getKLastTweets(int k){
     	return tsQuery("SELECT * FROM tweets ORDER BY tweetid DESC LIMIT " + k);
     }
+    public TweetStorage getInterval(int start,int size){
+    	return tsQuery("SELECT * FROM tweets ORDER BY id LIMIT " + size +" OFFSET " + start);
+    }
     
     public long countQuery(String query){
         long numTweets = 0;
