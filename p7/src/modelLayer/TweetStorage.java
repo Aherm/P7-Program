@@ -37,6 +37,9 @@ public class TweetStorage implements Iterable<Tweet> {
 	}
 	
 	public void removeOldTweets(int days, List<Cluster> clusters) {
+		if (tweets.isEmpty()) {
+			return;
+		}
 		Tweet tweet = tweets.getFirst();
 		Date today = new Date();
 		
