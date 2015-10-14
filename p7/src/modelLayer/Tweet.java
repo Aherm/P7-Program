@@ -13,7 +13,6 @@ public class Tweet {
     private Date createdAt;
     private double lat, lon;
     private double score = -1;
-    private int counter = 0;
     private List<Keyword> matchedKeywords = new ArrayList<Keyword>();    
     private Cluster assignedCluster = null;
 
@@ -25,10 +24,10 @@ public class Tweet {
     }
 
     public Tweet(long tweetID, long userID, long responseID, long retweetID, String tweetText, Date createdAt, double lat, double lon) {
-        this(tweetID, userID, responseID, retweetID, tweetText, createdAt, lat, lon, new ArrayList<String>());
+        this(tweetID, userID, responseID, retweetID, tweetText, createdAt, lat, lon, new ArrayList<Keyword>());
     }
     
-    public Tweet(long tweetID, long userID, long responseID, long retweetID, String tweetText, Date createdAt, double lat, double lon, List<String> keywords) {
+    public Tweet(long tweetID, long userID, long responseID, long retweetID, String tweetText, Date createdAt, double lat, double lon, List<Keyword> keywords) {
         this.tweetID = tweetID;
         this.userID = userID;
         this.responseID = responseID;
@@ -37,7 +36,7 @@ public class Tweet {
         this.createdAt = createdAt;
         this.lat = lat;
         this.lon = lon;
-        this.matchedKeywords = matchedKeywords;
+        this.matchedKeywords = keywords;
     }
 
     public static Tweet createTweet(Status status) {
