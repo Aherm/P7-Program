@@ -12,9 +12,9 @@ public class Tweet {
     private String tweetText;
     private Date createdAt;
     private double lat, lon;
-    private int score = -1;
+    private double score = -1;
     private int counter = 0;
-    private List<String> matchedKeywords;    
+    private List<Keyword> matchedKeywords = new ArrayList<Keyword>();    
     private Cluster assignedCluster = null;
 
     public Tweet() {
@@ -48,6 +48,11 @@ public class Tweet {
         }
         else return new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),
                 status.getText(), status.getCreatedAt(), status.getGeoLocation().getLatitude(), status.getGeoLocation().getLongitude());
+    }
+    
+    public void add(Keyword keyword)
+    {
+    	matchedKeywords.add(keyword);
     }
     
     public long getTweetID() {
@@ -114,20 +119,24 @@ public class Tweet {
         this.lon = lon;
     }
 
-    public int getScore() {
+    public double getScore()
+    {
+    	score = 0;
+    	for(Keyword keyword : matchedKeywords)
+    	{
+    		this.score += keyword.getWeight();
+    	}
+    	
     	return score;
+    }
+    
+    public void resetScore()
+    {
+    	score = -1;
     }
     
     public void setScore(int score) {
     	this.score = score;
-    }
-    
-    public List<String> getKeywords() {
-        return matchedKeywords;
-    }
-
-    public void setKeywords(List<String> matchedKeywords) {
-        this.matchedKeywords = matchedKeywords;
     }
     
     public Cluster getCluster() {

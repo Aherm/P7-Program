@@ -13,6 +13,90 @@ public class Filter {
     static String reg2 = "[\\s@?]?";        // space followed by a @ zero or one time
     static String reg4 = "[\\w?\\s?]?";    // Any letter or digit zero or one time followed by a space
 
+    public static TweetStorage filterTweets(TweetStorage tweets, Date date) {
+        TweetStorage newTweetStorage = new TweetStorage();
+		List<Keyword> regularExpressions = getRegularExpressions();
+        String reg3 = "";            // Any of the regular expressions in regs(list of regular expressions)
+        boolean keepThisTweet = false;
+        
+        for (int i = tweets.size() - 1; i >= 0; i--) {
+            Tweet tweet = tweets.get(i);
+            if (tweet.getCreatedAt().before(date)) {
+                continue;
+            }
+
+            for (Keyword keyword : regularExpressions){
+                reg3 = keyword.getRegex();
+                // Full Regex Example:
+                // ".*\\s@?(bad?\\s?|upset?\\s?)?stoma(ch|k)\\s?(pain?|flu?|flue?|)\\w?\\s"
+                Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+                Matcher m = p.matcher(tweet.getTweetText());
+                if (m.find()) {
+                    keepThisTweet = true;
+                    tweet.add(keyword);
+                }
+            }
+            if(keepThisTweet)
+            {
+            	newTweetStorage.add(tweet);
+            }
+            keepThisTweet = false;
+        }
+        return newTweetStorage.getReverseCopy();
+    }
+    
+    public static TweetStorage filterTweetsInWork(TweetStorage tweets, Date date) {
+        TweetStorage newTweetStorage = new TweetStorage();
+		List<Keyword> regularExpressions = getRegularExpressions();
+        String reg3 = "";            // Any of the regular expressions in regs(list of regular expressions)
+        boolean keepThisTweet = false;
+        
+        for(Keyword keyword : regularExpressions)
+        {
+        	reg3 = keyword.getRegex();
+        	Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+                  	
+        	for(int i = tweets.size() - 1; i >= 0; i--)
+        	{
+        		Tweet tweet = tweets.get(i);
+        		
+        		if (tweet.getCreatedAt().before(date)) {
+                    continue;
+                }
+        		Matcher m = p.matcher(tweet.getTweetText());
+        		if (m.find()) {
+                    newTweetStorage.add(tweet);
+                    continue;
+                    //tweet.add(keyword);
+                }
+        		
+        	}
+        	
+        }
+        return newTweetStorage.getReverseCopy();
+    }
+    
+    public static boolean filterTweet(Tweet tweet) {
+        List<Keyword> regularExpressions = getRegularExpressions();
+        String reg3 = ""; // Any of the regular expressions in regularExpressions
+        boolean matchFound = false;
+        for (Keyword keyword : regularExpressions) {
+            reg3 = keyword.getRegex();
+            Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+            Matcher m = p.matcher(tweet.getTweetText());
+            if (m.find()) {
+            	tweet.add(keyword);
+                matchFound = true;
+            }
+        }
+        if(matchFound)
+        {
+        	return true;
+        }
+        else
+        	return false;
+    }
+    
 	public static Map<String, Integer> countMatches(TweetStorage tweets)
 	{
 		List<Keyword> regs = getRegularExpressions();
@@ -44,7 +128,8 @@ public class Filter {
 		regs.add(new Keyword("food poison", "fo(od|d|ood|ods|odd)\\s?poi(son|sons|sen|sens|sn)", 10));
 		regs.add(new Keyword("sick", "si(ck|k)", 10));
 		regs.add(new Keyword("ill", "(ill|il|fever|pain)", 10));
-		regs.add(new Keyword("stomach flue","(bad?\\s?|upset?\\s?)?stoma(ch|k)\\s?(pain?|flu?|flue?|)", 10));
+		regs.add(new Keyword("stomach flue","stoma(ch|k)\\s?(pain|flu|flue|)", 10));
+		regs.add(new Keyword("stomach flue","(bad|upset)\\s?stoma(ch|k)", 10));
 		regs.add(new Keyword("diarrhea","dia(rrhea|rria|rhea|ria|hrrhea|hrhea)", 10));
 		regs.add(new Keyword("dehydration", "de(hy|hi)dra(tion|sion)", 10));
 		regs.add(new Keyword("salmonella", "salmonel(la|a)", 10));
@@ -59,49 +144,4 @@ public class Filter {
 		regs.add(new Keyword("headache","head(a|e)(che|k)", 10));
 		return regs;
 	}
-
-    public static TweetStorage filterTweets(TweetStorage tweets, Date date) {
-        TweetStorage newTweetStorage = new TweetStorage();
-		List<Keyword> regularExpressions = getRegularExpressions();
-        String reg3 = "";            // Any of the regular expressions in regs(list of regular expressions)
-
-        for (int i = tweets.size() - 1; i >= 0; i--) {
-            Tweet tweet = tweets.get(i);
-            if (tweet.getCreatedAt().before(date)) {
-                continue;
-            }
-
-            for (Keyword keyword : regularExpressions){
-                reg3 = keyword.getRegex();
-                // Full Regex Example:
-                // ".*\\s@?(bad?\\s?|upset?\\s?)?stoma(ch|k)\\s?(pain?|flu?|flue?|)\\w?\\s"
-                Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-                Matcher m = p.matcher(tweet.getTweetText());
-                if (m.find()) {
-                    newTweetStorage.add(tweet);
-                    break;
-                }
-            }
-        }
-        return newTweetStorage.getReverseCopy();
-    }
-
-    public static boolean filterTweet(Tweet tweet) {
-        TweetStorage newTweetStorage = new TweetStorage();
-        List<Keyword> regularExpressions = getRegularExpressions();
-        String reg3 = ""; // Any of the regular expressions in regs(list of // regular expressions)
-        for (Keyword keyword : regularExpressions) {
-            reg3 = keyword.getRegex();
-            // Full Regex Example:
-            // ".*\\s@?(bad?\\s?|upset?\\s?)?stoma(ch|k)\\s?(pain?|flu?|flue?|)\\w?\\s"
-            Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-            Matcher m = p.matcher(tweet.getTweetText());
-            if (m.find()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
 }

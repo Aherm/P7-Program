@@ -31,6 +31,14 @@ public class Cluster {
 	public void removeTweet(Tweet tweet) {
 		tweets.remove(tweet);
 	}
+	
+	public double getScore() {
+		double score = 0;
+		for (Tweet t : tweets) {
+			score += t.getScore();
+		}
+		return score / tweets.size();
+	}
 
 	public static void reassignTweet(Tweet t, Cluster c) {
 		if (t.getCluster() != null) {
