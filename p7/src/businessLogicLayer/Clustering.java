@@ -19,7 +19,7 @@ public class Clustering {
 		// Maybe move this loop to refineClusters. Should give more accurate updates of clusters, but worse performance.
 		double iterations = Math.log(clusters.size());
 		for (int i = 0; i < iterations; i++) {
-			System.out.println("Doing refinement step " + (i + 1) + " of " + iterations + ".");
+			System.out.println("Doing refinement step " + (i + 1) + " of " + (int)iterations + ".");
 			refineClusters(tweets, tweets, facilityCost, clusters);
 		}
 		System.out.println("Clustering done.");
