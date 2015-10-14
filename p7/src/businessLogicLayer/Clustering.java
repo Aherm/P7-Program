@@ -12,15 +12,15 @@ public class Clustering {
 	
 	public static List<Cluster> tweetClustering (TweetStorage tweets, double facilityCost) {
 		System.out.println("Start of clustering. Doing initial solution.");
-		List<Cluster> clusters = initialSolution(tweets, facilityCost);		
+		List<Cluster> clusters = initialSolution(tweets, facilityCost);
 		System.out.println("Initial solution done. Starting refinement process.");
 		
 		// TODO I'm not sure if it's log of cluster size or clonedTweets size. The paper didn't make this clear.
-		// Maybe move this loop to refineClusters. More accurate updates of clusters, but worse performance.
+		// Maybe move this loop to refineClusters. Should give more accurate updates of clusters, but worse performance.
 		double iterations = Math.log(clusters.size());
 		for (int i = 0; i < iterations; i++) {
+			System.out.println("Doing refinement step " + (i + 1) + " of " + (int)iterations + ".");
 			refineClusters(tweets, tweets, facilityCost, clusters);
-			System.out.println("Refinement step " + i + " of " + (int)iterations + " done.");
 		}
 		System.out.println("Clustering done.");
 		return clusters;
@@ -135,15 +135,6 @@ public class Clustering {
 		
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		return (R * c) * 1000;
-		
-		/*
-		double x1 = t1.getLon();
-		double x2 = t2.getLon();
-		double y1 = t1.getLat();
-		double y2 = t2.getLat();
-		
-		return Math.abs(x1 - x2) + Math.abs(y1 - y2);
-		*/
 	}
 	
 	private static double toRadians(double degree)

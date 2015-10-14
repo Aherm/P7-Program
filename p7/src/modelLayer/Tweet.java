@@ -14,7 +14,7 @@ public class Tweet {
     private double lat, lon;
     private double score = -1;
     private int counter = 0;
-    private List<Keyword> matchedKeywords;    
+    private List<Keyword> matchedKeywords = new ArrayList<Keyword>();    
     private Cluster assignedCluster = null;
 
     public Tweet() {
