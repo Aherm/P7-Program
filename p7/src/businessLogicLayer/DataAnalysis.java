@@ -27,6 +27,17 @@ public class DataAnalysis {
 		
 		return amount; 
 	}
+	
+	public TweetStorage geotagged(){
+		TweetStorage ts = new TweetStorage(); 
+		for(Tweet t : storage){
+			if(t.getLat() != 0){
+				ts.add(t);
+			}
+		}
+		
+		return ts; 
+	}
 
 	
 	public void printStatistics(){

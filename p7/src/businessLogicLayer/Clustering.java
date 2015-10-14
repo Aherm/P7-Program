@@ -92,7 +92,7 @@ public class Clustering {
 			if (removalGain > 0) {
 				gain += removalGain;
 				removalList.add(c);
-				reassignmentList.add(c.getTweets());
+				reassignmentList.addAll(c.getTweets());
 			}
 		}
 		
