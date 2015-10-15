@@ -24,8 +24,22 @@ public class TweetStorage implements Iterable<Tweet> {
 		tweets.addAll(ts.tweets);
 	}
 	
-	public void remove(Tweet t) {
-		tweets.remove(t);
+	public void remove(Tweet tweet) {
+		remove(tweet, null);
+	}
+	
+	public void remove(Tweet tweet, List<Cluster> clusters) {
+		if (clusters != null) {
+			Cluster c = tweet.getCluster();
+			if (c.getCenter() == tweet) {
+				clusters.remove(c);
+				c.removeTweet(tweet);
+				for (Tweet t : c.getTweets()) {
+					Clustering.getNearestCluster(clusters, t);
+				}
+			}
+		}
+		tweets.remove(tweet);
 	}
 	
 	public boolean isEmpty(){
@@ -37,24 +51,16 @@ public class TweetStorage implements Iterable<Tweet> {
 	}
 	
 	public void removeOldTweets(int days, List<Cluster> clusters) {
-		if (tweets.isEmpty()) {
-			return;
-		}
-		Tweet tweet = tweets.getFirst();
-		Date today = new Date();
-		
-		while(Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays() >= days) {
-			if (clusters != null) {
-				Cluster c = tweet.getCluster();
-				if (c.getCenter() == tweet) {
-					clusters.remove(c);
-					for (Tweet t : c.getTweets()) {
-						Clustering.getNearestCluster(clusters, t);
-					}
+		if (!tweets.isEmpty()) {
+			Tweet tweet = tweets.getFirst();
+			Date today = new Date();
+			
+			while(Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays() >= days && !tweets.isEmpty()) {
+				remove(tweet, clusters);
+				if (!tweets.isEmpty()) {
+					tweet = tweets.getFirst();
 				}
 			}
-			remove(tweet);
-			tweet = tweets.getFirst();
 		}
 	}
 	

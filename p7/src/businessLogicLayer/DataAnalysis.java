@@ -30,7 +30,7 @@ public class DataAnalysis {
 	public TweetStorage geotagged(){
 		TweetStorage ts = new TweetStorage(); 
 		for(Tweet t : storage){
-			if(t.getLat() != 0){
+			if(t.isGeotagged()){
 				ts.add(t);
 			}
 		}
@@ -46,8 +46,8 @@ public class DataAnalysis {
 								   ((double)nrGeotagged() / (double)storage.size()) * 100) + " %");
 	}
 	
-	public void clusterAnalysis(List<Cluster> clusters){
-		int[] sizes = new int[52];
+	public void clusterAnalysis(List<Cluster> clusters, int numbers){
+		int[] sizes = new int[numbers];
 		
 		for(int i = 0; i < sizes.length; i++){
 			sizes[i] = 0;
@@ -61,8 +61,10 @@ public class DataAnalysis {
 				sizes[c.getTweets().size()]++;
 		}
 		
+		System.out.println("Total amount of clusters: " + clusters.size());
 		for(int i = 0; i < sizes.length; i++){
-			System.out.println("nr " + i + " Size: " + sizes[i]);
+			if(sizes[i] > 0 )
+				System.out.println("nr " + i + " Size: " + sizes[i]);
 		}
 		
 	}
