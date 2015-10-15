@@ -1,15 +1,19 @@
 package businessLogicLayer;
 
+import java.util.List;
 import java.util.Scanner;
 
+import modelLayer.Cluster;
 import modelLayer.TweetStorage;
 
 public class TweetQueryThread extends Thread {
 	
 	private TweetStorage tweets;
+	private List<Cluster> clusters;
 	
-	public TweetQueryThread (TweetStorage tweets) {
+	public TweetQueryThread (TweetStorage tweets, List<Cluster> clusters) {
 		this.tweets = tweets;
+		this.clusters = clusters;
 	}
 	
 	private int getSize() {

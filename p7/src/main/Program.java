@@ -1,10 +1,7 @@
 package main;
 
-import businessLogicLayer.Filter;
 import dataAccessLayer.DBConnect;
-import dataAccessLayer.DBGetTweets;
-import dataAccessLayer.DBInsert;
-import modelLayer.Tweet;
+import modelLayer.Cluster;
 import modelLayer.TweetStorage;
 
 import streaming.Oauth;
@@ -15,59 +12,30 @@ import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 
 import java.util.*;
-
-import businessLogicLayer.Preprocessor;
 import businessLogicLayer.TweetQueryThread;
 
 public class Program {
 
     public static void main(String[] args) {
-
-
-        /*Tweet tweet1 = new Tweet(0, 2, 3, 4, "asfafas f463t fsahe8Mads90ath9", new Date(), 0.2, 0.5);
-        Tweet tweet2 = new Tweet(0, 2, 3, 4, "asfafas Mathias f463t fssafasfasfahe890ath9", new Date(), 0.2, 0.5);
-        List<Tweet> tweets = new ArrayList<Tweet>();
-        tweets.add(tweet1);
-        tweets.add(tweet2);
-
-
-        List<String> patterns = new ArrayList<String>();
-        //patterns.add("[\\w*mads\\w*]");
-        patterns.add("(.*)Mathias(.*)");
-        //patterns.add(".*\\Mathias\\b.*");
-
-        for (Tweet tweet : tweets) {
-            Preprocessor.processTweet(tweet);
-
-            if (Filter.filterTweetFromPatterns(tweet, patterns))
-            {
-                System.out.println(tweet.getTweetText() + " is approved");
-            }
-            else {
-                System.out.println(tweet.getTweetText() + " is not approved");
-            }
-        }
-
-*/
-
-        //connection to twitters streaming api
-		Oauth auth = new Oauth(); 
-		OurStatusListener listener = new OurStatusListener();
+    	Oauth auth = new Oauth(); 
 		TwitterStreamFactory tsf = new TwitterStreamFactory(auth.createConfigBuilder().build());
 		TwitterStream stream = tsf.getInstance(); 
+
+		OurStatusListener listener = new OurStatusListener();
 		stream.addListener(listener);
 		//stream.sample();
 
-        //boudning box for the whole of us
-        double[][] locations = new double[][]{
-                {-167.276413, 5.49955},
-                {-52.23304, 83.162102}
-        };
+		//bounding box for new york
+		//double[][] locations = new double[][]{
+		//{-74, 40},
+		//{-73, 41}
+		//};
 
-        //bounding box for new york
-        //{-74,40},
-        //{-73,41}
-
+        //bounding box for the whole of us		
+		double[][] locations = new double[][]{
+            {-167.276413, 5.49955},
+            {-52.23304, 83.162102}
+		};
 
         FilterQuery query = new FilterQuery();
         //query.language("en");
@@ -76,18 +44,21 @@ public class Program {
 
         DBConnect connection = DBConnect.getInstance();
         connection.connectTo("world", "postgres", "21");
+        
+        TweetStorage newTweets = listener.getNewTweets();
+        TweetStorage allTweets = listener.getAllTweets();
+        List<Cluster> clusters = new ArrayList<Cluster>();
+        listener.setClusters(clusters);
 
-        TweetStorage tweets = listener.getTweets();
-
-        TimerTask task = new RunMeTask(tweets);
+        //A minute in ms: 60000
+        //An hour in ms: 3600000
+        TimerTask task = new RunMeTask(newTweets);
         Timer timer = new Timer();
         timer.schedule(task, 1000, 60000);
         
-        TweetQueryThread t = new TweetQueryThread(tweets);
+        TweetQueryThread t = new TweetQueryThread(allTweets, clusters);
         t.start();
-        //A minute in ms: 60000
-        //An hour in ms: 3600000
-
+        
         //connection.closeConnection();
     }
 }

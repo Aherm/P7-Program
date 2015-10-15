@@ -135,7 +135,7 @@ public class Tweet {
     	score = -1;
     }
     
-    public void setScore(int score) {
+    public void setScore(double score) {
     	this.score = score;
     }
     
@@ -152,6 +152,13 @@ public class Tweet {
     		return false; 
     	else 
     		return true; 
+    }
+    
+    public Tweet clone() {
+    	Tweet res = new Tweet(tweetID, userID, responseID, retweetID, tweetText, createdAt, lat, lon, matchedKeywords);
+    	res.setCluster(assignedCluster);
+    	res.setScore(score);
+    	return res;
     }
 
     public boolean isAddedToStorage() {

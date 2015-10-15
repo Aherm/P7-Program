@@ -12,7 +12,7 @@ public class Filter {
     static String reg1 = ".*?";        // Any character 0-many times
     static String reg2 = "[\\s@?]?";        // space followed by a @ zero or one time
     static String reg4 = "[\\w?\\s?]?";    // Any letter or digit zero or one time followed by a space
-
+   
     public static TweetStorage filterTweets(TweetStorage tweets, Date date) {
         TweetStorage newTweetStorage = new TweetStorage();
         List<Keyword> regularExpressions = getRegularExpressions();
@@ -93,7 +93,7 @@ public class Filter {
         List<Keyword> regs = new ArrayList<Keyword>();
         regs.add(new Keyword("food poison", "fo(od|d|ood|ods|odd)\\s?poi(son|sons|sen|sens|sn)", 10));
         regs.add(new Keyword("sick", "si(ck|k)", 10));
-        regs.add(new Keyword("ill", "(ill|il|fever|pain)", 10));
+        //regs.add(new Keyword("ill", "(ill|il|fever|pain)", 10));
         regs.add(new Keyword("stomach flue", "stoma(ch|k)\\s?(pain|flu|flue|)", 10));
         regs.add(new Keyword("stomach flue", "(bad|upset)\\s?stoma(ch|k)", 10));
         regs.add(new Keyword("diarrhea", "dia(rrhea|rria|rhea|ria|hrrhea|hrhea)", 10));

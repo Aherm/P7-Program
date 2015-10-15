@@ -20,7 +20,7 @@ public class TweetStorage implements Iterable<Tweet> {
 		tweets.addLast(t);
 	}
 	
-	public void add(TweetStorage ts) {
+	public void addAll(TweetStorage ts) {
 		tweets.addAll(ts.tweets);
 	}
 	
@@ -28,11 +28,18 @@ public class TweetStorage implements Iterable<Tweet> {
 		tweets.remove(t);
 	}
 	
+	public boolean isEmpty(){
+		return tweets.isEmpty();
+	}
+	
 	public void removeOldTweets(int days) {
 		removeOldTweets(days, null);
 	}
 	
 	public void removeOldTweets(int days, List<Cluster> clusters) {
+		if (tweets.isEmpty()) {
+			return;
+		}
 		Tweet tweet = tweets.getFirst();
 		Date today = new Date();
 		
@@ -117,5 +124,9 @@ public class TweetStorage implements Iterable<Tweet> {
 		res.tweets.removeAll(ts.tweets);
 		
 		return res;
+	}
+	
+	public void clear() {
+		this.tweets.clear();
 	}
 }
