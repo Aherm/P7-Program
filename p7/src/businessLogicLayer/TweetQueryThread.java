@@ -10,6 +10,7 @@ public class TweetQueryThread extends Thread {
 	
 	private TweetStorage tweets;
 	private List<Cluster> clusters;
+	private int facilityCost = 5000;
 	
 	public TweetQueryThread (TweetStorage tweets, List<Cluster> clusters) {
 		this.tweets = tweets;
@@ -29,11 +30,18 @@ public class TweetQueryThread extends Thread {
 			
 			if (i == 1) {
 				System.out.println("Size is " + getSize());
+			}			
+			else if (i == 2) {
+				if (clusters.size() == 0) {
+					clusters = Clustering.tweetClustering(tweets, facilityCost);
+				}
+				else {
+					Clustering.updateClusters(clusters, Cluster.getUnclusteredTweets(tweets), tweets, facilityCost);
+				}
 			}
 			else break;
 		}
 		
 		sc.close();
-		
 	}
 }
