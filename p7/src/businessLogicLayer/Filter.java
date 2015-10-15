@@ -10,8 +10,8 @@ import modelLayer.TweetStorage;
 
 public class Filter {
     static String reg1 = ".*?";        // Any character 0-many times
-    static String reg2 = "\\s@?";        // space followed by a @ zero or one time
-    static String reg4 = "\\w?\\s";    // Any letter or digit zero or one time followed by a space
+    static String reg2 = "\\s?@?";        // space followed by a @ zero or one time
+    static String reg4 = "\\w?\\s?";    // Any letter or digit zero or one time followed by a space
     
     public static TweetStorage filterTweets(TweetStorage tweets, Date date) {
         TweetStorage newTweetStorage = new TweetStorage();
@@ -92,15 +92,17 @@ public class Filter {
     static private List<Keyword> getRegularExpressions() {
         List<Keyword> regs = new ArrayList<Keyword>();
         regs.add(new Keyword("food poison", "fo(od|d|ood|ods|odd)\\s?poi(son|sons|sen|sens|sn)", 10));
-        regs.add(new Keyword("sick", "si(ck|k)", 10));
+        regs.add(new Keyword("feeling sick", "feelin(g|)\\s?si(ck|k)", 10));
+        regs.add(new Keyword("im sick", "i('m|m)\\s?si(ck|k)", 10));
+
         //regs.add(new Keyword("ill", "(ill|il|fever|pain)", 10));
         regs.add(new Keyword("stomach flue", "stoma(ch|k)\\s?(pain|flu|flue|)", 10));
-        regs.add(new Keyword("stomach flue", "(bad|upset)\\s?stoma(ch|k)", 10));
+        regs.add(new Keyword("bad stomach", "(bad|upset)\\s?stoma(ch|k)", 10));
         regs.add(new Keyword("diarrhea", "dia(rrhea|rria|rhea|ria|hrrhea|hrhea)", 10));
         regs.add(new Keyword("dehydration", "de(hy|hi)dra(tion|sion)", 10));
         regs.add(new Keyword("salmonella", "salmonel(la|a)", 10));
         regs.add(new Keyword("nausea", "nausea", 10));
-        regs.add(new Keyword("vomit", "vom(it|mit)", 10));
+        regs.add(new Keyword("vomit", "vom(it|mit|miting|mitin|iting|itin)", 10));
         regs.add(new Keyword("throwing up", "throw(ing|)\\s?(u|o)p", 10));
         regs.add(new Keyword("pepto bismal", "pe(p|b)to\\s?bi(s|ss)mal", 10));
         regs.add(new Keyword("on the toilet", "on\\s?the\\s?toilet", 10));
