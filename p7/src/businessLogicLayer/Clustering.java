@@ -42,7 +42,7 @@ public class Clustering {
 	}
 	
 	// Gets an initial cluster. Assigns a tweet to the nearest cluster, and randomly creates new clusters based on distance.
-	public static List<Cluster> initialSolution (TweetStorage tweets, double facilityCost) {
+	private static List<Cluster> initialSolution (TweetStorage tweets, double facilityCost) {
 		TweetStorage randomizedTweets = tweets.getRandomizedCopy();
 		Random rand = new Random();
 		List<Cluster> clusters = new ArrayList<Cluster>();
