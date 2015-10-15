@@ -102,6 +102,7 @@ public class Filter {
         regs.add(new Keyword("dehydration", "de(hy|hi)dra(tion|sion)", 10));
         regs.add(new Keyword("salmonella", "salmonel(la|a)", 10));
         regs.add(new Keyword("nausea", "nausea", 10));
+        regs.add(new Keyword("nauseous", "nauseous", 10));
         regs.add(new Keyword("vomit", "vom(it|mit|miting|mitin|iting|itin)", 10));
         regs.add(new Keyword("throwing up", "throw(ing|)\\s?(u|o)p", 10));
         regs.add(new Keyword("pepto bismal", "pe(p|b)to\\s?bi(s|ss)mal", 10));
