@@ -47,7 +47,7 @@ public class DBConnect {
         }	
     }
     
-    public void connectTo(String dbname,String _userName, String _password){
+    public void connectToLocal(String dbname,String _userName, String _password){
     	connectToServer ("jdbc:postgresql://localhost/", dbname, _userName, _password);
     }    
 
