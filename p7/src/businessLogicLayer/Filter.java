@@ -10,9 +10,9 @@ import modelLayer.TweetStorage;
 
 public class Filter {
     static String reg1 = ".*?";        // Any character 0-many times
-    static String reg2 = "[\\s@?]?";        // space followed by a @ zero or one time
-    static String reg4 = "[\\w?\\s?]?";    // Any letter or digit zero or one time followed by a space
-   
+    static String reg2 = "\\s@?";        // space followed by a @ zero or one time
+    static String reg4 = "\\w?\\s";    // Any letter or digit zero or one time followed by a space
+    
     public static TweetStorage filterTweets(TweetStorage tweets, Date date) {
         TweetStorage newTweetStorage = new TweetStorage();
         List<Keyword> regularExpressions = getRegularExpressions();
@@ -103,7 +103,7 @@ public class Filter {
         regs.add(new Keyword("vomit", "vom(it|mit)", 10));
         regs.add(new Keyword("throwing up", "throw(ing|)\\s?(u|o)p", 10));
         regs.add(new Keyword("pepto bismal", "pe(p|b)to\\s?bi(s|ss)mal", 10));
-        regs.add(new Keyword("on the toilet", "(on\\s?the\\s?)?toilet", 10));
+        regs.add(new Keyword("on the toilet", "on\\s?the\\s?toilet", 10));
         regs.add(new Keyword("cramps", "(c|k)ram(p|b)s", 10));
         regs.add(new Keyword("infection", "infe(c|k)(t|s)ion", 10));
         regs.add(new Keyword("disease", "d(i|e)sease", 10));
