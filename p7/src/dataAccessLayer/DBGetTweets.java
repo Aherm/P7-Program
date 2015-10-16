@@ -50,7 +50,11 @@ public class DBGetTweets {
     }
     
     public TweetStorage getTweetsFromLastThreeDays(){
-    	return tsQuery("SELECT * FROM tweets WHERE EXTRACT(DAY FROM age(createdat::timestramp)) <= 3");
+    	return tsQuery("SELECT * FROM tweets WHERE EXTRACT(DAY FROM age(createdat::timestamp)) <= 3");
+    }
+    
+    public TweetStorage getGeotaggedTweets(){
+    	return tsQuery("SELECT * from tweets WHERE NOT lat = 0 AND not lon = 0");
     }
     
     
