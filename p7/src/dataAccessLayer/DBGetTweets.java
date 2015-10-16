@@ -15,7 +15,7 @@ public class DBGetTweets {
     public DBGetTweets() {
     }
 
-    public TweetStorage tsQuery(String query){
+    private TweetStorage tsQuery(String query){
     	
     	TweetStorage tweets = new TweetStorage();
         
@@ -44,11 +44,18 @@ public class DBGetTweets {
     public TweetStorage getKLastTweets(int k){
     	return tsQuery("SELECT * FROM tweets ORDER BY tweetid DESC LIMIT " + k);
     }
+    
     public TweetStorage getInterval(int start,int size){
     	return tsQuery("SELECT * FROM tweets ORDER BY id LIMIT " + size +" OFFSET " + start);
     }
     
-    public long countQuery(String query){
+    public TweetStorage getTweetsFromLastThreeDays(){
+    	return tsQuery("SELECT * FROM tweets WHERE EXTRACT(DAY FROM age(createdat::timestramp)) <= 3");
+    }
+    
+    
+    
+    private long countQuery(String query){
         long numTweets = 0;
 
         try {
