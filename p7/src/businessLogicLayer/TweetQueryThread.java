@@ -22,24 +22,31 @@ public class TweetQueryThread extends Thread {
 	}
 	
 	public void run() {
-		System.out.println("Ask for size");
+		System.out.println("Press 1 to get size of tweets, 2 to cluster tweets, and 3 to get cluster size.");
 		Scanner sc = new Scanner(System.in);
+		boolean running = true;
 		
-		while (true) {		
+		while (running) {		
 			int i = sc.nextInt();
 			
-			if (i == 1) {
-				System.out.println("Size is " + getSize());
-			}			
-			else if (i == 2) {
-				if (clusters.size() == 0) {
-					clusters = Clustering.tweetClustering(tweets, facilityCost);
-				}
-				else {
-					Clustering.updateClusters(clusters, Cluster.getUnclusteredTweets(tweets), tweets, facilityCost);
-				}
+			switch (i) {
+				case 1:
+					System.out.println("Tweet size is " + getSize());
+					break;
+				case 2:
+					if (clusters.size() == 0) {
+						clusters = Clustering.tweetClustering(tweets, facilityCost);
+					}
+					else {
+						Clustering.updateClusters(clusters, Cluster.getUnclusteredTweets(tweets), tweets, facilityCost);
+					}
+					break;
+				case 3:
+					System.out.println("Cluster size: " + clusters.size());
+					break;
+				default:
+					running = false;
 			}
-			else break;
 		}
 		
 		sc.close();
