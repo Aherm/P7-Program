@@ -96,6 +96,7 @@ public class Filter {
         String stomacheReg = "stoma(ch|k)e";
         regs.add(new Keyword("food poison", "fo(od|d|ood|ods|odd)\\s?poi(son|sons|sen|sens|sn)", 10));
         regs.add(new Keyword("feeling sick", feelingReg + "\\s?" + sickReg, 10));
+        regs.add(new Keyword("being sick", "being\\s?" + sickReg, 10));
         regs.add(new Keyword("im sick", "i('m|m)\\s?" + sickReg, 10));
         regs.add(new Keyword("ill", feelingReg + "\\s?(ill|il)", 10));
         regs.add(new Keyword("stomach flue", stomacheReg + "\\s?(pain|flu|flue|)", 10));
