@@ -58,4 +58,14 @@ public class Cluster {
 		
 		return cluster;
 	}
+	
+	public static TweetStorage getUnclusteredTweets(TweetStorage tweets) {
+		TweetStorage res = new TweetStorage();
+		for (Tweet t : tweets) {
+			if (t.getCluster() == null) {
+				res.add(t);
+			}
+		}
+		return res;
+	}
 }
