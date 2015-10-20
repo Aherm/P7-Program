@@ -41,7 +41,7 @@ public class TestDBMain {
 		*/
 
         DBConnect connection = DBConnect.getInstance();
-        connection.connectTo("filtered", "guest", "42");
+        connection.connectToLocal("filtered", "guest", "42");
         DBGetTweets getTweets = new DBGetTweets();
         TweetStorage ts = getTweets.getTweets();
         DataAnalysis analysis = new DataAnalysis(ts);
