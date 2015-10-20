@@ -17,9 +17,9 @@ public class Clustering {
 		
 		// TODO I'm not sure if it's log of cluster size or clonedTweets size. The paper didn't make this clear.
 		// Maybe move this loop to refineClusters. Should give more accurate updates of clusters, but worse performance.
-		double iterations = Math.log(clusters.size());
+		int iterations = (int) Math.log(clusters.size());
 		for (int i = 0; i < iterations; i++) {
-			System.out.println("Doing refinement step " + (i + 1) + " of " + (int)iterations + ".");
+			System.out.println("Doing refinement step " + (i + 1) + " of " + iterations + ".");
 			refineClusters(tweets, tweets, facilityCost, clusters);
 		}
 		System.out.println("Clustering done.");

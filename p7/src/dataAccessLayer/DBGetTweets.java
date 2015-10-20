@@ -15,7 +15,7 @@ public class DBGetTweets {
     public DBGetTweets() {
     }
 
-    private TweetStorage tsQuery(String query){
+    private static TweetStorage tsQuery(String query){
     	
     	TweetStorage tweets = new TweetStorage();
         
@@ -33,33 +33,33 @@ public class DBGetTweets {
     }
     
 
-    public TweetStorage getKTweets (int k) {
+    public static TweetStorage getKTweets (int k) {
     	return tsQuery("SELECT * FROM tweets LIMIT " + k);
     }
     
-    public TweetStorage getTweets() {
+    public static TweetStorage getTweets() {
         return tsQuery("SELECT * FROM tweets");
     }
     
-    public TweetStorage getKLastTweets(int k){
+    public static TweetStorage getKLastTweets(int k){
     	return tsQuery("SELECT * FROM tweets ORDER BY tweetid DESC LIMIT " + k);
     }
     
-    public TweetStorage getInterval(int start,int size){
+    public static TweetStorage getInterval(int start,int size){
     	return tsQuery("SELECT * FROM tweets ORDER BY id LIMIT " + size +" OFFSET " + start);
     }
     
-    public TweetStorage getTweetsFromLastThreeDays(){
+    public static TweetStorage getTweetsFromLastThreeDays(){
     	return tsQuery("SELECT * FROM tweets WHERE EXTRACT(DAY FROM age(createdat::timestamp)) <= 3");
     }
     
-    public TweetStorage getGeotaggedTweets(){
+    public static TweetStorage getGeotaggedTweets(){
     	return tsQuery("SELECT * from tweets WHERE NOT lat = 0 AND not lon = 0");
     }
     
     
     
-    private long countQuery(String query){
+    private static long countQuery(String query){
         long numTweets = 0;
 
         try {
@@ -77,11 +77,11 @@ public class DBGetTweets {
         return numTweets;
     }
     
-    public long getNumTweets() {
+    public static long getNumTweets() {
        return countQuery("SELECT count(*) FROM tweets");
     }
     
-    private TweetStorage initializeTweets(ResultSet res) {
+    private static TweetStorage initializeTweets(ResultSet res) {
         TweetStorage tweets = new TweetStorage();
         try {
             while (res.next()) {

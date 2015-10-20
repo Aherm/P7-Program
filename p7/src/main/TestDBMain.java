@@ -1,15 +1,8 @@
 package main;
 
-import java.util.List;
-
-import businessLogicLayer.Batch;
-import businessLogicLayer.Clustering;
 import businessLogicLayer.DataAnalysis;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetTweets;
-import dataAccessLayer.DBInsert;
-import modelLayer.Cluster;
-import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 import visual.GpxCreator;
 
@@ -41,13 +34,11 @@ public class TestDBMain {
 		*/
 
         DBConnect connection = DBConnect.getInstance();
-        connection.connectTo("filtered", "guest", "42");
-        DBGetTweets getTweets = new DBGetTweets();
-        TweetStorage ts = getTweets.getTweets();
+        connection.connectToLocal("filtered", "guest", "42");
+        TweetStorage ts = DBGetTweets.getTweets();
         DataAnalysis analysis = new DataAnalysis(ts);
         analysis.printStatistics();
-        GpxCreator gpx = new GpxCreator();
-        gpx.createGpxFile(ts,"fall", "C:\\Users\\madjen12\\Desktop");
+        GpxCreator.createGpxFile(ts,"fall", "C:\\Users\\madjen12\\Desktop");
         connection.closeConnection();
     }
 

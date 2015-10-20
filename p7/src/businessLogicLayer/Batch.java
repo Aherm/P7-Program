@@ -12,10 +12,9 @@ public class Batch {
 		int size = 10000; 
 		int start = 0; 
 		int itnr = 1; 
-		DBGetTweets getT = new DBGetTweets();
 		do{
 			System.out.println("iteration: " + itnr);
-			interval = getT.getInterval(start, size);
+			interval = DBGetTweets.getInterval(start, size);
 			ts.addAll(Filter.filterTweets(interval, new Date()));
 		    System.out.println(ts.size());
 			start = start + size; 
@@ -31,10 +30,9 @@ public class Batch {
 		int size = 10000;
 		int start = 0;
 		int itnr = 1;
-		DBGetTweets getT = new DBGetTweets();
 		do{
 			System.out.println("iteration: " + itnr);
-			interval = getT.getInterval(start, size);
+			interval = DBGetTweets.getInterval(start, size);
 			Map<String, Integer> tempMap = Filter.countMatches(interval);
 			for (Map.Entry entry : tempMap.entrySet()){
 

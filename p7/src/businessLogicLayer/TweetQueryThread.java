@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import modelLayer.Cluster;
 import modelLayer.TweetStorage;
+import visual.GpxCreator;
 
 public class TweetQueryThread extends Thread {
 	
@@ -22,7 +23,7 @@ public class TweetQueryThread extends Thread {
 	}
 	
 	public void run() {
-		System.out.println("Press 1 to get size of tweets, 2 to cluster tweets, and 3 to get cluster size.");
+		System.out.println("Press 1 to get size of tweets, 2 to cluster tweets, 3 to get cluster size, and 4 to create cluster gpx files");
 		Scanner sc = new Scanner(System.in);
 		boolean running = true;
 		
@@ -43,6 +44,9 @@ public class TweetQueryThread extends Thread {
 					break;
 				case 3:
 					System.out.println("Cluster size: " + clusters.size());
+					break;
+				case 4:
+					GpxCreator.createClusterGpsFiles(clusters);
 					break;
 				default:
 					running = false;
