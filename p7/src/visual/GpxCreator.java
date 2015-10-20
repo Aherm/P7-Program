@@ -53,7 +53,15 @@ public class GpxCreator {
 	}
 	
 	public static void createClusterGpsFiles(List<Cluster> clusters) {
+		TweetStorage centers = new TweetStorage();
+		String path = "./gpxFiles/";
 		
+		for (int i = 0; i < clusters.size(); i++) {
+			Cluster c = clusters.get(i);
+			String name = "Cluster" + i;
+			centers.add(c.getCenter());
+			createGpxFile(c.getTweets(), name, path);
+		}
 	}
 
 	private static void createWPT(Tweet tweet){
