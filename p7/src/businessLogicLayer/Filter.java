@@ -12,7 +12,7 @@ public class Filter {
     static String reg1 = ".*?";        // Any character 0-many times
     static String reg2 = "\\s?@?";        // space followed by a @ zero or one time
     static String reg4 = "\\w?\\s?";    // Any letter or digit zero or one time followed by a space
-    
+
     public static TweetStorage filterTweets(TweetStorage tweets, Date date) {
         TweetStorage newTweetStorage = new TweetStorage();
         List<Keyword> regularExpressions = getRegularExpressions();
@@ -21,7 +21,7 @@ public class Filter {
         for (Keyword keyword : regularExpressions) {
             reg3 = keyword.getRegex();
             Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-
+            
             for (int i = tweets.size() - 1; i >= 0; i--) {
                 Tweet tweet = tweets.get(i);
                 if (tweet.getCreatedAt().before(date)) {
@@ -101,8 +101,7 @@ public class Filter {
         regs.add(new Keyword("food poison", "fo(od|d|ood|ods|odd)\\s?poi(son|sons|sen|sens|sn|soning)", 10));
         regs.add(new Keyword("feeling sick", feelingReg + "\\s?" + sickReg, 10));
         regs.add(new Keyword("being sick", "being\\s?" + sickReg, 10));
-        String notToReg = "^(?!to).*";
-        regs.add(new Keyword("im sick", "i('m|m)\\s?" + sickReg + notToReg, 10));
+        regs.add(new Keyword("im sick", "i('m|m)\\s?" + sickReg + "\\s?", 10));
         regs.add(new Keyword("ill", feelingReg + "\\s?(ill|il)", 10));
         regs.add(new Keyword("stomach flue", stomacheReg + "\\s?(pain|flu|flue|hurt|hurts|)", 10));
         regs.add(new Keyword("bad stomach", "(bad|upset)\\s?" + stomacheReg, 10));
@@ -120,4 +119,7 @@ public class Filter {
         regs.add(new Keyword("headache", "head(a|e)(che|k)", 10));
         return regs;
     }
+    //String notToReg = "(^(.(?!to))$)*";
+
+
 }
