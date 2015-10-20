@@ -94,6 +94,7 @@ public class Filter {
         //Todo: 
         //Make sure (of|off) after sick is not allowed, so we dont get "im sick of you"
         //Consider (to) and (and) after sick as well
+        //also consider (bad) before headache
         String feelingReg = "fe(e|el|l|)(lin(g|))?";
         String sickReg = "si(ck|k)";
         String stomacheReg = "stoma(ch|k)e";
