@@ -86,4 +86,13 @@ public class TwitterRest {
 			startTime = System.nanoTime();
 		}
 	}
+
+	public void printUserName(long id){
+		try {
+			System.out.println(twitter.getUserTimeline(id).get(0).getUser().getScreenName());
+		}
+		catch(TwitterException e){
+			e.printStackTrace();
+		}
+	}
 }

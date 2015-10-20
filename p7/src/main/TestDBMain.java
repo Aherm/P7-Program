@@ -2,16 +2,19 @@ package main;
 
 import java.util.List;
 
+import businessLogicLayer.Batch;
 import businessLogicLayer.Clustering;
+import businessLogicLayer.DataAnalysis;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetTweets;
+import dataAccessLayer.DBInsert;
 import modelLayer.Cluster;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
+import visual.GpxCreator;
 
 public class TestDBMain {
-	public static void main(String[] args) 
-	{
+	public static void main(String[] args) {/*
 		DBConnect connection = DBConnect.getInstance();
 		connection.connectToServer("jdbc:postgresql://172.25.26.208/", "postgres", "guest", "42");
 
@@ -35,5 +38,17 @@ public class TestDBMain {
 		System.out.println("Cluster size: " + clusters.size());
 		
 		connection.closeConnection();
-	}
+		*/
+
+        DBConnect connection = DBConnect.getInstance();
+        connection.connectTo("filtered", "guest", "42");
+        DBGetTweets getTweets = new DBGetTweets();
+        TweetStorage ts = getTweets.getTweets();
+        DataAnalysis analysis = new DataAnalysis(ts);
+        analysis.printStatistics();
+        GpxCreator gpx = new GpxCreator();
+        gpx.createGpxFile(ts,"fall", "C:\\Users\\madjen12\\Desktop");
+        connection.closeConnection();
+    }
+
 }
