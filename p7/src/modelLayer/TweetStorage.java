@@ -57,9 +57,10 @@ public class TweetStorage implements Iterable<Tweet> {
 			
 			while(Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays() >= days && !tweets.isEmpty()) {
 				remove(tweet, clusters);
-				if (!tweets.isEmpty()) {
-					tweet = tweets.getFirst();
+				if (tweets.isEmpty()) {
+					break;
 				}
+				tweet = tweets.getFirst();
 			}
 		}
 	}
