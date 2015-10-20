@@ -12,7 +12,7 @@ import modelLayer.*;
 public class GpxCreator {
 	private static XMLOutputFactory factory = XMLOutputFactory.newInstance();
 	private static XMLStreamWriter writer;
-	
+
 	public GpxCreator() {
 	}
 
@@ -20,12 +20,7 @@ public class GpxCreator {
 		try {
 			File gpxFile;
 
-			if(System.getProperty("os.name").equals("Linux")) {
-				gpxFile = new File(outPutPath +"/" + name + ".gpx");
-			}
-			else {
-				gpxFile = new File(outPutPath +"\\" + name + ".gpx"); 
-			}
+			gpxFile = new File(outPutPath +"/" + name + ".gpx");
 
 			if(!gpxFile.exists()) {
 				gpxFile.createNewFile(); 
@@ -51,9 +46,19 @@ public class GpxCreator {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void createClusterGpsFiles(List<Cluster> clusters) {
+		TweetStorage centers = new TweetStorage();
+		String path = "./gpxFiles";
+
+		for (int i = 0; i < clusters.size(); i++) {
+			Cluster c = clusters.get(i);
+			String name = "Cluster" + i;
+			centers.add(c.getCenter());
+			createGpxFile(c.getTweets(), name, path);
+		}
 		
+		createGpxFile(centers, "centers", path);
 	}
 
 	private static void createWPT(Tweet tweet){
