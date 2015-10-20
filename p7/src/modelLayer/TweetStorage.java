@@ -51,17 +51,17 @@ public class TweetStorage implements Iterable<Tweet> {
 	}
 	
 	public void removeOldTweets(int days, List<Cluster> clusters) {
-		if (!tweets.isEmpty()) {
-			Tweet tweet = tweets.getFirst();
-			Date today = new Date();
-			
-			while(Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays() >= days && !tweets.isEmpty()) {
-				remove(tweet, clusters);
-				if (tweets.isEmpty()) {
-					break;
-				}
-				tweet = tweets.getFirst();
+		TweetStorage removalList = new TweetStorage();
+		Date today = new Date();
+		
+		for (Tweet tweet : tweets) {
+			if (Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays() >= days) {
+				removalList.add(tweet);
 			}
+		}
+		
+		for (Tweet tweet : removalList) {
+			remove(tweet, clusters);
 		}
 	}
 	
