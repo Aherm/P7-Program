@@ -95,9 +95,11 @@ public class DataAnalysis {
 
 		String clusterAnalysis = null;
 		if (clusters != null){
-			clusterAnalysis = "Average cluster size: " + calcAvgClusterSize(clusters) + "\r\n" +
-				"Min cluster size: " + calcMinClusterSize(clusters) + "\r\n" +
-				"Max cluster size: " + calcMaxClusterSize(clusters) + "\r\n";
+			if(clusters.size() > 0){
+				clusterAnalysis = "Average cluster size: " + calcAvgClusterSize(clusters) + "\r\n" +
+						"Min cluster size: " + calcMinClusterSize(clusters) + "\r\n" +
+						"Max cluster size: " + calcMaxClusterSize(clusters) + "\r\n";
+			}
 		}
 
 		if (clusterAnalysis != null)
@@ -114,8 +116,6 @@ public class DataAnalysis {
 		}
 		return result;
 	}
-
-
 
 
 
@@ -141,9 +141,5 @@ public class DataAnalysis {
 		}
 		
 	}
-	
-	
-	
-	
 	
 }
