@@ -23,6 +23,7 @@ public class DBGetTweets {
         	Connection con = DBConnect.getInstance().getCon();
 
             Statement stmt = con.createStatement();
+            stmt.execute("SET datestyle = \"ISO,DMY\"");
             ResultSet res = stmt.executeQuery(query);
 
             tweets = initializeTweets(res);
@@ -55,9 +56,7 @@ public class DBGetTweets {
     
     public static TweetStorage getGeotaggedTweets(){
     	return tsQuery("SELECT * from tweets WHERE NOT lat = 0 AND not lon = 0");
-    }
-    
-    
+    } 
     
     private static long countQuery(String query){
         long numTweets = 0;
@@ -66,6 +65,7 @@ public class DBGetTweets {
             Connection con = DBConnect.getInstance().getCon();
             
             Statement stmt = con.createStatement();
+            stmt.execute("set datestyle = \"ISO,DMY\""); 
             ResultSet res = stmt.executeQuery(query);
 
             res.next();
@@ -79,6 +79,10 @@ public class DBGetTweets {
     
     public static long getNumTweets() {
        return countQuery("SELECT count(*) FROM tweets");
+    }
+    
+    public static long getNrTweetsFromDay(String date){
+    	return countQuery("SELECT count(*) FROM tweets WHERE createdat::date = '" + date + "'");
     }
     
     private static TweetStorage initializeTweets(ResultSet res) {
