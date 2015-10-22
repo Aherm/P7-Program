@@ -27,7 +27,7 @@ public class OurStatusListener implements StatusListener {
     	{
     		allTweets.add(tweet);
     		try {
-				allTweets.addAll(restAPI.getUserTimeline3days(tweet.getUserID(),new Date()));
+				allTweets.addAll(restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet));
 			} catch (TwitterException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
