@@ -17,8 +17,7 @@ import businessLogicLayer.TweetQueryThread;
 public class Program {
 
     public static void main(String[] args) {
-    	Oauth auth = new Oauth(); 
-		TwitterStreamFactory tsf = new TwitterStreamFactory(auth.createConfigBuilder().build());
+		TwitterStreamFactory tsf = new TwitterStreamFactory(Oauth.createConfigBuilder().build());
 		TwitterStream stream = tsf.getInstance(); 
 
 		OurStatusListener listener = new OurStatusListener();
