@@ -31,6 +31,8 @@ public class OurStatusListener implements StatusListener {
 			} catch (TwitterException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				System.out.println("Stopped because of rateLimit");
+				return; 
 			}
     		
     	}
