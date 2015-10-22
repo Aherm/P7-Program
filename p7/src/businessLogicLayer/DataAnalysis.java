@@ -51,7 +51,7 @@ public class DataAnalysis {
 		int numClusters = clusters.size();
 
 		for (Cluster cluster : clusters){
-			totalSize += cluster.getSize();
+			totalSize += cluster.size();
 		}
 
 		//make sure double return works
@@ -64,9 +64,9 @@ public class DataAnalysis {
 
 		for (Cluster cluster : clusters){
 			if (minSize == 0)
-				minSize = cluster.getSize();
-			else if (minSize > cluster.getSize())
-				minSize = cluster.getSize();
+				minSize = cluster.size();
+			else if (minSize > cluster.size())
+				minSize = cluster.size();
 		}
 		return minSize;
 	}
@@ -76,9 +76,9 @@ public class DataAnalysis {
 
 		for (Cluster cluster : clusters){
 			if (maxSize == 0)
-				maxSize = cluster.getSize();
-			else if (maxSize < cluster.getSize())
-				maxSize = cluster.getSize();
+				maxSize = cluster.size();
+			else if (maxSize < cluster.size())
+				maxSize = cluster.size();
 		}
 		return maxSize;
 	}
