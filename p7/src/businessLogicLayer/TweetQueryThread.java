@@ -3,10 +3,10 @@ package businessLogicLayer;
 import java.util.List;
 import java.util.Scanner;
 
+import fileCreation.GpxCreator;
+import fileCreation.StatisticsWriter;
 import modelLayer.Cluster;
 import modelLayer.TweetStorage;
-import visual.GpxCreator;
-import visual.StatisticsWriter;
 
 public class TweetQueryThread extends Thread {
 
