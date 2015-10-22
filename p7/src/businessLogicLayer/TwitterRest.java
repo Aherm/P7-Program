@@ -24,7 +24,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterRest {
 
 	private int totalcalls = 0; // holds nr of times we use the twitter api
-	private long startTime = System.nanoTime();
+	private long startTime;
 	private Twitter twitter;
 	private int stuff = 1; 
 	public boolean limitReached = false; 
@@ -70,7 +70,11 @@ public class TwitterRest {
 	
 	private void rateLimiter(){
 		
-		if(System.nanoTime() - startTime > 900000000000L){// 15 minutes
+		if(totalcalls == 0){
+			startTime = System.nanoTime();
+		}
+		
+		if((System.nanoTime() - startTime) > 900000000000L){// 15 minutes
 			totalcalls = 0; 
 			startTime = System.nanoTime();
 			limitReached = false; 
