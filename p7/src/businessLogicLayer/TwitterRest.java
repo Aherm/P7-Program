@@ -55,9 +55,11 @@ public class TwitterRest {
 			// adds all tweets that are no more than 3 days old 
 			for (int i = 0; i < userTimeline.size(); i++) {
 				DateTime tweetDate = new DateTime(userTimeline.get(i).getCreatedAt());
-				if (Days.daysBetween(tweetDate,startDate).getDays() <= 3 && tweet.getTweetID() != userTimeline.get(i).getId()) {
-					tweets.add(Tweet.createTweet(userTimeline.get(i)));					
-					}
+				if (Days.daysBetween(tweetDate,startDate).getDays() <= 3) {
+					if(tweet.getTweetID() != userTimeline.get(i).getId()){
+						tweets.add(Tweet.createTweet(userTimeline.get(i)));	
+					}								
+				}
 				else break;
 			}
 			pagenr++;
