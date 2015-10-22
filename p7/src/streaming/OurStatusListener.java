@@ -1,9 +1,11 @@
 package streaming;
 
+import java.util.Date;
 import java.util.List;
 
 import businessLogicLayer.Filter;
 import businessLogicLayer.Preprocessor;
+import businessLogicLayer.TwitterRest;
 import modelLayer.Cluster;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
@@ -13,7 +15,8 @@ public class OurStatusListener implements StatusListener {
     TweetStorage newTweets = new TweetStorage();
     TweetStorage allTweets = new TweetStorage();
     List<Cluster> clusters = null;
-
+    TwitterRest restAPI = new TwitterRest(); 
+    
     public void onStatus(Status status) {
         Tweet tweet = Tweet.createTweet(status);
         newTweets.add(tweet);
@@ -23,6 +26,13 @@ public class OurStatusListener implements StatusListener {
     	if(Filter.filterTweet(tweet))
     	{
     		allTweets.add(tweet);
+    		try {
+				allTweets.addAll(restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet));
+			} catch (TwitterException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
     	}
     	allTweets.removeOldTweets(3, clusters);
     }

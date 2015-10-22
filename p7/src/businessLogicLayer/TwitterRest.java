@@ -1,5 +1,6 @@
 package businessLogicLayer;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,8 +25,9 @@ public class TwitterRest {
 
 	private int totalcalls = 0; // holds nr of times we use the twitter api
 	private long startTime;
-	private long endTime;
 	private Twitter twitter;
+	private int stuff = 1; 
+	public boolean limitReached = false; 
 
 	public TwitterRest() {
 
@@ -35,42 +37,34 @@ public class TwitterRest {
 	}
 
 	//currently assumes that the list is sorted from newest to oldest 
-	public TweetStorage getUserTimeline3days(long userId, Date startDate) {
+	public TweetStorage getUserTimeline3days(long userId, Date _startdate,Tweet tweet) throws TwitterException{
 	
 		TweetStorage tweets = new TweetStorage();		
+		int pagenr = 1;
 		
-		try {
-			int pagenr = 1;
-
-			Paging page = new Paging(pagenr, 500);
-			List<Status> userTimeline = new ArrayList<Status>();
-			do {	
-				rateLimiter();
-				if(totalcalls == 280) // makes sure we do not reach our limit 
-					break;
-				
-				userTimeline = twitter.getUserTimeline(userId, page);
-				Date lastDate = userTimeline.get(userTimeline.size() - 1).getCreatedAt();
-				
-				// adds all tweets that are no more than 3 days old 
-				for (int i = 0; i < userTimeline.size(); i++) {
-					Date today = userTimeline.get(i).getCreatedAt();
-					if (Days.daysBetween(new DateTime(today),new DateTime(startDate)).getDays() <= 3) {
-						tweets.add(Tweet.createTweet(userTimeline.get(i)));
+		Paging page = new Paging(pagenr, 500);
+		List<Status> userTimeline = new ArrayList<Status>();
+		DateTime oldestTweetDate = new DateTime();
+		DateTime startDate = new DateTime(_startdate);
+		do {
+			rateLimiter();
+			if(limitReached)
+				break; 
+			userTimeline = twitter.getUserTimeline(userId, page);
+			
+			// adds all tweets that are no more than 3 days old 
+			for (int i = 0; i < userTimeline.size(); i++) {
+				DateTime tweetDate = new DateTime(userTimeline.get(i).getCreatedAt());
+				if (Days.daysBetween(tweetDate,startDate).getDays() <= 3 && tweet.getTweetID() != userTimeline.get(i).getId()) {
+					tweets.add(Tweet.createTweet(userTimeline.get(i)));					
 					}
-					else break;
-				}
-
-				pagenr++;
-				page.setPage(pagenr);
-			} while (Days.daysBetween(new DateTime(userTimeline.get(userTimeline.size() -1).getCreatedAt()), new DateTime(startDate)).getDays() <= 3);
-
-		}
-		catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+				else break;
+			}
+			pagenr++;
+			page.setPage(pagenr);
+			oldestTweetDate = new DateTime(userTimeline.get(userTimeline.size() - 1).getCreatedAt()); //get the oldest tweet from the usertimeline
+			}while (Days.daysBetween(oldestTweetDate, startDate).getDays() <= 3);
+		
 		return tweets; 
 	}
 	
@@ -78,21 +72,26 @@ public class TwitterRest {
 		
 		if(totalcalls == 0){
 			startTime = System.nanoTime();
-			totalcalls++;
 		}
-
-		if(System.nanoTime() - startTime > 900000000000L){// 15 minutes
-			totalcalls = 1; 
+		
+		if((System.nanoTime() - startTime) > 900000000000L){// 15 minutes
+			totalcalls = 0; 
 			startTime = System.nanoTime();
+			limitReached = false; 
 		}
+		//MADS: maybe thrown an exception 
+		if(totalcalls == 175){
+			System.out.println("REST API limit reached: need to wait");
+			limitReached = true; 
+		}
+		else
+			totalcalls++;		
 	}
 
-	public void printUserName(long id){
-		try {
-			System.out.println(twitter.getUserTimeline(id).get(0).getUser().getScreenName());
-		}
-		catch(TwitterException e){
-			e.printStackTrace();
-		}
+	public void printUserName(long id) throws TwitterException{
+		
+		rateLimiter();
+		System.out.println(twitter.getUserTimeline(id).get(0).getUser().getScreenName());
+		
 	}
 }

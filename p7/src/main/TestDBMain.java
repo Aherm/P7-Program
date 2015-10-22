@@ -3,8 +3,8 @@ package main;
 import businessLogicLayer.DataAnalysis;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetTweets;
+import fileCreation.GpxCreator;
 import modelLayer.TweetStorage;
-import visual.GpxCreator;
 
 public class TestDBMain {
 	public static void main(String[] args) {/*

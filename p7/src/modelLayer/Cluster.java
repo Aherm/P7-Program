@@ -3,7 +3,12 @@ package modelLayer;
 public class Cluster {
 	private Tweet center;
 	private TweetStorage tweets = new TweetStorage();
-	
+	private int size = 0;
+
+	public int getSize() {
+		return getTweets().size();
+	}
+
 	public Cluster(Tweet center) {
 		this.center = center;
 	}
