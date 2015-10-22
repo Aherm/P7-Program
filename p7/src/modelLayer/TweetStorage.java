@@ -31,11 +31,15 @@ public class TweetStorage implements Iterable<Tweet> {
 	public void remove(Tweet tweet, List<Cluster> clusters) {
 		if (clusters != null) {
 			Cluster c = tweet.getCluster();
-			if (c.getCenter() == tweet) {
-				clusters.remove(c);
-				c.removeTweet(tweet);
-				for (Tweet t : c.getTweets()) {
-					Clustering.getNearestCluster(clusters, t);
+
+			//not geotagged tweets don't have a cluster...
+			if (c != null){
+				if (c.getCenter() == tweet) {
+					clusters.remove(c);
+					c.removeTweet(tweet);
+					for (Tweet t : c.getTweets()) {
+						Clustering.getNearestCluster(clusters, t);
+					}
 				}
 			}
 		}
