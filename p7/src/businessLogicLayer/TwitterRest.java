@@ -37,7 +37,7 @@ public class TwitterRest {
 	}
 
 	//currently assumes that the list is sorted from newest to oldest 
-	public TweetStorage getUserTimeline3days(long userId, Date _startdate) throws TwitterException{
+	public TweetStorage getUserTimeline3days(long userId, Date _startdate,Tweet tweet) throws TwitterException{
 	
 		TweetStorage tweets = new TweetStorage();		
 		int pagenr = 1;
@@ -55,7 +55,7 @@ public class TwitterRest {
 			// adds all tweets that are no more than 3 days old 
 			for (int i = 0; i < userTimeline.size(); i++) {
 				DateTime tweetDate = new DateTime(userTimeline.get(i).getCreatedAt());
-				if (Days.daysBetween(tweetDate,startDate).getDays() <= 3) {
+				if (Days.daysBetween(tweetDate,startDate).getDays() <= 3 && tweet.getTweetID() != userTimeline.get(i).getId()) {
 					tweets.add(Tweet.createTweet(userTimeline.get(i)));					
 					}
 				else break;

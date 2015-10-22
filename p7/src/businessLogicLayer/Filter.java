@@ -11,7 +11,7 @@ import modelLayer.TweetStorage;
 public class Filter {
     static String reg1 = ".*?";        // Any character 0-many times
     static String reg2 = "\\s?@?";        // space followed by a @ zero or one time
-    static String reg4 = "\\w?\\s?";    // Any letter or digit zero or one time followed by a space
+    static String reg4 = "\\w?";    // Any letter or digit zero or one time followed by a space
 
     public static TweetStorage filterTweets(TweetStorage tweets, Date date) {
         TweetStorage newTweetStorage = new TweetStorage();
@@ -98,17 +98,18 @@ public class Filter {
         String feelingReg = "fe(e|el|l|)(lin(g|))?";
         String sickReg = "si(ck|k)";
         String stomacheReg = "stoma(ch|k)e";
+        String excludeOfReg = "(?!\\sof)";
         regs.add(new Keyword("food poison", "fo(od|d|ood|ods|odd)\\s?pois(on|ons|en|ens|n|oning)", 10));
-        regs.add(new Keyword("feeling sick", feelingReg + "\\s?" + sickReg, 10));
-        regs.add(new Keyword("being sick", "being\\s?" + sickReg, 10));
-        //regs.add(new Keyword("sick of", "i('m|m)\\s?" + sickReg + "\\s?^(of)", 10));
+        regs.add(new Keyword("feeling sick", feelingReg + "\\s?" + sickReg + excludeOfReg, 10));
+        regs.add(new Keyword("being sick", "be(ing|)\\s?" + sickReg, 10));
+        regs.add(new Keyword("sick of", "i('m|m)\\s?" + sickReg + excludeOfReg, 10));
         regs.add(new Keyword("ill", feelingReg + "\\s?(ill|il)", 10));
-        regs.add(new Keyword("stomach flue", stomacheReg + "\\s?(pain|flu|flue|hurt|hurts|)", 10));
+        regs.add(new Keyword("stomach flue", stomacheReg + "\\s?(is\\s)?(pain|flu|flue|hurt|hurts|hurting|)", 10));
         regs.add(new Keyword("bad stomach", "(bad|upset)\\s?" + stomacheReg, 10));
         regs.add(new Keyword("diarrhea", "dia(rrhea|rria|rhea|ria|hrrhea|hrhea)", 10));
         regs.add(new Keyword("dehydration", "de(hy|hi)dra(tion|sion)", 10));
         regs.add(new Keyword("salmonella", "salmonel(la|a)", 10));
-        regs.add(new Keyword("nausea", feelingReg + "\\s?nause(a|ous)", 10));
+        regs.add(new Keyword("nausea", feelingReg + "?\\s?nause(a|ous)", 10));
         regs.add(new Keyword("vomit", "vom(it|mit|iting|itin|miting|mitin)", 10));
         regs.add(new Keyword("throwing up", "throw(ing|)\\s?(u|o)p", 10));
         regs.add(new Keyword("pepto bismal", "pe(p|b)to\\s?bi(s|ss)mal", 10));
