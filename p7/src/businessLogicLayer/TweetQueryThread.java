@@ -24,7 +24,7 @@ public class TweetQueryThread extends Thread {
     }
 
     public void run() {
-        System.out.println("Press 1 to get size of tweets, 2 to cluster tweets, 3 to get cluster size, and 4 to create cluster gpx files");
+        System.out.println("Press 1 to get size of tweets, 2 to cluster tweets, 3 to get cluster size, 4 to create cluster gpx files and 5 to get data statistics");
         Scanner sc = new Scanner(System.in);
         boolean running = true;
 
@@ -57,6 +57,7 @@ public class TweetQueryThread extends Thread {
                     } catch (Exception ex) {
                         System.out.print(ex);
                     }
+                    System.out.println("DataAnalysis done, check the statistics folder");
                     break;
                 default:
                     running = false;

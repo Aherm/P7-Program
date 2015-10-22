@@ -28,7 +28,8 @@ public class Clustering {
 
 	public static void updateClusters (List<Cluster> clusters, TweetStorage newTweets, TweetStorage tweets, double facilityCost) {
 		for (Tweet t : newTweets) {
-			getNearestCluster(clusters, t);
+			if (t.isGeotagged())
+				getNearestCluster(clusters, t);
 		}
 		refineClusters(newTweets, tweets, facilityCost, clusters);
 	}
@@ -37,7 +38,8 @@ public class Clustering {
 		
 		// Checks for all new tweets if the solution would be better if a new cluster was made there.
 		for (Tweet t : newTweets.getRandomizedCopy()) {
-			checkGainAndReassign(t, clusters, allTweets, facilityCost);
+			if (t.isGeotagged())
+				checkGainAndReassign(t, clusters, allTweets, facilityCost);
 		}
 	}
 	
@@ -52,14 +54,16 @@ public class Clustering {
 		
 		for (int i = 1; i < randomizedTweets.size(); i++) {
 			Tweet tweet = randomizedTweets.get(i);
-			
-			double dist = getNearestCluster(clusters, tweet);
-			double prob = dist / facilityCost;
-			
-			double r = rand.nextDouble();
-			if (r <= prob) {
-				cluster = Cluster.createCluster(tweet);
-				clusters.add(cluster);
+
+			if (tweet.isGeotagged()){
+				double dist = getNearestCluster(clusters, tweet);
+				double prob = dist / facilityCost;
+
+				double r = rand.nextDouble();
+				if (r <= prob) {
+					cluster = Cluster.createCluster(tweet);
+					clusters.add(cluster);
+				}
 			}
 		}
 		return clusters;
