@@ -106,16 +106,13 @@ public class Tweet {
 		this.lon = lon;
 	}
 
-	public void add(Keyword keyword)
-	{
+	public void add(Keyword keyword) {
 		matchedKeywords.add(keyword);
 	}
 
-	public double getScore()
-	{
+	public double getScore() {
 		score = 0;
-		for(Keyword keyword : matchedKeywords)
-		{
+		for(Keyword keyword : matchedKeywords) {
 			this.score += keyword.getWeight();
 		}
 
@@ -142,7 +139,7 @@ public class Tweet {
 		this.addedToStorage = addedToStorage;
 	}
 
-	public boolean isGeotagged(){
+	public boolean isGeotagged() {
 		if(lat == 0 && lon == 0)
 			return false; 
 		else 
