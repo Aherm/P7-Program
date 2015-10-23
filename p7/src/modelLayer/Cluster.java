@@ -30,6 +30,7 @@ public class Cluster {
 	}
 	
 	public void removeTweet(Tweet tweet) {
+		// TODO Check if tweet is center of the cluster
 		tweet.setCluster(null);
 		tweets.remove(tweet);
 	}
