@@ -1,8 +1,8 @@
 package modelLayer;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class ClusterStorage implements Iterable<Cluster> {
 	private List<Cluster> clusters = new ArrayList<Cluster>();
@@ -28,7 +28,7 @@ public class ClusterStorage implements Iterable<Cluster> {
 		return clusters.size();
 	}
 
-	public Iterator<Cluster> iterator(){
+	public Iterator<Cluster> iterator() {
 		return clusters.iterator();
 	}
 }
