@@ -11,39 +11,38 @@ import modelLayer.TweetStorage;
 public class Clustering {
 	
 	public static List<Cluster> tweetClustering (TweetStorage tweets, double facilityCost) {
-		System.out.println("Start of clustering. Doing initial solution.");
-		List<Cluster> clusters = initialSolution(tweets, facilityCost);
-		System.out.println("Initial solution done. Starting refinement process.");
+		TweetStorage geotaggedTweets = tweets.getGeotaggedTweets();
 		
+		System.out.println("Start of clustering. Doing initial solution.");
+		List<Cluster> clusters = initialSolution(geotaggedTweets, facilityCost);
+		
+		System.out.println("Initial solution done. Starting refinement process.");		
 		// TODO I'm not sure if it's log of cluster size or clonedTweets size. The paper didn't make this clear.
 		// Maybe move this loop to refineClusters. Should give more accurate updates of clusters, but worse performance.
 		int iterations = (int) Math.log(clusters.size());
 		for (int i = 0; i < iterations; i++) {
 			System.out.println("Doing refinement step " + (i + 1) + " of " + iterations + ".");
-			refineClusters(tweets, tweets, facilityCost, clusters);
+			refineClusters(geotaggedTweets, geotaggedTweets, facilityCost, clusters);
 		}
+		
 		System.out.println("Clustering done.");
 		return clusters;
 	}
 
-	public static void updateClusters (List<Cluster> clusters, TweetStorage newTweets, TweetStorage tweets, double facilityCost) {
-		for (Tweet t : newTweets) {
-			if (t.isGeotagged())
-				getNearestCluster(clusters, t);
+	public static void updateClusters (List<Cluster> clusters, TweetStorage newTweets, TweetStorage allTweets, double facilityCost) {
+		TweetStorage geotaggedTweets = newTweets.getGeotaggedTweets();
+		for (Tweet t : geotaggedTweets) {
+			t.setCluster(getNearestCluster(clusters, t));
 		}
-		refineClusters(newTweets, tweets, facilityCost, clusters);
+		refineClusters(geotaggedTweets, allTweets.getGeotaggedTweets(), facilityCost, clusters);
 	}
 	
 	private static void refineClusters(TweetStorage newTweets, TweetStorage allTweets, double facilityCost, List<Cluster> clusters) {
-		
-		// Checks for all new tweets if the solution would be better if a new cluster was made there.
 		for (Tweet t : newTweets.getRandomizedCopy()) {
-			if (t.isGeotagged())
-				checkGainAndReassign(t, clusters, allTweets, facilityCost);
+			checkGainAndReassign(t, clusters, allTweets, facilityCost);
 		}
 	}
 	
-	// Gets an initial cluster. Assigns a tweet to the nearest cluster, and randomly creates new clusters based on distance.
 	private static List<Cluster> initialSolution (TweetStorage tweets, double facilityCost) {
 		TweetStorage randomizedTweets = tweets.getRandomizedCopy();
 		Random rand = new Random();
@@ -54,53 +53,53 @@ public class Clustering {
 		
 		for (int i = 1; i < randomizedTweets.size(); i++) {
 			Tweet tweet = randomizedTweets.get(i);
+			
+			Cluster nearestCluster = getNearestCluster(clusters, tweet);
+			double dist = getDist(nearestCluster.getCenter(), tweet);
+			double prob = dist / facilityCost;
 
-			if (tweet.isGeotagged()){
-				double dist = getNearestCluster(clusters, tweet);
-				double prob = dist / facilityCost;
-
-				double r = rand.nextDouble();
-				if (r <= prob) {
-					cluster = Cluster.createCluster(tweet);
-					clusters.add(cluster);
-				}
+			double r = rand.nextDouble();
+			if (r <= prob) {
+				cluster = Cluster.createCluster(tweet);
+				clusters.add(cluster);
+			}
+			else {
+				Cluster.reassignTweet(tweet, nearestCluster);
 			}
 		}
 		return clusters;
 	}
 	
-	// Check the gain for creating a new cluster with a center at tweet, and reassigning all other tweets.
-	// Gain is based on the cost of creating a new cluster and total distance from tweets to their cluster.
-	private static double checkGainAndReassign(Tweet tweet, List<Cluster> clusters, TweetStorage tweets, double facilityCost) {
-
-		// The gain from creating a new cluster with tweet as center is the sum of distance-decreases after
-		// reassigning tweets that are closer to tweet than their cluster, minus the facility cost.		
+	private static void checkGainAndReassign(Tweet tweet, List<Cluster> clusters, TweetStorage tweets, double facilityCost) {	
 		TweetStorage reassignmentList = new TweetStorage();
 		List<Cluster> removalList = new ArrayList<Cluster>();
 		double gain = -facilityCost;
 		
 		for (Tweet t : tweets) {
-			double dist = getDist(t, t.getCluster().getCenter()) - getDist(t, tweet);
+			double d1 = getDist(t, t.getCluster().getCenter());
+			double d2 = getDist(t, tweet);
+			double dist =  d1 - d2;
 			if (dist > 0) {
 				gain += dist;
 				reassignmentList.add(t);
 			}
 		}
 		
-		// It may increase gain to remove some clusters as well
 		for (Cluster c : clusters) {
 			double removalGain = facilityCost;
-			for (Tweet t : c.getTweets().getDifference(reassignmentList)) {
-				removalGain += getDist(t, t.getCluster().getCenter()) - getDist(t, tweet);
+			TweetStorage tweetDifference = TweetStorage.getDifference(c.getTweets(), reassignmentList);
+			for (Tweet t : tweetDifference) {
+				double d1 = getDist(t, t.getCluster().getCenter());
+				double d2 = getDist(t, tweet);
+				removalGain +=  d1 - d2;
 			}
 			if (removalGain > 0) {
 				gain += removalGain;
 				removalList.add(c);
-				reassignmentList.addAll(c.getTweets());
+				reassignmentList.addAll(tweetDifference);
 			}
 		}
 		
-		// If gain is greater than 0, reassign all tweets to the new cluster and remove some clusters
 		if (gain > 0) {
 			Cluster c = Cluster.createCluster(tweet);
 			for (Tweet t : reassignmentList) {
@@ -109,25 +108,22 @@ public class Clustering {
 			clusters.removeAll(removalList);
 			clusters.add(c);
 		}
-
-		return gain;
 	}
 	
-	// TODO Maybe make getNearestCluster return the nearest cluster instead of the distance
-	public static double getNearestCluster(List<Cluster> clusters, Tweet tweet) {
+	// TODO Maybe return both cluster and distance? And maybe private
+	public static Cluster getNearestCluster(List<Cluster> clusters, Tweet tweet) {
 		double dist = Double.POSITIVE_INFINITY;
-		
+		Cluster c = null;
+
 		for (Cluster cluster : clusters) {
 			double currentDist = getDist(cluster.getCenter(), tweet);
 			if (currentDist < dist) {
 				dist = currentDist;
-				tweet.setCluster(cluster);
+				c = cluster;
 			}
 		}
-		
-		tweet.getCluster().addTweet(tweet);
-		
-		return dist;
+
+		return c;
 	}
 	
 	// TODO Maybe move distance methods to a different class

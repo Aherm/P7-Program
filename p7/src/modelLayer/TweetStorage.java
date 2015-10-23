@@ -129,15 +129,25 @@ public class TweetStorage implements Iterable<Tweet> {
 		}
 	}
 	
-	public TweetStorage getDifference(TweetStorage ts) {
+	public static TweetStorage getDifference(TweetStorage t1, TweetStorage t2) {
 		TweetStorage res = new TweetStorage();
-		res = this.clone();
-		res.tweets.removeAll(ts.tweets);
+		res = t1.clone();
+		res.tweets.removeAll(t2.tweets);
 		
 		return res;
 	}
 	
 	public void clear() {
 		this.tweets.clear();
+	}
+	
+	public TweetStorage getGeotaggedTweets() {
+		TweetStorage res = new TweetStorage();
+		for (Tweet t : this) {
+			if (t.isGeotagged()) {
+				res.add(t);
+			}
+		}
+		return res;
 	}
 }
