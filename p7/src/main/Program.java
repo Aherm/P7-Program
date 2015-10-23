@@ -44,10 +44,9 @@ public class Program {
         DBConnect connection = DBConnect.getInstance();
         connection.connectToLocal("world", "postgres", "21");
         
-        TweetStorage newTweets = listener.getNewTweets();
-        TweetStorage allTweets = listener.getAllTweets();
+        TweetStorage newTweets = listener.getDBTweets();
+        TweetStorage allTweets = listener.getTweets();
         List<Cluster> clusters = new ArrayList<Cluster>();
-        listener.setClusters(clusters);
 
         //A minute in ms: 60000
         //An hour in ms: 3600000
