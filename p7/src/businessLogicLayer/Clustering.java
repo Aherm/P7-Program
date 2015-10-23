@@ -113,6 +113,7 @@ public class Clustering {
 		return gain;
 	}
 	
+	// TODO Maybe make getNearestCluster return the nearest cluster instead of the distance
 	public static double getNearestCluster(List<Cluster> clusters, Tweet tweet) {
 		double dist = Double.POSITIVE_INFINITY;
 		
@@ -129,6 +130,7 @@ public class Clustering {
 		return dist;
 	}
 	
+	// TODO Maybe move distance methods to a different class
 	public static double getDist(Tweet t1, Tweet t2) {
 		double R = 6371;	//Earths radius
 		double deltaLat = toRadians(t2.getLat() - t1.getLat());

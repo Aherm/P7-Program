@@ -4,8 +4,19 @@ public class Cluster {
 	private Tweet center;
 	private TweetStorage tweets = new TweetStorage();
 
-	public Cluster(Tweet center) {
+	private Cluster(Tweet center) {
 		this.center = center;
+	}
+	
+	public static Cluster createCluster(Tweet centerTweet) {
+		if (centerTweet.getCluster() != null) {
+			centerTweet.getCluster().removeTweet(centerTweet);
+		}		
+		Cluster cluster = new Cluster(centerTweet);
+		centerTweet.setCluster(cluster);
+		cluster.addTweet(centerTweet);
+		
+		return cluster;
 	}
 	
 	public void setCenter(Tweet tweet) {
@@ -50,17 +61,6 @@ public class Cluster {
 		}
 		t.setCluster(c);
 		c.addTweet(t);
-	}
-
-	public static Cluster createCluster(Tweet centerTweet) {
-		if (centerTweet.getCluster() != null) {
-			centerTweet.getCluster().removeTweet(centerTweet);
-		}		
-		Cluster cluster = new Cluster(centerTweet);
-		centerTweet.setCluster(cluster);
-		cluster.addTweet(centerTweet);
-		
-		return cluster;
 	}
 	
 	public static TweetStorage getUnclusteredTweets(TweetStorage tweets) {
