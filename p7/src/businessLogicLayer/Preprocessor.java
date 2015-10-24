@@ -5,13 +5,13 @@ import java.util.Date;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
+// TODO: Why we we have two versions of the same processing functions?
 public class Preprocessor {
-
-	// This preprocessing can easily be optimized to n instead of 3n(although
-	// exactly the same asymptotically)
+	// This preprocessing can easily be optimized to n instead of 3n(although exactly the same asymptotically)
 	public static void processTweets(TweetStorage tweets, Date date) {
 		for (int i = tweets.size() - 1; i >= 0; i--) {
 			Tweet tweet = tweets.get(i);
+			// TODO: I don't think we have the assumption that tweets are stored in chronological order anymore.
 			if (tweet.getCreatedAt().before(date)) {
 				break;
 			}
