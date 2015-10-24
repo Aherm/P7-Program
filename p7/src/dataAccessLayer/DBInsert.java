@@ -8,11 +8,11 @@ import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 
 public class DBInsert {
-	
-	public DBInsert(){}
-	
+
+	public DBInsert() {}
+
 	public static void insertTweets(TweetStorage tweets) {
-		try{
+		try {
 			Connection con = DBConnect.getInstance().getCon();
 			String insertSQL= "INSERT INTO tweets " +
 							  "(tweetID, userID, responseID, retweetID, tweetText, createdAt, " +
@@ -27,7 +27,7 @@ public class DBInsert {
 				Tweet tweet = tweets.get(i);
 
 				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-				
+
 				st.setLong(1, tweet.getTweetID());
 				st.setLong(2, tweet.getUserID());
 				st.setLong(3, tweet.getResponseID());
@@ -42,39 +42,10 @@ public class DBInsert {
 				//		st.executeBatch();
 			}
 			st.executeBatch();
-			
-		} catch(Exception E) {
+
+		}
+		catch(Exception E) {
 			E.printStackTrace();
 		}
 	}
-	
-	/*
-	public void insertKeywords(HashMap<String, Tweet> tweets)
-	{
-		try{
-			Connection con = DBConnect.getInstance().getCon();
-			String insertSQL = "INSERT INTO keywords " +
-					"(tweetID, keyword) VALUES " +
-					"(?, ?)";
-			
-			PreparedStatement st = con.prepareStatement(insertSQL);
-			
-			for (Map.Entry<String, Tweet> entry : tweets.entrySet()) {
-				String key = entry.getKey();
-				Tweet value = entry.getValue();
-				
-				for(String keyword : value.getKeywords())
-				{
-					st.setLong(1, value.getTweetID());		
-					st.setString(2, keyword);
-					st.addBatch();
-				}
-			}
-			st.executeBatch();
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 }
