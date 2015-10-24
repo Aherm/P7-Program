@@ -19,7 +19,7 @@ public class OurStatusListener implements StatusListener {
 
 		tweet = tweet.clone();
 		Preprocessor.processTweet(tweet);
-		if(Filter.filterTweet(tweet)) {
+		if(Filter.passesFilter(tweet)) {
 			tweets.add(tweet);
 			try {
 				// TODO: Do we want to add user timeline to database?

@@ -106,7 +106,7 @@ public class Tweet {
 		this.lon = lon;
 	}
 
-	public void add(Keyword keyword) {
+	public void addKeyword(Keyword keyword) {
 		matchedKeywords.add(keyword);
 	}
 
