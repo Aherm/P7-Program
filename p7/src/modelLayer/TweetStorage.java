@@ -44,7 +44,7 @@ public class TweetStorage implements Iterable<Tweet> {
 				removalList.add(tweet);
 			}
 		}
-
+		// TODO: Remove from cluster as well
 		removeAll(removalList);
 	}
 
