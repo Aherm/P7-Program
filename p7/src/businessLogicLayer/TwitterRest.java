@@ -1,6 +1,5 @@
 package businessLogicLayer;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,26 +18,23 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-//Created by Mads on 07-10-2015
-
 public class TwitterRest {
-
 	private int totalcalls = 0; // holds nr of times we use the twitter api
 	private long startTime;
 	private Twitter twitter;
-	private int stuff = 1; 
+	private int stuff = 1; // TODO: wtf is this?
 	public boolean limitReached = false; 
 
 	public TwitterRest() {
-
-		ConfigurationBuilder cb = new Oauth().createConfigBuilder();
+		ConfigurationBuilder cb = Oauth.createConfigBuilder();
 		TwitterFactory factory = new TwitterFactory(cb.build());
 		twitter = factory.getInstance();
 	}
 
 	//currently assumes that the list is sorted from newest to oldest 
-	public TweetStorage getUserTimeline3days(long userId, Date _startdate,Tweet tweet) throws TwitterException{
-	
+	// TODO: Make sure that the assumption is actually true
+	// TODO: Why do we need to send a tweet as parameter?
+	public TweetStorage getUserTimeline3days(long userId, Date _startdate, Tweet tweet) throws TwitterException {	
 		TweetStorage tweets = new TweetStorage();		
 		int pagenr = 1;
 		
@@ -65,14 +61,13 @@ public class TwitterRest {
 			pagenr++;
 			page.setPage(pagenr);
 			oldestTweetDate = new DateTime(userTimeline.get(userTimeline.size() - 1).getCreatedAt()); //get the oldest tweet from the usertimeline
-			}while (Days.daysBetween(oldestTweetDate, startDate).getDays() <= 3);
+		} while (Days.daysBetween(oldestTweetDate, startDate).getDays() <= 3);
 		
 		return tweets; 
 	}
 	
-	private void rateLimiter(){
-		
-		if(totalcalls == 0){
+	private void rateLimiter() {		
+		if(totalcalls == 0) {
 			startTime = System.nanoTime();
 		}
 		
@@ -90,10 +85,8 @@ public class TwitterRest {
 			totalcalls++;		
 	}
 
-	public void printUserName(long id) throws TwitterException{
-		
+	public void printUserName(long id) throws TwitterException {		
 		rateLimiter();
 		System.out.println(twitter.getUserTimeline(id).get(0).getUser().getScreenName());
-		
 	}
 }
