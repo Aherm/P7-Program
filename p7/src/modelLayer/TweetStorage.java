@@ -27,17 +27,11 @@ public class TweetStorage implements Iterable<Tweet> {
 	}
 
 	public void remove(Tweet tweet) {
-		// TODO Do we want removal from cluster in here? Might get messy if a tweet is in multiple storages, but we only want to remove it from one.
-		if (tweets.contains(tweet) && tweet.getCluster() != null) {
-			tweet.getCluster().removeTweet(tweet);
-		}
 		tweets.remove(tweet);
 	}
 	
 	public void removeAll(TweetStorage ts) {
-		for (Tweet t : ts) {
-			remove(t);
-		}
+		tweets.removeAll(ts.tweets);
 	}
 
 	public void removeOldTweets(int days) {
