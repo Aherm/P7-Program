@@ -101,17 +101,17 @@ public class Clustering {
 			}
 		}
 
-		if (gain > 0) {
-			Cluster c = new Cluster(tweet);
+		if (gain > 0) {			
+			Cluster c = new Cluster(tweet);			
 			for (Tweet t : reassignmentList) {
 				c.addTweet(t);
 			}
+			
 			clusters.removeAll(removalList);
 			clusters.add(c);
 		}
 	}
 
-	// TODO Maybe return both cluster and distance?
 	private static Cluster getNearestCluster(ClusterStorage clusters, Tweet tweet) {
 		double dist = Double.POSITIVE_INFINITY;
 		Cluster c = null;
@@ -127,8 +127,7 @@ public class Clustering {
 		return c;
 	}
 
-	// TODO Maybe move distance methods to a different class
-	public static double getDist(Tweet t1, Tweet t2) {
+	private static double getDist(Tweet t1, Tweet t2) {
 		double R = 6371;	//Earths radius
 		double deltaLat = toRadians(t2.getLat() - t1.getLat());
 		double deltaLon = toRadians(t2.getLon() - t1.getLon());
