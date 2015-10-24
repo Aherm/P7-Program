@@ -1,17 +1,16 @@
 package main;
 
 import dataAccessLayer.DBConnect;
-import modelLayer.Cluster;
+import modelLayer.ClusterStorage;
 import modelLayer.TweetStorage;
-
 import streaming.Oauth;
 import streaming.OurStatusListener;
-
 import twitter4j.FilterQuery;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 
 import java.util.*;
+
 import businessLogicLayer.TweetQueryThread;
 
 public class Program {
@@ -46,7 +45,7 @@ public class Program {
         
         TweetStorage newTweets = listener.getDBTweets();
         TweetStorage allTweets = listener.getTweets();
-        List<Cluster> clusters = new ArrayList<Cluster>();
+        ClusterStorage clusters = new ClusterStorage();
 
         //A minute in ms: 60000
         //An hour in ms: 3600000

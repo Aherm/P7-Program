@@ -1,14 +1,12 @@
 package fileCreation;
 
+import modelLayer.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import modelLayer.*;
 
 public class GpxCreator {
 	private static XMLOutputFactory factory = XMLOutputFactory.newInstance();
@@ -47,7 +45,7 @@ public class GpxCreator {
 		}
 	}
 
-	public static void createClusterGpsFiles(List<Cluster> clusters) {
+	public static void createClusterGpsFiles(ClusterStorage clusters) {
 		TweetStorage centers = new TweetStorage();
 		String path = "./gpxFiles";
 
@@ -57,7 +55,7 @@ public class GpxCreator {
 			centers.add(c.getCenter());
 			createGpxFile(c.getTweets(), name, path);
 		}
-		
+
 		createGpxFile(centers, "centers", path);
 	}
 

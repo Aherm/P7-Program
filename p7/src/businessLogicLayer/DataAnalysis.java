@@ -1,25 +1,20 @@
 package businessLogicLayer;
 
-import java.util.List;
-
 import modelLayer.Cluster;
+import modelLayer.ClusterStorage;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
-import java.util.Date;
 import java.util.Map;
 
-
-// Created by Mads at 11-10-2015
 public class DataAnalysis {
-
 	private TweetStorage storage;
-	private List<Cluster> clusters;
+	private ClusterStorage clusters;
 
 	public DataAnalysis(TweetStorage storage){
 		this.storage = storage;
 	}
 
-	public DataAnalysis(TweetStorage storage, List<Cluster> clusters) {
+	public DataAnalysis(TweetStorage storage, ClusterStorage clusters) {
 		this.storage = storage;
 		this.clusters = clusters;
 	}
@@ -46,7 +41,7 @@ public class DataAnalysis {
 		return ts; 
 	}
 
-	private double calcAvgClusterSize(List<Cluster> clusters){
+	private double calcAvgClusterSize(ClusterStorage clusters){
 		int totalSize = 0;
 		int numClusters = clusters.size();
 
@@ -59,7 +54,7 @@ public class DataAnalysis {
 	}
 
 
-	private int calcMinClusterSize(List<Cluster> clusters){
+	private int calcMinClusterSize(ClusterStorage clusters){
 		int minSize = 0;
 
 		for (Cluster cluster : clusters){
@@ -71,7 +66,7 @@ public class DataAnalysis {
 		return minSize;
 	}
 
-	private int calcMaxClusterSize(List<Cluster> clusters){
+	private int calcMaxClusterSize(ClusterStorage clusters){
 		int maxSize = 0;
 
 		for (Cluster cluster : clusters){
@@ -81,10 +76,6 @@ public class DataAnalysis {
 				maxSize = cluster.size();
 		}
 		return maxSize;
-	}
-
-	private int numClusters(List<Cluster> clusters){
-		return clusters.size();
 	}
 
 	public String printStatistics(){
@@ -111,7 +102,7 @@ public class DataAnalysis {
 	public String printKeywordAnalysis(){
 		String result = "";
 		Map<String, Integer> keywordMatches = Filter.countMatches(storage);
-		for (Map.Entry entry : keywordMatches.entrySet()){
+		for (Map.Entry<String, Integer> entry : keywordMatches.entrySet()){
 			result += "Keyword: " + entry.getKey() + " Count: " + entry.getValue() + "\r\n";
 		}
 		return result;
@@ -119,7 +110,7 @@ public class DataAnalysis {
 
 
 
-	public void clusterAnalysis(List<Cluster> clusters, int numbers){
+	public void clusterAnalysis(ClusterStorage clusters, int numbers){
 		int[] sizes = new int[numbers];
 		
 		for(int i = 0; i < sizes.length; i++){
