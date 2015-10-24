@@ -25,7 +25,7 @@ public class TweetStorage implements Iterable<Tweet> {
 	public void remove(Tweet tweet) {
 		tweets.remove(tweet);
 	}
-	
+
 	public void removeAll(TweetStorage ts) {
 		tweets.removeAll(ts.tweets);
 	}
@@ -37,7 +37,7 @@ public class TweetStorage implements Iterable<Tweet> {
 	public int size() {
 		return tweets.size();
 	}
-	
+
 	public boolean contains(Tweet t) {
 		return tweets.contains(t);
 	}
