@@ -1,4 +1,5 @@
 package fileCreation;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,10 +14,9 @@ public class GpxCreator {
 	private static XMLOutputFactory factory = XMLOutputFactory.newInstance();
 	private static XMLStreamWriter writer;
 
-	public GpxCreator() {
-	}
+	public GpxCreator() {}
 
-	public static void createGpxFile(TweetStorage storage, String name, String outPutPath){
+	public static void createGpxFile(TweetStorage storage, String name, String outPutPath) {
 		try {
 			File gpxFile;
 
@@ -61,15 +61,14 @@ public class GpxCreator {
 		createGpxFile(centers, "centers", path);
 	}
 
-	private static void createWPT(Tweet tweet){
-
+	private static void createWPT(Tweet tweet) {
 		try{
 			writer.writeStartElement("wpt");
 			writer.writeAttribute("lat", Double.toString(tweet.getLat()));
 			writer.writeAttribute("lon", Double.toString(tweet.getLon()));
 			writer.writeEndElement();
 		}
-		catch(XMLStreamException e){
+		catch(XMLStreamException e) {
 			e.printStackTrace();
 		}	
 	}
