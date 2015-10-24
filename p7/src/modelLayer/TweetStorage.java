@@ -1,13 +1,9 @@
 package modelLayer;
 
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Date;
 
 public class TweetStorage implements Iterable<Tweet> {
 	private List<Tweet> tweets = new ArrayList<Tweet>();
@@ -32,20 +28,6 @@ public class TweetStorage implements Iterable<Tweet> {
 	
 	public void removeAll(TweetStorage ts) {
 		tweets.removeAll(ts.tweets);
-	}
-
-	public void removeOldTweets(int days) {
-		TweetStorage removalList = new TweetStorage();
-		Date today = new Date();
-
-		for (Tweet tweet : tweets) {
-			int tweetAge = Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays();
-			if (tweetAge >= days) {
-				removalList.add(tweet);
-			}
-		}
-		// TODO: Remove from cluster as well
-		removeAll(removalList);
 	}
 
 	public void clear() {

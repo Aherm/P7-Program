@@ -45,7 +45,7 @@ public class Program {
         
         TweetStorage newTweets = listener.getDBTweets();
         TweetStorage allTweets = listener.getTweets();
-        ClusterStorage clusters = new ClusterStorage();
+        ClusterStorage clusters = listener.getClusters();
 
         //A minute in ms: 60000
         //An hour in ms: 3600000

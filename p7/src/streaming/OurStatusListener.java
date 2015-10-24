@@ -1,9 +1,15 @@
 package streaming;
 
 import java.util.Date;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
 import businessLogicLayer.Filter;
 import businessLogicLayer.Preprocessor;
 import businessLogicLayer.TwitterRest;
+import modelLayer.Cluster;
+import modelLayer.ClusterStorage;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 import twitter4j.*;
@@ -11,6 +17,7 @@ import twitter4j.*;
 public class OurStatusListener implements StatusListener {
 	TweetStorage dbTweets = new TweetStorage();
 	TweetStorage tweets = new TweetStorage();
+	ClusterStorage clusters = new ClusterStorage();
 	TwitterRest restAPI = new TwitterRest(); 
 
 	public void onStatus(Status status) {
@@ -31,9 +38,30 @@ public class OurStatusListener implements StatusListener {
 				return; 
 			}
 		}
-		tweets.removeOldTweets(3);
+		removeOldTweets(3);
 	}
 
+	public void removeOldTweets(int days) {
+		TweetStorage removalList = new TweetStorage();
+		Date today = new Date();
+
+		for (Tweet tweet : tweets) {
+			int tweetAge = Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays();
+			if (tweetAge >= days) {
+				removalList.add(tweet);
+				
+				Cluster c = tweet.getCluster();
+				if (c != null) {
+					if (c.getCenter() == tweet) {
+						clusters.remove(c);
+					}
+					c.removeTweet(tweet);
+				}
+			}
+		}
+		tweets.removeAll(removalList);
+	}
+	
 	public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
 	}
 
@@ -56,5 +84,9 @@ public class OurStatusListener implements StatusListener {
 
 	public TweetStorage getTweets() {
 		return tweets;
+	}
+	
+	public ClusterStorage getClusters() {
+		return clusters;
 	}
 }
