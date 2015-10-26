@@ -15,10 +15,10 @@ import modelLayer.TweetStorage;
 import twitter4j.*;
 
 public class OurStatusListener implements StatusListener {
-	TweetStorage dbTweets = new TweetStorage();
-	TweetStorage tweets = new TweetStorage();
-	ClusterStorage clusters = new ClusterStorage();
-	TwitterRest restAPI = new TwitterRest(); 
+	private TweetStorage dbTweets = new TweetStorage();
+	private TweetStorage tweets = new TweetStorage();
+	private ClusterStorage clusters = new ClusterStorage();
+	private TwitterRest restAPI = new TwitterRest(); 
 
 	public void onStatus(Status status) {
 		Tweet tweet = Tweet.createTweet(status);
