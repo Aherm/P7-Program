@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO: Do we even use this class any more? Might want to remove it.
 public class Batch {
 
 	public static TweetStorage filterTweets() {

@@ -74,7 +74,6 @@ public class DataAnalysis {
 		return tweetsAnalysis + clusterAnalysis;
 	}
 
-	// TODO: Do we still use this one or can I remove it?
 	public String printKeywordAnalysis() {
 		String result = "";
 		Map<String, Integer> keywordMatches = Filter.countMatches(tweets);

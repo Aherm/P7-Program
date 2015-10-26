@@ -29,7 +29,6 @@ public class OurStatusListener implements StatusListener {
 		if(Filter.passesFilter(tweet)) {
 			tweets.add(tweet);
 			try {
-				// TODO: Do we want to add user timeline to database?
 				tweets.addAll(restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet));
 			}
 			catch (TwitterException e) {
