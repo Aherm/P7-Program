@@ -22,7 +22,6 @@ public class TwitterRest {
 	private int totalcalls = 0; // holds nr of times we use the twitter api
 	private long startTime;
 	private Twitter twitter;
-	private int stuff = 1; // TODO: wtf is this?
 	public boolean limitReached = false; 
 
 	public TwitterRest() {
