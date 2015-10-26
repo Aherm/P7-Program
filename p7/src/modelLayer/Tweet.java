@@ -138,14 +138,14 @@ public class Tweet {
 
 	public void setAddedToStorage(boolean addedToStorage) {
 		this.addedToStorage = addedToStorage;
-	}
+	}*/
 
 	public boolean isGeotagged() {
 		if(lat == 0 && lon == 0)
 			return false; 
 		else 
 			return true; 
-	}*/
+	}
 
 	public Tweet clone() {
 		return new Tweet(tweetID, userID, responseID, retweetID, tweetText, createdAt, lat, lon);
