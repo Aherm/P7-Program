@@ -17,7 +17,7 @@ public class Filter {
 	static String reg2 = "\\s?@?";  // space followed by a @ zero or one time
 	static String reg4 = "\\w?";    // Any letter or digit zero or one time followed by a space
 
-	public static TweetStorage filterTweets(TweetStorage tweets, Date date) {
+	public static TweetStorage getFilteredTweets(TweetStorage tweets, Date date) {
 		TweetStorage newTweetStorage = new TweetStorage();
 		List<Keyword> keywordsToMatch = getKeywordsToMatch();
 		String reg3 = "";           // Any of the regular expressions in regs(list of regular expressions)
@@ -26,47 +26,39 @@ public class Filter {
 			reg3 = keyword.getRegex();
 			Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
-			for (int i = tweets.size() - 1; i >= 0; i--) {
-				Tweet tweet = tweets.get(i);
-				if (tweet.getCreatedAt().before(date)) {
-					continue;
-				}
+			for (Tweet tweet : tweets) {
 				Matcher m = p.matcher(tweet.getTweetText());
 				if (m.find()) {
-					// TODO: Use !newTweetStorage.contains(tweet) instead?
-					if (!tweet.isAddedToStorage()) {
+					if (!newTweetStorage.contains(tweet)) {
 						newTweetStorage.add(tweet);
-						tweet.setAddedToStorage(true);
 					}
-
+					
 					tweet.addKeyword(keyword);
 				}
 			}
 		}
-		// TODO: Why do we get them reversed?
-		return newTweetStorage.getReverseCopy();
+		
+		return newTweetStorage;
 	}
 
 	public static boolean passesFilter(Tweet tweet) {
 		List<Keyword> keywordsToMatch = getKeywordsToMatch();
 		String reg3 = ""; // Any of the regular expressions in regularExpressions
+		boolean passed = false;
+		
 		for (Keyword keyword : keywordsToMatch) {
 			reg3 = keyword.getRegex();
 			Pattern p = Pattern.compile(reg1 + reg2 + reg3 + reg4, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 			Matcher m = p.matcher(tweet.getTweetText());
 
-			//Pattern.matches(reg1 + reg2 + reg3 + reg4, tweet.getTweetText())
-
 			if (m.find()) {
 				tweet.addKeyword(keyword);
 
-				// TODO: Why do we set addedToStorage here instead of just creating a boolean variable?
-				if (!tweet.isAddedToStorage())
-					tweet.setAddedToStorage(true);
+				passed = true;
 			}
 		}
 
-		return tweet.isAddedToStorage();
+		return passed;
 	}
 
 	public static Map<String, Integer> countMatches(TweetStorage tweets) {
@@ -94,10 +86,7 @@ public class Filter {
 
 	static private List<Keyword> getKeywordsToMatch() {
 		List<Keyword> regs = new ArrayList<Keyword>();
-		//TODO: 
-		//Make sure (of|off) after sick is not allowed, so we dont get "im sick of you"
-		//Consider (to) and (and) after sick as well
-		//also consider (bad) before headache
+
 		String feelingReg = "fe(e|el|l|)(lin(g|))?";
 		String sickReg = "si(ck|k)";
 		String stomacheReg = "stoma(ch|k)e";

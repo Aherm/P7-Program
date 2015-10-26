@@ -18,7 +18,7 @@ public class Batch {
 		do {
 			System.out.println("iteration: " + itnr);
 			interval = DBGetTweets.getInterval(start, size);
-			ts.addAll(Filter.filterTweets(interval, new Date()));
+			ts.addAll(Filter.getFilteredTweets(interval, new Date()));
 			System.out.println(ts.size());
 			start = start + size; 
 			itnr++;

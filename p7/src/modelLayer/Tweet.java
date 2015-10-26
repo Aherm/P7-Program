@@ -14,7 +14,7 @@ public class Tweet {
 
 	private double score = -1;
 	private Cluster assignedCluster = null;
-	private boolean addedToStorage = false;
+	//private boolean addedToStorage = false;
 
 	public Tweet() {}
 
@@ -131,6 +131,7 @@ public class Tweet {
 		this.assignedCluster = c;
 	}
 
+	/* TODO: Remove if the new filter methods work
 	public boolean isAddedToStorage() {
 		return addedToStorage;
 	}
@@ -144,7 +145,7 @@ public class Tweet {
 			return false; 
 		else 
 			return true; 
-	}
+	}*/
 
 	public Tweet clone() {
 		return new Tweet(tweetID, userID, responseID, retweetID, tweetText, createdAt, lat, lon);
