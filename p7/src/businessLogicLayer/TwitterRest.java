@@ -31,8 +31,6 @@ public class TwitterRest {
 	}
 
 	//currently assumes that the list is sorted from newest to oldest 
-	// TODO: Make sure that the assumption is actually true
-	// TODO: Why do we need to send a tweet as parameter?
 	public TweetStorage getUserTimeline3days(long userId, Date _startdate, Tweet tweet) throws TwitterException {	
 		TweetStorage tweets = new TweetStorage();		
 		int pagenr = 1;
@@ -75,7 +73,7 @@ public class TwitterRest {
 			startTime = System.nanoTime();
 			limitReached = false; 
 		}
-		//MADS: maybe thrown an exception 
+		//TODO: MADS: maybe thrown an exception 
 		if(totalcalls == 175){
 			System.out.println("REST API limit reached: need to wait");
 			limitReached = true; 
