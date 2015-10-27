@@ -14,7 +14,7 @@ public class Tweet {
 
 	private double score = -1;
 	private Cluster assignedCluster = null;
-	private boolean addedToStorage = false;
+	//private boolean addedToStorage = false;
 
 	public Tweet() {}
 
@@ -131,13 +131,14 @@ public class Tweet {
 		this.assignedCluster = c;
 	}
 
+	/* TODO: Remove if the new filter methods work
 	public boolean isAddedToStorage() {
 		return addedToStorage;
 	}
 
 	public void setAddedToStorage(boolean addedToStorage) {
 		this.addedToStorage = addedToStorage;
-	}
+	}*/
 
 	public boolean isGeotagged() {
 		if(lat == 0 && lon == 0)

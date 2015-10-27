@@ -15,10 +15,10 @@ import modelLayer.TweetStorage;
 import twitter4j.*;
 
 public class OurStatusListener implements StatusListener {
-	TweetStorage dbTweets = new TweetStorage();
-	TweetStorage tweets = new TweetStorage();
-	ClusterStorage clusters = new ClusterStorage();
-	TwitterRest restAPI = new TwitterRest(); 
+	private TweetStorage dbTweets = new TweetStorage();
+	private TweetStorage tweets = new TweetStorage();
+	private ClusterStorage clusters = new ClusterStorage();
+	private TwitterRest restAPI = new TwitterRest(); 
 
 	public void onStatus(Status status) {
 		Tweet tweet = Tweet.createTweet(status);
@@ -29,7 +29,6 @@ public class OurStatusListener implements StatusListener {
 		if(Filter.passesFilter(tweet)) {
 			tweets.add(tweet);
 			try {
-				// TODO: Do we want to add user timeline to database?
 				tweets.addAll(restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet));
 			}
 			catch (TwitterException e) {

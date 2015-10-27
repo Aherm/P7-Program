@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO: Do we even use this class any more? Might want to remove it.
 public class Batch {
 
 	public static TweetStorage filterTweets() {
@@ -18,7 +17,7 @@ public class Batch {
 		do {
 			System.out.println("iteration: " + itnr);
 			interval = DBGetTweets.getInterval(start, size);
-			ts.addAll(Filter.filterTweets(interval, new Date()));
+			ts.addAll(Filter.getFilteredTweets(interval, new Date()));
 			System.out.println(ts.size());
 			start = start + size; 
 			itnr++;
