@@ -18,7 +18,7 @@ public class OurStatusListener implements StatusListener {
 	private TweetStorage dbTweets = new TweetStorage();
 	private TweetStorage tweets = new TweetStorage();
 	private ClusterStorage clusters = new ClusterStorage();
-	private TwitterRest restAPI = new TwitterRest(); 
+	private TwitterRest restAPI = TwitterRest.getInstance(); 
 
 	public void onStatus(Status status) {
 		Tweet tweet = Tweet.createTweet(status);

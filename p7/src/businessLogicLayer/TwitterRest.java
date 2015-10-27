@@ -18,16 +18,25 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-public class TwitterRest {
+public final class TwitterRest {
+	private static TwitterRest instance = null; 
 	private int totalcalls = 0; // holds nr of times we use the twitter api
 	private long startTime;
 	private Twitter twitter;
 	public boolean limitReached = false; 
 
-	public TwitterRest() {
+	private TwitterRest() {
 		ConfigurationBuilder cb = Oauth.createConfigBuilder();
 		TwitterFactory factory = new TwitterFactory(cb.build());
 		twitter = factory.getInstance();
+	}
+	
+	public static TwitterRest getInstance(){
+		if(instance == null){
+			instance = new TwitterRest(); 
+		}
+		
+		return instance; 
 	}
 
 	//currently assumes that the list is sorted from newest to oldest 
@@ -49,7 +58,7 @@ public class TwitterRest {
 			for (int i = 0; i < userTimeline.size(); i++) {
 				DateTime tweetDate = new DateTime(userTimeline.get(i).getCreatedAt());
 				if (Days.daysBetween(tweetDate,startDate).getDays() <= 3) {
-					if(tweet.getTweetID() != userTimeline.get(i).getId()){
+					if(tweet.getTweetID() != userTimeline.get(i).getId() && userTimeline.get(i).getGeoLocation() != null){
 						tweets.add(Tweet.createTweet(userTimeline.get(i)));	
 					}								
 				}
