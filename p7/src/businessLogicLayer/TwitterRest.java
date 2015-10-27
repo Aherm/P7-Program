@@ -51,7 +51,7 @@ public final class TwitterRest {
 		do {
 			rateLimiter();
 			if(limitReached)
-				break; 
+				return tweets;
 			userTimeline = twitter.getUserTimeline(userId, page);
 			
 			// adds all tweets that are no more than 3 days old 
