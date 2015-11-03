@@ -4,6 +4,9 @@ import fileCreation.GpxCreator;
 import fileCreation.StatisticsWriter;
 import modelLayer.ClusterStorage;
 import modelLayer.TweetStorage;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class TweetQueryThread extends Thread {
@@ -54,6 +57,11 @@ public class TweetQueryThread extends Thread {
 				}
 				System.out.println("DataAnalysis done, check the statistics folder");
 				break;
+			case 6:
+				 Date date = new Date();
+			     String dateString = new SimpleDateFormat("yyyy-MM-dd HH-mm").format(date);
+				 GpxCreator.createGpxFile(tweets, dateString + "_all" , "./gpxFiles");
+				 break;
 			default:
 				running = false;
 			}

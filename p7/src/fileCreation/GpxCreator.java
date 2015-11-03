@@ -61,10 +61,12 @@ public class GpxCreator {
 
 	private static void createWPT(Tweet tweet) {
 		try{
-			writer.writeStartElement("wpt");
-			writer.writeAttribute("lat", Double.toString(tweet.getLat()));
-			writer.writeAttribute("lon", Double.toString(tweet.getLon()));
-			writer.writeEndElement();
+			if(tweet.isGeotagged()){		
+				writer.writeStartElement("wpt");
+				writer.writeAttribute("lat", Double.toString(tweet.getLat()));
+				writer.writeAttribute("lon", Double.toString(tweet.getLon()));
+				writer.writeEndElement();
+			}
 		}
 		catch(XMLStreamException e) {
 			e.printStackTrace();
