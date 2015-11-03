@@ -25,13 +25,11 @@ public class ClusterStorage implements Iterable<Cluster> {
 	}
 	
 	public void removeAll(ClusterStorage cs) {
-		Iterator<Cluster> it = cs.iterator();
-		while (it.hasNext()) {
-			Cluster c = it.next();
+		for (Cluster c : cs) {
 			for (Tweet t : c.getTweets()) {
 				t.setCluster(null);
 			}
-			it.remove();
+			clusters.remove(c);
 		}
 	}
 
