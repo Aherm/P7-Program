@@ -20,7 +20,7 @@ public class TweetQueryThread extends Thread {
 	}
 
 	public void run() {
-		System.out.println("Press 1 to get size of tweets, 2 to cluster tweets, 3 to get cluster size, 4 to create cluster gpx files and 5 to get data statistics");
+		System.out.println("Press 1 to get size of tweets, 2 to cluster tweets, 3 to get cluster size, 4 to create cluster gpx files, 5 to get data statistics, 6 to write location tweets in storage to gpx");
 		Scanner sc = new Scanner(System.in);
 		boolean running = true;
 
@@ -60,7 +60,7 @@ public class TweetQueryThread extends Thread {
 			case 6:
 				 Date date = new Date();
 			     String dateString = new SimpleDateFormat("yyyy-MM-dd HH-mm").format(date);
-				 GpxCreator.createGpxFile(tweets, dateString + "_all" , "./gpxFiles");
+				 GpxCreator.createGpxFile(tweets, dateString + "_all" , "./gpxFiles/all");
 				 break;
 			default:
 				running = false;
