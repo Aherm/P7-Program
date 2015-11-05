@@ -109,6 +109,10 @@ public class Clustering {
 			
 			clusters.removeAll(removalList);
 			clusters.add(c);
+			
+			for (Tweet t : tweets.getUnclusteredTweets()) {
+				t.setCluster(getNearestCluster(clusters, t));
+			}
 		}
 	}
 
