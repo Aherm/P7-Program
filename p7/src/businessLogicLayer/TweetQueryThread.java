@@ -35,7 +35,7 @@ public class TweetQueryThread extends Thread {
 					clusters = Clustering.clusterTweets(tweets, facilityCost);
 				}
 				else {
-					Clustering.updateClusters(clusters, tweets, facilityCost);
+					Clustering.updateClusters(clusters, tweets.clone(), facilityCost);
 				}
 				break;
 			case 3:

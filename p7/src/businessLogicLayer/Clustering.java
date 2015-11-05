@@ -23,7 +23,6 @@ public class Clustering {
 
 	public static void updateClusters (ClusterStorage clusters, TweetStorage tweets, double facilityCost) {
 		TweetStorage newTweets = tweets.getGeotaggedTweets().getUnclusteredTweets();
-
 		for (Tweet t : newTweets) {
 			Cluster c = getNearestCluster(clusters, t);
 			c.addTweet(t);
@@ -34,7 +33,7 @@ public class Clustering {
 
 	private static void refineClusters(ClusterStorage clusters, TweetStorage allTweets, TweetStorage newTweets, double facilityCost) {
 		// TODO I'm not sure if it's log of cluster size or clonedTweets size. The paper didn't make this clear.
-		int iterations = (int) Math.log(clusters.size());
+		int iterations = (int) Math.ceil(Math.log(clusters.size()));
 		for (int i = 0; i < iterations; i++) {
 			System.out.println("Doing refinement step " + (i + 1) + " of " + iterations + ".");
 			for (Tweet t : newTweets.getRandomizedCopy()) {
