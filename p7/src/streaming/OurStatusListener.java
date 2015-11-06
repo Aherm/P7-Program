@@ -10,6 +10,7 @@ import businessLogicLayer.Preprocessor;
 import businessLogicLayer.TwitterRest;
 import modelLayer.Cluster;
 import modelLayer.ClusterStorage;
+import modelLayer.InvertedIndex;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 import twitter4j.*;
@@ -19,6 +20,7 @@ public class OurStatusListener implements StatusListener {
 	private TweetStorage tweets = new TweetStorage();
 	private ClusterStorage clusters = new ClusterStorage();
 	private TwitterRest restAPI = TwitterRest.getInstance(); 
+	private InvertedIndex invertedIndex = new InvertedIndex();
 
 	public void onStatus(Status status) {
 		Tweet tweet = Tweet.createTweet(status);
@@ -28,6 +30,7 @@ public class OurStatusListener implements StatusListener {
 		Preprocessor.processTweet(tweet);
 		if(Filter.passesFilter(tweet)) {
 			tweets.add(tweet);
+			invertedIndex.extractWords(tweet); //Need to extract from timeline of this tweet as well
 			try {
 				tweets.addAll(restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet));
 			}
@@ -87,5 +90,9 @@ public class OurStatusListener implements StatusListener {
 	
 	public ClusterStorage getClusters() {
 		return clusters;
+	}
+	
+	public InvertedIndex getInvertedIndex() {
+		return invertedIndex;
 	}
 }
