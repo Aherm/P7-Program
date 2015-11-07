@@ -30,7 +30,7 @@ public class OurStatusListener implements StatusListener {
 		Preprocessor.processTweet(tweet);
 		if(Filter.passesFilter(tweet)) {
 			tweets.add(tweet);
-			invertedIndex.extractWords(tweet); //Need to extract from timeline of this tweet as well
+			//invertedIndex.extractWords(tweet); //Need to extract from timeline of this tweet as well
 			try {
 				tweets.addAll(restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet));
 			}
