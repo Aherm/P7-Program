@@ -1,27 +1,16 @@
 package modelLayer;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Iterator;
 
-public class ClusterStorage implements Iterable<Cluster> {
-	private List<Cluster> clusters = new ArrayList<Cluster>();
-
-	public ClusterStorage() {}
-
-	public Cluster get(int n) {
-		return clusters.get(n);
-	}
-
-	public void add(Cluster c) {
-		clusters.add(c);
-	}
+public class ClusterStorage extends ArrayList<Cluster> {
+	// This field has to be there. We don't use it.
+	private static final long serialVersionUID = -7427521225340998074L;
 
 	public void remove(Cluster c) {
 		for (Tweet t : c.getTweets()) {
 			t.setCluster(null);
 		}
-		clusters.remove(c);
+		super.remove(c);
 	}
 	
 	public void removeAll(ClusterStorage cs) {
@@ -29,15 +18,7 @@ public class ClusterStorage implements Iterable<Cluster> {
 			for (Tweet t : c.getTweets()) {
 				t.setCluster(null);
 			}
-			clusters.remove(c);
+			super.remove(c);
 		}
-	}
-
-	public int size() {
-		return clusters.size();
-	}
-
-	public Iterator<Cluster> iterator() {
-		return clusters.iterator();
 	}
 }
