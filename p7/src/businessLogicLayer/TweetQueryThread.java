@@ -3,20 +3,32 @@ package businessLogicLayer;
 import fileCreation.GpxCreator;
 import fileCreation.StatisticsWriter;
 import modelLayer.ClusterStorage;
+import modelLayer.InvertedIndex;
 import modelLayer.TweetStorage;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class TweetQueryThread extends Thread {
 	private TweetStorage tweets;
 	private ClusterStorage clusters;
+	private List<String> restaurants;
+	private InvertedIndex invertedIndex;
 	private int facilityCost = 5000;
 
 	public TweetQueryThread(TweetStorage tweets, ClusterStorage clusters) {
 		this.tweets = tweets;
 		this.clusters = clusters;
+	}
+	
+	public TweetQueryThread(TweetStorage tweets, ClusterStorage clusters, List<String> restaurants, InvertedIndex invertedIndex) {
+		this.tweets = tweets;
+		this.clusters = clusters;
+		this.restaurants = restaurants;
+		this.invertedIndex = invertedIndex;
 	}
 
 	public void run() {
@@ -62,11 +74,33 @@ public class TweetQueryThread extends Thread {
 			     String dateString = new SimpleDateFormat("yyyy-MM-dd HH-mm").format(date);
 				 GpxCreator.createGpxFile(tweets, dateString + "_all" , "./gpxFiles/all");
 				 break;
+			case 7:
+				List<String> mentionedRestaurants = mentionedRestaurants();
+				System.out.println("Number of restaurants mentioned: " + mentionedRestaurants.size());
+				break;
 			default:
 				running = false;
 			}
 		}
 
 		sc.close();
+	}
+	
+	private List<String> mentionedRestaurants()
+	{
+		List<String> mentionedRestaurants = new ArrayList<String>();
+		
+		for(String restaurant : restaurants)
+		{
+			for(String word : invertedIndex.keySet())
+			{
+				if(restaurant.contains(word))
+				{
+					mentionedRestaurants.add(restaurant);
+					break;
+				}
+			}
+		}
+		return mentionedRestaurants;
 	}
 }

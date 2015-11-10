@@ -1,7 +1,9 @@
 package main;
 
 import dataAccessLayer.DBConnect;
+import dataAccessLayer.DBGetRestaurants;
 import modelLayer.ClusterStorage;
+import modelLayer.InvertedIndex;
 import modelLayer.TweetStorage;
 import streaming.Oauth;
 import streaming.OurStatusListener;
@@ -46,13 +48,15 @@ public class Program {
         TweetStorage newTweets = listener.getDBTweets();
         TweetStorage allTweets = listener.getTweets();
         ClusterStorage clusters = listener.getClusters();
-
+        List<String> restaurants = DBGetRestaurants.getRestaurants();
+        InvertedIndex invertedIndex = listener.getInvertedIndex();
+        
         //A minute in ms: 60000
         //An hour in ms: 3600000
         TimerTask task = new RunMeTask(newTweets);
         Timer timer = new Timer();
         timer.schedule(task, 1000, 60000);
-        
+        //TweetQueryThread t = new TweetQueryThread(allTweets, clusters, restaurants, invertedIndex);
         TweetQueryThread t = new TweetQueryThread(allTweets, clusters);
         t.start();
         
