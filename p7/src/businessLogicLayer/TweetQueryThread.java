@@ -75,7 +75,13 @@ public class TweetQueryThread extends Thread {
 				 GpxCreator.createGpxFile(tweets, dateString + "_all" , "./gpxFiles/all");
 				 break;
 			case 7:
-				List<String> mentionedRestaurants = mentionedRestaurants();
+				List<String> mentionedRestaurants = new ArrayList<String>();
+				for(String restaurant : restaurants)
+				{
+					if(Filter.matchResturant(restaurant, invertedIndex))
+						mentionedRestaurants.add(restaurant);
+				}
+				
 				System.out.println("Number of restaurants mentioned: " + mentionedRestaurants.size());
 				break;
 			default:
@@ -84,23 +90,5 @@ public class TweetQueryThread extends Thread {
 		}
 
 		sc.close();
-	}
-	
-	private List<String> mentionedRestaurants()
-	{
-		List<String> mentionedRestaurants = new ArrayList<String>();
-		
-		for(String restaurant : restaurants)
-		{
-			for(String word : invertedIndex.keySet())
-			{
-				if(restaurant.contains(word))
-				{
-					mentionedRestaurants.add(restaurant);
-					break;
-				}
-			}
-		}
-		return mentionedRestaurants;
 	}
 }

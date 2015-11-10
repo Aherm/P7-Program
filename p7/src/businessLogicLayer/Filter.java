@@ -1,5 +1,6 @@
 package businessLogicLayer;
 
+import modelLayer.InvertedIndex;
 import modelLayer.Keyword;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -113,4 +115,33 @@ public class Filter {
 		return regs;
 	}
 	//String notToReg = "(^(.(?!to))$)*";
+	
+	public static boolean matchResturant(String restaurant, InvertedIndex invertedIndex)
+    {
+        List<Set<Tweet>> tweetSet = new ArrayList<Set<Tweet>>();
+        String[] restaurantWords = restaurant.split(" ");
+        for (String restaurantWord : restaurantWords) {
+            String resWord = restaurantWord.toLowerCase();
+            for (String word : invertedIndex.keySet()) {
+                String w = word.toLowerCase();
+                if (resWord.equals(w)) {
+                    tweetSet.add(invertedIndex.get(word));
+                    break;
+                }
+            }
+        }
+
+        for(int i = 1; i < tweetSet.size(); i++)
+        {
+            tweetSet.get(0).retainAll(tweetSet.get(i));
+        }
+
+        for(Tweet tweet : tweetSet.get(0))
+        {
+            if(tweet.getTweetText().contains(restaurant))
+                return true;
+        }
+
+        return false;
+    }
 }
