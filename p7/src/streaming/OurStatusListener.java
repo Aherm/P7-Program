@@ -32,9 +32,11 @@ public class OurStatusListener implements StatusListener {
 		Preprocessor.processTweet(tweet);
 		if(Filter.passesFilter(tweet)) {
 			tweets.add(tweet);
-			//invertedIndex.extractWords(tweet); //Need to extract from timeline of this tweet as well
+			invertedIndex.extractWords(tweet);
 			try {
-				tweets.addAll(restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet));
+				TweetStorage ts = restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet);
+				invertedIndex.extractWords(ts);
+				tweets.addAll(ts);
 			}
 			catch (TwitterException e) {
 				e.printStackTrace();
@@ -42,7 +44,8 @@ public class OurStatusListener implements StatusListener {
 				return; 
 			}
 		}
-		removeOldTweets(3);
+		removeOldTweetsFromInvertedIndex(3);
+		removeOldTweetsFromTweetStorage(3);
 	}
 
 	public void removeOldTweetsFromInvertedIndex(int days) {
@@ -63,7 +66,7 @@ public class OurStatusListener implements StatusListener {
 		}
 	}
 	
-	public void removeOldTweets(int days) {
+	public void removeOldTweetsFromTweetStorage(int days) {
 		TweetStorage removalList = new TweetStorage();
 		Date today = new Date();
 
