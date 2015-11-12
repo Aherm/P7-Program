@@ -1,6 +1,8 @@
 package streaming;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -43,6 +45,24 @@ public class OurStatusListener implements StatusListener {
 		removeOldTweets(3);
 	}
 
+	public void removeOldTweetsFromInvertedIndex(int days) {
+		Set<Tweet> removalList = new HashSet<Tweet>();
+		Date today = new Date();
+		
+		for(String word : invertedIndex.keySet())
+		{
+			for(Tweet tweet : invertedIndex.get(word))
+			{
+				int tweetAge = Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays();
+				if (tweetAge >= days)
+					removalList.add(tweet);
+			}
+			
+			invertedIndex.get(word).removeAll(removalList);
+			removalList.clear();
+		}
+	}
+	
 	public void removeOldTweets(int days) {
 		TweetStorage removalList = new TweetStorage();
 		Date today = new Date();
