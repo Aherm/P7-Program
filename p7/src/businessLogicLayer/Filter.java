@@ -116,7 +116,7 @@ public class Filter {
 	}
 	//String notToReg = "(^(.(?!to))$)*";
 	
-	public static boolean matchResturant(String restaurant, InvertedIndex invertedIndex)
+	public static boolean matchResturantByName(String restaurant, InvertedIndex invertedIndex)
     {
         List<Set<Tweet>> tweetSet = new ArrayList<Set<Tweet>>();
         String[] restaurantWords = restaurant.split(" ");
