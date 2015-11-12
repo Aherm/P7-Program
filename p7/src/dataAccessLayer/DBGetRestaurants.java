@@ -10,10 +10,9 @@ import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
 public class DBGetRestaurants {
-	private static List<String> listQuery(String query) {
+	private static List<String> listQuery(String query) { // Give this a proper name
 
 		List<String> restaurants = new ArrayList<String>();
-
 		try {
 			Connection con = DBConnect.getInstance().getCon();
 
@@ -21,7 +20,7 @@ public class DBGetRestaurants {
 			//stmt.execute("SET datestyle = \"ISO,DMY\"");
 			ResultSet res = stmt.executeQuery(query);
 
-			restaurants = initializeTweets(res);
+			restaurants = initializeRestaurants(res);
 		}
 		catch (Exception exh) {
 			System.out.println(exh);
@@ -30,7 +29,7 @@ public class DBGetRestaurants {
 		return restaurants;
 	}
 	
-	private static List<String> initializeTweets(ResultSet res) {
+	private static List<String> initializeRestaurants(ResultSet res) {
 		List<String> restaurants = new ArrayList<String>();
 		try {
 			while (res.next()) {
@@ -47,6 +46,6 @@ public class DBGetRestaurants {
 	}
 	
 	public static List<String> getRestaurants() {
-		return listQuery("SELECT name FROM restaurants");
+		return listQuery("SELECT DISTINCT name, street FROM dohmh LIMIT 50");
 	}
 }
