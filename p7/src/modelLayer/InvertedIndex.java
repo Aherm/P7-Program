@@ -5,7 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class InvertedIndex extends HashMap<String, Set<Tweet>> {
-    public void extractWords(Tweet tweet) {
+	// This field has to be there. We don't use it.
+	private static final long serialVersionUID = -9190464032994889522L;
+
+	public void extractWords(Tweet tweet) {
         for (String word : tweet.getTweetText().split(" ")){
             addIndex(word, tweet);
         }
