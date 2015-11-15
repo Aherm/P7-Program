@@ -12,114 +12,126 @@ import java.util.Date;
 
 public class DBGetTweets {
 
-	public DBGetTweets() {}
+    public DBGetTweets() {
+    }
 
-	private static TweetStorage tsQuery(String query) {
+    private static TweetStorage tsQuery(String query) {
 
-		TweetStorage tweets = new TweetStorage();
+        TweetStorage tweets = new TweetStorage();
 
-		try {
-			Connection con = DBConnect.getInstance().getCon();
+        try {
+            Connection con = DBConnect.getInstance().getCon();
 
-			Statement stmt = con.createStatement();
-			stmt.execute("SET datestyle = \"ISO,DMY\"");
-			ResultSet res = stmt.executeQuery(query);
+            Statement stmt = con.createStatement();
+            stmt.execute("SET datestyle = \"ISO,DMY\"");
+            ResultSet res = stmt.executeQuery(query);
 
-			tweets = initializeTweets(res);
-		}
-		catch (Exception exh) {
-			System.out.println(exh);
-		}
+            tweets = initializeTweets(res);
+        } catch (Exception exh) {
+            System.out.println(exh);
+        }
 
-		return tweets;
-	}
+        return tweets;
+    }
 
-	public static TweetStorage getTweets() {
-		return tsQuery("SELECT * FROM tweets");
-	}
+    public static TweetStorage getTweets() {
+        return tsQuery("SELECT * FROM tweets");
+    }
 
-	public static TweetStorage getKTweets (int k) {
-		return tsQuery("SELECT * FROM tweets LIMIT " + k);
-	}
+    public static TweetStorage getKTweets(int k) {
+        return tsQuery("SELECT * FROM tweets LIMIT " + k);
+    }
 
-	public static TweetStorage getKLastTweets(int k) {
-		return tsQuery("SELECT * FROM tweets ORDER BY tweetid DESC LIMIT " + k);
-	}
+    public static TweetStorage getKLastTweets(int k) {
+        return tsQuery("SELECT * FROM tweets ORDER BY tweetid DESC LIMIT " + k);
+    }
 
-	public static TweetStorage getInterval(int start, int size) {
-		return tsQuery("SELECT * FROM tweets ORDER BY id LIMIT " + size + " OFFSET " + start);
-	}
+    public static TweetStorage getInterval(int start, int size) {
+        return tsQuery("SELECT * FROM tweets ORDER BY id LIMIT " + size + " OFFSET " + start);
+    }
 
-	public static TweetStorage getTweetsFromLastThreeDays() {
-		return tsQuery("SELECT * FROM tweets WHERE EXTRACT(DAY FROM age(createdat::timestamp)) <= 3");
-	}
+    public static TweetStorage getTweetsFromLastThreeDays() {
+        return tsQuery("SELECT * FROM tweets WHERE EXTRACT(DAY FROM age(createdat::timestamp)) <= 3");
+    }
 
-	public static TweetStorage getGeotaggedTweets() {
-		return tsQuery("SELECT * from tweets WHERE NOT lat = 0 AND not lon = 0");
-	}
+    public static TweetStorage getGeotaggedTweets() {
+        return tsQuery("SELECT * from tweets WHERE NOT lat = 0 AND not lon = 0");
+    }
 
-	private static long countQuery(String query) {
-		long numTweets = 0;
+    public static TweetStorage getTweetsFromNewYork(){
+        return getTweetsForBoundingBox(40, -74, 41, -73);
+    }
 
-		try {
-			Connection con = DBConnect.getInstance().getCon();
+    //btc 15112015, maybe refactor so that it takes arrays of lat lon pairs
+    public static TweetStorage getTweetsForBoundingBox(int lat1, int lon1, int lat2, int lon2) {
+        return tsQuery("SELECT * " +
+                "FROM tweets AS t " +
+                "WHERE t.lat >= " + lat1 + " AND t.lat <= " + lat2 + " AND t.lon >= " + lon1 + " -74.0 AND t.lon <= " + lon2);
+    }
 
-			Statement stmt = con.createStatement();
-			stmt.execute("set datestyle = \"ISO,DMY\""); 
-			ResultSet res = stmt.executeQuery(query);
+    private static long countQuery(String query) {
+        long numTweets = 0;
 
-			res.next();
-			numTweets = res.getLong("count");
+        try {
+            Connection con = DBConnect.getInstance().getCon();
 
-		} catch (Exception exh) {
-			System.out.println(exh);
-		}
-		return numTweets;
-	}
+            Statement stmt = con.createStatement();
+            stmt.execute("set datestyle = \"ISO,DMY\"");
+            ResultSet res = stmt.executeQuery(query);
 
-	public static long getNumTweets() {
-		return countQuery("SELECT count(*) FROM tweets");
-	}
+            res.next();
+            numTweets = res.getLong("count");
 
-	public static long getNrTweetsFromDay(String date){
-		return countQuery("SELECT count(*) FROM tweets WHERE createdat::date = '" + date + "'");
-	}
+        } catch (Exception exh) {
+            System.out.println(exh);
+        }
+        return numTweets;
+    }
 
-	private static TweetStorage initializeTweets(ResultSet res) {
-		TweetStorage tweets = new TweetStorage();
-		try {
-			while (res.next()) {
-				Tweet newTweet = new Tweet();
-				newTweet.setTweetID(res.getLong("tweetID"));
-				newTweet.setUserID(res.getLong("userid"));
-				newTweet.setResponseID(res.getLong("responseid"));
-				newTweet.setRetweetID(res.getLong("retweetid"));
-				newTweet.setTweetText(res.getString("tweetText"));
-				newTweet.setCreatedAt(convertStringToDate(res.getString("createdat")));
-				newTweet.setLat(res.getDouble("lat"));
-				newTweet.setLon(res.getDouble("lon"));
-				tweets.add(newTweet);
-			}
-		}
-		catch (Exception exh) {
-			System.out.println(exh);
-		}
-		return tweets;
-	}
+    public static long getNumTweets() {
+        return countQuery("SELECT count(*) FROM tweets");
+    }
 
-	//New select query
-	//SELECT * FROM tweets Order By id LIMIT 9000 OFFSET 4000
+    public static long getNrTweetsFromDay(String date) {
+        return countQuery("SELECT count(*) FROM tweets WHERE createdat::date = '" + date + "'");
+    }
 
-	private static Date convertStringToDate(String string) {
-		Date date = new Date();
-		try {
-			DateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-			date = format.parse(string);
-		}
-		catch (Exception ex) {
-			System.out.println(ex);
-		}
 
-		return date;
-	}
+    private static TweetStorage initializeTweets(ResultSet res) {
+        TweetStorage tweets = new TweetStorage();
+        try {
+            while (res.next()) {
+                Tweet newTweet = new Tweet();
+                newTweet.setTweetID(res.getLong("tweetID"));
+                newTweet.setUserID(res.getLong("userid"));
+                newTweet.setResponseID(res.getLong("responseid"));
+                newTweet.setRetweetID(res.getLong("retweetid"));
+                newTweet.setTweetText(res.getString("tweetText"));
+                newTweet.setCreatedAt(convertStringToDate(res.getString("createdat")));
+                newTweet.setLat(res.getDouble("lat"));
+                newTweet.setLon(res.getDouble("lon"));
+                tweets.add(newTweet);
+            }
+        } catch (Exception exh) {
+            System.out.println(exh);
+        }
+        return tweets;
+    }
+
+    //New select query
+    //SELECT * FROM tweets Order By id LIMIT 9000 OFFSET 4000
+
+    private static Date convertStringToDate(String string) {
+        Date date = new Date();
+        try {
+            DateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+            date = format.parse(string);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        return date;
+    }
+
+
 }

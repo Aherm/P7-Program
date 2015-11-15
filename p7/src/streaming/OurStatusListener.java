@@ -1,6 +1,8 @@
 package streaming;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -30,9 +32,11 @@ public class OurStatusListener implements StatusListener {
 		Preprocessor.processTweet(tweet);
 		if(Filter.passesFilter(tweet)) {
 			tweets.add(tweet);
-			//invertedIndex.extractWords(tweet); //Need to extract from timeline of this tweet as well
+			invertedIndex.extractWords(tweet);
 			try {
-				tweets.addAll(restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet));
+				TweetStorage ts = restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet);
+				invertedIndex.extractWords(ts);
+				tweets.addAll(ts);
 			}
 			catch (TwitterException e) {
 				e.printStackTrace();
@@ -40,10 +44,29 @@ public class OurStatusListener implements StatusListener {
 				return; 
 			}
 		}
-		removeOldTweets(3);
+		removeOldTweetsFromInvertedIndex(3);
+		removeOldTweetsFromTweetStorage(3);
 	}
 
-	public void removeOldTweets(int days) {
+	public void removeOldTweetsFromInvertedIndex(int days) {
+		Set<Tweet> removalList = new HashSet<Tweet>();
+		Date today = new Date();
+		
+		for(String word : invertedIndex.keySet())
+		{
+			for(Tweet tweet : invertedIndex.get(word))
+			{
+				int tweetAge = Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays();
+				if (tweetAge >= days)
+					removalList.add(tweet);
+			}
+			
+			invertedIndex.get(word).removeAll(removalList);
+			removalList.clear();
+		}
+	}
+	
+	public void removeOldTweetsFromTweetStorage(int days) {
 		TweetStorage removalList = new TweetStorage();
 		Date today = new Date();
 

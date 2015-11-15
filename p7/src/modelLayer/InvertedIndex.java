@@ -13,6 +13,12 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
             addIndex(word, tweet);
         }
     }
+	
+	public void extractWords(TweetStorage tweets) {
+		for(Tweet tweet : tweets) {
+			extractWords(tweet);
+		}
+	}
 
     private void addIndex(String word, Tweet newTweet) {
         // if contains => true then add tweet to set
