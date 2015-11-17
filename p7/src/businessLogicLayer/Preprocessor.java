@@ -55,6 +55,7 @@ public class Preprocessor {
 					newTweetText += word.charAt(i);
 				}
 			}
+			newTweetText = newTweetText.toLowerCase();
 			newTweetText += " ";
 		}
 
