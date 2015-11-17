@@ -43,6 +43,7 @@ public class Preprocessor {
 
 	private static void processTweetSymbols(Tweet tweet) {
 		String[] tweetText = tweet.getTweetText().split(" ");
+		String tweetWord = "";
 		String newTweetText = "";
 		for (String word : tweetText) {
 			if (word.contains("@") || word.contains("#")) {
@@ -52,10 +53,21 @@ public class Preprocessor {
 
 			for (int i = 0; i < word.length(); i++) {
 				if (Character.isLetter(word.charAt(i)) || Character.isDigit(word.charAt(i))) {
-					newTweetText += word.charAt(i);
+					tweetWord += word.charAt(i);
 				}
 			}
-			newTweetText += " ";
+			
+			if(tweetWord.equals("@MENTION") || tweetWord.equals("@LINK"))
+			{
+				newTweetText += tweetWord + " ";
+			}
+			else
+			{
+				tweetWord = tweetWord.toLowerCase();
+				newTweetText += tweetWord + " ";
+			}
+			
+			tweetWord = "";
 		}
 
 		tweet.setTweetText(newTweetText);
