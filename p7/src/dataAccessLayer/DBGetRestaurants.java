@@ -35,7 +35,8 @@ public class DBGetRestaurants {
 			while (res.next()) {
 				String newRestaurant = "";
 				newRestaurant = res.getString("name");
-				restaurants.add(newRestaurant);
+				if (newRestaurant != null)
+					restaurants.add(newRestaurant.toLowerCase());
 			}
 		}
 		catch (Exception exh) {
@@ -46,6 +47,6 @@ public class DBGetRestaurants {
 	}
 	
 	public static List<String> getRestaurants() {
-		return listQuery("SELECT DISTINCT name, street FROM dohmh LIMIT 50");
+		return listQuery("SELECT DISTINCT name, street FROM dohmh");
 	}
 }

@@ -66,7 +66,9 @@ public class DBGetTweets {
     public static TweetStorage getTweetsForBoundingBox(int lat1, int lon1, int lat2, int lon2) {
         return tsQuery("SELECT * " +
                 "FROM tweets AS t " +
-                "WHERE t.lat >= " + lat1 + " AND t.lat <= " + lat2 + " AND t.lon >= " + lon1 + " -74.0 AND t.lon <= " + lon2);
+                "WHERE t.lat >= " + lat1 + " AND t.lat <= " + lat2 + " AND t.lon >= " + lon1 + " -74.0 AND t.lon <= " + lon2 +
+				" Order By id LIMIT 10"
+		);
     }
 
     private static long countQuery(String query) {
