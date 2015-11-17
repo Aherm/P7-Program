@@ -129,9 +129,10 @@ public class Filter {
                 }
             }
         }
-        if (restaurantWords.length != tweetSet.size()) {
+        
+        if (restaurantWords.length != tweetSet.size()) 
             return false;
-        }
+        
 
         for (int i = 1; i < tweetSet.size(); i++) {
             tweetSet.get(0).retainAll(tweetSet.get(i));
