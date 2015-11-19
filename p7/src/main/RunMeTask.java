@@ -7,9 +7,11 @@ import java.util.TimerTask;
 public class RunMeTask extends TimerTask
 {
     TweetStorage newTweets;
+    String tableName;
     
-    public RunMeTask(TweetStorage tweets) {
+    public RunMeTask(TweetStorage tweets, String tableName) {
     	this.newTweets = tweets;
+        this.tableName = tableName;
     }
 
     @Override
@@ -18,7 +20,7 @@ public class RunMeTask extends TimerTask
             System.out.println("Run Me ~");
 
             if (newTweets.size() != 0) {
-                DBInsert.insertTweets(newTweets);
+                DBInsert.insertTweets(newTweets, tableName);
                 newTweets.clear();
             }
         }

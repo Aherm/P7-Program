@@ -120,9 +120,9 @@ public class Filter {
         List<Set<Tweet>> tweetSet = new ArrayList<Set<Tweet>>();
         String[] restaurantWords = restaurant.split(" ");
         for (String restaurantWord : restaurantWords) {
-            String resWord = restaurantWord.toLowerCase();
+            String resWord = restaurantWord;
             for (String word : invertedIndex.keySet()) {
-                String w = word.toLowerCase();
+                String w = word;
                 if (resWord.equals(w)) {
                     tweetSet.add(invertedIndex.get(word));
                     break;
@@ -132,7 +132,6 @@ public class Filter {
         
         if (restaurantWords.length != tweetSet.size()) 
             return false;
-        
 
         for (int i = 1; i < tweetSet.size(); i++) {
             tweetSet.get(0).retainAll(tweetSet.get(i));
@@ -141,12 +140,10 @@ public class Filter {
         if (tweetSet.isEmpty())
             return false;
 
-        //At some point this results in an out of bounds exception
         for (Tweet tweet : tweetSet.get(0)) {
             if (tweet.getTweetText().contains(restaurant))
                 return true;
         }
-
 
         return false;
     }
