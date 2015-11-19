@@ -39,9 +39,17 @@ public class OurStatusListener implements StatusListener {
 				tweets.addAll(ts);
 			}
 			catch (TwitterException e) {
-				e.printStackTrace();
-				System.out.println("Stopped because of rateLimit");
-				return; 
+				if (e.getStatusCode() == 420 || e.getStatusCode() == 429){
+					System.out.println("Too many requests");
+					e.printStackTrace();
+				}
+				// server overloaded
+				if (e.getStatusCode() == 503){
+					System.out.println("Twitter is overloaded");
+					e.printStackTrace();
+				}
+
+				return;
 			}
 		}
 		removeOldTweetsFromInvertedIndex(3);
