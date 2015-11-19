@@ -11,11 +11,11 @@ public class DBInsert {
 
 	public DBInsert() {}
 
-	public static void insertTweets(TweetStorage tweets) {
+	public static void insertTweets(TweetStorage tweets, String tableName) {
 		try {
 			Connection con = DBConnect.getInstance().getCon();
-			String insertSQL= "INSERT INTO tweets " +
-							  "(tweetID, userID, responseID, retweetID, tweetText, createdAt, " +
+			String insertSQL= "INSERT INTO " + tableName +
+							  " (tweetID, userID, responseID, retweetID, tweetText, createdAt, " +
 							  "lat, lon)" + " VALUES " +
 							  "(?, ?, ?, ?, ?, ?, ?, ?)";
 			

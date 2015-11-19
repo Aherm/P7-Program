@@ -1,4 +1,4 @@
-﻿CREATE TABLE tweets
+﻿CREATE TABLE new_york_tweets
   (
   	tweetid bigint PRIMARY KEY,
   	userid bigint NOT NULL,
@@ -11,8 +11,9 @@
   	id BIGSERIAL
   );
 
-CREATE TABLE Keywords
-  (
-  	tweetid bigint REFERENCES tweets (tweetid),
-  	keyword varchar(255)
-  );
+
+--CREATE TABLE Keywords
+--(
+--  	tweetid bigint REFERENCES tweets (tweetid),
+--  	keyword varchar(255)
+--  );

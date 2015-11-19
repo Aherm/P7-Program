@@ -120,9 +120,9 @@ public class Filter {
         List<Set<Tweet>> tweetSet = new ArrayList<Set<Tweet>>();
         String[] restaurantWords = restaurant.split(" ");
         for (String restaurantWord : restaurantWords) {
-            String resWord = restaurantWord.toLowerCase();
+            String resWord = restaurantWord;
             for (String word : invertedIndex.keySet()) {
-                String w = word.toLowerCase();
+                String w = word;
                 if (resWord.equals(w)) {
                     tweetSet.add(invertedIndex.get(word));
                     break;
