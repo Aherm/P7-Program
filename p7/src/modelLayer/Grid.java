@@ -23,10 +23,10 @@ public class Grid {
 	
 	public TweetStorage rangeQuery(Box queryBox) {
 		TweetStorage result = new TweetStorage();
-		int mini = geti(queryBox.getBottom());
-		int maxi = geti(queryBox.getTop());
-		int minj = getj(queryBox.getLeft());
-		int maxj = getj(queryBox.getRight());
+		int mini = Math.max(geti(queryBox.getBottom()), 0);
+		int maxi = Math.min(geti(queryBox.getTop()), grid.length - 1);
+		int minj = Math.max(getj(queryBox.getLeft()), 0);
+		int maxj = Math.min(getj(queryBox.getRight()), grid[0].length - 1);
 		
 		for (int i = mini; i <= maxi; i++) {
 			for (int j = minj; j <= maxj; j++) {
