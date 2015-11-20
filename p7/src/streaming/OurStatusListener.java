@@ -12,6 +12,7 @@ import businessLogicLayer.Preprocessor;
 import businessLogicLayer.TwitterRest;
 import modelLayer.Cluster;
 import modelLayer.ClusterStorage;
+import modelLayer.Grid;
 import modelLayer.InvertedIndex;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
@@ -23,7 +24,9 @@ public class OurStatusListener implements StatusListener {
 	private ClusterStorage clusters = new ClusterStorage();
 	private TwitterRest restAPI = TwitterRest.getInstance(); 
 	private InvertedIndex invertedIndex = new InvertedIndex();
-
+	// TODO: Determine the best number of rows and columns. Maybe pass them as argument instead.
+	private Grid grid = new Grid(-74, -73, 40, 41, 1000, 1000);
+			
 	public void onStatus(Status status) {
 		Tweet tweet = Tweet.createTweet(status);
 		dbTweets.add(tweet);
@@ -33,10 +36,15 @@ public class OurStatusListener implements StatusListener {
 		if(Filter.passesFilter(tweet)) {
 			tweets.add(tweet);
 			invertedIndex.extractWords(tweet);
+			grid.addTweet(tweet);
+			
 			try {
 				TweetStorage ts = restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet);
 				invertedIndex.extractWords(ts);
 				tweets.addAll(ts);
+				for (Tweet t : ts) {
+					grid.addTweet(t);
+				}
 			}
 			catch (TwitterException e) {
 				if (e.getStatusCode() == 420 || e.getStatusCode() == 429){
@@ -125,5 +133,9 @@ public class OurStatusListener implements StatusListener {
 	
 	public InvertedIndex getInvertedIndex() {
 		return invertedIndex;
+	}
+	
+	public Grid getGrid() {
+		return grid;
 	}
 }

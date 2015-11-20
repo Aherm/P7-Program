@@ -58,15 +58,19 @@ public class Grid {
 	}
 	
 	public void addTweet(Tweet t) {
-		int i = geti(t);
-		int j = getj(t);		
-		grid[i][j].add(t);
+		if (t.isGeotagged()) {
+			int i = geti(t);
+			int j = getj(t);
+			grid[i][j].add(t);
+		}
 	}
 	
 	public void removeTweet(Tweet t) {
-		int i = geti(t);
-		int j = getj(t);
-		grid[i][j].remove(t);
+		if (t.isGeotagged()) {
+			int i = geti(t);
+			int j = getj(t);
+			grid[i][j].remove(t);
+		}
 	}
 	
 	public int geti(Tweet t) {
