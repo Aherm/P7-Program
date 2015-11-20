@@ -7,15 +7,15 @@ public class Grid {
 	private double cellWidth;
 	private double cellHeight;
 	
-	public Grid(double x1, double y1, double x2, double y2, int cellRowAmount, int cellColumnAmount) {
-		this.gridBox = new Box(x1, y1, x2, y2);
+	public Grid(double leftX, double rightX, double bottomY, double topY, int rowAmount, int columnAmount) {
+		this.gridBox = new Box(leftX, rightX, bottomY, topY);
 		
-		this.cellWidth = gridBox.getWidth() / cellRowAmount;
-		this.cellHeight = gridBox.getHeight() / cellColumnAmount;
+		this.cellWidth = gridBox.getWidth() / rowAmount;
+		this.cellHeight = gridBox.getHeight() / columnAmount;
 		
-		this.grid = new TweetStorage[cellRowAmount][cellColumnAmount];
-		for (int i = 0; i < cellRowAmount; i++) {
-			for (int j = 0; j < cellColumnAmount; j++) {
+		this.grid = new TweetStorage[rowAmount][columnAmount];
+		for (int i = 0; i < rowAmount; i++) {
+			for (int j = 0; j < columnAmount; j++) {
 				grid[i][j] = new TweetStorage();
 			}
 		}
@@ -23,15 +23,19 @@ public class Grid {
 	
 	public TweetStorage rangeQuery(Box queryBox) {
 		TweetStorage result = new TweetStorage();
-		int mini = geti(queryBox.getX1());
-		int maxi = geti(queryBox.getX2());
-		int minj = getj(queryBox.getY1());
-		int maxj = getj(queryBox.getY2());
+		int mini = geti(queryBox.getBottom());
+		int maxi = geti(queryBox.getTop());
+		int minj = getj(queryBox.getLeft());
+		int maxj = getj(queryBox.getRight());
 		
-		for (int i = mini; i < maxi; i++) {
-			for (int j = minj; j < maxj; j++) {
+		for (int i = mini; i <= maxi; i++) {
+			for (int j = minj; j <= maxj; j++) {
 				TweetStorage cell = grid[i][j];
-				Box cellBox = new Box(i * cellWidth, j * cellWidth, (i + 1) * cellWidth, (j + 1) * cellWidth);
+				double cellLeft = j * cellWidth + gridBox.getLeft();
+				double cellRight = cellLeft + cellWidth;
+				double cellBottom = i * cellHeight + gridBox.getBottom();
+				double cellTop = cellBottom + cellHeight;
+				Box cellBox = new Box(cellLeft, cellRight, cellBottom, cellTop);
 				
 				if (queryBox.contains(cellBox)) {
 					result.addAll(cell);
@@ -53,7 +57,6 @@ public class Grid {
 		return grid[i][j];
 	}
 	
-	// TODO: Error handling when tweet is out of grid range
 	public void addTweet(Tweet t) {
 		int i = geti(t);
 		int j = getj(t);		
@@ -66,21 +69,21 @@ public class Grid {
 		grid[i][j].remove(t);
 	}
 	
-	private int geti(Tweet t) {
-		return geti(t.getLon());
+	public int geti(Tweet t) {
+		return geti(t.getLat());
 	}
 	
-	private int getj(Tweet t) {
-		return getj(t.getLat());
+	public int getj(Tweet t) {
+		return getj(t.getLon());
 	}
 	
-	private int geti(double x) {
-		double hdist = Math.abs(x - gridBox.getX1());
-		return (int) (hdist / cellWidth);
+	private int geti(double y) {
+		double vdist = y - gridBox.getBottom();
+		return (int) (vdist / cellWidth);
 	}
 	
-	private int getj(double y) {
-		double vdist = Math.abs(y - gridBox.getY1());
-		return (int) (vdist / cellHeight);
+	private int getj(double x) {
+		double hdist = x - gridBox.getLeft();
+		return (int) (hdist / cellHeight);
 	}
 }

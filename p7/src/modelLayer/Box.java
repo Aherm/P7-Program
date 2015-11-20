@@ -1,67 +1,51 @@
 package modelLayer;
 
 public class Box {
-	private double x1, x2, y1, y2;
+	private double left, right, top, bottom;
 
-	public Box(double x1, double y1, double x2, double y2) {
-		this.x1 = x1;
-		this.x2 = x2;
-		this.y1 = y1;
-		this.y2 = y2;
+	public Box(double leftX, double rightX, double bottomY, double topY) {
+		this.left = leftX;
+		this.right = rightX;
+		this.top = topY;
+		this.bottom = bottomY;
 	}
 	
 	public double getWidth() {
-		return Math.abs(x2 - x1);
+		return Math.abs(right - left);
 	}
 	
 	public double getHeight() {
-		return Math.abs(y2 - y1);
+		return Math.abs(top - bottom);
 	}
 	
 	public Boolean contains(Tweet t) {
-		return (t.getLat() < this.y1) && (t.getLat() > this.y2) && (t.getLon() > this.x1) && (t.getLon() < this.x2);
+		return (t.getLat() < this.top) && (t.getLat() > this.bottom) && (t.getLon() > this.left) && (t.getLon() < this.right);
 	}
 	
 	public Boolean contains(Box b) {
-		return (this.x1 < b.x1) && (this.x2 > b.x2) && (this.y1 > b.y1) && (this.y2 < b.y2);
+		return (this.left < b.left) && (this.right > b.right) && (this.top > b.top) && (this.bottom < b.bottom);
 	}
 	
 	public boolean intersects(Box b) {
-		return !((this.x2 < b.x1) ||
-				(b.x2 < this.x1) || 
-				(y2 > b.y1) ||
-				(b.y2 > this.y1));
+		return !((this.right < b.left) ||
+				(b.right < this.left) || 
+				(this.bottom > b.top) ||
+				(b.bottom > this.top));
 	}
 	
-	public double getX1() {
-		return x1;
+	public double getLeft() {
+		return left;
 	}
 
-	public void setX1(double x1) {
-		this.x1 = x1;
+	public double getRight() {
+		return right;
 	}
 
-	public double getX2() {
-		return x2;
+	public double getTop() {
+		return top;
 	}
 
-	public void setX2(double x2) {
-		this.x2 = x2;
-	}
-
-	public double getY1() {
-		return y1;
-	}
-
-	public void setY1(double y1) {
-		this.y1 = y1;
-	}
-
-	public double getY2() {
-		return y2;
-	}
-
-	public void setY2(double y2) {
-		this.y2 = y2;
+	public double getBottom() {
+		return bottom;
 	}
 }
