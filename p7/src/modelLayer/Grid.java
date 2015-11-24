@@ -1,5 +1,7 @@
 package modelLayer;
 
+import utility.Distance;
+
 public class Grid {
 	private TweetStorage[][] grid;
 	private Box gridBox;
@@ -21,8 +23,22 @@ public class Grid {
 		}
 	}
 	
-	public TweetStorage rangeQuery(Box queryBox) {
+	public TweetStorage rangeQuery(OurLocation loc, double dist) {
+		Box queryBox = Distance.getBoundingBox(loc, dist);
 		TweetStorage result = new TweetStorage();
+		
+		for (Tweet t : rangeQuery(queryBox)) {
+			if (Distance.getDist(t, loc) < dist) {
+				result.add(t);
+			}
+		}
+		
+		return result;
+	}
+	
+	public TweetStorage rangeQuery(Box queryBox) {
+		TweetStorage result = new TweetStorage();		
+
 		int mini = Math.max(geti(queryBox.getBottom()), 0);
 		int maxi = Math.min(geti(queryBox.getTop()), grid.length - 1);
 		int minj = Math.max(getj(queryBox.getLeft()), 0);

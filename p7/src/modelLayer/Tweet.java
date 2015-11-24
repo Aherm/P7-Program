@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Tweet {
+public class Tweet implements OurLocation {
 	private long tweetID, userID, responseID, retweetID;
 	private String tweetText;
 	private Date createdAt;
