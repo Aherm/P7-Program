@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Tweet {
+public class Tweet implements OurLocation {
 	private long tweetID, userID, responseID, retweetID;
 	private String tweetText;
 	private Date createdAt;

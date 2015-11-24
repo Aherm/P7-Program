@@ -4,6 +4,8 @@ import modelLayer.Cluster;
 import modelLayer.ClusterStorage;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
+import utility.Distance;
+
 import java.util.Random;
 
 public class Clustering {
@@ -54,7 +56,7 @@ public class Clustering {
 			Tweet tweet = randomizedTweets.get(i);
 
 			Cluster nearestCluster = getNearestCluster(clusters, tweet);
-			double dist = getDist(nearestCluster.getCenter(), tweet);
+			double dist = Distance.getDist(nearestCluster.getCenter(), tweet);
 			double prob = dist / facilityCost;
 
 			double r = rand.nextDouble();
@@ -76,8 +78,8 @@ public class Clustering {
 		double gain = -facilityCost;
 
 		for (Tweet t : tweets) {
-			double d1 = getDist(t, t.getCluster().getCenter());
-			double d2 = getDist(t, tweet);
+			double d1 = Distance.getDist(t, t.getCluster().getCenter());
+			double d2 = Distance.getDist(t, tweet);
 			double dist =  d1 - d2;
 			if (dist > 0) {
 				gain += dist;
@@ -89,8 +91,8 @@ public class Clustering {
 			double removalGain = facilityCost;
 			TweetStorage notReassignedTweets = TweetStorage.getDifference(c.getTweets(), reassignmentList);
 			for (Tweet t : notReassignedTweets) {
-				double d1 = getDist(t, t.getCluster().getCenter());
-				double d2 = getDist(t, tweet);
+				double d1 = Distance.getDist(t, t.getCluster().getCenter());
+				double d2 = Distance.getDist(t, tweet);
 				removalGain +=  d1 - d2;
 			}
 			if (removalGain >= 0) {
@@ -120,7 +122,7 @@ public class Clustering {
 		Cluster c = null;
 
 		for (Cluster cluster : clusters) {
-			double currentDist = getDist(cluster.getCenter(), tweet);
+			double currentDist = Distance.getDist(cluster.getCenter(), tweet);
 			if (currentDist < dist) {
 				dist = currentDist;
 				c = cluster;
@@ -128,22 +130,5 @@ public class Clustering {
 		}
 
 		return c;
-	}
-
-	private static double getDist(Tweet t1, Tweet t2) {
-		double R = 6371;	//Earths radius
-		double deltaLat = toRadians(t2.getLat() - t1.getLat());
-		double deltaLon = toRadians(t2.getLon() - t1.getLon());
-		double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-				Math.cos(toRadians(t1.getLat())) * Math.cos(toRadians(t2.getLat())) *
-				Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
-
-		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-		return (R * c) * 1000;
-	}
-
-	private static double toRadians(double degree)
-	{
-		return degree * Math.PI / 180;
 	}
 }
