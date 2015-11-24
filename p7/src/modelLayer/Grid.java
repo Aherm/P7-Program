@@ -25,8 +25,15 @@ public class Grid {
 	
 	public TweetStorage rangeQuery(OurLocation loc, double dist) {
 		Box queryBox = Distance.getBoundingBox(loc, dist);
-		// TODO: Now has tweets within the bounding box of our location. Maybe filter to distance
-		return rangeQuery(queryBox);
+		TweetStorage result = new TweetStorage();
+		
+		for (Tweet t : rangeQuery(queryBox)) {
+			if (Distance.getDist(t, loc) < dist) {
+				result.add(t);
+			}
+		}
+		
+		return result;
 	}
 	
 	public TweetStorage rangeQuery(Box queryBox) {
