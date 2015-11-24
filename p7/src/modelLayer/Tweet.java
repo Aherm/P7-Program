@@ -2,6 +2,12 @@ package modelLayer;
 
 import twitter4j.Status;
 import java.util.List;
+
+import javax.net.ssl.HandshakeCompletedEvent;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -149,5 +155,24 @@ public class Tweet {
 
 	public Tweet clone() {
 		return new Tweet(tweetID, userID, responseID, retweetID, tweetText, createdAt, lat, lon);
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o == this) 
+			return true; 
+		
+		if(!(o instanceof Tweet))
+			return false; 
+		
+		Tweet t = (Tweet)o;
+		
+		return new EqualsBuilder().append(tweetID, t.tweetID).isEquals();  
+		
+	}
+	
+	@Override
+	public int hashCode(){
+		return new HashCodeBuilder(41,83).append(tweetID).toHashCode();
 	}
 }

@@ -40,6 +40,7 @@ public class OurStatusListener implements StatusListener {
 			
 			try {
 				TweetStorage ts = restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet);
+				removeSeenTweets(ts);
 				invertedIndex.extractWords(ts);
 				tweets.addAll(ts);
 				for (Tweet t : ts) {
@@ -103,6 +104,14 @@ public class OurStatusListener implements StatusListener {
 		tweets.removeAll(removalList);
 	}
 	
+	private void removeSeenTweets(TweetStorage ts){
+		for(int i = 0 ; i < ts.size(); i++){
+			if(tweets.contains(ts.get(i))){
+				ts.remove(ts.get(i)); 
+			}
+		}
+	}
+	
 	public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
 	}
 
@@ -138,4 +147,5 @@ public class OurStatusListener implements StatusListener {
 	public Grid getGrid() {
 		return grid;
 	}
+	
 }
