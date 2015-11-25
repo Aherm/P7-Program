@@ -2,6 +2,7 @@ package businessLogicLayer;
 
 import modelLayer.InvertedIndex;
 import modelLayer.Keyword;
+import modelLayer.Restaurant;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
@@ -148,10 +149,10 @@ public class Filter {
         return false;
     }
     
-    public static TweetStorage restaurantNameQuery(String restaurant, InvertedIndex invertedIndex) {
+    public static TweetStorage restaurantNameQuery(Restaurant restaurant, InvertedIndex invertedIndex) {
         List<Set<Tweet>> tweetSet = new ArrayList<Set<Tweet>>();
         TweetStorage tweetStorage = new TweetStorage();
-        String[] restaurantWords = restaurant.split(" ");
+        String[] restaurantWords = restaurant.getName().split(" ");
         for (String restaurantWord : restaurantWords) {
             String resWord = restaurantWord;
             for (String word : invertedIndex.keySet()) {
@@ -176,7 +177,7 @@ public class Filter {
             return tweetStorage;
 
         for (Tweet tweet : tweetSet.get(0)) {
-            if (tweet.getTweetText().contains(restaurant))
+            if (tweet.getTweetText().contains(restaurant.getName()))
             	tweetStorage.add(tweet);
         }
 
