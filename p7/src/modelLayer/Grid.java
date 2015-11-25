@@ -74,15 +74,21 @@ public class Grid {
 	}
 	
 	public void addTweet(Tweet t) {
-		if (t.isGeotagged()) {
+		if (t.isGeotagged() && gridBox.contains(t)) {
 			int i = geti(t);
 			int j = getj(t);
 			grid[i][j].add(t);
 		}
 	}
 	
+	public void addTweets(TweetStorage ts) {
+		for (Tweet t : ts) {
+			this.addTweet(t);
+		}
+	}
+	
 	public void removeTweet(Tweet t) {
-		if (t.isGeotagged()) {
+		if (t.isGeotagged() && gridBox.contains(t)) {
 			int i = geti(t);
 			int j = getj(t);
 			grid[i][j].remove(t);
@@ -99,11 +105,11 @@ public class Grid {
 	
 	private int geti(double y) {
 		double vdist = y - gridBox.getBottom();
-		return (int) (vdist / cellWidth);
+		return (int) (vdist / cellHeight);
 	}
 	
 	private int getj(double x) {
 		double hdist = x - gridBox.getLeft();
-		return (int) (hdist / cellHeight);
+		return (int) (hdist / cellWidth);
 	}
 }
