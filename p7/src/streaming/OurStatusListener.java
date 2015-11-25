@@ -35,13 +35,12 @@ public class OurStatusListener implements StatusListener {
 		Preprocessor.processTweet(tweet);
 		if(Filter.passesFilter(tweet)) {
 			tweets.add(tweet);
-			invertedIndex.extractWords(tweet);
 			grid.addTweet(tweet);
-			
+			invertedIndex.addIndex(tweet);
 			try {
 				TweetStorage ts = restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet);
 				removeSeenTweets(ts);
-				invertedIndex.extractWords(ts);
+				invertedIndex.addIndices(ts);
 				tweets.addAll(ts);
 				for (Tweet t : ts) {
 					grid.addTweet(t);
@@ -61,26 +60,7 @@ public class OurStatusListener implements StatusListener {
 				return;
 			}
 		}
-		removeOldTweetsFromInvertedIndex(3);
 		removeOldTweetsFromTweetStorage(3);
-	}
-
-	public void removeOldTweetsFromInvertedIndex(int days) {
-		Set<Tweet> removalList = new HashSet<Tweet>();
-		Date today = new Date();
-		
-		for(String word : invertedIndex.keySet())
-		{
-			for(Tweet tweet : invertedIndex.get(word))
-			{
-				int tweetAge = Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays();
-				if (tweetAge >= days)
-					removalList.add(tweet);
-			}
-			
-			invertedIndex.get(word).removeAll(removalList);
-			removalList.clear();
-		}
 	}
 	
 	public void removeOldTweetsFromTweetStorage(int days) {
@@ -140,12 +120,11 @@ public class OurStatusListener implements StatusListener {
 		return clusters;
 	}
 	
-	public InvertedIndex getInvertedIndex() {
-		return invertedIndex;
-	}
-	
 	public Grid getGrid() {
 		return grid;
 	}
 	
+	public InvertedIndex getInvertedIndex() {
+		return invertedIndex;
+	}
 }

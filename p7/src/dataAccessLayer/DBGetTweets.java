@@ -35,7 +35,7 @@ public class DBGetTweets {
     }
 
     public static TweetStorage getTweets() {
-        return tsQuery("SELECT * FROM tweets");
+        return tsQuery("SELECT * FROM new_york_tweets");
     }
 
     public static TweetStorage getKTweets(int k) {

@@ -51,7 +51,6 @@ public class Program {
         ClusterStorage clusters = listener.getClusters();
         List<Restaurant> restaurants = DBGetRestaurants.getRestaurants();
         InvertedIndex invertedIndex = listener.getInvertedIndex();
-
         //A minute in ms: 60000
         //An hour in ms: 3600000
         TimerTask insertTweetsTask = new RunMeTask(newTweets, "new_york_tweets");

@@ -35,9 +35,9 @@ public class DBGetRestaurants {
 		try {
 			while (res.next()) {
 				String name = res.getString("name");
-				long lat = res.getLong("lat");
-				long lon = res.getLong("long"); 
-				Restaurant newRestaurant = new Restaurant(name, lat, lon); 
+				//long lat = res.getLong("lat");
+				//long lon = res.getLong("long"); 
+				Restaurant newRestaurant = new Restaurant(name, 0, 0); 
 				restaurants.add(newRestaurant); 
 				
 			}
@@ -50,6 +50,6 @@ public class DBGetRestaurants {
 	}
 	
 	public static List<Restaurant> getRestaurants() {
-		return listQuery("SELECT DISTINCT name, lat,long FROM reslocations");
+		return listQuery("SELECT DISTINCT lower(name) as name FROM dohmh WHERE name IS NOT NULL");
 	}
 }
