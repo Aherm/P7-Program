@@ -81,8 +81,14 @@ public class Grid {
 		}
 	}
 	
+	public void addTweets(TweetStorage ts) {
+		for (Tweet t : ts) {
+			this.addTweet(t);
+		}
+	}
+	
 	public void removeTweet(Tweet t) {
-		if (t.isGeotagged()) {
+		if (t.isGeotagged() && gridBox.contains(t)) {
 			int i = geti(t);
 			int j = getj(t);
 			grid[i][j].remove(t);
