@@ -35,8 +35,8 @@ public class DBGetRestaurants {
 		try {
 			while (res.next()) {
 				String name = res.getString("name");
-				long lat = res.getLong("lat");
-				long lon = res.getLong("long"); 
+				double lat = res.getDouble("lat");
+				double lon = res.getDouble("long"); 
 				Restaurant newRestaurant = new Restaurant(name, lat, lon); 
 				restaurants.add(newRestaurant); 
 				
