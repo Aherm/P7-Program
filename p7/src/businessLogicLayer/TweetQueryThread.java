@@ -78,7 +78,7 @@ public class TweetQueryThread extends Thread {
 				List<String> mentionedRestaurants = new ArrayList<String>();
 				for(String restaurant : restaurants)
 				{
-					if(Filter.matchRestaurantByName(restaurant, invertedIndex))
+					if(Filter.matchRestaurantByNameOld(restaurant, invertedIndex))
 						mentionedRestaurants.add(restaurant);
 				}
 				
