@@ -74,7 +74,7 @@ public class Grid {
 	}
 	
 	public void addTweet(Tweet t) {
-		if (t.isGeotagged()) {
+		if (t.isGeotagged() && gridBox.contains(t)) {
 			int i = geti(t);
 			int j = getj(t);
 			grid[i][j].add(t);
