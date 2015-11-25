@@ -105,11 +105,11 @@ public class Grid {
 	
 	private int geti(double y) {
 		double vdist = y - gridBox.getBottom();
-		return (int) (vdist / cellWidth);
+		return (int) (vdist / cellHeight);
 	}
 	
 	private int getj(double x) {
 		double hdist = x - gridBox.getLeft();
-		return (int) (hdist / cellHeight);
+		return (int) (hdist / cellWidth);
 	}
 }

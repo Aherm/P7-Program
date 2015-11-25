@@ -26,7 +26,7 @@ public class Distance {
 	    double lonMin = lon - halfSide / pradius;
 	    double lonMax = lon + halfSide / pradius;
 
-	    return new Box(rad2deg(latMin), rad2deg(latMax), rad2deg(lonMin), rad2deg(lonMax));        
+	    return new Box(rad2deg(lonMin), rad2deg(lonMax), rad2deg(latMin), rad2deg(latMax));        
 	}
 
 	public static double getDist(OurLocation loc1, OurLocation loc2) {
