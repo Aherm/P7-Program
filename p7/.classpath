@@ -33,5 +33,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="postgresql-9.4-1203.jdbc4.jar"/>
+	<classpathentry kind="lib" path="libaries/commons-lang3-3.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
