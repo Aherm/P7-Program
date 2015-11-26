@@ -20,6 +20,8 @@ public class Tweet implements OurLocation {
 
 	private double score = -1;
 	private Cluster assignedCluster = null;
+	
+	private String classLabel = "";
 	//private boolean addedToStorage = false;
 
 	public Tweet() {}
@@ -91,6 +93,10 @@ public class Tweet implements OurLocation {
 	public Date getCreatedAt() {
 		return createdAt;
 	}
+	
+	public String getClassLabel() {
+		return classLabel;
+	}
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
@@ -135,6 +141,10 @@ public class Tweet implements OurLocation {
 
 	public void setCluster (Cluster c) {
 		this.assignedCluster = c;
+	}
+	
+	public void setClassLabel(String s) {
+		this.classLabel = s;
 	}
 
 	/* TODO: Remove if the new filter methods work
