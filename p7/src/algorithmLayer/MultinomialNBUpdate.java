@@ -1,6 +1,5 @@
 package algorithmLayer;
 
-import modelLayer.Probability;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
@@ -14,8 +13,7 @@ public class MultinomialNBUpdate {
      * @param D : the trainingset, aka the document set D, in this case a list of tweet
      * @return Probability object : the model used to later classify new stweets
      */
-    //Possible issue: All tweets in the tweetstorage needs to be associated to a class
-    public ProbabilityUpdate trainMultinomialNB(ArrayList<String> C, TweetStorage D) {
+    public ProbabilityModel trainMultinomialNB(ArrayList<String> C, TweetStorage D) {
         Map<String, Double> prior = new HashMap<String, Double>();
         Map<ArrayList<String>, Double> condprob = new HashMap<ArrayList<String>, Double>();
 
@@ -36,7 +34,7 @@ public class MultinomialNBUpdate {
                 condprob.put(new ArrayList<String>(Arrays.asList(t, c)), T_ct / totalT_ct);
             }
         }
-        return new ProbabilityUpdate(V, prior, condprob);
+        return new ProbabilityModel(V, prior, condprob);
     }
 
     /**
@@ -46,7 +44,7 @@ public class MultinomialNBUpdate {
      * @param tweet : is the tweet to classify
      * @return c : the class the provided tweet is set to
      */
-    public String applyMultinomialNB(String[] C, ProbabilityUpdate probability, Tweet tweet) {
+    public String applyMultinomialNB(String[] C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
@@ -62,15 +60,14 @@ public class MultinomialNBUpdate {
 
     private List<String> extractTokens(List<String> vocabulary, Tweet tweet) {
         String[] tweetWords = tweet.getTweetText().split(" ");
-        List<String> newVocabulary = new ArrayList<String>();
+        List<String> vocabularyContained = new ArrayList<String>();
         for (int i = 0; i < tweetWords.length; i++) {
             for (String word : vocabulary) {
                 if (tweetWords[i].equals(word))
-                    newVocabulary.add(tweetWords[i]);
+                    vocabularyContained.add(tweetWords[i]);
             }
         }
-
-        return newVocabulary;
+        return vocabularyContained;
     }
 
     private List<String> extractVocabulary(TweetStorage tweets) {

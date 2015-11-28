@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ProbabilityUpdate {
+public class ProbabilityModel {
 	List<String> vocabulary;
 	Map<String, Double> prior;
 	Map<ArrayList<String>, Double> condprop;
 
-	public ProbabilityUpdate(List<String> vocabulary, Map<String, Double> prior, Map<ArrayList<String>, Double> condprop) {
+	public ProbabilityModel(List<String> vocabulary, Map<String, Double> prior, Map<ArrayList<String>, Double> condprop) {
 		this.vocabulary = vocabulary;
 		this.prior = prior;
 		this.condprop = condprop;
