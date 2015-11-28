@@ -8,6 +8,13 @@ import java.util.*;
 
 public class MultinomialNBUpdate {
 
+    /**
+     *
+     * @param C : set of possible classes
+     * @param D : the trainingset, aka the document set D, in this case a list of tweet
+     * @return Probability object : the model used to later classify new stweets
+     */
+    //Possible issue: All tweets in the tweetstorage needs to be associated to a class
     public ProbabilityUpdate trainMultinomialNB(ArrayList<String> C, TweetStorage D) {
         Map<String, Double> prior = new HashMap<String, Double>();
         Map<ArrayList<String>, Double> condprob = new HashMap<ArrayList<String>, Double>();
@@ -32,6 +39,13 @@ public class MultinomialNBUpdate {
         return new ProbabilityUpdate(V, prior, condprob);
     }
 
+    /**
+     *
+     * @param C : set of possible classes
+     * @param probability : the learned probabilistic model
+     * @param tweet : is the tweet to classify
+     * @return c : the class the provided tweet is set to
+     */
     public String applyMultinomialNB(String[] C, ProbabilityUpdate probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
         List<String> W = extractTokens(probability.getVocabulary(), tweet);

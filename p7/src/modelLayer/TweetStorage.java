@@ -7,6 +7,14 @@ public class TweetStorage extends ArrayList<Tweet> {
 	// This field has to be there. We don't use it.
 	private static final long serialVersionUID = -6057556249495829151L;
 
+	public TweetStorage(){
+
+	}
+
+	public TweetStorage(ArrayList<Tweet> tweets){
+		super(tweets);
+	}
+
 	public TweetStorage clone() {
 		return (TweetStorage) super.clone();
 	}
