@@ -29,7 +29,7 @@ public class TestMultinomialNB {
                         new Tweet(2, 2, 3, 4, "Got sick, mcdonalds fucking sucks", new Date(), -73, 41, classLabels.get(1)),
                         new Tweet(2, 2, 3, 4, "Im sick of my hater", new Date(), -73, 41, classLabels.get(0)),
                         new Tweet(2, 2, 3, 4, "I love people, but hate when do weird shit", new Date(), -73, 41, classLabels.get(0)),
-                        new Tweet(2, 2, 3, 4, "lol lol lol why you mad", new Date(), -73, 41, classLabels.get(1)))
+                        new Tweet(2, 2, 3, 4, "lol lol lol why you mad", new Date(), -73, 41, classLabels.get(0)))
                 )
         );
 
@@ -38,7 +38,6 @@ public class TestMultinomialNB {
          */
         MultinomialNBUpdate naiveBayes = new MultinomialNBUpdate();
         ProbabilityModel probabilityModel = naiveBayes.trainMultinomialNB(classLabels, trainingSet);
-
 
         /**
          * Test phase
