@@ -41,6 +41,12 @@ public class Tweet implements OurLocation {
 		this.lon = lon;
 	}
 
+	//btc 28112015, constructor to set classLabel
+	public Tweet(long tweetID, long userID, long responseID, long retweetID, String tweetText, Date createdAt, double lat, double lon, String classLabel) {
+		this(tweetID, userID, responseID, retweetID, tweetText, createdAt, lat, lon);
+		this.setClassLabel(classLabel);
+	}
+
 	public static Tweet createTweet(Status status) {
 		if (status.getGeoLocation() == null) {
 			return new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),

@@ -44,7 +44,7 @@ public class MultinomialNBUpdate {
      * @param tweet : is the tweet to classify
      * @return c : the class the provided tweet is set to
      */
-    public String applyMultinomialNB(String[] C, ProbabilityModel probability, Tweet tweet) {
+    public String applyMultinomialNB(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
