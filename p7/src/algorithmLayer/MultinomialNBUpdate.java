@@ -49,8 +49,10 @@ public class MultinomialNBUpdate {
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
         for (String c : C) {
+            //score[c] <- log prior(c)
             score.put(c, Math.log10(probability.getPriorProbability(c)));
             for (String t : W) {
+                //score[c] += log condprod[t][c]
                 score.put(c, probability.getPriorProbability(c) + Math.log10(probability.getConditionalProbability(t, c)));
             }
         }
