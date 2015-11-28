@@ -10,20 +10,7 @@ import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
 public class MultiNomialNB {
-	public double ApplyMultinomialNB(String[] classVariables, Probability probability, Tweet tweet) {
-		List<String> tokensFromTweet = extractTokens(probability.getVocabulary(), tweet);
-		Double[] scores = new Double[classVariables.length];
-		for(int i = 0; i < classVariables.length; i++) {
-			scores[i] = Math.log10(probability.getPriorProbability()[0]);
-			for(int n = 0; n < tokensFromTweet.size(); n++) {
-				scores[i] += Math.log10(probability.getConditionalProbability()[n][i]);
-			}
-		}
-		List<Double> temp = Arrays.asList(scores);
-		return Collections.max(temp);
-	}
-	
-	public Probability TrainMultinomialNB(String[] classVariables, TweetStorage tweets) {
+	public Probability trainMultinomialNB(String[] classVariables, TweetStorage tweets) {
 		List<String> vocabulary = extractWords(tweets);
 		double numberOfTweets = tweets.size();
 		double[] priorProbabilityOfClass = new double[classVariables.length];
@@ -42,10 +29,23 @@ public class MultiNomialNB {
 				conditionalProbabilityOfTokenInClass[n][i] = numberOfTokenOccurencesInClass / totalTokenOccurencesInClass;
 			}
 		}
-		
+
 		return new Probability(vocabulary, priorProbabilityOfClass, conditionalProbabilityOfTokenInClass);
 	}
-	
+
+	public double applyMultinomialNB(String[] classVariables, Probability probability, Tweet tweet) {
+		List<String> tokensFromTweet = extractTokens(probability.getVocabulary(), tweet);
+		Double[] scores = new Double[classVariables.length];
+		for(int i = 0; i < classVariables.length; i++) {
+			scores[i] = Math.log10(probability.getPriorProbability()[0]);
+			for(int n = 0; n < tokensFromTweet.size(); n++) {
+				scores[i] += Math.log10(probability.getConditionalProbability()[n][i]);
+			}
+		}
+		List<Double> temp = Arrays.asList(scores);
+		return Collections.max(temp);
+	}
+
 	private List<String> extractTokens(List<String> vocabulary, Tweet tweet) {
 		String[] tweetWords = tweet.getTweetText().split(" ");
 		List<String> newVocabulary = new ArrayList<String>();
