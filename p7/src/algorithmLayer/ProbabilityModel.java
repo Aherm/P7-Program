@@ -34,11 +34,11 @@ public class ProbabilityModel {
 	public Double getConditionalProbability(String t, String c) {
 		double value = 0;
 		for (Map.Entry<ArrayList<String>, Double> entry : this.condprop.entrySet()){
-			//arraylist of two elements, the token and the class
+			//arraylist of two elements, the token and the classLabel
 			ArrayList<String> key = entry.getKey();
 			String token = key.get(0);
-			String cClass = key.get(1);
-			if (c.equals(cClass) && t.equals(token)){
+			String classLabel = key.get(1);
+			if (c.equals(classLabel) && t.equals(token)){
 				value = entry.getValue();
 				return value;
 			}

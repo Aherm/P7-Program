@@ -108,7 +108,6 @@ public class MultinomialNBUpdate {
             if (word.equals(token))
                 counter++;
         }
-
         return counter;
     }
 

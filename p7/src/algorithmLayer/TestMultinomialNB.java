@@ -38,6 +38,7 @@ public class TestMultinomialNB {
          */
         MultinomialNBUpdate naiveBayes = new MultinomialNBUpdate();
         ProbabilityModel probabilityModel = naiveBayes.trainMultinomialNB(classLabels, trainingSet);
+        //Possibly find way to store .jar stopped at this point and executes on with provided argument
 
         /**
          * Test phase
