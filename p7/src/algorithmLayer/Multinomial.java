@@ -5,15 +5,15 @@ import modelLayer.TweetStorage;
 
 import java.util.*;
 
-public class MultinomialNBUpdate {
-
+public class Multinomial extends NaiveBayes {
     /**
      *
      * @param C : set of possible classes
      * @param D : the trainingset, aka the document set D, in this case a list of tweet
      * @return Probability object : the model used to later classify new stweets
      */
-    public ProbabilityModel trainMultinomialNB(ArrayList<String> C, TweetStorage D) {
+    @Override
+    public ProbabilityModel train(ArrayList<String> C, TweetStorage D) {
         Map<String, Double> prior = new HashMap<String, Double>();
         Map<ArrayList<String>, Double> condprob = new HashMap<ArrayList<String>, Double>();
 
@@ -44,7 +44,8 @@ public class MultinomialNBUpdate {
      * @param tweet : is the tweet to classify
      * @return c : the class the provided tweet is set to
      */
-    public String applyMultinomialNB(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    @Override
+    public String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
@@ -60,49 +61,6 @@ public class MultinomialNBUpdate {
         return classWHighestProbability(score);
     }
 
-    private List<String> extractTokens(List<String> vocabulary, Tweet tweet) {
-        String[] tweetWords = tweet.getTweetText().split(" ");
-        List<String> vocabularyContained = new ArrayList<String>();
-        for (int i = 0; i < tweetWords.length; i++) {
-            for (String word : vocabulary) {
-                if (tweetWords[i].equals(word))
-                    vocabularyContained.add(tweetWords[i]);
-            }
-        }
-        return vocabularyContained;
-    }
-
-    private List<String> extractVocabulary(TweetStorage tweets) {
-        List<String> vocabulary = new ArrayList<String>();
-        for (Tweet tweet : tweets) {
-            String[] tweetWords = tweet.getTweetText().split(" ");
-            for (String tweetWord : tweetWords) {
-                if (!(vocabulary.contains(tweetWord)))
-                    vocabulary.add(tweetWord);
-            }
-        }
-
-        return vocabulary;
-    }
-
-    private double countTweetsInClass(TweetStorage tweets, String c) {
-        double counter = 0;
-        for (Tweet tweet : tweets) {
-            if (tweet.getClassLabel().equals(c))
-                counter++;
-        }
-        return counter;
-    }
-
-    private String concatenateTextOfAllTweetsInClass(TweetStorage tweets, String c) {
-        String concatenatedText = "";
-        for (Tweet tweet : tweets) {
-            if (tweet.getClassLabel().equals(c))
-                concatenatedText += tweet.getTweetText() + " ";
-        }
-        return concatenatedText.substring(0, concatenatedText.length() - 1);
-    }
-
     private double countTokensInTextInClass(String text, String token) {
         double counter = 0;
         String[] words = text.split(" ");
@@ -112,17 +70,4 @@ public class MultinomialNBUpdate {
         }
         return counter;
     }
-
-    private static String classWHighestProbability(Map<String, Double> score) {
-        //Map<String, Double> curBest = new HashMap<String, Double>();
-        String c = null;
-        for (Map.Entry<String, Double> entry : score.entrySet()) {
-            if (c == null)
-                c = entry.getKey();
-            else if (entry.getValue() > score.get(c))
-                c = entry.getKey();
-        }
-        return c;
-    }
-
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class TestMultinomialNB {
+public class TestNaiveBayes {
 
     public static void main(String[] args) {
 
@@ -38,8 +38,10 @@ public class TestMultinomialNB {
         /**
          * Training phase
          */
-        MultinomialNBUpdate naiveBayes = new MultinomialNBUpdate();
-        ProbabilityModel probabilityModel = naiveBayes.trainMultinomialNB(bookClassLabels, bookTrainingSet);
+        NaiveBayes multinomialNB = new Multinomial();
+        NaiveBayes bernoulliNB = new Bernoulli();
+
+        ProbabilityModel probabilityModel = multinomialNB.train(bookClassLabels, bookTrainingSet);
         //Possibly find way to store .jar stopped at this point and executes on with provided argument
 
         /**
@@ -56,7 +58,7 @@ public class TestMultinomialNB {
                 )
         );
         for (Tweet tweet : bookTestSet) {
-            String resultClass = naiveBayes.applyMultinomialNB(bookClassLabels, probabilityModel, tweet);
+            String resultClass = multinomialNB.apply(bookClassLabels, probabilityModel, tweet);
             printResults(resultClass, tweet);
         }
     }
