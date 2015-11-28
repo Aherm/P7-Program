@@ -16,9 +16,9 @@ public class TestMultinomialNB {
          */
         //btc, consider using a HashSet to avoid duplicate classes
         ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("Not visited", "Visited"));
-        ArrayList<String> bookClassLabels = initializeClassLabels();
+        ArrayList<String> bookClassLabels = Data.initializeClassLabels();
 
-        TweetStorage bookTrainingSet = initializeTrainingSet(bookClassLabels);
+        TweetStorage bookTrainingSet = Data.initializeTrainingSet(bookClassLabels);
 
         //Consider making a separate Document class as a wrapper of a tweet that provides access to the most
         //relevant fields of the tweet in relation to naiveBayes
@@ -45,7 +45,7 @@ public class TestMultinomialNB {
         /**
          * Test phase
          */
-        TweetStorage bookTestSet = initializeTestSet();
+        TweetStorage bookTestSet = Data.initializeTestSet();
         TweetStorage testSet = new TweetStorage(
                 new ArrayList<Tweet>(Arrays.asList(
                         new Tweet(2, 2, 3, 4, "sick of this shit", new Date(), -73, 41, classLabels.get(0)),
@@ -57,50 +57,8 @@ public class TestMultinomialNB {
         );
         for (Tweet tweet : bookTestSet) {
             String resultClass = naiveBayes.applyMultinomialNB(bookClassLabels, probabilityModel, tweet);
-
             printResults(resultClass, tweet);
-
         }
-    }
-
-    private static ArrayList<String> initializeClassLabels(){
-        return new ArrayList<String>(Arrays.asList("UK","China","poultry","coffee","elections","sports"));
-    }
-
-    private static TweetStorage initializeTrainingSet(ArrayList<String> classLabels) {
-        return new TweetStorage(
-                new ArrayList<Tweet>(Arrays.asList(
-                        new Tweet(2, 2, 3, 4, "congestion London", new Date(), -73, 41, classLabels.get(0)),
-                        new Tweet(2, 2, 3, 4, "Parliament Big Ben", new Date(), -73, 41, classLabels.get(0)),
-                        new Tweet(2, 2, 3, 4, "Windsor the Queen", new Date(), -73, 41, classLabels.get(0)),
-                        new Tweet(2, 2, 3, 4, "Olympics Beijing", new Date(), -73, 41, classLabels.get(1)),
-                        new Tweet(2, 2, 3, 4, "tourism Great Wall", new Date(), -73, 41, classLabels.get(1)),
-                        new Tweet(2, 2, 3, 4, "Mao communist", new Date(), -73, 41, classLabels.get(1)),
-                        new Tweet(2, 2, 3, 4, "feed chicken", new Date(), -73, 41, classLabels.get(2)),
-                        new Tweet(2, 2, 3, 4, "pate ducks", new Date(), -73, 41, classLabels.get(2)),
-                        new Tweet(2, 2, 3, 4, "bird flu turkey", new Date(), -73, 41, classLabels.get(2)),
-                        new Tweet(2, 2, 3, 4, "roasting beans", new Date(), -73, 41, classLabels.get(3)),
-                        new Tweet(2, 2, 3, 4, "arabica robusta", new Date(), -73, 41, classLabels.get(3)),
-                        new Tweet(2, 2, 3, 4, "Kenya harvest", new Date(), -73, 41, classLabels.get(3)),
-                        new Tweet(2, 2, 3, 4, "recount votes", new Date(), -73, 41, classLabels.get(4)),
-                        new Tweet(2, 2, 3, 4, "seat run-off", new Date(), -73, 41, classLabels.get(4)),
-                        new Tweet(2, 2, 3, 4, "TV ads campaign", new Date(), -73, 41, classLabels.get(4)),
-                        new Tweet(2, 2, 3, 4, "diamond baseball", new Date(), -73, 41, classLabels.get(5)),
-                        new Tweet(2, 2, 3, 4, "forward soccer", new Date(), -73, 41, classLabels.get(5)),
-                        new Tweet(2, 2, 3, 4, "team captain", new Date(), -73, 41, classLabels.get(5))
-                ))
-        );
-    }
-
-    //Note that these collections will not give the expected result of "China" as none of the words in this
-    //tweet have ever been seen before
-    private static TweetStorage initializeTestSet() {
-        TweetStorage trainingSet = new TweetStorage(
-                new ArrayList<Tweet>(Arrays.asList(
-                        new Tweet(2, 2, 3, 4, "first private Chinese airline", new Date(), -73, 41)
-                ))
-        );
-        return trainingSet;
     }
 
     private static void printResults(String resultClass, Tweet tweet){
