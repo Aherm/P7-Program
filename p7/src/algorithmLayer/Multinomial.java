@@ -4,6 +4,7 @@ import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
 import java.util.*;
+import java.util.regex.Matcher;
 
 public class Multinomial extends NaiveBayes {
     /**
@@ -51,10 +52,10 @@ public class Multinomial extends NaiveBayes {
 
         for (String c : C) {
             //score[c] <- log prior(c)
-            score.put(c, Math.log10(probability.getPriorProbability(c)));
+            score.put(c, Math.abs(Math.log10(probability.getPriorProbability(c))));
             for (String t : W) {
                 //score[c] += log condprod[t][c]
-                score.put(c, probability.getPriorProbability(c) + Math.log10(probability.getConditionalProbability(t, c)));
+                score.put(c, score.get(c) + Math.log10(probability.getConditionalProbability(t, c)));
             }
         }
         // return the class with the highest probability value
