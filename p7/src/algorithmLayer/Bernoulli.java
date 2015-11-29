@@ -33,12 +33,12 @@ public class Bernoulli extends NaiveBayes {
 
         for (String c : C) {
             //score[c] <- log prior(c)
-            score.put(c, Math.log10(probability.getPriorProbability(c)));
+            score.put(c, Math.abs(Math.log10(probability.getPriorProbability(c))));
             for (String t : probability.getVocabulary()) {
                 if (V_d.contains(t))
-                    score.put(c, probability.getPriorProbability(c) + Math.log10(probability.getConditionalProbability(t, c)));
+                    score.put(c, score.get(c) + Math.abs(Math.log10(probability.getConditionalProbability(t, c))));
                 else
-                    score.put(c, probability.getPriorProbability(c) + Math.log10(1 - probability.getConditionalProbability(t, c)));
+                    score.put(c, score.get(c) + Math.abs(Math.log10(1 - probability.getConditionalProbability(t, c))));
             }
         }
         // return the class with the highest probability value
