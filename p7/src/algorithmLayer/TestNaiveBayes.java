@@ -3,14 +3,14 @@ package algorithmLayer;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.io.IOException;
+import java.net.URL;
+import java.util.*;
+import java.util.logging.StreamHandler;
 
 public class TestNaiveBayes {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args){
         /**
          * Initialization of data
          */
@@ -25,15 +25,6 @@ public class TestNaiveBayes {
 
         //Need to fetch actual training data from database and use below as test data
         //Possible issue: Make sure that all tweets in the tweetstorage are associated to a class
-        TweetStorage trainingSet = new TweetStorage(
-                new ArrayList<Tweet>(Arrays.asList(
-                        new Tweet(2, 2, 3, 4, "sick of this shit", new Date(), -73, 41, classLabels.get(0)),
-                        new Tweet(2, 2, 3, 4, "Got sick, mcdonalds fucking sucks", new Date(), -73, 41, classLabels.get(1)),
-                        new Tweet(2, 2, 3, 4, "Im sick of my hater", new Date(), -73, 41, classLabels.get(0)),
-                        new Tweet(2, 2, 3, 4, "I love people, but hate when do weird shit", new Date(), -73, 41, classLabels.get(0)),
-                        new Tweet(2, 2, 3, 4, "lol lol lol why you mad", new Date(), -73, 41, classLabels.get(0)))
-                )
-        );
 
         /**
          * Training phase
@@ -48,15 +39,6 @@ public class TestNaiveBayes {
          * Test phase
          */
         TweetStorage bookTestSet = Data.initializeTestSet();
-        TweetStorage testSet = new TweetStorage(
-                new ArrayList<Tweet>(Arrays.asList(
-                        new Tweet(2, 2, 3, 4, "sick of this shit", new Date(), -73, 41, classLabels.get(0)),
-                        new Tweet(2, 2, 3, 4, "Got sick, mcdonalds fucking sucks", new Date(), -73, 41, classLabels.get(1)),
-                        new Tweet(2, 2, 3, 4, "Im sick of my hater", new Date(), -73, 41, classLabels.get(0)),
-                        new Tweet(2, 2, 3, 4, "I love people, but hate when do weird shit", new Date(), -73, 41, classLabels.get(0)),
-                        new Tweet(2, 2, 3, 4, "lol lol lol why you mad", new Date(), -73, 41, classLabels.get(1)))
-                )
-        );
         for (Tweet tweet : bookTestSet) {
             String resultClass = multinomialNB.apply(bookClassLabels, probabilityModel, tweet);
             printResults(resultClass, tweet);

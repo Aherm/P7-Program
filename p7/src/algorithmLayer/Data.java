@@ -3,14 +3,52 @@ package algorithmLayer;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.*;
 
 public class Data {
+    public static String[] readLines(URL url) throws IOException {
+
+        Reader fileReader = new InputStreamReader(url.openStream(), Charset.forName("UTF-8"));
+        List<String> lines = new ArrayList<String>();;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (Exception ex){
+            System.out.println(ex);
+        }
+        return lines.toArray(new String[lines.size()]);
+    }
+
     public static ArrayList<String> initializeClassLabels(){
         return new ArrayList<String>(Arrays.asList("UK","China","poultry","coffee","elections","sports"));
     }
+
+
+    public static Map<String, String[]> getTrainingExamples(){
+        Map<String, URL> trainingFiles = new HashMap<String, URL>();
+        trainingFiles.put("English", TestNaiveBayes.class.getResource("training.language.en.txt"));
+
+        //loading examples in memory
+        Map<String, String[]> trainingExamples = new HashMap<String, String[]>();
+        try{
+            for(Map.Entry<String, URL> entry : trainingFiles.entrySet()) {
+                trainingExamples.put(entry.getKey(), Data.readLines(entry.getValue()));
+            }
+        } catch (IOException iex){
+            System.out.println(iex);
+        }
+        return trainingExamples;
+    }
+
 
     public static TweetStorage initializeTrainingSet(ArrayList<String> classLabels) {
         return new TweetStorage(
