@@ -21,6 +21,7 @@ public abstract class NaiveBayes {
         return vocabularyContained;
     }
 
+    //bug: this doesnt consider upper and lowercase of the same words at the same
     protected List<String> extractVocabulary(TweetStorage tweets) {
         List<String> vocabulary = new ArrayList<String>();
         for (Tweet tweet : tweets) {

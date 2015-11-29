@@ -28,11 +28,13 @@ public class Multinomial extends NaiveBayes {
             String text_c = concatenateTextOfAllTweetsInClass(D, c);
 
             for (String t : V)
-                totalT_ct += countTokensInTextInClass(text_c, t) + 1; // this could be done by simply instead adding the length of vocatbil
+                totalT_ct += countTokensInTextInClass(text_c, t);
+            //totalT_ct += countTokensInTextInClass(text_c, t) + 1; // this is an alternative to adding the vocab size at the computation
 
             for (String t : V) {
-                double T_ct = countTokensInTextInClass(text_c, t) + 1;
-                condprob.put(new ArrayList<String>(Arrays.asList(t, c)), T_ct / totalT_ct);
+                double T_ct = countTokensInTextInClass(text_c, t);
+                //totalT_ct + |V|
+                condprob.put(new ArrayList<String>(Arrays.asList(t, c)), (T_ct + 1) / (totalT_ct + V.size()));
             }
         }
         return new ProbabilityModel(V, prior, condprob);

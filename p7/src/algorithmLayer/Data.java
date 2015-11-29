@@ -53,7 +53,7 @@ public class Data {
     public static TweetStorage initializeTrainingSet(ArrayList<String> classLabels) {
         return new TweetStorage(
                 new ArrayList<Tweet>(Arrays.asList(
-                        new Tweet(2, 2, 3, 4, "congestion London", new Date(), -73, 41, classLabels.get(0)),
+                        new Tweet(2, 2, 3, 4, "congestion London London", new Date(), -73, 41, classLabels.get(0)),
                         new Tweet(2, 2, 3, 4, "Parliament Big Ben", new Date(), -73, 41, classLabels.get(0)),
                         new Tweet(2, 2, 3, 4, "Windsor the Queen", new Date(), -73, 41, classLabels.get(0)),
                         new Tweet(2, 2, 3, 4, "Olympics Beijing", new Date(), -73, 41, classLabels.get(1)),
