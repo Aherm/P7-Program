@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class TestMultinomialNB {
+public class TestNaiveBayes {
 
     public static void main(String[] args) {
 
@@ -15,9 +15,11 @@ public class TestMultinomialNB {
          * Initialization of data
          */
         //btc, consider using a HashSet to avoid duplicate classes
-        ArrayList<String> classLabels = new ArrayList<String>();
-        classLabels.add("Not visited");
-        classLabels.add("Visited");
+        ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("Not visited", "Visited"));
+        ArrayList<String> bookClassLabels = Data.initializeClassLabels();
+
+        TweetStorage bookTrainingSet = Data.initializeTrainingSet(bookClassLabels);
+
         //Consider making a separate Document class as a wrapper of a tweet that provides access to the most
         //relevant fields of the tweet in relation to naiveBayes
 
@@ -36,13 +38,16 @@ public class TestMultinomialNB {
         /**
          * Training phase
          */
-        MultinomialNBUpdate naiveBayes = new MultinomialNBUpdate();
-        ProbabilityModel probabilityModel = naiveBayes.trainMultinomialNB(classLabels, trainingSet);
+        NaiveBayes multinomialNB = new Multinomial();
+        NaiveBayes bernoulliNB = new Bernoulli();
+
+        ProbabilityModel probabilityModel = multinomialNB.train(bookClassLabels, bookTrainingSet);
         //Possibly find way to store .jar stopped at this point and executes on with provided argument
 
         /**
          * Test phase
          */
+        TweetStorage bookTestSet = Data.initializeTestSet();
         TweetStorage testSet = new TweetStorage(
                 new ArrayList<Tweet>(Arrays.asList(
                         new Tweet(2, 2, 3, 4, "sick of this shit", new Date(), -73, 41, classLabels.get(0)),
@@ -52,14 +57,17 @@ public class TestMultinomialNB {
                         new Tweet(2, 2, 3, 4, "lol lol lol why you mad", new Date(), -73, 41, classLabels.get(1)))
                 )
         );
-        for (Tweet tweet : testSet){
-            String resultClass = naiveBayes.applyMultinomialNB(classLabels, probabilityModel, tweet);
-            System.out.println("-----------------------------------------------------");
-            System.out.println("Tweet ID: " + tweet.getTweetID());
-            System.out.println("Text: " + tweet.getTweetText());
-            System.out.println("Class assigned: " + resultClass);
-            System.out.println("-----------------------------------------------------");
+        for (Tweet tweet : bookTestSet) {
+            String resultClass = multinomialNB.apply(bookClassLabels, probabilityModel, tweet);
+            printResults(resultClass, tweet);
         }
     }
 
+    private static void printResults(String resultClass, Tweet tweet){
+        System.out.println("-----------------------------------------------------");
+        System.out.println("Tweet ID: " + tweet.getTweetID());
+        System.out.println("Text: " + tweet.getTweetText());
+        System.out.println("Class assigned: " + resultClass);
+        System.out.println("-----------------------------------------------------");
+    }
 }
