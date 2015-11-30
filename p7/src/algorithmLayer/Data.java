@@ -29,7 +29,8 @@ public class Data {
     }
 
     public static ArrayList<String> initializeClassLabels(){
-        return new ArrayList<String>(Arrays.asList("UK","China","poultry","coffee","elections","sports"));
+        return new ArrayList<String>(Arrays.asList("No","Yes"));
+        //return new ArrayList<String>(Arrays.asList("UK","China","poultry","coffee","elections","sports"));
     }
 
 
@@ -53,6 +54,12 @@ public class Data {
     public static TweetStorage initializeTrainingSet(ArrayList<String> classLabels) {
         return new TweetStorage(
                 new ArrayList<Tweet>(Arrays.asList(
+                        new Tweet(2, 2, 3, 4, "Chinese Beijing Chinese", new Date(), -73, 41, classLabels.get(1)),
+                        new Tweet(2, 2, 3, 4, "Chinese Chinese Shanghai", new Date(), -73, 41, classLabels.get(1)),
+                        new Tweet(2, 2, 3, 4, "Chinese Macao", new Date(), -73, 41, classLabels.get(1)),
+                        new Tweet(2, 2, 3, 4, "Tokyo Japan Chinese", new Date(), -73, 41, classLabels.get(0))
+
+                        /*
                         new Tweet(2, 2, 3, 4, "congestion London London", new Date(), -73, 41, classLabels.get(0)),
                         new Tweet(2, 2, 3, 4, "Parliament Big Ben", new Date(), -73, 41, classLabels.get(0)),
                         new Tweet(2, 2, 3, 4, "Windsor the Queen", new Date(), -73, 41, classLabels.get(0)),
@@ -71,6 +78,7 @@ public class Data {
                         new Tweet(2, 2, 3, 4, "diamond baseball", new Date(), -73, 41, classLabels.get(5)),
                         new Tweet(2, 2, 3, 4, "forward soccer", new Date(), -73, 41, classLabels.get(5)),
                         new Tweet(2, 2, 3, 4, "team captain", new Date(), -73, 41, classLabels.get(5))
+                    */
                 ))
         );
     }
@@ -80,7 +88,8 @@ public class Data {
     public static TweetStorage initializeTestSet() {
         TweetStorage trainingSet = new TweetStorage(
                 new ArrayList<Tweet>(Arrays.asList(
-                        new Tweet(2, 2, 3, 4, "first private Chinese airline", new Date(), -73, 41)
+                        new Tweet(2, 2, 3, 4, "Chinese Chinese Chinese Tokyo Japan", new Date(), -73, 41)
+                        //new Tweet(2, 2, 3, 4, "first private Chinese airline Beijing", new Date(), -73, 41)
                 ))
         );
         return trainingSet;
