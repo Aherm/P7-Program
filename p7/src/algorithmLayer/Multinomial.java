@@ -50,14 +50,16 @@ public class Multinomial extends NaiveBayes {
     @Override
     public String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
+
+        //consider whether this is right correctly. Store the same words more than once
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
         for (String c : C) {
             //score[c] <- log prior(c)
-            score.put(c, Math.abs(Math.log10(probability.getPriorProbability(c))));
+            score.put(c, Math.log10(probability.getPriorProbability(c)));
             for (String t : W) {
                 //score[c] += log condprod[t][c]
-                score.put(c, score.get(c) + Math.abs(Math.log10(probability.getConditionalProbability(t, c))));
+                score.put(c, score.get(c) + Math.log10(probability.getConditionalProbability(t, c)));
             }
         }
         // return the class with the highest probability value
