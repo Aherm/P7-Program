@@ -3,12 +3,14 @@ package algorithmLayer;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public abstract class NaiveBayes {
     public abstract ProbabilityModel train(ArrayList<String> C, TweetStorage D);
     public abstract String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet);
-
+    public abstract Map<String, Double> applyGetProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet);
+    
     protected List<String> extractTokens(List<String> vocabulary, Tweet tweet) {
         String[] tweetWords = tweet.getTweetText().split(" ");
         List<String> vocabularyContained = new ArrayList<String>();
@@ -35,13 +37,13 @@ public abstract class NaiveBayes {
         return vocabulary;
     }
 
-    protected double countTweetsInClass(TweetStorage tweets, String c) {
-        double counter = 0;
+    protected BigDecimal countTweetsInClass(TweetStorage tweets, String c) {
+    	double counter = 0;
         for (Tweet tweet : tweets) {
             if (tweet.getClassLabel().equals(c))
                 counter++;
         }
-        return counter;
+        return new BigDecimal(counter);
     }
 
     protected String concatenateTextOfAllTweetsInClass(TweetStorage tweets, String c) {

@@ -1,15 +1,16 @@
 package algorithmLayer;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ProbabilityModel {
 	List<String> vocabulary;
-	Map<String, Double> prior;
-	Map<ArrayList<String>, Double> condprop;
+	Map<String, BigDecimal> prior;
+	Map<ArrayList<String>, BigDecimal> condprop;
 
-	public ProbabilityModel(List<String> vocabulary, Map<String, Double> prior, Map<ArrayList<String>, Double> condprop) {
+	public ProbabilityModel(List<String> vocabulary, Map<String, BigDecimal> prior, Map<ArrayList<String>, BigDecimal> condprop) {
 		this.vocabulary = vocabulary;
 		this.prior = prior;
 		this.condprop = condprop;
@@ -19,9 +20,9 @@ public class ProbabilityModel {
 		return this.vocabulary;
 	}
 	
-	public double getPriorProbability(String c) {
-		double value = 0;
-		for (Map.Entry<String, Double> entry : this.prior.entrySet()){
+	public BigDecimal getPriorProbability(String c) {
+		BigDecimal value = new BigDecimal(0);
+		for (Map.Entry<String, BigDecimal> entry : this.prior.entrySet()){
 			String key = entry.getKey();
 			if (c.equals(key)){
 				value = entry.getValue();
@@ -31,9 +32,9 @@ public class ProbabilityModel {
 		return value;
 	}
 	
-	public double getConditionalProbability(String t, String c) {
-		double value = 0;
-		for (Map.Entry<ArrayList<String>, Double> entry : this.condprop.entrySet()){
+	public BigDecimal getConditionalProbability(String t, String c) {
+		BigDecimal value = new BigDecimal(0);
+		for (Map.Entry<ArrayList<String>, BigDecimal> entry : this.condprop.entrySet()){
 			//arraylist of two elements, the token and the classLabel
 			ArrayList<String> key = entry.getKey();
 			String token = key.get(0);
