@@ -8,7 +8,8 @@ import java.util.*;
 public abstract class NaiveBayes {
     public abstract ProbabilityModel train(ArrayList<String> C, TweetStorage D);
     public abstract String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet);
-
+    public abstract Map<String, Double> applyGetProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet);
+    
     protected List<String> extractTokens(List<String> vocabulary, Tweet tweet) {
         String[] tweetWords = tweet.getTweetText().split(" ");
         List<String> vocabularyContained = new ArrayList<String>();

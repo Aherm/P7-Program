@@ -3,10 +3,7 @@ package algorithmLayer;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.*;
@@ -15,36 +12,37 @@ public class Data {
     public static String[] readLines(URL url) throws IOException {
 
         Reader fileReader = new InputStreamReader(url.openStream(), Charset.forName("UTF-8"));
-        List<String> lines = new ArrayList<String>();;
+        List<String> lines = new ArrayList<String>();
+        ;
         try {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 lines.add(line);
             }
-        } catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return lines.toArray(new String[lines.size()]);
     }
 
-    public static ArrayList<String> initializeClassLabels(){
-        return new ArrayList<String>(Arrays.asList("No","Yes"));
+    public static ArrayList<String> initializeClassLabels() {
+        return new ArrayList<String>(Arrays.asList("No", "Yes"));
         //return new ArrayList<String>(Arrays.asList("UK","China","poultry","coffee","elections","sports"));
     }
 
 
-    public static Map<String, String[]> getTrainingExamples(){
+    public static Map<String, String[]> getTrainingExamples() {
         Map<String, URL> trainingFiles = new HashMap<String, URL>();
         trainingFiles.put("English", TestNaiveBayes.class.getResource("training.language.en.txt"));
 
         //loading examples in memory
         Map<String, String[]> trainingExamples = new HashMap<String, String[]>();
-        try{
-            for(Map.Entry<String, URL> entry : trainingFiles.entrySet()) {
+        try {
+            for (Map.Entry<String, URL> entry : trainingFiles.entrySet()) {
                 trainingExamples.put(entry.getKey(), Data.readLines(entry.getValue()));
             }
-        } catch (IOException iex){
+        } catch (IOException iex) {
             System.out.println(iex);
         }
         return trainingExamples;
@@ -94,4 +92,75 @@ public class Data {
         );
         return trainingSet;
     }
+
+    public static ArrayList<String> fetchDataFromFile(String filePath) {
+        ArrayList<String> data = new ArrayList<String>();
+        File file = new File(filePath);
+
+        try {
+            Scanner input = new Scanner(file);
+            while (input.hasNext()) {
+                //String nextToken = input.next();
+
+                //or to process line by line
+                String nextLine = input.nextLine();
+                data.add(nextLine);
+            }
+            input.close();
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return data;
+    }
+
+
+    //btc temp test
+    public static void main(String[] args) {
+        String filePath = "resturant_mentions.csv";
+        ArrayList<String> data = fetchDataFromFile(filePath);
+        ArrayList<Document> initializedData = new ArrayList<Document>();
+
+        for (String tweet : data) {
+            int counter = 0;
+            Document document = new Document();
+
+            for (String token : tweet.split(";")) {
+                switch (counter){
+                    case 0:
+                        document.setMatchedToken(token);
+                        break;
+                    case 1:
+                        if (isStringInt(token))
+                            document.setID(Integer.parseInt(token));
+                        break;
+                    case 2:
+                        document.setText(token);
+                        break;
+                    case 3:
+                        document.setGeotagged(Boolean.parseBoolean(token));
+                        break;
+                    case 4:
+                        document.setClassLabel(token);
+                        break;
+                }
+                counter++;
+            }
+            counter = 0;
+            initializedData.add(document);
+        }
+
+        System.out.println("documents: " + initializedData.size());
+
+    }
+
+    private static boolean isStringInt(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
 }

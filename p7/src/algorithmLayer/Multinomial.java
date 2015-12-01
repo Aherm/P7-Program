@@ -50,10 +50,6 @@ public class Multinomial extends NaiveBayes {
     
     @Override
     public String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
-    	return "";
-    }
-    
-    public String applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
 
         //consider whether this is right correctly. Store the same words more than once
@@ -71,7 +67,7 @@ public class Multinomial extends NaiveBayes {
         return classWHighestProbability(score);
     }
 
-    public String applyGetProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    public Map<String, Double> applyGetProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
 
         //consider whether this is right correctly. Store the same words more than once
@@ -86,7 +82,7 @@ public class Multinomial extends NaiveBayes {
             }
         }
         // return the class with the highest probability value
-        return classWHighestProbability(score);
+        return score;
     }
     
     private double countTokensInTextInClass(String text, String token) {
