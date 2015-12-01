@@ -38,10 +38,11 @@ public class TestNaiveBayes {
         /**
          * Test phase
          */
+        List<Map<String, Double>> results = new ArrayList<Map<String, Double>>();
         TweetStorage bookTestSet = Data.initializeTestSet();
         for (Tweet tweet : bookTestSet) {
-            String resultClass = multinomialNB.apply(bookClassLabels, probabilityModel, tweet);
-            printResults(resultClass, tweet);
+             results.add(multinomialNB.applyGetProbability(bookClassLabels, probabilityModel, tweet));
+            //printResults(resultClass, tweet);
         }
     }
 

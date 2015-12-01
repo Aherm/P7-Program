@@ -43,6 +43,11 @@ public class Bernoulli extends NaiveBayes {
         // return the class with the highest probability value
         return classWHighestProbability(score);
     }
+    
+    @Override
+    public Map<String, Double> applyGetProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    	return new HashMap<String, Double>();
+    }
 
     private static double countDocsInClassContainingTerm(TweetStorage D, String classLabel, String token){
         double counter = 0;
