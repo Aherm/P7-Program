@@ -41,7 +41,7 @@ public class TestNaiveBayes {
         List<Map<String, Double>> results = new ArrayList<Map<String, Double>>();
         TweetStorage bookTestSet = Data.initializeTestSet();
         for (Tweet tweet : bookTestSet) {
-             results.add(multinomialNB.applyGetProbability(bookClassLabels, probabilityModel, tweet));
+             multinomialNB.apply(bookClassLabels, probabilityModel, tweet);
             //printResults(resultClass, tweet);
         }
     }
