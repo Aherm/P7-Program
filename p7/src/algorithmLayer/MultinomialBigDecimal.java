@@ -4,6 +4,7 @@ import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 public class MultinomialBigDecimal extends NaiveBayes {
@@ -34,7 +35,7 @@ public class MultinomialBigDecimal extends NaiveBayes {
                 BigDecimal T_ct = countTokensInTextInClass(text_c, t);
                 //totalT_ct + |V|
                 condprob.put(new ArrayList<String>(Arrays.asList(t, c)),
-                        (T_ct.add(new BigDecimal(1))).divide(totalT_ct.add(new BigDecimal(V.size()))));
+                        (T_ct.add(new BigDecimal(1))).divide(totalT_ct.add(new BigDecimal(V.size())), 2, RoundingMode.HALF_UP));
             }
         }
         return new ProbabilityModelBigDecimal(V, prior, condprob);
