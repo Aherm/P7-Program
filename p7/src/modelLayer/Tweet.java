@@ -157,7 +157,7 @@ public class Tweet implements OurLocation {
 		this.sick = s; 
 	}
 	
-	public boolean Sick(){
+	public boolean isSick(){
 		return this.sick; 
 	}
 
