@@ -2,7 +2,6 @@ package businessLogicLayer;
 
 import modelLayer.InvertedIndex;
 import modelLayer.Keyword;
-import modelLayer.Restaurant;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
@@ -147,40 +146,5 @@ public class Filter {
         }
 
         return false;
-    }
-    
-    public static TweetStorage restaurantNameQuery(Restaurant restaurant, InvertedIndex invertedIndex) {
-        List<Set<Tweet>> tweetSet = new ArrayList<Set<Tweet>>();
-        TweetStorage tweetStorage = new TweetStorage();
-        String[] restaurantWords = restaurant.getName().split(" ");
-        for (String restaurantWord : restaurantWords) {
-            String resWord = restaurantWord;
-            for (String word : invertedIndex.keySet()) {
-                String w = word;
-                if (resWord.equals(w)) {
-                    tweetSet.add(invertedIndex.get(word));
-                    break;
-                }
-            }
-        }
-        
-        //if no words in inverted index matched a word of a restaurant
-        if (restaurantWords.length != tweetSet.size()) 
-            return tweetStorage;
-
-        for (int i = 1; i < tweetSet.size(); i++) {
-            tweetSet.get(0).retainAll(tweetSet.get(i));
-        }
-
-        //if the intersection results in an empty list
-        if (tweetSet.isEmpty())
-            return tweetStorage;
-
-        for (Tweet tweet : tweetSet.get(0)) {
-            if (tweet.getTweetText().contains(restaurant.getName()))
-            	tweetStorage.add(tweet);
-        }
-
-        return tweetStorage;
     }
 }
