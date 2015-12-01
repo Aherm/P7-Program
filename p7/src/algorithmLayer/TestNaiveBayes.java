@@ -4,6 +4,7 @@ import businessLogicLayer.Preprocessor;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -94,7 +95,22 @@ public class TestNaiveBayes {
         for (Tweet t : bookTestSet)
             Preprocessor.processTweet(t);
 
-        testMultinomialProbability(classLabels, trainingSet, trainingSet);
+
+        TweetStorage testSet = new TweetStorage();
+        testSet.add(new Tweet(1, 1, 1, 1, "I'm at HaterKing in New York, NY https://t.co/frLjcnL0zk", new Date()));
+        testSet.add(new Tweet(1, 1, 1, 1, "I'm at NoMad in New	 York, NY @LINK", new Date()));
+        testSet.add(new Tweet(1, 1, 1, 1, "I'm at Carstensen's Café in New York, NY", new Date()));
+        testSet.add(new Tweet(1, 1, 1, 1, "Happy hour lel mate at 2A", new Date()));
+        testSet.add(new Tweet(1, 1, 1, 1, "I'm at", new Date()));
+        testSet.add(new Tweet(1, 1, 1, 1, "HOOOOOOOOOOOOOOOODOOOOOOOOOOOOOOOOOR", new Date()));
+        testSet.add(new Tweet(1, 1, 1, 1, "fuck u bjørk", new Date()));
+        Preprocessor.processTweets(testSet);
+
+        testMultinomialProbability(classLabels, trainingSet, testSet);
+
+
+
+
         //testMultinomialBigDecimal(bookClassLabels, bookTrainingSet);
     }
 
