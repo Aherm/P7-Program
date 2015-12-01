@@ -48,6 +48,11 @@ public class Multinomial extends NaiveBayes {
      * @return c : the class the provided tweet is set to
      */
     
+    @Override
+    public String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    	return "";
+    }
+    
     public String applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
 
