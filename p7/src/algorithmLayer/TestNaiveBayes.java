@@ -3,12 +3,55 @@ package algorithmLayer;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.*;
-import java.util.logging.StreamHandler;
 
 public class TestNaiveBayes {
+
+    private void testMultinomialBigDecimal(ArrayList<String> classLabels, TweetStorage trainingSet){
+        MultinomialBigDecimal multinomialNBBD = new MultinomialBigDecimal();
+
+        //ProbabilityModel probabilityModel = multinomialNB.train(bookClassLabels, bookTrainingSet);
+        ProbabilityModelBigDecimal probabilityModelBigDecimal = multinomialNBBD.trainBigDecimal(classLabels, trainingSet);
+        //Possibly find way to store .jar stopped at this point and executes on with provided argument
+
+        /**
+         * Test phase
+         */
+        List<Map<String, Double>> results = new ArrayList<Map<String, Double>>();
+        //List<Map<String, Map<String, BigDecimal>>> resultsBigDecimal = new ArrayList<Map<String, Map<String, BigDecimal>>>();
+
+        TweetStorage bookTestSet = Data.initializeTestSet();
+        for (Tweet tweet : bookTestSet) {
+            String predictedClass = multinomialNBBD.applyBigDecimal(classLabels, probabilityModelBigDecimal, tweet);
+            System.out.println("predicted class: " + predictedClass);
+            //Map<String, BigDecimal> probability = multinomialNBBD.applyGetProbability(bookClassLabels, probabilityModelBigDecimal, tweet);
+            //Map<String, Map<String, BigDecimal>> store = new HashMap<String, Map<String, BigDecimal>>();
+            //store.put(predictedClass, probability);
+            //resultsBigDecimal.add(store);
+            //results.add(multinomialNB.applyGetScore(bookClassLabels, probabilityModel, tweet));
+            //printResults(resultClass, tweet);
+        }
+    }
+
+    private static void testMultinomialProbability(ArrayList<String> classLabels, TweetStorage trainingSet){
+        Multinomial multinomialNB = new Multinomial();
+
+        ProbabilityModel probabilityModel = multinomialNB.train(classLabels, trainingSet);
+        //Possibly find way to store .jar stopped at this point and executes on with provided argument
+
+        /**
+         * Test phase
+         */
+        List<Map<String, Double>> results = new ArrayList<Map<String, Double>>();
+        TweetStorage bookTestSet = Data.initializeTestSet();
+        for (Tweet tweet : bookTestSet) {
+            String predictedClass = multinomialNB.applyProbability(classLabels, probabilityModel, tweet);
+            Map<String, Double> score = multinomialNB.applyProbabilityGetScore(classLabels, probabilityModel, tweet);
+            results.add(score);
+            System.out.println("predicted class: " + predictedClass);
+            //printResults(resultClass, tweet);
+        }
+    }
 
     public static void main(String[] args){
         /**
@@ -29,21 +72,7 @@ public class TestNaiveBayes {
         /**
          * Training phase
          */
-        NaiveBayes multinomialNB = new Multinomial();
-        NaiveBayes bernoulliNB = new Bernoulli();
-
-        ProbabilityModel probabilityModel = multinomialNB.train(bookClassLabels, bookTrainingSet);
-        //Possibly find way to store .jar stopped at this point and executes on with provided argument
-
-        /**
-         * Test phase
-         */
-        List<Map<String, Double>> results = new ArrayList<Map<String, Double>>();
-        TweetStorage bookTestSet = Data.initializeTestSet();
-        for (Tweet tweet : bookTestSet) {
-             results.add(multinomialNB.applyGetProbability(bookClassLabels, probabilityModel, tweet));
-            //printResults(resultClass, tweet);
-        }
+        testMultinomialProbability(bookClassLabels, bookTrainingSet);
     }
 
     private static void printResults(String resultClass, Tweet tweet){

@@ -8,8 +8,8 @@ import java.util.*;
 public abstract class NaiveBayes {
     public abstract ProbabilityModel train(ArrayList<String> C, TweetStorage D);
     public abstract String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet);
-    public abstract Map<String, Double> applyGetProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet);
-    
+    public abstract Map<String, Double> applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet);
+
     protected List<String> extractTokens(List<String> vocabulary, Tweet tweet) {
         String[] tweetWords = tweet.getTweetText().split(" ");
         List<String> vocabularyContained = new ArrayList<String>();
@@ -36,15 +36,6 @@ public abstract class NaiveBayes {
         return vocabulary;
     }
 
-    protected double countTweetsInClass(TweetStorage tweets, String c) {
-        double counter = 0;
-        for (Tweet tweet : tweets) {
-            if (tweet.getClassLabel().equals(c))
-                counter++;
-        }
-        return counter;
-    }
-
     protected String concatenateTextOfAllTweetsInClass(TweetStorage tweets, String c) {
         String concatenatedText = "";
         for (Tweet tweet : tweets) {
@@ -52,19 +43,5 @@ public abstract class NaiveBayes {
                 concatenatedText += tweet.getTweetText() + " ";
         }
         return concatenatedText.substring(0, concatenatedText.length() - 1);
-    }
-
-
-
-    protected static String classWHighestProbability(Map<String, Double> score) {
-        //Map<String, Double> curBest = new HashMap<String, Double>();
-        String c = null;
-        for (Map.Entry<String, Double> entry : score.entrySet()) {
-            if (c == null)
-                c = entry.getKey();
-            else if (entry.getValue() > score.get(c))
-                c = entry.getKey();
-        }
-        return c;
     }
 }
