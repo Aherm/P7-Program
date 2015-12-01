@@ -2,8 +2,6 @@ package modelLayer;
 
 import java.util.List;
 
-import businessLogicLayer.Filter;
-
 public class Restaurant implements OurLocation {
 	private String name;
 	private double lat, lon;
@@ -46,7 +44,7 @@ public class Restaurant implements OurLocation {
 	
 	public int calculateScore(Grid g, InvertedIndex ii, double dist) {
 		this.matchedTweets = g.rangeQuery(this, dist);
-		TweetStorage temp = Filter.restaurantNameQuery(this, ii);
+		TweetStorage temp = ii.nameQuery(this);
 		// Removes first to make sure the same tweet isn't there twice.
 		this.matchedTweets.removeAll(temp);
 		this.matchedTweets.addAll(temp);

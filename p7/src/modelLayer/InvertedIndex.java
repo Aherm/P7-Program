@@ -1,5 +1,6 @@
 package modelLayer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -40,4 +41,40 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     		addIndex(tweet);
     	}
     }
+
+
+	public TweetStorage nameQuery(Restaurant restaurant) {
+	    List<Set<Tweet>> tweetSet = new ArrayList<Set<Tweet>>();
+	    TweetStorage tweetStorage = new TweetStorage();
+	    String[] restaurantWords = restaurant.getName().split(" ");
+	    for (String restaurantWord : restaurantWords) {
+	        String resWord = restaurantWord;
+	        for (String word : this.keySet()) {
+	            String w = word;
+	            if (resWord.equals(w)) {
+	                tweetSet.add(this.get(word));
+	                break;
+	            }
+	        }
+	    }
+	    
+	    //if no words in inverted index matched a word of a restaurant
+	    if (restaurantWords.length != tweetSet.size()) 
+	        return tweetStorage;
+	
+	    for (int i = 1; i < tweetSet.size(); i++) {
+	        tweetSet.get(0).retainAll(tweetSet.get(i));
+	    }
+	
+	    //if the intersection results in an empty list
+	    if (tweetSet.isEmpty())
+	        return tweetStorage;
+	
+	    for (Tweet tweet : tweetSet.get(0)) {
+	        if (tweet.getTweetText().contains(restaurant.getName()))
+	        	tweetStorage.add(tweet);
+	    }
+	
+	    return tweetStorage;
+	}
 }

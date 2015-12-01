@@ -17,7 +17,7 @@ public class Tweet implements OurLocation {
 	private Date createdAt;
 	private double lat, lon;
 	private List<Keyword> matchedKeywords = new ArrayList<Keyword>();
-
+	private boolean sick = false; 
 	private double score = -1;
 	private Cluster assignedCluster = null;
 	
@@ -151,6 +151,14 @@ public class Tweet implements OurLocation {
 	
 	public void setClassLabel(String s) {
 		this.classLabel = s;
+	}
+	
+	public void setSick(boolean s){
+		this.sick = s; 
+	}
+	
+	public boolean isSick(){
+		return this.sick; 
 	}
 
 	/* TODO: Remove if the new filter methods work

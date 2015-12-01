@@ -52,6 +52,16 @@ public class TweetStorage extends ArrayList<Tweet> {
 		}
 		return res;
 	}
+	
+	public TweetStorage getSickTweets() {
+		TweetStorage res = new TweetStorage();
+		for (Tweet t : this) {
+			if (t.isSick()) {
+				res.add(t);
+			}
+		}
+		return res;
+	}
 
 	public static TweetStorage getDifference(TweetStorage ts1, TweetStorage ts2) {
 		TweetStorage res = new TweetStorage();
