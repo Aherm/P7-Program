@@ -1,7 +1,9 @@
 package streaming;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.joda.time.DateTime;
@@ -33,10 +35,10 @@ public class OurStatusListener implements StatusListener {
 
 		tweet = tweet.clone();
 		Preprocessor.processTweet(tweet);
+		tweets.add(tweet);
+		grid.addTweet(tweet);
+		invertedIndex.addIndex(tweet);
 		if(Filter.passesFilter(tweet)) {
-			tweets.add(tweet);
-			grid.addTweet(tweet);
-			invertedIndex.addIndex(tweet);
 			try {
 				TweetStorage ts = restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet);
 				removeSeenTweets(ts);
@@ -86,9 +88,8 @@ public class OurStatusListener implements StatusListener {
 	
 	private void removeSeenTweets(TweetStorage ts){
 		for(int i = 0 ; i < ts.size(); i++){
-			ts.get(i).setSick(true);
 			if(tweets.contains(ts.get(i))){
-				tweets.remove(ts.get(i));
+				tweets.getTweet(ts.get(i)).setSick(true);;
 			}
 		}
 	}
