@@ -59,7 +59,7 @@ public final class TwitterRest {
 				DateTime tweetDate = new DateTime(userTimeline.get(i).getCreatedAt());
 				if (Days.daysBetween(tweetDate,startDate).getDays() <= 3) {
 					if(tweet.getTweetID() != userTimeline.get(i).getId() && userTimeline.get(i).getGeoLocation() != null){
-						tweets.add(Tweet.createTweet(userTimeline.get(i)));	
+						tweets.add(Tweet.createSickTweet(userTimeline.get(i)));	
 					}								
 				}
 				else break;

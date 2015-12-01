@@ -72,6 +72,7 @@ public class TestNaiveBayes {
         /**
          * Training phase
          */
+
         testMultinomialProbability(bookClassLabels, bookTrainingSet);
     }
 
