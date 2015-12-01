@@ -64,13 +64,15 @@ public class TweetStorage extends ArrayList<Tweet> {
 	}
 
 	public static TweetStorage getDifference(TweetStorage ts1, TweetStorage ts2) {
-		TweetStorage res = new TweetStorage();
-		for (Tweet t : ts1) {
-			if (!ts2.contains(t)) {
-				res.add(t);
-			}
-		}
-
+		TweetStorage res = ts1.clone();
+		res.removeAll(ts2);
+		return res;
+	}
+	
+	public static TweetStorage getUnion(TweetStorage ts1, TweetStorage ts2) {
+		TweetStorage res = ts1.clone();
+		res.removeAll(ts2);
+		res.addAll(ts2);
 		return res;
 	}
 }
