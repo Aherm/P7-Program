@@ -4,7 +4,7 @@ import modelLayer.Tweet;
 
 public class Preprocessor {
 	public static void processTweet(Tweet tweet) {
-		processTweetMentions(tweet);
+		//processTweetMentions(tweet);
 		processTweetLinks(tweet);
 		processTweetSymbols(tweet);
 		// remove the last empty space character
