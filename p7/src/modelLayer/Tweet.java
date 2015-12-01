@@ -55,6 +55,12 @@ public class Tweet implements OurLocation {
 		else return new Tweet(status.getId(), status.getUser().getId(), status.getInReplyToUserId(), status.getCurrentUserRetweetId(),
 				status.getText(), status.getCreatedAt(), status.getGeoLocation().getLatitude(), status.getGeoLocation().getLongitude());
 	}
+	
+	public static Tweet createSickTweet(Status status){
+		Tweet t = createTweet(status);
+		t.setSick(true);
+		return t; 
+	}
 
 	public long getTweetID() {
 		return tweetID;

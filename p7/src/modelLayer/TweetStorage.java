@@ -14,6 +14,17 @@ public class TweetStorage extends ArrayList<Tweet> {
 	public TweetStorage(ArrayList<Tweet> tweets){
 		super(tweets);
 	}
+	
+	public Tweet getTweet(Tweet x){
+		Tweet returnTweet = new Tweet(); 
+	
+		for(Tweet t : this){
+			if(x.equals(t))
+				returnTweet = t; 
+		}
+	
+		return returnTweet; 
+	}
 
 	public TweetStorage clone() {
 		return (TweetStorage) super.clone();
