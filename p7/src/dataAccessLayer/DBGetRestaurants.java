@@ -48,8 +48,9 @@ public class DBGetRestaurants {
 		}
 		return restaurants;
 	}
-	
+
 	public static List<Restaurant> getRestaurants() {
+		//return listQuery("SELECT distinct name from dohmh WHERE lower(name) like '%tofu house%'");
 		return listQuery("SELECT DISTINCT lower(name) as name FROM dohmh WHERE name IS NOT NULL");
 	}
 }

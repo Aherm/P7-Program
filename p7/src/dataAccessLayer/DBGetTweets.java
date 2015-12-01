@@ -39,7 +39,7 @@ public class DBGetTweets {
     }
 
     public static TweetStorage getKTweets(int k) {
-        return tsQuery("SELECT * FROM tweets LIMIT " + k);
+        return tsQuery("SELECT * FROM new_york_tweets LIMIT " + k);
     }
 
     public static TweetStorage getKLastTweets(int k) {

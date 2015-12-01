@@ -18,20 +18,19 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     	}
     }
     
+       
     public void addIndex(Tweet tweet) {
     	
     	for(String word : this.keySet())
     	{
-    		String regex1 = "(@|\\s?|#)"+ word +"(nyc|ny|\\s?)"; 
-    		Pattern p = Pattern.compile(regex1, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+    		String newWord = word;
+    		String regex = "(@|#|the|cafe|restaurant|\\s)" 
+    				        + "(" + newWord + "|" + newWord.replaceAll("\\s+","") + ")" +
+    				       "(restaurant|cafe|nyc|ny|\\s?)\\s";
+    		Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
             Matcher m = p.matcher(tweet.getTweetText()); 
-            boolean test1 = m.find(); 
-            String regex2 = "(@|\\s?|#)"+ word.replaceAll("\\s+", "") +"(nyc|ny|\\s?)"; 
-            p = Pattern.compile(regex2, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-            m = p.matcher(tweet.getTweetText()); 
-            boolean test2 = m.find(); 
     		
-            if(test1 || test2)
+            if(m.find())
     			this.get(word).add(tweet);
     	}
     }
