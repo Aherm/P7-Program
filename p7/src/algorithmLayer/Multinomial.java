@@ -47,8 +47,8 @@ public class Multinomial extends NaiveBayes {
      * @param tweet : is the tweet to classify
      * @return c : the class the provided tweet is set to
      */
-    @Override
-    public String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    
+    public String applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
 
         //consider whether this is right correctly. Store the same words more than once
@@ -66,6 +66,24 @@ public class Multinomial extends NaiveBayes {
         return classWHighestProbability(score);
     }
 
+    public String applyGetProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+        Map<String, Double> score = new HashMap<String, Double>();
+
+        //consider whether this is right correctly. Store the same words more than once
+        List<String> W = extractTokens(probability.getVocabulary(), tweet);
+
+        for (String c : C) {
+            //score[c] <- log prior(c)
+            score.put(c, probability.getPriorProbability(c));
+            for (String t : W) {
+                //score[c] += log condprod[t][c]
+                score.put(c, score.get(c) * probability.getConditionalProbability(t, c));
+            }
+        }
+        // return the class with the highest probability value
+        return classWHighestProbability(score);
+    }
+    
     private double countTokensInTextInClass(String text, String token) {
         double counter = 0;
         String[] words = text.split(" ");
