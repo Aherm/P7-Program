@@ -2,6 +2,7 @@ package algorithmLayer;
 
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
+import utility.Utils;
 
 import java.io.*;
 import java.net.URL;
@@ -114,10 +115,7 @@ public class Data {
         return data;
     }
 
-
-    //btc temp test
-    public static void main(String[] args) {
-        String filePath = "resturant_mentions.csv";
+    public static ArrayList<Document> initializeDataFromFile(String filePath){
         ArrayList<String> data = fetchDataFromFile(filePath);
         ArrayList<Document> initializedData = new ArrayList<Document>();
 
@@ -131,7 +129,7 @@ public class Data {
                         document.setMatchedToken(token);
                         break;
                     case 1:
-                        if (isStringInt(token))
+                        if (Utils.isStringInt(token))
                             document.setID(Integer.parseInt(token));
                         break;
                     case 2:
@@ -149,18 +147,14 @@ public class Data {
             counter = 0;
             initializedData.add(document);
         }
-
-        System.out.println("documents: " + initializedData.size());
-
+        return initializedData;
     }
 
-    private static boolean isStringInt(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (Exception ex) {
-            return false;
-        }
-    }
 
+    //btc temp test
+    public static void main(String[] args) {
+        String filePath = "resturant_mentions.csv";
+        ArrayList<Document> documents = initializeDataFromFile(filePath);
+        System.out.println("documents: " + documents.size());
+    }
 }

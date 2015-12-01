@@ -1,5 +1,6 @@
 package algorithmLayer;
 
+import businessLogicLayer.Preprocessor;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
@@ -34,7 +35,7 @@ public class TestNaiveBayes {
         }
     }
 
-    private static void testMultinomialProbability(ArrayList<String> classLabels, TweetStorage trainingSet){
+    private static void testMultinomialProbability(ArrayList<String> classLabels, TweetStorage trainingSet, TweetStorage testSet){
         Multinomial multinomialNB = new Multinomial();
 
         /**
@@ -47,13 +48,14 @@ public class TestNaiveBayes {
          * Test phase
          */
         List<Map<String, Double>> results = new ArrayList<Map<String, Double>>();
-        TweetStorage bookTestSet = Data.initializeTestSet();
-        for (Tweet tweet : bookTestSet) {
+        int counter = 0;
+        for (Tweet tweet : testSet) {
             String predictedClass = multinomialNB.applyProbability(classLabels, probabilityModel, tweet);
             Map<String, Double> score = multinomialNB.applyProbabilityGetScore(classLabels, probabilityModel, tweet);
             results.add(score);
-            System.out.println("predicted class: " + predictedClass);
+            System.out.println("index: " + counter + ", predicted class: " + predictedClass);
             //printResults(resultClass, tweet);
+            counter++;
         }
     }
 
@@ -62,10 +64,25 @@ public class TestNaiveBayes {
          * Initialization of data
          */
         //btc, consider using a HashSet to avoid duplicate classes
-        ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("Not visited", "Visited"));
         ArrayList<String> bookClassLabels = Data.initializeClassLabels();
+        ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("not visited", "visited"));
+        String filePath = "resturant_mentions.csv";
 
-        TweetStorage bookTrainingSet = Data.initializeTrainingSet(bookClassLabels);
+        //TweetStorage bookTrainingSet = Data.initializeTrainingSet(bookClassLabels);
+
+        TweetStorage trainingSet = new TweetStorage();
+        for (Document d : Data.initializeDataFromFile(filePath)){
+            Tweet tweet = new Tweet();
+            tweet.setTweetID(d.getID());
+            tweet.setTweetText(d.getText());
+            tweet.setClassLabel(d.getClassLabel());
+            trainingSet.add(tweet);
+        }
+
+        // Preprocess the training data
+        for (Tweet t : trainingSet)
+            Preprocessor.processTweet(t);
+
 
         //Consider making a separate Document class as a wrapper of a tweet that provides access to the most
         //relevant fields of the tweet in relation to naiveBayes
@@ -73,7 +90,11 @@ public class TestNaiveBayes {
         //Need to fetch actual training data from database and use below as test data
         //Possible issue: Make sure that all tweets in the tweetstorage are associated to a class
 
-        testMultinomialProbability(bookClassLabels, bookTrainingSet);
+        TweetStorage bookTestSet = Data.initializeTestSet();
+        for (Tweet t : bookTestSet)
+            Preprocessor.processTweet(t);
+
+        testMultinomialProbability(classLabels, trainingSet, trainingSet);
         //testMultinomialBigDecimal(bookClassLabels, bookTrainingSet);
     }
 
