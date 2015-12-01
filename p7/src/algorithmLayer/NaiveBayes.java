@@ -3,7 +3,6 @@ package algorithmLayer;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 public abstract class NaiveBayes {
@@ -37,13 +36,13 @@ public abstract class NaiveBayes {
         return vocabulary;
     }
 
-    protected BigDecimal countTweetsInClass(TweetStorage tweets, String c) {
-    	double counter = 0;
+    protected double countTweetsInClass(TweetStorage tweets, String c) {
+        double counter = 0;
         for (Tweet tweet : tweets) {
             if (tweet.getClassLabel().equals(c))
                 counter++;
         }
-        return new BigDecimal(counter);
+        return counter;
     }
 
     protected String concatenateTextOfAllTweetsInClass(TweetStorage tweets, String c) {
