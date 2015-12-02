@@ -3,7 +3,7 @@ package algorithmLayer;
 import java.util.Map;
 
 public class Document {
-    private int ID;
+    private long ID;
     private String matchedToken;
     private String text;
     private boolean geotagged;
@@ -20,11 +20,11 @@ public class Document {
         this.classLabel = classLabel;
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(long ID) {
         this.ID = ID;
     }
 
