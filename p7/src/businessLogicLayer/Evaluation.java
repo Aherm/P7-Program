@@ -13,7 +13,7 @@ import modelLayer.TweetStorage;
 
 public class Evaluation {
 
-	public static TweetStorage[] tenFoldCrossValidation(TweetStorage dataSet){
+	public TweetStorage[] tenFoldCrossValidation(TweetStorage dataSet){
 		TweetStorage[] folds = new TweetStorage[10];
 		int from = 0;
 		int sizeOfFold = (dataSet.size() / 10) - 1;
@@ -34,6 +34,11 @@ public class Evaluation {
 			folds[i] = fold;
 		}
 		
+		int TP = 0;
+		int TN = 0;
+		int FP = 0;
+		int FN = 0;
+		
 		for(int i = 0; i < 10; i++) {
 			TweetStorage testSet = folds[i];
 			TweetStorage trainingSet = new TweetStorage();
@@ -44,13 +49,21 @@ public class Evaluation {
 			}
 			ProbabilityModel probModel = NB.train(classLabels, trainingSet);
 			for(Tweet tweet : testSet) {
-				NB.apply(classLabels, probModel, tweet);
+				tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
+				if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
+					TP++;
+				} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
+					FP++;
+				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("0")) {
+					TN++;
+				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("1")) {
+					FN++;
+				}
 			}
-			// something needs to happen here 
-			// if classified = true = expected TP++
-			// if classified = true != expected FP++
-			// if classified = false = expected TN++
-			// if classified = false != expected FN++
+			double prec = getPrecision(TP, FP);
+			double rec = getRecall(TP, FN);
+			double tpRate = getTPRate(TP, FN);
+			double tnRate = getTNRate(FP, TN);
 		}
 		
 		return folds;
@@ -68,19 +81,19 @@ public class Evaluation {
 		}
 	}
 	
-	public double precision(int TP, int FP) {
+	public double getPrecision(int TP, int FP) {
 		return TP / (TP + FP);
 	}
 	
-	public double recall(int TP, int FN) {
+	public double getRecall(int TP, int FN) {
 		return TP / (TP + FN);
 	}
 	
-	public double tpRate(int TP, int FN) {
-		return recall(TP, FN);
+	public double getTPRate(int TP, int FN) {
+		return getRecall(TP, FN);
 	}
 	
-	public double tnRate(int FP, int TN) {
+	public double getTNRate(int FP, int TN) {
 		return TN / (FP + TN);
 	}
 }
