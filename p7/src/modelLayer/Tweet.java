@@ -24,7 +24,7 @@ public class Tweet implements OurLocation {
 	private String expectedClassLabel = ""; 
 	private String assignedClassLabel = ""; //Result of classification
 
-	private BigDecimal probabilityAssignedClass;
+	private BigDecimal probabilityTrue;
 	//private boolean addedToStorage = false;
 
 	public Tweet() {}
@@ -171,12 +171,12 @@ public class Tweet implements OurLocation {
 		this.assignedClassLabel = assignedClassLabel;
 	}
 
-	public BigDecimal getProbabilityAssignedClass() {
-		return probabilityAssignedClass;
+	public BigDecimal getProbabilityTrue() {
+		return probabilityTrue;
 	}
 
-	public void setProbabilityAssignedClass(BigDecimal probabilityAssignedClass) {
-		this.probabilityAssignedClass = probabilityAssignedClass;
+	public void setProbabilityTrue(BigDecimal probabilityTrue) {
+		this.probabilityTrue = probabilityTrue;
 	}
 
 	public void setSick(boolean s){
