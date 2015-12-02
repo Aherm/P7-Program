@@ -21,8 +21,8 @@ public class Tweet implements OurLocation {
 	private double score = -1;
 	private Cluster assignedCluster = null;
 
-	private String expectedClassLabel = "";
-	private String assignedClassLabel = "";
+	private String expectedClassLabel = ""; 
+	private String assignedClassLabel = ""; //Result of classification
 
 	private BigDecimal probabilityAssignedClass;
 	//private boolean addedToStorage = false;
