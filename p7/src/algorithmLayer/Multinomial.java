@@ -141,7 +141,7 @@ public class Multinomial extends NaiveBayes {
     protected double countTweetsInClass(TweetStorage tweets, String c) {
         double counter = 0;
         for (Tweet tweet : tweets) {
-            if (tweet.getClassLabel().equals(c))
+            if (tweet.getExpectedClassLabel().equals(c))
                 counter++;
         }
         return counter;

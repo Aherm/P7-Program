@@ -64,7 +64,7 @@ public class Bernoulli extends NaiveBayes {
     private static double countDocsInClassContainingTerm(TweetStorage D, String classLabel, String token){
         double counter = 0;
         for (Tweet tweet : D)
-            if (tweet.getClassLabel().equals(classLabel) && tweet.getTweetText().contains(token))
+            if (tweet.getExpectedClassLabel().equals(classLabel) && tweet.getTweetText().contains(token))
                 counter++;
         //return num docs of the class that contain token
         return counter;
@@ -73,7 +73,7 @@ public class Bernoulli extends NaiveBayes {
     protected double countTweetsInClass(TweetStorage tweets, String c) {
         double counter = 0;
         for (Tweet tweet : tweets) {
-            if (tweet.getClassLabel().equals(c))
+            if (tweet.getExpectedClassLabel().equals(c))
                 counter++;
         }
         return counter;

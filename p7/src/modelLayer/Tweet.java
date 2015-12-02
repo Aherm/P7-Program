@@ -1,9 +1,9 @@
 package modelLayer;
 
 import twitter4j.Status;
-import java.util.List;
 
-import javax.net.ssl.HandshakeCompletedEvent;
+import java.math.BigDecimal;
+import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -20,8 +20,11 @@ public class Tweet implements OurLocation {
 	private boolean sick = false; 
 	private double score = -1;
 	private Cluster assignedCluster = null;
-	
-	private String classLabel = "";
+
+	private String expectedClassLabel = "";
+	private String assignedClassLabel = "";
+
+	private BigDecimal probabilityAssignedClass;
 	//private boolean addedToStorage = false;
 
 	public Tweet() {}
@@ -41,10 +44,10 @@ public class Tweet implements OurLocation {
 		this.lon = lon;
 	}
 
-	//btc 28112015, constructor to set classLabel
-	public Tweet(long tweetID, long userID, long responseID, long retweetID, String tweetText, Date createdAt, double lat, double lon, String classLabel) {
+	//btc 28112015, constructor to set expectedClassLabel for training data
+	public Tweet(long tweetID, long userID, long responseID, long retweetID, String tweetText, Date createdAt, double lat, double lon, String expectedClassLabel) {
 		this(tweetID, userID, responseID, retweetID, tweetText, createdAt, lat, lon);
-		this.setClassLabel(classLabel);
+		this.setExpectedClassLabel(expectedClassLabel);
 	}
 
 	public static Tweet createTweet(Status status) {
@@ -105,10 +108,7 @@ public class Tweet implements OurLocation {
 	public Date getCreatedAt() {
 		return createdAt;
 	}
-	
-	public String getClassLabel() {
-		return classLabel;
-	}
+
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
@@ -154,11 +154,31 @@ public class Tweet implements OurLocation {
 	public void setCluster (Cluster c) {
 		this.assignedCluster = c;
 	}
-	
-	public void setClassLabel(String s) {
-		this.classLabel = s;
+
+	public String getExpectedClassLabel() {
+		return expectedClassLabel;
 	}
-	
+
+	public void setExpectedClassLabel(String expectedClassLabel) {
+		this.expectedClassLabel = expectedClassLabel;
+	}
+
+	public String getAssignedClassLabel() {
+		return assignedClassLabel;
+	}
+
+	public void setAssignedClassLabel(String assignedClassLabel) {
+		this.assignedClassLabel = assignedClassLabel;
+	}
+
+	public BigDecimal getProbabilityAssignedClass() {
+		return probabilityAssignedClass;
+	}
+
+	public void setProbabilityAssignedClass(BigDecimal probabilityAssignedClass) {
+		this.probabilityAssignedClass = probabilityAssignedClass;
+	}
+
 	public void setSick(boolean s){
 		this.sick = s; 
 	}
