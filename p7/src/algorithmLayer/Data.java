@@ -97,17 +97,17 @@ public class Data {
     public static ArrayList<String> fetchDataFromFile(String filePath) {
         ArrayList<String> data = new ArrayList<String>();
         File file = new File(filePath);
-
+        
         try {
-            Scanner input = new Scanner(file);
-            while (input.hasNext()) {
+        	BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+        	String line;
+            while ((line = reader.readLine()) != null) {
                 //String nextToken = input.next();
 
                 //or to process line by line
-                String nextLine = input.nextLine();
-                data.add(nextLine);
+                data.add(line);
             }
-            input.close();
+            reader.close();
 
         } catch (Exception ex) {
             System.out.println(ex);
