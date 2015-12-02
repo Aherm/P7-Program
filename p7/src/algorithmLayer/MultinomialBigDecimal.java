@@ -83,20 +83,9 @@ public class MultinomialBigDecimal extends NaiveBayes {
         }
 
         for (Map.Entry<String, BigDecimal> entry : score.entrySet()){
-            String classLabel = entry.getKey();
-            BigDecimal classProbability = entry.getValue();
-
-            if (classLabel.equals(classWHighestProbability(score))){
-                //this is the instance with highest probability
-                tweet.setAssignedClassLabel(classLabel);
-                tweet.setProbabilityAssignedClass(classProbability);
-            }
-            else {
-                tweet.setLowestProbability(classProbability);
-            }
+            if (entry.getKey().equals("1"))
+                tweet.setProbabilityTrue(entry.getValue());
         }
-
-
         return tweet;
     }
 
