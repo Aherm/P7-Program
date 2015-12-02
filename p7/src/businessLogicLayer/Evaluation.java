@@ -47,6 +47,10 @@ public class Evaluation {
 				NB.apply(classLabels, probModel, tweet);
 			}
 			// something needs to happen here 
+			// if classified = true = expected TP++
+			// if classified = true != expected FP++
+			// if classified = false = expected TN++
+			// if classified = false != expected FN++
 		}
 		
 		return folds;
@@ -57,10 +61,7 @@ public class Evaluation {
 		for (int threshold = 100; threshold >= 0; threshold--) {
 			int TP = 0, FP = 0, TN = 0, FN = 0;
 			for (Tweet t : tweets) {
-				// if classified = true = expected TP++
-				// if classified = true != expected FP++
-				// if classified = false = expected TN++
-				// if classified = false != expected FN++
+				
 			}
 			// TP rate
 			// FP rate
