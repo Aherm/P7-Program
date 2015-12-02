@@ -12,6 +12,8 @@ import java.util.Date;
 
 public class DBGetTweets {
 
+	private static String db = "new_york_tweets"; 
+	
     public DBGetTweets() {
     }
 
@@ -35,27 +37,28 @@ public class DBGetTweets {
     }
 
     public static TweetStorage getTweets() {
-        return tsQuery("SELECT * FROM new_york_tweets");
+        return tsQuery("SELECT * FROM " + db);
     }
 
     public static TweetStorage getKTweets(int k) {
-        return tsQuery("SELECT * FROM new_york_tweets LIMIT " + k);
+        return tsQuery("SELECT * FROM " + db + " LIMIT " + k);
     }
 
+
     public static TweetStorage getKLastTweets(int k) {
-        return tsQuery("SELECT * FROM tweets ORDER BY tweetid DESC LIMIT " + k);
+        return tsQuery("SELECT * FROM "+ db + " ORDER BY tweetid DESC LIMIT " + k);
     }
 
     public static TweetStorage getInterval(int start, int size) {
-        return tsQuery("SELECT * FROM tweets ORDER BY id LIMIT " + size + " OFFSET " + start);
+        return tsQuery("SELECT * FROM " + db + " ORDER BY id LIMIT " + size + " OFFSET " + start);
     }
 
     public static TweetStorage getTweetsFromLastThreeDays() {
-        return tsQuery("SELECT * FROM tweets WHERE EXTRACT(DAY FROM age(createdat::timestamp)) <= 3");
+        return tsQuery("SELECT * FROM + " + db + "  WHERE EXTRACT(DAY FROM age(createdat::timestamp)) <= 3");
     }
 
     public static TweetStorage getGeotaggedTweets() {
-        return tsQuery("SELECT * from tweets WHERE NOT lat = 0 AND not lon = 0");
+        return tsQuery("SELECT * from " + db + " WHERE NOT lat = 0 AND not lon = 0");
     }
 
     public static TweetStorage getTweetsFromNewYork(){
@@ -91,11 +94,11 @@ public class DBGetTweets {
     }
 
     public static long getNumTweets() {
-        return countQuery("SELECT count(*) FROM tweets");
+        return countQuery("SELECT count(*) FROM " + db);
     }
 
     public static long getNrTweetsFromDay(String date) {
-        return countQuery("SELECT count(*) FROM tweets WHERE createdat::date = '" + date + "'");
+        return countQuery("SELECT count(*) FROM " + db + "  WHERE createdat::date = '" + date + "'");
     }
 
 
@@ -134,6 +137,16 @@ public class DBGetTweets {
 
         return date;
     }
-
+    
+    
+    //USED IN SIMULATION DO NOT TOUCH 
+    
+    public static TweetStorage getAllTweetsExperiment(){
+    	return tsQuery("SELECT * FROM experiment");
+    }
+    
+    public static TweetStorage getUserExperiment(){
+    	return tsQuery("SELECT * FROM experiment"); 
+    }
 
 }
