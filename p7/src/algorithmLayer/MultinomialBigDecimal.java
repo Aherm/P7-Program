@@ -67,7 +67,7 @@ public class MultinomialBigDecimal extends NaiveBayes {
         return classWHighestProbability(score);
     }
 
-    public Map<String, BigDecimal> applyGetProbability(ArrayList<String> C, ProbabilityModelBigDecimal probability, Tweet tweet) {
+    public Tweet applyGetProbability(ArrayList<String> C, ProbabilityModelBigDecimal probability, Tweet tweet) {
         Map<String, BigDecimal> score = new HashMap<String, BigDecimal>();
 
         //consider whether this is right correctly. Store the same words more than once
@@ -81,14 +81,16 @@ public class MultinomialBigDecimal extends NaiveBayes {
                 score.put(c, score.get(c).multiply(probability.getConditionalProbability(t, c)));
             }
         }
-        // return the class with the highest probability value
-        return score;
+
+        tweet.setAssignedClassLabel(classWHighestProbability(score));
+        tweet.setProbabilityAssignedClass(score.get(classWHighestProbability(score)));
+        return tweet;
     }
 
     protected BigDecimal countTweetsInClass(TweetStorage tweets, String c) {
         double counter = 0;
         for (Tweet tweet : tweets) {
-            if (tweet.getClassLabel().equals(c))
+            if (tweet.getExpectedClassLabel().equals(c))
                 counter++;
         }
         return new BigDecimal(counter);

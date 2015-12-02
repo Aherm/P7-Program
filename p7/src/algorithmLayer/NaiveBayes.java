@@ -39,7 +39,7 @@ public abstract class NaiveBayes {
     protected String concatenateTextOfAllTweetsInClass(TweetStorage tweets, String c) {
         String concatenatedText = "";
         for (Tweet tweet : tweets) {
-            if (tweet.getClassLabel().equals(c))
+            if (tweet.getExpectedClassLabel().equals(c))
                 concatenatedText += tweet.getTweetText() + " ";
         }
         return concatenatedText.substring(0, concatenatedText.length() - 1);
