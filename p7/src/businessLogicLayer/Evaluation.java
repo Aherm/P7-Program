@@ -14,7 +14,8 @@ public class Evaluation {
 	public static TweetStorage[] tenFoldCrossValidation(TweetStorage dataSet){
 		TweetStorage[] folds = new TweetStorage[10];
 		int from = 0;
-		int to = (dataSet.size() / 10) - 1;		
+		int sizeOfFold = (dataSet.size() / 10) - 1;
+		int to = sizeOfFold; 	
 		int remainder = dataSet.size() % 10;
 		NaiveBayes NB = new Multinomial();
 		ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("1", "0"));
@@ -27,7 +28,7 @@ public class Evaluation {
 				fold = dataSet.getFromInterval(from, to);
 			}
 			from = to + 1;
-			to = from + (dataSet.size() / 10) - 1;
+			to = from + sizeOfFold;
 			folds[i] = fold;
 		}
 		
@@ -43,6 +44,7 @@ public class Evaluation {
 			for(Tweet tweet : testSet) {
 				NB.apply(classLabels, probModel, tweet);
 			}
+			// something needs to happen here 
 		}
 		
 		return folds;
