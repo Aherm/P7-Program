@@ -10,44 +10,28 @@ import java.util.*;
 
 public class TestNaiveBayes {
 
-    private static void testMultinomialBigDecimal(ArrayList<String> classLabels, TweetStorage trainingSet){
+    private static TweetStorage testMultinomialBigDecimal(ArrayList<String> classLabels, TweetStorage trainingSet, TweetStorage testSet){
         MultinomialBigDecimal multinomialNBBD = new MultinomialBigDecimal();
-
-        //ProbabilityModel probabilityModel = multinomialNB.train(bookClassLabels, bookTrainingSet);
         ProbabilityModelBigDecimal probabilityModelBigDecimal = multinomialNBBD.trainBigDecimal(classLabels, trainingSet);
-        //Possibly find way to store .jar stopped at this point and executes on with provided argument
 
-        /**
-         * Test phase
-         */
-        List<Map<String, Map<String, BigDecimal>>> resultsBigDecimal = new ArrayList<Map<String, Map<String, BigDecimal>>>();
-
-        TweetStorage bookTestSet = Data.initializeTestSet();
-        for (Tweet tweet : bookTestSet) {
+        //test
+        TweetStorage resultTweets = new TweetStorage();
+        for (Tweet tweet : testSet) {
             String predictedClass = multinomialNBBD.applyBigDecimal(classLabels, probabilityModelBigDecimal, tweet);
             System.out.println("predicted class: " + predictedClass);
-            Map<String, BigDecimal> probability = multinomialNBBD.applyGetProbability(classLabels, probabilityModelBigDecimal, tweet);
-            Map<String, Map<String, BigDecimal>> store = new HashMap<String, Map<String, BigDecimal>>();
-            store.put(predictedClass, probability);
-            resultsBigDecimal.add(store);
-            System.out.println("done");
+            Tweet classifiedTweet = multinomialNBBD.applyGetProbability(classLabels, probabilityModelBigDecimal, tweet);
+            resultTweets.add(classifiedTweet);
 
             //printResults(resultClass, tweet);
         }
+        return resultTweets;
     }
 
     private static void testMultinomialProbability(ArrayList<String> classLabels, TweetStorage trainingSet, TweetStorage testSet){
         Multinomial multinomialNB = new Multinomial();
-
-        /**
-         * Training phase
-         */
         ProbabilityModel probabilityModel = multinomialNB.train(classLabels, trainingSet);
-        //Possibly find way to store .jar stopped at this point and executes on with provided argument
 
-        /**
-         * Test phase
-         */
+        //test
         List<Map<String, Double>> results = new ArrayList<Map<String, Double>>();
         int counter = 0;
         for (Tweet tweet : testSet) {
@@ -67,29 +51,28 @@ public class TestNaiveBayes {
         //btc, consider using a HashSet to avoid duplicate classes
         ArrayList<String> bookClassLabels = Data.initializeClassLabels();
         ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("not visited", "visited"));
-        String filePath = "resturant_mentions.csv";
+        String trainingFilePath = "Resturants_mentions2.csv";
 
-        //TweetStorage bookTrainingSet = Data.initializeTrainingSet(bookClassLabels);
+        TweetStorage bookTrainingSet = Data.initializeTrainingSet(bookClassLabels);
 
+        for (Tweet t : bookTrainingSet)
+            Preprocessor.processTweet(t);
+
+        /*
         TweetStorage trainingSet = new TweetStorage();
-        for (Document d : Data.initializeDataFromFile(filePath)){
+        for (Document d : Data.initializeDataFromFile(trainingFilePath)){
             Tweet tweet = new Tweet();
             tweet.setTweetID(d.getID());
             tweet.setTweetText(d.getText());
-            tweet.setClassLabel(d.getClassLabel());
+            tweet.setExpectedClassLabel(d.getClassLabel());
             trainingSet.add(tweet);
         }
 
         // Preprocess the training data
         for (Tweet t : trainingSet)
             Preprocessor.processTweet(t);
+        */
 
-
-        //Consider making a separate Document class as a wrapper of a tweet that provides access to the most
-        //relevant fields of the tweet in relation to naiveBayes
-
-        //Need to fetch actual training data from database and use below as test data
-        //Possible issue: Make sure that all tweets in the tweetstorage are associated to a class
 
         TweetStorage bookTestSet = Data.initializeTestSet();
         for (Tweet t : bookTestSet)
@@ -106,12 +89,8 @@ public class TestNaiveBayes {
         testSet.add(new Tweet(1, 1, 1, 1, "fuck u bjørk", new Date()));
         Preprocessor.processTweets(testSet);
 
-        testMultinomialProbability(classLabels, trainingSet, testSet);
-
-
-
-
-        //testMultinomialBigDecimal(bookClassLabels, bookTrainingSet);
+        //testMultinomialProbability(classLabels, trainingSet, testSet);
+        testMultinomialBigDecimal(bookClassLabels, bookTrainingSet, bookTestSet);
     }
 
     private static void printResults(String resultClass, Tweet tweet){
