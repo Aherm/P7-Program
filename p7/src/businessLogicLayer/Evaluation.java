@@ -1,6 +1,8 @@
 package businessLogicLayer;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,24 +65,39 @@ public class Evaluation {
 			double prec = getPrecision(TP, FP);
 			double rec = getRecall(TP, FN);
 			double tpRate = getTPRate(TP, FN);
-			double tnRate = getTNRate(FP, TN);
+			double fpRate = getFPRate(FP, TN);
 		}
 		
 		return folds;
 	}
 	
 	public void rocCurve(TweetStorage tweets) {
-		List<Point> points = new ArrayList<Point>();
-		for (int threshold = 100; threshold >= 0; threshold--) {
+		List<Point2D.Double> points = new ArrayList<Point2D.Double>();
+		
+		BigDecimal minProb = minProb(tweets);
+		BigDecimal maxProb = maxProb(tweets);
+		BigDecimal step = maxProb.subtract(minProb).divide(new BigDecimal(100));
+		
+		for (BigDecimal threshold = maxProb; threshold.compareTo(minProb) >= 0; threshold = threshold.subtract(step)) {
 			int TP = 0, FP = 0, TN = 0, FN = 0;
 			for (Tweet t : tweets) {
-				// if classified >= threhshold && expected == true; TP++
-				// if classified >= threhshold && expected == false; FP++
-				// if classified < threhshold && expected == false; TN++
-				// if classified < threhshold && expected == true; FN++
+				if (t.getProbabilityTrue().compareTo(threshold) >= 0 && t.getExpectedClassLabel() == "1") {
+					TP++;
+				}
+				if (t.getProbabilityTrue().compareTo(threshold) >= 0 && t.getExpectedClassLabel() == "0") {
+					FP++;
+				}
+				if (t.getProbabilityTrue().compareTo(threshold) < 0 && t.getExpectedClassLabel() == "0") {
+					TN++;
+				}
+				if (t.getProbabilityTrue().compareTo(threshold) < 0 && t.getExpectedClassLabel() == "1") {
+					FN++;
+				}
 			}
-			// TP rate
-			// FP rate
+			double tpRate = getTPRate(TP, FN);
+			double fpRate = getFPRate(FP, TN);
+			
+			points.add(new Point2D.Double(fpRate, tpRate));
 		}
 	}
 	
@@ -96,7 +113,27 @@ public class Evaluation {
 		return getRecall(TP, FN);
 	}
 	
-	public double getTNRate(int FP, int TN) {
-		return TN / (FP + TN);
+	public double getFPRate(int FP, int TN) {
+		return FP / (FP + TN);
+	}
+	
+	private BigDecimal maxProb(TweetStorage tweets) {
+		BigDecimal max = new BigDecimal(-1);
+		for (Tweet t : tweets) {
+			if (t.getProbabilityTrue().compareTo(max) > 0) {
+				max = t.getProbabilityTrue();
+			}
+		}
+		return max;		
+	}
+	
+	private BigDecimal minProb(TweetStorage tweets) {
+		BigDecimal min = new BigDecimal(1000000000);
+		for (Tweet t : tweets) {
+			if (t.getProbabilityTrue().compareTo(min) < 0) {
+				min = t.getProbabilityTrue();
+			}
+		}
+		return min;
 	}
 }
