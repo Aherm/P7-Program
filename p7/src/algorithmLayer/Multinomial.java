@@ -33,7 +33,6 @@ public class Multinomial extends NaiveBayes {
 
             for (String t : V) {
                 double T_ct = countTokensInTextInClass(text_c, t);
-                //totalT_ct + |V|
                 condprob.put(new ArrayList<String>(Arrays.asList(t, c)), (T_ct + 1) / (totalT_ct + V.size()));
             }
         }
@@ -51,15 +50,11 @@ public class Multinomial extends NaiveBayes {
     @Override
     public String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
-
-        //consider whether this is right correctly. Store the same words more than once
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
         for (String c : C) {
-            //score[c] <- log prior(c)
             score.put(c, Math.log10(probability.getPriorProbability(c)));
             for (String t : W) {
-                //score[c] += log condprod[t][c]
                 score.put(c, score.get(c) + Math.log10(probability.getConditionalProbability(t, c)));
             }
         }
@@ -70,15 +65,11 @@ public class Multinomial extends NaiveBayes {
     @Override
     public Map<String, Double> applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
-
-        //consider whether this is right correctly. Store the same words more than once
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
         for (String c : C) {
-            //score[c] <- log prior(c)
             score.put(c, Math.log10(probability.getPriorProbability(c)));
             for (String t : W) {
-                //score[c] += log condprod[t][c]
                 score.put(c, score.get(c) + Math.log10(probability.getConditionalProbability(t, c)));
             }
         }
@@ -87,15 +78,11 @@ public class Multinomial extends NaiveBayes {
 
     public String applyProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
-
-        //consider whether this is right correctly. Store the same words more than once
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
         for (String c : C) {
-            //score[c] <- log prior(c)
             score.put(c, probability.getPriorProbability(c));
             for (String t : W) {
-                //score[c] += log condprod[t][c]
                 score.put(c, score.get(c) * probability.getConditionalProbability(t, c));
             }
         }
@@ -106,15 +93,11 @@ public class Multinomial extends NaiveBayes {
 
     public Map<String, Double> applyProbabilityGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
-
-        //consider whether this is right correctly. Store the same words more than once
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
         for (String c : C) {
-            //score[c] <- log prior(c)
             score.put(c, probability.getPriorProbability(c));
             for (String t : W) {
-                //score[c] += log condprod[t][c]
                 score.put(c, score.get(c) * probability.getConditionalProbability(t, c));
             }
         }
@@ -124,7 +107,6 @@ public class Multinomial extends NaiveBayes {
 
 
     protected static String classWHighestProbability(Map<String, Double> score) {
-        //Map<String, Double> curBest = new HashMap<String, Double>();
         String c = null;
         for (Map.Entry<String, Double> entry : score.entrySet()) {
             if (c == null)

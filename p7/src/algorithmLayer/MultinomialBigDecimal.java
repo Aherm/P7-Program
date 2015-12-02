@@ -33,7 +33,6 @@ public class MultinomialBigDecimal extends NaiveBayes {
 
             for (String t : V) {
                 BigDecimal T_ct = countTokensInTextInClass(text_c, t);
-                //totalT_ct + |V|
                 condprob.put(new ArrayList<String>(Arrays.asList(t, c)),
                         (T_ct.add(new BigDecimal(1))).divide(totalT_ct.add(new BigDecimal(V.size())), 2, RoundingMode.HALF_UP));
             }
@@ -51,33 +50,24 @@ public class MultinomialBigDecimal extends NaiveBayes {
 
     public String applyBigDecimal(ArrayList<String> C, ProbabilityModelBigDecimal probability, Tweet tweet) {
         Map<String, BigDecimal> score = new HashMap<String, BigDecimal>();
-
-        //consider whether this is right correctly. Store the same words more than once
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
         for (String c : C) {
-            //score[c] <- log prior(c)
             score.put(c, probability.getPriorProbability(c));
             for (String t : W) {
-                //score[c] += log condprod[t][c]
                 score.put(c, score.get(c).multiply(probability.getConditionalProbability(t, c)));
             }
         }
-        // return the class with the highest probability value
         return classWHighestProbability(score);
     }
 
     public Tweet applyGetProbability(ArrayList<String> C, ProbabilityModelBigDecimal probability, Tweet tweet) {
         Map<String, BigDecimal> score = new HashMap<String, BigDecimal>();
-
-        //consider whether this is right correctly. Store the same words more than once
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
         for (String c : C) {
-            //score[c] <- log prior(c)
             score.put(c, probability.getPriorProbability(c));
             for (String t : W) {
-                //score[c] += log condprod[t][c]
                 score.put(c, score.get(c).multiply(probability.getConditionalProbability(t, c)));
             }
         }
@@ -99,7 +89,6 @@ public class MultinomialBigDecimal extends NaiveBayes {
     }
 
     protected static String classWHighestProbability(Map<String, BigDecimal> score) {
-        //Map<String, Double> curBest = new HashMap<String, Double>();
         String c = null;
         for (Map.Entry<String, BigDecimal> entry : score.entrySet()) {
             BigDecimal value = entry.getValue();
