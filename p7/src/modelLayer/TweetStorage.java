@@ -53,6 +53,15 @@ public class TweetStorage extends ArrayList<Tweet> {
 		}
 		return res;
 	}
+	
+	public TweetStorage getFromInterval(int lowerBound, int upperBound){
+		TweetStorage interval = new TweetStorage(); 
+		for(int i = lowerBound; i < upperBound; i++){
+			interval.add(this.get(i));
+		}
+		
+		return interval; 
+	}
 
 	public TweetStorage getUnclusteredTweets() {
 		TweetStorage res = new TweetStorage();
