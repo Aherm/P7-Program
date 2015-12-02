@@ -67,7 +67,44 @@ public class Multinomial extends NaiveBayes {
         return classWHighestProbability(score);
     }
 
-    public Map<String, Double> applyGetProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    @Override
+    public Map<String, Double> applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+        Map<String, Double> score = new HashMap<String, Double>();
+
+        //consider whether this is right correctly. Store the same words more than once
+        List<String> W = extractTokens(probability.getVocabulary(), tweet);
+
+        for (String c : C) {
+            //score[c] <- log prior(c)
+            score.put(c, Math.log10(probability.getPriorProbability(c)));
+            for (String t : W) {
+                //score[c] += log condprod[t][c]
+                score.put(c, score.get(c) + Math.log10(probability.getConditionalProbability(t, c)));
+            }
+        }
+        return score;
+    }
+
+    public String applyProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+        Map<String, Double> score = new HashMap<String, Double>();
+
+        //consider whether this is right correctly. Store the same words more than once
+        List<String> W = extractTokens(probability.getVocabulary(), tweet);
+
+        for (String c : C) {
+            //score[c] <- log prior(c)
+            score.put(c, probability.getPriorProbability(c));
+            for (String t : W) {
+                //score[c] += log condprod[t][c]
+                score.put(c, score.get(c) * probability.getConditionalProbability(t, c));
+            }
+        }
+        // return the class with the highest probability value
+        return classWHighestProbability(score);
+    }
+
+
+    public Map<String, Double> applyProbabilityGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         Map<String, Double> score = new HashMap<String, Double>();
 
         //consider whether this is right correctly. Store the same words more than once
@@ -84,7 +121,32 @@ public class Multinomial extends NaiveBayes {
         // return the class with the highest probability value
         return score;
     }
-    
+
+
+    protected static String classWHighestProbability(Map<String, Double> score) {
+        //Map<String, Double> curBest = new HashMap<String, Double>();
+        String c = null;
+        for (Map.Entry<String, Double> entry : score.entrySet()) {
+            if (c == null)
+                c = entry.getKey();
+            else if (entry.getValue() > score.get(c))
+                c = entry.getKey();
+        }
+        return c;
+    }
+
+
+
+
+    protected double countTweetsInClass(TweetStorage tweets, String c) {
+        double counter = 0;
+        for (Tweet tweet : tweets) {
+            if (tweet.getClassLabel().equals(c))
+                counter++;
+        }
+        return counter;
+    }
+
     private double countTokensInTextInClass(String text, String token) {
         double counter = 0;
         String[] words = text.split(" ");

@@ -1,8 +1,15 @@
 package businessLogicLayer;
 
 import modelLayer.Tweet;
+import modelLayer.TweetStorage;
 
 public class Preprocessor {
+	public static void processTweets(TweetStorage tweets) {
+		for(Tweet tweet : tweets) {
+			processTweet(tweet);
+		}
+	}
+	
 	public static void processTweet(Tweet tweet) {
 		//processTweetMentions(tweet);
 		processTweetLinks(tweet);

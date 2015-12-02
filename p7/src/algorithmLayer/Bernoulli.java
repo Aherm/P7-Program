@@ -43,9 +43,21 @@ public class Bernoulli extends NaiveBayes {
         // return the class with the highest probability value
         return classWHighestProbability(score);
     }
-    
+
+    protected static String classWHighestProbability(Map<String, Double> score) {
+        //Map<String, Double> curBest = new HashMap<String, Double>();
+        String c = null;
+        for (Map.Entry<String, Double> entry : score.entrySet()) {
+            if (c == null)
+                c = entry.getKey();
+            else if (entry.getValue() > score.get(c))
+                c = entry.getKey();
+        }
+        return c;
+    }
+
     @Override
-    public Map<String, Double> applyGetProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    public Map<String, Double> applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
     	return new HashMap<String, Double>();
     }
 
@@ -55,6 +67,15 @@ public class Bernoulli extends NaiveBayes {
             if (tweet.getClassLabel().equals(classLabel) && tweet.getTweetText().contains(token))
                 counter++;
         //return num docs of the class that contain token
+        return counter;
+    }
+
+    protected double countTweetsInClass(TweetStorage tweets, String c) {
+        double counter = 0;
+        for (Tweet tweet : tweets) {
+            if (tweet.getClassLabel().equals(c))
+                counter++;
+        }
         return counter;
     }
 }
