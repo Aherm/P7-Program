@@ -1,6 +1,4 @@
-package algorithmLayer;
-
-import java.util.Map;
+package naiveBayes;
 
 public class Document {
     private long ID;

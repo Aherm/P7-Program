@@ -1,4 +1,4 @@
-package algorithmLayer;
+package naiveBayes;
 
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;

@@ -1,4 +1,4 @@
-package algorithmLayer;
+package naiveBayes;
 
 import java.util.ArrayList;
 import java.util.List;

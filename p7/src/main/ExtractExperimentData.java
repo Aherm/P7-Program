@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import businessLogicLayer.Filter;
-import businessLogicLayer.TwitterRest;
+import streaming.TwitterRest;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetTweets;
 import dataAccessLayer.DBInsert;

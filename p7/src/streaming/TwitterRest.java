@@ -1,4 +1,4 @@
-package businessLogicLayer;
+package streaming;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +10,6 @@ import modelLayer.TweetStorage;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-import streaming.Oauth;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;

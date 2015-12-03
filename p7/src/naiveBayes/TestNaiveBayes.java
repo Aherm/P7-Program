@@ -1,11 +1,9 @@
-package algorithmLayer;
+package naiveBayes;
 
 import businessLogicLayer.Preprocessor;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
 import java.util.*;
 
 public class TestNaiveBayes {

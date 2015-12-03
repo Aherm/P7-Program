@@ -1,5 +1,8 @@
-package businessLogicLayer;
+package streaming;
 
+import businessLogicLayer.Clustering;
+import businessLogicLayer.DataAnalysis;
+import businessLogicLayer.Filter;
 import fileCreation.GpxCreator;
 import fileCreation.StatisticsWriter;
 import modelLayer.ClusterStorage;

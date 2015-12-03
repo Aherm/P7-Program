@@ -1,19 +1,18 @@
-package businessLogicLayer;
+package evaluationLayer;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import algorithmLayer.Multinomial;
-import algorithmLayer.NaiveBayes;
-import algorithmLayer.ProbabilityModel;
+import naiveBayes.Multinomial;
+import naiveBayes.NaiveBayes;
+import naiveBayes.ProbabilityModel;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
-public class Evaluation {
+public class EvalNB {
 
 	public TweetStorage[] tenFoldCrossValidation(TweetStorage dataSet){
 		TweetStorage[] folds = new TweetStorage[10];

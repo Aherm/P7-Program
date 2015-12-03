@@ -1,0 +1,6 @@
+Total tweets: 2
+Geotagged Tweets: 0
+Procent Geotagged Tweets: 0.0 %
+-------------------------------------------
+|Created on: Wed Oct 21 13:04:07 CEST 2015|
+-------------------------------------------

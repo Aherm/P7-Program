@@ -14,7 +14,7 @@ import twitter4j.TwitterStreamFactory;
 
 import java.util.*;
 
-import businessLogicLayer.TweetQueryThread;
+import streaming.TweetQueryThread;
 
 public class Program {
 

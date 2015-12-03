@@ -1,4 +1,4 @@
-package algorithmLayer;
+package naiveBayes;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

@@ -1,10 +1,9 @@
-package algorithmLayer;
+package naiveBayes;
 
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
 import java.util.*;
-import java.util.regex.Matcher;
 
 public class Multinomial extends NaiveBayes {
     /**

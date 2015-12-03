@@ -1,17 +1,12 @@
 package streaming;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import businessLogicLayer.Filter;
 import businessLogicLayer.Preprocessor;
-import businessLogicLayer.TwitterRest;
 import modelLayer.Cluster;
 import modelLayer.ClusterStorage;
 import modelLayer.Grid;
@@ -44,6 +39,8 @@ public class OurStatusListener implements StatusListener {
 				removeSeenTweets(ts);
 				invertedIndex.addIndices(ts);
 				tweets.addAll(ts);
+
+				//add userTimeLine tweets to grid
 				for (Tweet t : ts) {
 					grid.addTweet(t);
 				}
