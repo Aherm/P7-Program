@@ -5,6 +5,7 @@ import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 import naiveBayes.*;
 
+import java.io.*;
 import java.util.*;
 
 public class TestNaiveBayes {
@@ -13,12 +14,16 @@ public class TestNaiveBayes {
         MultinomialBigDecimal multinomialNBBD = new MultinomialBigDecimal();
         ProbabilityModelBigDecimal probabilityModelBigDecimal = multinomialNBBD.trainBigDecimal(classLabels, trainingSet);
 
+        String filePath = "./classifiers/naiveBayes.model";
+        //MultinomialBigDecimal.saveClassifier(probabilityModelBigDecimal, filePath);
+        ProbabilityModelBigDecimal classifier = MultinomialBigDecimal.loadClassifier(filePath);
+
         //test
         TweetStorage resultTweets = new TweetStorage();
         for (Tweet tweet : testSet) {
-            String predictedClass = multinomialNBBD.applyBigDecimal(classLabels, probabilityModelBigDecimal, tweet);
+            String predictedClass = multinomialNBBD.applyBigDecimal(classLabels, classifier, tweet);
             System.out.println("predicted class: " + predictedClass);
-            Tweet classifiedTweet = multinomialNBBD.applyGetProbability(classLabels, probabilityModelBigDecimal, tweet);
+            Tweet classifiedTweet = multinomialNBBD.applyGetProbability(classLabels, classifier, tweet);
             resultTweets.add(classifiedTweet);
 
             //printResults(resultClass, tweet);
