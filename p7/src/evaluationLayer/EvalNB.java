@@ -76,11 +76,7 @@ public class EvalNB {
 				}
 			}
 			System.out.println("Model Has Been Tested...");
-			double prec = getPrecision(TP, FP);
-			double rec = getRecall(TP, FN);
-			double tpRate = getTPRate(TP, FN);
-			double fpRate = getFPRate(FP, TN);
-			EvaluationModel evalModel = new EvaluationModel(i, prec, rec, tpRate, fpRate);
+			EvaluationModel evalModel = new EvaluationModel(i, TP, TN, FP, FN);
 			fullEvaluation.put("Fold" + i, evalModel);
 		}
 		System.out.println("Model Has Been Applied...");
@@ -96,18 +92,28 @@ public class EvalNB {
 		NaiveBayes NB = new Multinomial();
 		ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("1", "0"));
 		Map<String, EvaluationModel> fullEvaluation = new HashMap<String, EvaluationModel>();
+		System.out.println("Starting To Create Training Data...");
 		for(int i = 0; i < sizeOfTrainingSet; i++) {
+			System.out.println("Training Data Creation Iteration " + i + "...");
 			trainingSet.add(dataSet.get(i));		
 		}
+		System.out.println("Training Data Has Been Created...");
+		System.out.println("Starting To Create Test Data...");
 		for(int i = testSetFrom; i < dataSet.size(); i++) {
+			System.out.println("Test Data Creation Iteration " + i + "...");
 			testSet.add(dataSet.get(i));
 		}
+		System.out.println("Test Data Has Been Created...");
 		int TP = 0;
 		int FP = 0;
 		int TN = 0;
 		int FN = 0;
+		System.out.println("Starting To Train Model...");
 		ProbabilityModel probModel = NB.train(classLabels, trainingSet);
+		System.out.println("The Model Has Been Trained...");
+		System.out.println("Starting To Test Model...");
 		for(Tweet tweet : testSet) {
+			System.out.println("Testing For Tweet: " + tweet.getTweetText());
 			tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
 			if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
 				TP++;
@@ -119,17 +125,14 @@ public class EvalNB {
 				FN++;
 			}
 		}
-		double prec = getPrecision(TP, FP);
-		double rec = getRecall(TP, FN);
-		double tpRate = getTPRate(TP, FN);
-		double fpRate = getFPRate(FP, TN);
+		System.out.println("The Model Has Been Tested...");
 		
-		EvaluationModel evalNB = new EvaluationModel(1, prec, rec, tpRate, fpRate);
+		EvaluationModel evalNB = new EvaluationModel(1, TP, TN, FP, FN);
 		fullEvaluation.put("Fold1", evalNB);
 		return fullEvaluation;
 	}
 	
-	public void rocCurve(TweetStorage tweets) {
+	/*public void rocCurve(TweetStorage tweets) {
 		List<Point2D.Double> points = new ArrayList<Point2D.Double>();
 		
 		BigDecimal minProb = minProb(tweets);
@@ -157,23 +160,7 @@ public class EvalNB {
 			
 			points.add(new Point2D.Double(fpRate, tpRate));
 		}
-	}
-	
-	private static double getPrecision(double TP, double FP) {
-		return TP / (TP + FP);
-	}
-	
-	private static double getRecall(double TP, double FN) {
-		return TP / (TP + FN);
-	}
-	
-	private static double getTPRate(double TP, double FN) {
-		return getRecall(TP, FN);
-	}
-	
-	private static double getFPRate(double FP, double TN) {
-		return FP / (FP + TN);
-	}
+	}*/
 	
 	private BigDecimal maxProb(TweetStorage tweets) {
 		BigDecimal max = new BigDecimal(-1);
