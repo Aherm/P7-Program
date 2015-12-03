@@ -37,7 +37,7 @@ public class Preprocessor {
 		String[] tweetText = tweet.getTweetText().split(" ");
 		String newTweetText = "";
 		for (String word : tweetText) {
-			if (word.contains("http://t.co/")) {
+			if (word.contains("https://t.co/")) {
 				newTweetText += "@LINK ";
 				continue;
 			}

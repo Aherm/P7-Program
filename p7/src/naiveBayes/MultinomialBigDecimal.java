@@ -3,6 +3,7 @@ package naiveBayes;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
@@ -124,6 +125,33 @@ public class MultinomialBigDecimal extends NaiveBayes {
     @Override
     public Map<String, Double> applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
         return null;
+    }
+
+    public static ProbabilityModelBigDecimal loadClassifier(String filePath){
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));
+            ProbabilityModelBigDecimal learnedClassifier = (ProbabilityModelBigDecimal) ois.readObject();
+            ois.close();
+            return learnedClassifier;
+        } catch (Exception ex){
+            System.out.println(ex);
+            return null;
+        }
+    }
+
+    public static boolean saveClassifier(ProbabilityModelBigDecimal classifier, String filePath){
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(
+                    new FileOutputStream(filePath));
+
+            oos.writeObject(classifier);
+            oos.flush();
+            oos.close();
+            return true;
+        } catch (IOException iex){
+            System.out.println(iex);
+            return false;
+        }
     }
 
 }
