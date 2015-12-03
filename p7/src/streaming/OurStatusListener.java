@@ -86,7 +86,8 @@ public class OurStatusListener implements StatusListener {
 	private void removeSeenTweets(TweetStorage ts){
 		for(int i = 0 ; i < ts.size(); i++){
 			if(tweets.contains(ts.get(i))){
-				tweets.getTweet(ts.get(i)).setSick(true);;
+				tweets.getTweet(ts.get(i)).setSick(true);
+				ts.remove(ts.get(i));
 			}
 		}
 	}

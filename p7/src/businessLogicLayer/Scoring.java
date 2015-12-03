@@ -17,8 +17,10 @@ public class Scoring {
 		double result = 0;
 		TweetStorage tweets = grid.rangeQuery(r, 25);
 		TweetStorage sickTweets = tweets.getSickTweets();
-		
-		result = sickTweets.size() / tweets.size();
+		if(tweets.isEmpty()){
+			return 0; 
+		}
+		result = (double)sickTweets.size() / (double)tweets.size();
 		
 		geoScore.put(r, result);
 		return result;
