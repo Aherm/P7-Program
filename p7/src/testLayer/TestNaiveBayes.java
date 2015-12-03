@@ -1,8 +1,9 @@
-package naiveBayes;
+package testLayer;
 
 import businessLogicLayer.Preprocessor;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
+import naiveBayes.*;
 
 import java.util.*;
 

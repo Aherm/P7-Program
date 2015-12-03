@@ -2,6 +2,7 @@ package naiveBayes;
 
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
+import testLayer.TestNaiveBayes;
 import utility.Utils;
 
 import java.io.*;
