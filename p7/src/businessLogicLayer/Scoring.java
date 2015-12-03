@@ -65,8 +65,8 @@ public class Scoring {
 		TweetStorage wordTweets = ii.nameQuery(r);
 
 		//Need find a way to store the learned classifier so that it doesn't need to be trained each time the program is run
-		ProbabilityModelBigDecimal classifier = new ProbabilityModelBigDecimal();
-		TweetStorage visitedTweets = filterVisitedTweets(classifier, wordTweets);
+		ProbabilityModelBigDecimal multinomialNBModel = new ProbabilityModelBigDecimal();
+		TweetStorage visitedTweets = filterVisitedTweets(multinomialNBModel, wordTweets);
 
 		TweetStorage tweets = TweetStorage.getUnion(geoTweets, visitedTweets);
 		TweetStorage sickTweets = tweets.getSickTweets();
