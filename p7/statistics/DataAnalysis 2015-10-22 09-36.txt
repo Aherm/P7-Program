@@ -1,6 +1,0 @@
-Total tweets: 3331
-Geotagged Tweets: 168
-Procent Geotagged Tweets: 5.043530471329931 %
--------------------------------------------
-|Created on: Thu Oct 22 09:36:41 CEST 2015|
--------------------------------------------
