@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ProbabilityModelBigDecimal {
+public class ProbabilityModelBigDecimal implements java.io.Serializable {
 
     List<String> vocabulary;
     Map<String, BigDecimal> prior;

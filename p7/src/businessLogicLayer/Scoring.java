@@ -64,8 +64,8 @@ public class Scoring {
 		TweetStorage geoTweets = grid.rangeQuery(r, 25);
 		TweetStorage wordTweets = ii.nameQuery(r);
 
-		//Need find a way to store the learned classifier so that it doesn't need to be trained each time the program is run
-		ProbabilityModelBigDecimal multinomialNBModel = new ProbabilityModelBigDecimal();
+		String classifierFilePath = "./classifiers/naiveBayes.model";
+		ProbabilityModelBigDecimal multinomialNBModel = MultinomialBigDecimal.loadClassifier(classifierFilePath);
 		TweetStorage visitedTweets = filterVisitedTweets(multinomialNBModel, wordTweets);
 
 		TweetStorage tweets = TweetStorage.getUnion(geoTweets, visitedTweets);
