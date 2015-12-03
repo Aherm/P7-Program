@@ -1,12 +1,13 @@
 package businessLogicLayer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import modelLayer.Grid;
-import modelLayer.InvertedIndex;
-import modelLayer.Restaurant;
-import modelLayer.TweetStorage;
+import modelLayer.*;
+import naiveBayes.MultinomialBigDecimal;
+import naiveBayes.ProbabilityModelBigDecimal;
 
 public class Scoring {
 	private static Map<Restaurant,Double> geoScore = new HashMap<Restaurant,Double>();
@@ -34,12 +35,40 @@ public class Scoring {
 		wordScore.put(r, result);;
 		return result;
 	}
-	
+
+	private static TweetStorage filterVisitedTweets(ProbabilityModelBigDecimal classifier, TweetStorage tweetsToClassify){
+		return getVisitedTweets(classifyTweets(classifier, tweetsToClassify));
+	}
+
+	private static TweetStorage classifyTweets(ProbabilityModelBigDecimal classifier, TweetStorage tweetsToClassify){
+		TweetStorage classificationResults = new TweetStorage();
+		MultinomialBigDecimal multinomialNB = new MultinomialBigDecimal();
+		for (Tweet tweet : tweetsToClassify) {
+			//String predictedClass = multinomialNB.applyBigDecimal(classLabels, classifier, tweet);
+			Tweet classifiedTweet = multinomialNB.applyGetProbability(new ArrayList<String>(Arrays.asList("0","1")), classifier, tweet);
+			classificationResults.add(classifiedTweet);
+		}
+		return classificationResults;
+	}
+
+	private static TweetStorage getVisitedTweets(TweetStorage tweets){
+		TweetStorage tS = new TweetStorage();
+		for (Tweet t : tweets)
+			if (t.getAssignedClassLabel().equals("1"))
+				tS.add(t);
+		return tS;
+	}
+
 	public static double combinedScore(Restaurant r, Grid grid, InvertedIndex ii) {
 		double result = 0;
 		TweetStorage geoTweets = grid.rangeQuery(r, 25);
 		TweetStorage wordTweets = ii.nameQuery(r);
-		TweetStorage tweets = TweetStorage.getUnion(geoTweets, wordTweets);
+
+		//Need find a way to store the learned classifier so that it doesn't need to be trained each time the program is run
+		ProbabilityModelBigDecimal classifier = new ProbabilityModelBigDecimal();
+		TweetStorage filteredWordTweets = filterVisitedTweets(classifier, wordTweets);
+
+		TweetStorage tweets = TweetStorage.getUnion(geoTweets, filteredWordTweets);
 		TweetStorage sickTweets = tweets.getSickTweets();
 		
 		result = sickTweets.size() / tweets.size();

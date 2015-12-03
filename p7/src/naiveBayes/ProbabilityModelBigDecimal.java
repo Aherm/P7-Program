@@ -11,6 +11,9 @@ public class ProbabilityModelBigDecimal {
     Map<String, BigDecimal> prior;
     Map<ArrayList<String>, BigDecimal> condprop;
 
+    public ProbabilityModelBigDecimal() {
+    }
+
     public ProbabilityModelBigDecimal(List<String> vocabulary, Map<String, BigDecimal> prior, Map<ArrayList<String>, BigDecimal> condprop) {
         this.vocabulary = vocabulary;
         this.prior = prior;
