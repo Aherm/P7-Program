@@ -1,9 +1,0 @@
-Total tweets: 170370
-Geotagged Tweets: 12571
-Percent Geotagged Tweets: 7.378646475318424 %
-Average cluster size: 0.1401668041834846
-Min cluster size: 0
-Max cluster size: 531
--------------------------------------------
-|Created on: Sun Nov 01 13:35:06 CET 2015|
--------------------------------------------
