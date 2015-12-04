@@ -23,7 +23,7 @@ public class EvalNB {
 		int sizeOfFold = (dataSet.size() / 10) - 1;
 		int to = sizeOfFold; 	
 		int remainder = dataSet.size() % 10;
-		NaiveBayes NB = new Multinomial();
+		MultinomialBigDecimal NB = new MultinomialBigDecimal();
 		ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("1", "0"));
 		Map<String, EvaluationModel> fullEvaluation = new HashMap<String, EvaluationModel>();
 		System.out.println("Starting To Create Data Set...");
@@ -59,12 +59,12 @@ public class EvalNB {
 			}
 			System.out.println("Training Set For Iteration " + i + " Created...");
 			System.out.println("Starting To Train Model For Iteration " + i + "...");
-			ProbabilityModel probModel = NB.train(classLabels, trainingSet);
+			ProbabilityModelBigDecimal probModel = NB.trainBigDecimal(classLabels, trainingSet);
 			System.out.println("Model Has Been Trained...");
 			System.out.println("Starting To Test Model For Iteration " + i + "...");
 			for(Tweet tweet : testSet) {
 				System.out.println("Testing For Tweet " + tweet.getTweetText());
-				tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
+				tweet.setAssignedClassLabel(NB.applyBigDecimal(classLabels, probModel, tweet));
 				if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
 					TP++;
 				} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
@@ -89,7 +89,7 @@ public class EvalNB {
 		int testSetFrom = sizeOfTrainingSet;
 		TweetStorage trainingSet = new TweetStorage();
 		TweetStorage testSet = new TweetStorage();
-		NaiveBayes NB = new Multinomial();
+		MultinomialBigDecimal NB = new MultinomialBigDecimal();
 		ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("1", "0"));
 		Map<String, EvaluationModel> fullEvaluation = new HashMap<String, EvaluationModel>();
 		System.out.println("Starting To Create Training Data...");
@@ -109,12 +109,12 @@ public class EvalNB {
 		int TN = 0;
 		int FN = 0;
 		System.out.println("Starting To Train Model...");
-		ProbabilityModel probModel = NB.train(classLabels, trainingSet);
+		ProbabilityModelBigDecimal probModel = NB.trainBigDecimal(classLabels, trainingSet);
 		System.out.println("The Model Has Been Trained...");
 		System.out.println("Starting To Test Model...");
 		for(Tweet tweet : testSet) {
 			System.out.println("Testing For Tweet: " + tweet.getTweetText());
-			tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
+			tweet.setAssignedClassLabel(NB.applyBigDecimal(classLabels, probModel, tweet));
 			if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
 				TP++;
 			} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
