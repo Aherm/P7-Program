@@ -5,13 +5,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InvertedIndex extends HashMap<String, Set<Tweet>> {
 	// This field has to be there. We don't use it.
 	private static final long serialVersionUID = -9190464032994889522L;
-    
+    private Pattern[] patterns; 
+    private ArrayList<String> stringList = new ArrayList<String>(); 
+	
     public void addEntry(Restaurant restaurant) {
     	if(!(this.containsKey(restaurant.getName()))) {
         	Set<Tweet> tweetSet = new HashSet<Tweet>();
@@ -19,20 +22,33 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     	}
     }
     
-       
-    public void addIndex(Tweet tweet) {
-    	
-    	for(String word : this.keySet())
-    	{
+    public void init(){
+    	patterns = new Pattern[this.keySet().size()]; 
+    	stringList.addAll(this.keySet()); 
+     	int counter = 0; 
+    	for(String word : stringList){
     		String newWord = word;
     		String regex = "(@|#|the|cafe|restaurant|\\s)" 
     				        + "(" + newWord + "|" + newWord.replaceAll("\\s+","") + ")" +
     				       "(restaurant|cafe|nyc|ny|\\s?)\\s";
     		Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-            Matcher m = p.matcher(tweet.getTweetText()); 
-    		
-            if(m.find())
-    			this.get(word).add(tweet);
+    		patterns[counter] = p; 
+    		counter++; 
+    	}
+    }
+    
+       
+    public void addIndex(Tweet tweet) {
+    	
+    	int counter = 0; 
+    	for(String word : stringList)
+    	{
+    		if(tweet.getTweetText().contains(word)){
+    			Matcher m = patterns[counter].matcher(tweet.getTweetText()); 
+    			if(m.find())
+    				this.get(word).add(tweet);
+    		}
+    		counter++; 
     	}
     }
     

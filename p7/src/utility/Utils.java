@@ -1,6 +1,10 @@
 package utility;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 
 import businessLogicLayer.Preprocessor;
@@ -57,6 +61,7 @@ public class Utils {
         return dataSet;
     }
     
+    
     private static TweetStorage convertDataToTweet(ArrayList<Document> initializedData) {
     	TweetStorage dataSet = new TweetStorage();
     	for(Document d : initializedData) {
@@ -93,4 +98,68 @@ public class Utils {
 		long returnNum = (long)realNumber;
 		return returnNum;
 	}
+	
+	
+	//shit code please ignore
+	
+	public static void doNotuse(String filepath, String filepath2){
+		ArrayList<String> listofSubset = Data.fetchDataFromFile(filepath); 
+		ArrayList<String> listofEntireset = Data.fetchDataFromFile(filepath2); 
+		
+		ArrayList<String> restaurantsSeen = new ArrayList<String>(); 
+		ArrayList<String> allrestaurants = new  ArrayList<String>(); 
+		
+		System.out.println("starting seen");
+		for(String line : listofSubset){
+			String[] split = line.split(",");
+			if(!restaurantsSeen.contains(split[0]))
+				restaurantsSeen.add(split[0]); 
+		}
+		System.out.println("starting all");
+		for(String line : listofEntireset ){
+			String[] split  = line.split(";");
+			if(!allrestaurants.contains(split[0]))
+				allrestaurants.add(split[0]); 
+		}
+		
+		System.out.println("starting remove");
+		for(String line : restaurantsSeen){
+			if(allrestaurants.contains(line))
+				allrestaurants.remove(line);
+		}
+		
+		Collections.shuffle(allrestaurants);
+		ArrayList<String> chosenRestaurants = new ArrayList<String>(); 
+		
+		for(int i = 0; i < 2000; i++){
+			chosenRestaurants.add(allrestaurants.get(i)); 
+		}
+		int totallines = 0; 
+		System.out.println("starting last thing");
+		StringBuilder builder = new StringBuilder(); 
+		for(String restaurant : chosenRestaurants){
+			int counter = 0;
+			for(String line : listofEntireset){
+				String[] split  = line.split(";");	
+				if(restaurant.equals(split[0]) && counter < 10){
+					builder.append(line + "\n"); 
+					counter++; 
+					totallines++; 
+				}
+			}
+		}
+		
+		System.out.println(totallines);
+		try {
+			PrintWriter print = new PrintWriter("tester.csv");
+			print.write(builder.toString());
+			print.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
 }
