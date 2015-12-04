@@ -14,7 +14,7 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
 	private static final long serialVersionUID = -9190464032994889522L;
     private Pattern[] patterns; 
     private ArrayList<String> stringList = new ArrayList<String>(); 
-	
+	private ArrayList<String> spaceRemovedList = new ArrayList<String>();
     public void addEntry(Restaurant restaurant) {
     	if(!(this.containsKey(restaurant.getName()))) {
         	Set<Tweet> tweetSet = new HashSet<Tweet>();
@@ -35,6 +35,10 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     		patterns[counter] = p; 
     		counter++; 
     	}
+    	
+    	for(String s: stringList){
+    		spaceRemovedList.add(s.replaceAll("\\s+", ""));
+    	}
     }
     
        
@@ -43,7 +47,7 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     	int counter = 0; 
     	for(String word : stringList)
     	{
-    		if(tweet.getTweetText().contains(word)){
+    		if(tweet.getTweetText().toLowerCase().contains(word) || tweet.getTweetText().toLowerCase().contains(spaceRemovedList.get(counter))){
     			Matcher m = patterns[counter].matcher(tweet.getTweetText()); 
     			if(m.find())
     				this.get(word).add(tweet);
