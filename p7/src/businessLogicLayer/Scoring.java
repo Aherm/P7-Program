@@ -32,7 +32,7 @@ public class Scoring {
 		//TODO: Put tweets through classification
 		TweetStorage sickTweets = tweets.getSickTweets();
 		
-		result = sickTweets.size() / tweets.size();
+		result = (double)sickTweets.size() / (double)tweets.size();
 		
 		wordScore.put(r, result);;
 		return result;
@@ -66,8 +66,8 @@ public class Scoring {
 		TweetStorage geoTweets = grid.rangeQuery(r, 25);
 		TweetStorage wordTweets = ii.nameQuery(r);
 
-		String classifierFilePath = "./classifiers/naiveBayes.model";
-		ProbabilityModelBigDecimal multinomialNBModel = MultinomialBigDecimal.loadClassifier(classifierFilePath);
+		//Need find a way to store the learned classifier so that it doesn't need to be trained each time the program is run
+		ProbabilityModelBigDecimal multinomialNBModel = new ProbabilityModelBigDecimal();
 		TweetStorage visitedTweets = filterVisitedTweets(multinomialNBModel, wordTweets);
 
 		TweetStorage tweets = TweetStorage.getUnion(geoTweets, visitedTweets);
