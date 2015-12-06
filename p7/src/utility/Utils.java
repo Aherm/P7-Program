@@ -99,6 +99,40 @@ public class Utils {
 		return returnNum;
 	}
 	
+	public static void printPositivesAndNegatives(String filePath) {
+    	ArrayList<String> data = Data.fetchDataFromFile(filePath);
+    	int numPositives = 0;
+    	int numNegatives = 0;
+        for (String line : data) {
+            int counter = 0;
+            for (String token : line.split(",")) {
+                switch (counter){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        //Classlabel
+                    	if(Integer.parseInt(token) == 0) {
+                    		numNegatives++;
+                    	} else {
+                    		numPositives++;
+                    	}
+                        break;
+                }
+                counter++;
+            }
+            counter = 0;
+        }
+        
+        System.out.println("Number of positives: " + numPositives);
+        System.out.println("Number of negatives: " + numNegatives);
+    }
+	
 	
 	//shit code please ignore
 	
