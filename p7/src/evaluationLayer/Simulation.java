@@ -33,7 +33,7 @@ public class Simulation {
 		DBConnect connection = DBConnect.getInstance();
         connection.connectToServer("jdbc:postgresql://172.25.26.208/", "world" + "", "postgres", "21");
 		TweetStorage allTweet = DBGetTweets.getAllTweetsExperiment(); 
-		restaurants = DBGetRestaurants.getRestaurants(); 
+		restaurants = DBGetRestaurants.getRestaurants().x; 
 		
 		for(Restaurant r: restaurants){
     		if(!r.getName().contains("v {iv}") && !r.getName().contains("floor)"))
