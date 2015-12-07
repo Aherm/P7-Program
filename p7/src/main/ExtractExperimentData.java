@@ -22,13 +22,14 @@ public class ExtractExperimentData {
 		TwitterRest restAPI = TwitterRest.getInstance();
 		TweetStorage result = tweets.clone();
 		System.out.println("Done fetching from DB");
-		
-		for (Tweet tweet : tweets) {
+		int counter = 0; 
+		while (counter < tweets.size()) {
+			 Tweet tweet = tweets.get(counter);
 			if (Filter.passesFilter(tweet)) {
 				if (restAPI.limitReached) {
 					try {
 						System.out.println("Limit reached. Waiting 15 minutes.");
-						TimeUnit.MINUTES.sleep(15);
+						TimeUnit.MINUTES.sleep(16);
 						System.out.println("Continuing");
 					} 
 					catch (InterruptedException e1) {
