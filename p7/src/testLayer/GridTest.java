@@ -32,9 +32,10 @@ public class GridTest {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		for (int i = 1; i <= 10; i++) {
-			long time = testCase(restaurants, tweets, i*500);
-			sb.append("Time for size " + i*500 + " is: " + time/1000000 + "ms \n");
+		for (int i = 1; i <= 50; i++) {
+			System.out.println("Doing step: " + i);
+			long time = testCase(restaurants, tweets, i*100);
+			sb.append("Time for size " + i*100 + " is: " + time/1000000 + "ms \n");
 		}
 		
 		GenericPrint.PRINTER("./statistics/gridTest.txt", sb.toString());
