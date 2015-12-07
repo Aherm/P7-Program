@@ -38,10 +38,10 @@ public class DBGetRestaurants {
 		try {
 			while (res.next()) {
 				String name = res.getString("name");
-				///double lat = res.getDouble("lat");
-				//double lon = res.getDouble("long"); 
+				double lat = res.getDouble("lat");
+				double lon = res.getDouble("long"); 
 				double score = res.getDouble("score");  
-				Restaurant newRestaurant = new Restaurant(name, 0, 0); 
+				Restaurant newRestaurant = new Restaurant(name, lat,lon); 
 				restaurants.add(newRestaurant); 
 				ranks.add(new Rank(newRestaurant,score)); 
 			}
@@ -55,6 +55,6 @@ public class DBGetRestaurants {
 
 	public static Tuple<List<Restaurant>, List<Rank>> getRestaurants() {
 		//return listQuery("SELECT distinct name from dohmh WHERE lower(name) like '%tofu house%'");
-		return listQuery("SELECT DISTINCT lower(name) as name,score FROM reslocs WHERE name IS NOT NULL");
+		return listQuery("SELECT DISTINCT lower(name) as name,score,lat,long FROM restaurants");
 	}
 }
