@@ -1,10 +1,12 @@
 package modelLayer;
 
 public class EvaluationModel {
+	String evalMethod;
 	int foldNum, TP, TN, FP, FN;
 	double precision, recall, tpRate, fpRate;
 
-	public EvaluationModel(int foldNum, int TP, int TN, int FP, int FN) {
+	public EvaluationModel(String evalMethod, int foldNum, int TP, int TN, int FP, int FN) {
+		this.evalMethod = evalMethod;
 		this.foldNum = foldNum;
 		this.TP = TP;
 		this.TN = TN;
@@ -18,11 +20,16 @@ public class EvaluationModel {
 
 	public void printEvaluation() {
 		System.out.println("---------EVALUATION BEGUN---------");
+		System.out.println("Evaluation method used: " + evalMethod);
 		System.out.println("Fold #:    " + this.foldNum);
 		System.out.println("Precision: " + this.precision);
 		System.out.println("Recall:    " + this.recall);
 		System.out.println("TP Rate:   " + this.tpRate);
 		System.out.println("FP Rate:   " + this.fpRate);
+		System.out.println("# of TP:   " + this.TP);
+		System.out.println("# of TN:   " + this.TN);
+		System.out.println("# of FP:   " + this.FP);
+		System.out.println("# of FN:   " + this.FN);
 		System.out.println("---------EVALUATION ENDED---------");
 	}
 
