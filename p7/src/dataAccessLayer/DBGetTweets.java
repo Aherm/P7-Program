@@ -142,11 +142,11 @@ public class DBGetTweets {
     //USED IN SIMULATION DO NOT TOUCH 
     
     public static TweetStorage getAllTweetsExperiment(){
-    	return tsQuery("SELECT * FROM experiment");
+    	return tsQuery("SELECT * FROM new_york_tweets WHERE lat != 0 LIMIT 50000" );
     }
     
-    public static TweetStorage getUserExperiment(){
-    	return tsQuery("SELECT * FROM experiment"); 
+    public static TweetStorage getUserExperiment(long userid){
+    	return tsQuery("SELECT * FROM new_york_tweets WHERE userid = " + userid); 
     }
 
 }
