@@ -25,7 +25,7 @@ public class MultinomialBigDecimal extends NaiveBayes {
             BigDecimal totalT_ct = new BigDecimal(0);
 
             BigDecimal N_c = countTweetsInClass(D, c);
-            prior.put(c, N_c.divide(N));
+            prior.put(c, N_c.divide(N, 2, RoundingMode.HALF_UP));
             String text_c = concatenateTextOfAllTweetsInClass(D, c);
 
             for (String t : V)
