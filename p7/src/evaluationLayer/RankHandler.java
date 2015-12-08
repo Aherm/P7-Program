@@ -10,12 +10,13 @@ public class RankHandler {
 	public List<Rank> ourRanks; 
 	public List<Rank> dohmRanks; 
 	
-	public RankHandler(List<Rank> y, List<Rank> y2){
-		this.ourRanks = y; 
-		this.dohmRanks = y2; 
+	public RankHandler(List<Rank> dohmh, List<Rank> our){
+		this.ourRanks = our; 
+		this.dohmRanks = dohmh; 
 	}
 	
 	public void printRanks(){
+		removeNotIn();  
 		Collections.sort(dohmRanks,new ScoreCompare());
 		Collections.sort(ourRanks, new ScoreCompare());
 		setRanks(dohmRanks);
@@ -24,7 +25,7 @@ public class RankHandler {
 		for(Rank r : dohmRanks){
 			for(Rank ourR : ourRanks){
 				if(r.getRestaurant().equals(ourR.getRestaurant())){
-					System.out.println(r.getRestaurant().getName() + " dohmh: " + r.getRank() + " our: " + r.getRank()); 
+					System.out.println(r.getRestaurant().getName() + " dohmh: " + r.getRank() + " our: " + ourR.getRank()); 
 				}
 			}
 		}		
@@ -37,16 +38,27 @@ public class RankHandler {
 		int currentRank = 1;
 		
 		for(Rank r : ranks){
-			
 			if(r.getScore() != lastScore){
 				currentRank++; 
 				lastScore = r.getScore(); 
 			}
-			
 			r.setRank(currentRank);
 		}
 	}
 	
+	private void removeNotIn(){
+		List<Rank> rankList = new ArrayList<Rank>();
+		
+		for(Rank r : dohmRanks){
+			for(Rank our : ourRanks){
+				if(r.getRestaurant().equals(our.getRestaurant())){
+					rankList.add(r);
+				}
+			}
+		}
+		
+		dohmRanks = rankList; 
+	}
 	
 	
 }
