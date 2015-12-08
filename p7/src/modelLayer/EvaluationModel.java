@@ -25,6 +25,7 @@ public class EvaluationModel {
 		System.out.println("Fold #:    " + this.foldNum);
 		System.out.println("Precision: " + this.precision);
 		System.out.println("Recall:    " + this.recall);
+		System.out.println("Accuracy:  " + this.accuracy);
 		System.out.println("TP Rate:   " + this.tpRate);
 		System.out.println("FP Rate:   " + this.fpRate);
 		System.out.println("# of TP:   " + this.TP);
