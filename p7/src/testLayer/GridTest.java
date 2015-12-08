@@ -12,7 +12,7 @@ import modelLayer.Restaurant;
 import modelLayer.TweetStorage;
 
 public class GridTest {
-	private static long[][] results = new long[50][10];
+	private static long[][] results = new long[51][10];
 	
 	public static long testCase(List<Restaurant> restaurants, TweetStorage tweets, int n) {
 		long startTime = System.nanoTime();
@@ -43,7 +43,7 @@ public class GridTest {
 		}
 		
 		sb.append("Averages over the runs \n");
-		for (int i = 1; i < 50; i++) {
+		for (int i = 1; i <= 50; i++) {
 			long averagetime = averageArray(results[i]);
 			sb.append("Time for size " + i*100 + " is: " + averagetime/1000000 + "ms \n");
 		}
@@ -56,7 +56,7 @@ public class GridTest {
 	private static String singleRun(TweetStorage tweets, List<Restaurant> restaurants, int run) {
 		StringBuilder sb = new StringBuilder();
 		
-		for (int i = 1; i < 50; i++) {
+		for (int i = 1; i <= 50; i++) {
 			//System.out.println("Doing step: " + i);
 			long time = testCase(restaurants, tweets, i*100);
 			results[i][run] = time;
