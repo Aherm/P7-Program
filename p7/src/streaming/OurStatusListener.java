@@ -37,6 +37,7 @@ public class OurStatusListener implements StatusListener {
 			try {
 				TweetStorage ts = restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet);
 				removeSeenTweets(ts);
+				Preprocessor.processTweets(ts);
 				invertedIndex.addIndices(ts);
 				tweets.addAll(ts);
 
