@@ -49,7 +49,7 @@ public class Program {
         TweetStorage newTweets = listener.getDBTweets();
         TweetStorage allTweets = listener.getTweets();
         ClusterStorage clusters = listener.getClusters();
-        List<Restaurant> restaurants = DBGetRestaurants.getRestaurants();
+        List<Restaurant> restaurants = DBGetRestaurants.getRestaurants().x;
         InvertedIndex invertedIndex = listener.getInvertedIndex();
         //A minute in ms: 60000
         //An hour in ms: 3600000
