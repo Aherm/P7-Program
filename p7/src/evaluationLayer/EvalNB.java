@@ -84,6 +84,7 @@ public class EvalNB {
 			EvaluationModel evalModel = new EvaluationModel("10-fold Crossvalidation", i, TP, TN, FP, FN);
 			fullEvaluation.put("Fold" + i, evalModel);
 		}
+		
 		System.out.println("Model Has Been Applied...");
 		
 		return fullEvaluation;
