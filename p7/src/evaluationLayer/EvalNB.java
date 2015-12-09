@@ -31,6 +31,7 @@ public class EvalNB {
 		ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("1", "0"));
 		Map<String, EvaluationModel> fullEvaluation = new HashMap<String, EvaluationModel>();
 		
+		System.out.println("Starting to create positive and negative sets...");
 		for(Tweet tweet : dataSet) {
 			if(tweet.getExpectedClassLabel().equals("1")) {
 				positives.add(tweet);
@@ -39,6 +40,7 @@ public class EvalNB {
 				negatives.add(tweet);
 			}
 		}
+		System.out.println("Positive and negative sets has been created...");
 		int fromPositives = 0;
 		int fromNegatives = 0;
 		int sizeOfPositives = (positives.size() / 10) - 1;
@@ -47,6 +49,7 @@ public class EvalNB {
 		int toNegatives = sizeOfNegatives;
 		int remainderPositives = positives.size() % 10;
 		int remainderNegatives = negatives.size() % 10;
+		System.out.println("Starting to create folds...");
 		for(int i = 0; i < 10; i++) {
 			TweetStorage fold = new TweetStorage();
 			if(i == 9) {
@@ -62,7 +65,9 @@ public class EvalNB {
 			toNegatives = fromNegatives + sizeOfNegatives;
 			folds[i] = fold;	
 		}
+		System.out.println("Folds has been created...");
 		
+		System.out.println("Starting to create training set...");
 		for(int i = 0; i < 10; i++) {
 			TweetStorage trainingSet = new TweetStorage();
 			TweetStorage testSet = folds[i];
@@ -75,9 +80,13 @@ public class EvalNB {
 					trainingSet.addAll(folds[n]);
 				}
 			}
-			
+			System.out.println("Training sets has been created...");
+			System.out.println("Starting to train model for iteration: " + (i + 1));
 			ProbabilityModel probModel = NB.train(classLabels, trainingSet);
+			System.out.println("Model has been trained for iteration: " + (i + 1));
+			System.out.println("Starting to test model...");
 			for(Tweet tweet : testSet) {
+				System.out.println("Testing for tweet: " + tweet.getTweetText());
 				tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
 				if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
 					TP++;
@@ -89,8 +98,9 @@ public class EvalNB {
 					FN++;
 				}
 			}
-			EvaluationModel evalModel = new EvaluationModel("10-fold stratified cross-validation", i, TP, TN, FP, FN);
-			fullEvaluation.put("Fold" + i, evalModel);
+			System.out.println("Model has been tested...");
+			EvaluationModel evalModel = new EvaluationModel("10-fold stratified cross-validation", (i + 1), TP, TN, FP, FN);
+			fullEvaluation.put("Fold" + (i + 1) , evalModel);
 		}
 		return fullEvaluation;
 	}
