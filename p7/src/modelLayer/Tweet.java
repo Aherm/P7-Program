@@ -20,10 +20,11 @@ public class Tweet implements OurLocation {
 	private boolean sick = false; 
 	private double score = -1;
 	private Cluster assignedCluster = null;
-
 	private String expectedClassLabel = ""; 
 	private String assignedClassLabel = ""; //Result of classification
-
+	private Restaurant nameRestaurant = null; 
+	private Restaurant locRestaurant = null; 
+	
 	private BigDecimal probabilityTrue;
 	//private boolean addedToStorage = false;
 
@@ -224,5 +225,32 @@ public class Tweet implements OurLocation {
 	@Override
 	public int hashCode(){
 		return new HashCodeBuilder(41,83).append(tweetID).toHashCode();
+	}
+	
+	//Stuff for scoring pls ignore )=
+	
+	public void setNameRes(Restaurant r){
+		this.nameRestaurant = r; 
+	}
+	
+	public void setLocRes(Restaurant r){
+		this.locRestaurant = r; 
+	}
+	
+	public Restaurant getLocRes(){
+		return this.locRestaurant; 
+	}
+	
+	public Restaurant getNameRes(){
+		return this.getNameRes(); 
+	}
+	
+	public boolean conflict(){
+		return !locRestaurant.equals(nameRestaurant); 
+	}
+	
+	//used in scoring
+	public boolean hasVisited(){
+		return this.locRestaurant != null || this.nameRestaurant != null; 
 	}
 }

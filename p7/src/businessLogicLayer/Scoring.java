@@ -3,6 +3,7 @@ package businessLogicLayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import modelLayer.*;
@@ -10,29 +11,79 @@ import naiveBayes.MultinomialBigDecimal;
 import naiveBayes.ProbabilityModelBigDecimal;
 
 public class Scoring {
-	private static Map<Restaurant,Double> geoScore = new HashMap<Restaurant,Double>();
-	private static Map<Restaurant,Double> wordScore = new HashMap<Restaurant,Double>();
+	public static Map<Restaurant,Double> geoScore = new HashMap<Restaurant,Double>();
+	public static Map<Restaurant,Double> wordScore = new HashMap<Restaurant,Double>();
+	public static Map<Restaurant,Double> combinedScore = new HashMap<Restaurant,Double>(); 
+	private static Map<String,Integer> RestaurantNameCounter = new HashMap<String,Integer>(); 
+	public  int   locTotalVisits; 
+	public  int   locTotalSickVisits; 
+	public  int   resTotalVisits; 
+	public  int   resTotalSickVisits; 
+ 
+	private void init(List<Restaurant> restaurants){
+		for(Restaurant r : restaurants){
+			if(RestaurantNameCounter.containsKey(r.getName())){
+				  Integer value = RestaurantNameCounter.get(r.getName()); 
+				  value = new Integer(value.intValue() + new Integer(1).intValue()); 
+				  RestaurantNameCounter.put(r.getName(), value); 
+			}
+			else{
+				RestaurantNameCounter.put(r.getName(), new Integer(1)); 
+			}
+			
+			initScores(restaurants, geoScore);
+			initScores(restaurants, wordScore);
+			initScores(restaurants, combinedScore);
+		}
+		
+	}
 	
-	public static double geotaggedScore(Restaurant r, Grid grid) {
+	private void initScores(List<Restaurant> restaurants, Map<Restaurant, Double> map){
+		for(Restaurant r : restaurants){
+			map.put(r, new Double(0)); 
+		}
+	}
+	
+	
+	private double geotaggedScore(Restaurant r, Grid grid) {
 		double result = 0;
 		TweetStorage tweets = grid.rangeQuery(r, 25);
 		TweetStorage sickTweets = tweets.getSickTweets();
 		if(tweets.isEmpty()){
 			return 0; 
 		}
+		
+		for(Tweet t: tweets){
+			t.setLocRes(r);
+			if(t.getLocRes() != null){
+				System.out.println("Changes restaurant oops");
+			}
+		}
+		
+	
 		result = (double)sickTweets.size() / (double)tweets.size();
 		
 		geoScore.put(r, result);
+		
 		return result;
 	}
 	
-	public static double keywordScore(Restaurant r, InvertedIndex ii) {
+	private double keywordScore(Restaurant r, InvertedIndex ii) {
+		
 		double result = 0;
 		TweetStorage tweets = ii.nameQuery(r);
-		//TODO: Put tweets through classification
 		TweetStorage sickTweets = tweets.getSickTweets();
 		
-		result = (double)sickTweets.size() / (double)tweets.size();
+		if(tweets.isEmpty()){
+			return 0; 
+		}
+		
+		for(Tweet t: tweets){
+			t.setNameRes(r);
+		}
+		double adjustedVisit = (double)tweets.size() / RestaurantNameCounter.get(r.getName()).doubleValue(); 
+		double adjustedSickVisit = (double) sickTweets.size() / RestaurantNameCounter.get(r.getName()).doubleValue(); 
+		result = adjustedSickVisit / adjustedVisit; 
 		
 		wordScore.put(r, result);;
 		return result;
@@ -60,21 +111,44 @@ public class Scoring {
 				tS.add(t);
 		return tS;
 	}
-
-	public static double combinedScore(Restaurant r, Grid grid, InvertedIndex ii) {
-		double result = 0;
-		TweetStorage geoTweets = grid.rangeQuery(r, 25);
-		TweetStorage wordTweets = ii.nameQuery(r);
-
-		//Need find a way to store the learned classifier so that it doesn't need to be trained each time the program is run
-		ProbabilityModelBigDecimal multinomialNBModel = new ProbabilityModelBigDecimal();
-		TweetStorage visitedTweets = filterVisitedTweets(multinomialNBModel, wordTweets);
-
-		TweetStorage tweets = TweetStorage.getUnion(geoTweets, visitedTweets);
-		TweetStorage sickTweets = tweets.getSickTweets();
+	
+	
+	
+	public void ScoreSystem(Grid grid, InvertedIndex ii,TweetStorage allTweets, List<Restaurant> allRestaurants){
+		init(allRestaurants); 
+		for(Restaurant r : allRestaurants ){
+			geotaggedScore(r, grid); 
+			//keywordScore(r, ii); 
+		}
 		
-		result = sickTweets.size() / tweets.size();
-		
-		return result;
+		//combinedScore(allTweets); 
 	}
+
+	/*
+	private void combinedScore(TweetStorage ts){
+		for(Tweet t : ts){
+			if(t.hasVisited()){
+				if(t.getLocRes() == null)
+					updateCounter(t.getNameRes());
+				else if(t.getNameRes() == null)
+					updateCounter(t.getLocRes());
+				else if(!t.conflict())
+					updateCounter(t.getLocRes()); 
+				else{
+					if(t.distToNameres())
+						updateCounter(t.getNameRes());
+					else
+						updateCounter(t.getLocRes());
+					}
+			}
+		}
+	}
+	
+	private void updateCounter(Restaurant r){
+		Double value = combinedScore.get(r); 
+		value = new Double(value.doubleValue() + 1);
+		combinedScore.put(r, value); 
+	}
+
+*/
 }

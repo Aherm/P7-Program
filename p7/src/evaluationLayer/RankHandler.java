@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import fileCreation.GenericPrint;
+
 public class RankHandler {
 
 	
@@ -22,13 +24,16 @@ public class RankHandler {
 		setRanks(dohmRanks);
 		setRanks(ourRanks);
 		
+		StringBuilder builder = new StringBuilder(); 
 		for(Rank r : dohmRanks){
 			for(Rank ourR : ourRanks){
 				if(r.getRestaurant().equals(ourR.getRestaurant())){
-					System.out.println(r.getRestaurant().getName() + " dohmh: " + r.getRank() + " our: " + ourR.getRank()); 
+					builder.append(r.getRank() +";" + ourR.getRank() + "\n");  
 				}
 			}
-		}		
+		}
+		
+		GenericPrint.PRINTER("ranks", builder.toString());
 	}
 	
 	

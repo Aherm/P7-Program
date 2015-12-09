@@ -45,16 +45,26 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     public void addIndex(Tweet tweet) {
     	
     	int counter = 0; 
+    	String lastString = ""; 
     	for(String word : stringList)
     	{
     		if(tweet.getTweetText().toLowerCase().contains(word) || tweet.getTweetText().toLowerCase().contains(spaceRemovedList.get(counter))){
     			Matcher m = patterns[counter].matcher(tweet.getTweetText()); 
-    			if(m.find())
-    				this.get(word).add(tweet);
+    			if(m.find()){
+    				if(word.length() > lastString.length()){
+    					lastString = word; 
+    				}
+    			}
     		}
     		counter++; 
     	}
+    	
+    	if(!lastString.isEmpty()){
+    		this.get(lastString).add(tweet); 
+    	}
     }
+    
+    
     
     public void addIndices(TweetStorage tweets) {
     	for(Tweet tweet : tweets) {

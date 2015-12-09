@@ -49,9 +49,8 @@ public class Simulation {
 		for(Tweet t : allTweet){
 			onTweet(t);
 		}
-		System.out.println(tweets.getSickTweets().size());
-		evaluate(); 
 		
+		System.out.println(tweets.getSickTweets().size());
 		connection.closeConnection();
 	}
 
@@ -83,15 +82,21 @@ public class Simulation {
 	}
 	
 	private void evaluate(){
-		List<Rank> ourRanks =  new ArrayList<Rank>();
-		for(Restaurant r: restaurants){
-			if(score.geotaggedScore(r, grid) > 0)
-				ourRanks.add(new Rank(r,score.geotaggedScore(r, grid)));
+		Scoring score = new Scoring(); 
+		
+		score.ScoreSystem(grid, invertedIndex, tweets, restaurants);
+		
+		List<Rank> geoRanks = new ArrayList<Rank>();
+		List<Rank> keywordRanks = new ArrayList<Rank>(); 
+		
+		for(Restaurant r : score.geoScore.keySet()){
+			if(score.geoScore.get(r).doubleValue() != 0){
+				geoRanks.add(new Rank(r,score.geoScore.get(r).doubleValue())); 
+			}
 		}
 		
-		RankHandler hanlder = new RankHandler(ranks, ourRanks);
-		
-		hanlder.printRanks();
 	}
+	
+
 	
 }
