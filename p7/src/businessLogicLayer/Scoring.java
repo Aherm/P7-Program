@@ -15,10 +15,10 @@ public class Scoring {
 	public static Map<Restaurant,Double> wordScore = new HashMap<Restaurant,Double>();
 	public static Map<Restaurant,Double> combinedScore = new HashMap<Restaurant,Double>(); 
 	private static Map<String,Integer> RestaurantNameCounter = new HashMap<String,Integer>(); 
-	public  int   locTotalVisits; 
-	public  int   locTotalSickVisits; 
-	public  int   resTotalVisits; 
-	public  int   resTotalSickVisits; 
+	public  int   locTotalVisits = 0; 
+	public  int   locTotalSickVisits = 0; 
+	public  int   nameTotalVisits = 0; 
+	public  int   nameTotalSickVisits = 0; 
  
 	private void init(List<Restaurant> restaurants){
 		for(Restaurant r : restaurants){
@@ -60,7 +60,8 @@ public class Scoring {
 			}
 		}
 		
-	
+		locTotalSickVisits += sickTweets.size(); 
+		locTotalVisits += tweets.size(); 
 		result = (double)sickTweets.size() / (double)tweets.size();
 		
 		geoScore.put(r, result);
@@ -68,7 +69,7 @@ public class Scoring {
 		return result;
 	}
 	
-	private double keywordScore(Restaurant r, InvertedIndex ii) {
+	private double nameScore(Restaurant r, InvertedIndex ii) {
 		
 		double result = 0;
 		TweetStorage tweets = ii.nameQuery(r);
@@ -81,6 +82,8 @@ public class Scoring {
 		for(Tweet t: tweets){
 			t.setNameRes(r);
 		}
+		nameTotalSickVisits += sickTweets.size(); 
+		nameTotalVisits += tweets.size(); 
 		double adjustedVisit = (double)tweets.size() / RestaurantNameCounter.get(r.getName()).doubleValue(); 
 		double adjustedSickVisit = (double) sickTweets.size() / RestaurantNameCounter.get(r.getName()).doubleValue(); 
 		result = adjustedSickVisit / adjustedVisit; 
