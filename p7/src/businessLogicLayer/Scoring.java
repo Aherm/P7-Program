@@ -84,6 +84,7 @@ public class Scoring {
 		}
 		nameTotalSickVisits += sickTweets.size(); 
 		nameTotalVisits += tweets.size(); 
+		
 		double adjustedVisit = (double)tweets.size() / RestaurantNameCounter.get(r.getName()).doubleValue(); 
 		double adjustedSickVisit = (double) sickTweets.size() / RestaurantNameCounter.get(r.getName()).doubleValue(); 
 		result = adjustedSickVisit / adjustedVisit; 
@@ -121,13 +122,13 @@ public class Scoring {
 		init(allRestaurants); 
 		for(Restaurant r : allRestaurants ){
 			geotaggedScore(r, grid); 
-			//keywordScore(r, ii); 
+			nameScore(r, ii); 
 		}
 		
-		//combinedScore(allTweets); 
+		combinedScore(allTweets); 
 	}
 
-	/*
+	
 	private void combinedScore(TweetStorage ts){
 		for(Tweet t : ts){
 			if(t.hasVisited()){
@@ -138,7 +139,7 @@ public class Scoring {
 				else if(!t.conflict())
 					updateCounter(t.getLocRes()); 
 				else{
-					if(t.distToNameres())
+					if(t.nameResWithin())
 						updateCounter(t.getNameRes());
 					else
 						updateCounter(t.getLocRes());
@@ -153,5 +154,4 @@ public class Scoring {
 		combinedScore.put(r, value); 
 	}
 
-*/
 }

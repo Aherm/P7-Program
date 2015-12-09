@@ -1,6 +1,7 @@
 package modelLayer;
 
 import twitter4j.Status;
+import utility.Distance;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -234,8 +235,16 @@ public class Tweet implements OurLocation {
 	}
 	
 	public void setLocRes(Restaurant r){
-		this.locRestaurant = r; 
+		if(locRestaurant == null)
+			this.locRestaurant = r; 
+		else{
+			double dist1 = Distance.getDist(this.locRestaurant, this); 
+			double dist2 = Distance.getDist(r, this); 
+			if(dist2 < dist1)
+				this.locRestaurant = r; 
+			}
 	}
+	
 	
 	public Restaurant getLocRes(){
 		return this.locRestaurant; 
@@ -252,5 +261,9 @@ public class Tweet implements OurLocation {
 	//used in scoring
 	public boolean hasVisited(){
 		return this.locRestaurant != null || this.nameRestaurant != null; 
+	}
+	
+	public boolean nameResWithin(){
+		return (Distance.getDist(this,nameRestaurant) < 25); 
 	}
 }
