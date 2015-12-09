@@ -89,7 +89,7 @@ public class EvalNB {
 					FN++;
 				}
 			}
-			EvaluationModel evalModel = new EvaluationModel("10-fold Crossvalidation", i, TP, TN, FP, FN);
+			EvaluationModel evalModel = new EvaluationModel("10-fold stratified cross-validation", i, TP, TN, FP, FN);
 			fullEvaluation.put("Fold" + i, evalModel);
 		}
 		return fullEvaluation;
