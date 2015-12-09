@@ -4,10 +4,12 @@ import java.awt.geom.Point2D;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import businessLogicLayer.Preprocessor;
 import naiveBayes.Multinomial;
 import naiveBayes.MultinomialBigDecimal;
 import naiveBayes.NaiveBayes;
@@ -19,7 +21,83 @@ import modelLayer.TweetStorage;
 
 public class EvalNB {
 
+	public static Map<String, EvaluationModel> stratifiedTenFoldCrossValidation(TweetStorage dataSet) {
+		Collections.shuffle(dataSet);
+		Preprocessor.processTweets(dataSet);
+		TweetStorage[] folds = new TweetStorage[10];
+		TweetStorage positives = new TweetStorage();
+		TweetStorage negatives = new TweetStorage();
+		NaiveBayes NB = new Multinomial();
+		ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("1", "0"));
+		Map<String, EvaluationModel> fullEvaluation = new HashMap<String, EvaluationModel>();
+		
+		for(Tweet tweet : dataSet) {
+			if(tweet.getExpectedClassLabel().equals("1")) {
+				positives.add(tweet);
+			}
+			if(tweet.getExpectedClassLabel().equals("0")) {
+				negatives.add(tweet);
+			}
+		}
+		int fromPositives = 0;
+		int fromNegatives = 0;
+		int sizeOfPositives = (positives.size() / 10) - 1;
+		int sizeOfNegatives = (negatives.size() / 10) - 1;
+		int toPositives = sizeOfPositives;
+		int toNegatives = sizeOfNegatives;
+		int remainderPositives = positives.size() % 10;
+		int remainderNegatives = negatives.size() % 10;
+		for(int i = 0; i < 10; i++) {
+			TweetStorage fold = new TweetStorage();
+			if(i == 9) {
+				fold = dataSet.getFromInterval(fromPositives, toPositives + remainderPositives);
+				fold.addAll(dataSet.getFromInterval(fromNegatives, toNegatives + remainderNegatives));
+			} else {
+				fold = dataSet.getFromInterval(fromPositives, toPositives);
+				fold.addAll(dataSet.getFromInterval(fromNegatives, toNegatives));
+			}
+			fromPositives = toPositives + 1;
+			toPositives = fromPositives + sizeOfPositives;
+			fromNegatives = toNegatives + 1;
+			toNegatives = fromNegatives + sizeOfNegatives;
+			folds[i] = fold;	
+		}
+		
+		for(int i = 0; i < 10; i++) {
+			TweetStorage trainingSet = new TweetStorage();
+			TweetStorage testSet = folds[i];
+			int TP = 0;
+			int TN = 0;
+			int FP = 0;
+			int FN = 0;
+			for(int n = 0; n < 10; n++) {
+				if (n != i) {
+					trainingSet.addAll(folds[n]);
+				}
+			}
+			
+			ProbabilityModel probModel = NB.train(classLabels, trainingSet);
+			for(Tweet tweet : testSet) {
+				tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
+				if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
+					TP++;
+				} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
+					FP++;
+				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("0")) {
+					TN++;
+				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("1")) {
+					FN++;
+				}
+			}
+			EvaluationModel evalModel = new EvaluationModel("10-fold Crossvalidation", i, TP, TN, FP, FN);
+			fullEvaluation.put("Fold" + i, evalModel);
+		}
+		return fullEvaluation;
+	}
+	
 	public static Map<String, EvaluationModel> tenFoldCrossValidation(TweetStorage dataSet){
+		Collections.shuffle(dataSet);
+		Preprocessor.processTweets(dataSet);
 		TweetStorage[] folds = new TweetStorage[10];
 		int from = 0;
 		int sizeOfFold = (dataSet.size() / 10) - 1;
@@ -91,6 +169,8 @@ public class EvalNB {
 	}
 	
 	public static Map<String, EvaluationModel> seventyThirtySplitValidation(TweetStorage dataSet) {
+		Collections.shuffle(dataSet);
+		Preprocessor.processTweets(dataSet);
 		int sizeOfTrainingSet = (dataSet.size() * 7/10);
 		int testSetFrom = sizeOfTrainingSet;
 		TweetStorage trainingSet = new TweetStorage();

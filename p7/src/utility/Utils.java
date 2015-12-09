@@ -23,8 +23,40 @@ public class Utils {
 			return false;
 		}
 	}
-
+	
 	public static TweetStorage getDataFromFile(String filePath) {
+		ArrayList<String> data = Data.fetchDataFromFile(filePath);
+		ArrayList<Document> initializedData = new ArrayList<Document>();
+		TweetStorage dataSet = new TweetStorage();
+		for (String line : data) {
+			int counter = 0;
+			Document document = new Document();
+
+			for (String token : line.split(",")) {
+				switch (counter) {
+				case 0:
+					document.setMatchedToken(token);
+					break;
+				case 1:
+					document.setID(Long.parseLong(token));
+					break;
+				case 2:
+					document.setText(token);
+					break;
+				case 3:
+					document.setClassLabel(token);
+					break;
+				}
+				counter++;
+			}
+			counter = 0;
+			initializedData.add(document);
+		}
+		dataSet = convertDataToTweet(initializedData);
+		return dataSet;
+	}
+	
+	public static TweetStorage getDataFromFileWithGeo(String filePath) {
 		ArrayList<String> data = Data.fetchDataFromFile(filePath);
 		ArrayList<Document> initializedData = new ArrayList<Document>();
 		TweetStorage dataSet = new TweetStorage();
