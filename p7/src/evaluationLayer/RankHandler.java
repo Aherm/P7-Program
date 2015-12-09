@@ -28,12 +28,12 @@ public class RankHandler {
 		for(Rank r : dohmRanks){
 			for(Rank ourR : ourRanks){
 				if(r.getRestaurant().equals(ourR.getRestaurant())){
-					builder.append(r.getRank() +";" + ourR.getRank() + "\n");  
+					builder.append(r.getRestaurant().getName() + ";" +r.getRank() +";" + ourR.getRank() + ";"+ r.getScore() +";" + ourR.getScore() +"\n");  
 				}
 			}
 		}
 		
-		GenericPrint.PRINTER("ranks", builder.toString());
+		GenericPrint.PRINTER("ranks.csv", builder.toString());
 	}
 	
 	

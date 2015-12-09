@@ -251,7 +251,7 @@ public class Tweet implements OurLocation {
 	}
 	
 	public Restaurant getNameRes(){
-		return this.getNameRes(); 
+		return this.nameRestaurant;
 	}
 	
 	public boolean conflict(){
@@ -263,7 +263,4 @@ public class Tweet implements OurLocation {
 		return this.locRestaurant != null || this.nameRestaurant != null; 
 	}
 	
-	public boolean nameResWithin(){
-		return (Distance.getDist(this,nameRestaurant) < 25); 
-	}
 }
