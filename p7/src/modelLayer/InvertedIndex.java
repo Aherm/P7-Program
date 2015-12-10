@@ -10,6 +10,8 @@ import java.util.SortedSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import naiveBayes.Multinomial;
+
 public class InvertedIndex extends HashMap<String, Set<Tweet>> {
 	// This field has to be there. We don't use it.
 	private static final long serialVersionUID = -9190464032994889522L;
@@ -22,6 +24,8 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
         	put(restaurant.getName(), tweetSet);
     	}
     }
+    
+    private Multinomial multinomial; 
     
     public void init(){
     	patterns = new Pattern[this.keySet().size()]; 
@@ -37,33 +41,28 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     		counter++; 
     	}
     	
+    	multinomial = Multinomial.loadClassifier("./classifiers/visitNaiveBayes.model");
+    	
     	for(String s: stringList){
     		spaceRemovedList.add(s.replaceAll("\\s+", ""));
     	}
     }
     
        
-    public void addIndex(Tweet tweet) {
+    public void addIndex(Tweet tweet) throws Exception {
     	
     	int counter = 0; 
     	String lastString = ""; 
+    	if(multinomial.apply(tweet).equals("1")){
     	for(String word : stringList)
     	{
-    		if(tweet.getTweetText().contains(word) || tweet.getTweetText().contains(spaceRemovedList.get(counter))){
-    			if(word.length() > lastString.length()){
-    				lastString = word; 
-    			}
-    	
+    		if(tweet.getTweetText().contains(word) || tweet.getTweetText().contains(spaceRemovedList.get(counter))){	
+    				if(word.length() > lastString.length()){
+    					lastString = word; 
+    				}
 			}
-    		/*
-    		if(tweet.getTweetText().toLowerCase().contains(word) || tweet.getTweetText().toLowerCase().contains(spaceRemovedList.get(counter))){
-    			Matcher m = patterns[counter].matcher(tweet.getTweetText()); 
-    			if(m.find()){
-    				
-    			}
-    		}
-    		*/
     		counter++; 
+    		}
     	}
     	
     	if(!lastString.isEmpty()){
@@ -73,7 +72,7 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     
     
     
-    public void addIndices(TweetStorage tweets) {
+    public void addIndices(TweetStorage tweets) throws Exception {
     	for(Tweet tweet : tweets) {
     		addIndex(tweet);
     	}

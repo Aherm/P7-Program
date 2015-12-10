@@ -65,11 +65,7 @@ public class Scoring {
 		TweetStorage tweets = grid.rangeQuery(r, 25);
 		
 		for(Tweet t: tweets){
-			if(t.getLocRes() != null){
-				System.out.println("Changed from " + t.getLocRes().getName() + " to " + r.getName());
-			}
 			t.setLocRes(r);
-			
 		}
 	}
 	
@@ -84,8 +80,7 @@ public class Scoring {
 			if(t.getLocRes() != null){
 				mapper.get(t.getLocRes()).add(t); 
 			}
-		}
-		
+		}	
 		for(Restaurant r : mapper.keySet()){
 			TweetStorage t = mapper.get(r); 
 			if(t.isEmpty())
@@ -197,10 +192,6 @@ public class Scoring {
 					map.get(t.getLocRes()).add(t);
 			}		
 		}
-		
-		//handle name 
-		
-		
 		for(Restaurant r : map.keySet()){
 			TweetStorage tweets  = map.get(r);
 			TweetStorage sickTweets = tweets.getSickTweets();
@@ -230,17 +221,14 @@ public class Scoring {
 	
 	
 	private Restaurant handleConflict(Tweet t){
-		//First case 
-		for(Restaurant r : restaurantsWithSameName.get(t.getNameRes().getName())){
-			if(t.getLocRes().equals(r))
-				return r; 
-		}
+		
+		if(t.getLocRes().getName().equals(t.getNameRes().getName()))
+				return t.getLocRes(); 
 		//second case
 		for(Restaurant r : restaurantsWithSameName.get(t.getNameRes().getName())){
 			if(Distance.getDist(r,t) < Constants.restaurantDistance)
 				return r; 
 		}
-		
 		return t.getLocRes();	
 	}
 

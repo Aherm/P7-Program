@@ -33,7 +33,7 @@ public class RankHandler {
 			}
 		}
 		
-		GenericPrint.PRINTER("filepath", builder.toString());
+		GenericPrint.PRINTER(filepath, builder.toString());
 	}
 	
 	
