@@ -1,6 +1,7 @@
 package modelLayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -45,16 +46,32 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     public void addIndex(Tweet tweet) {
     	
     	int counter = 0; 
+    	String lastString = ""; 
     	for(String word : stringList)
     	{
+    		if(tweet.getTweetText().contains(word) || tweet.getTweetText().contains(spaceRemovedList.get(counter))){
+    			if(word.length() > lastString.length()){
+    				lastString = word; 
+    			}
+    	
+			}
+    		/*
     		if(tweet.getTweetText().toLowerCase().contains(word) || tweet.getTweetText().toLowerCase().contains(spaceRemovedList.get(counter))){
     			Matcher m = patterns[counter].matcher(tweet.getTweetText()); 
-    			if(m.find())
-    				this.get(word).add(tweet);
+    			if(m.find()){
+    				
+    			}
     		}
+    		*/
     		counter++; 
     	}
+    	
+    	if(!lastString.isEmpty()){
+    		this.get(lastString).add(tweet); 
+    	}
     }
+    
+    
     
     public void addIndices(TweetStorage tweets) {
     	for(Tweet tweet : tweets) {
@@ -64,7 +81,15 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
 
 
 	public TweetStorage nameQuery(Restaurant restaurant) {
-	    List<Set<Tweet>> tweetSet = new ArrayList<Set<Tweet>>();
+	 
+	 TweetStorage values = new TweetStorage(); 
+	 if(this.get(restaurant.getName()) == null)
+		 return values; 
+	 values.addAll(this.get(restaurant.getName()));
+	 return values; 
+		
+		/*
+		List<Set<Tweet>> tweetSet = new ArrayList<Set<Tweet>>();
 	    TweetStorage tweetStorage = new TweetStorage();
 	    String[] restaurantWords = restaurant.getName().split(" ");
 	    for (String restaurantWord : restaurantWords) {
@@ -96,5 +121,6 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
 	    }
 	
 	    return tweetStorage;
+	    */
 	}
 }

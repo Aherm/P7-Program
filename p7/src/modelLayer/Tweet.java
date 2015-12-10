@@ -1,6 +1,7 @@
 package modelLayer;
 
 import twitter4j.Status;
+import utility.Distance;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,10 +21,11 @@ public class Tweet implements OurLocation {
 	private boolean sick = false; 
 	private double score = -1;
 	private Cluster assignedCluster = null;
-
 	private String expectedClassLabel = ""; 
 	private String assignedClassLabel = ""; //Result of classification
-
+	private Restaurant nameRestaurant = null; 
+	private Restaurant locRestaurant = null; 
+	
 	private BigDecimal probabilityTrue;
 	//private boolean addedToStorage = false;
 
@@ -225,4 +227,40 @@ public class Tweet implements OurLocation {
 	public int hashCode(){
 		return new HashCodeBuilder(41,83).append(tweetID).toHashCode();
 	}
+	
+	//Stuff for scoring pls ignore )=
+	
+	public void setNameRes(Restaurant r){
+		this.nameRestaurant = r; 
+	}
+	
+	public void setLocRes(Restaurant r){
+		if(locRestaurant == null)
+			this.locRestaurant = r; 
+		else{
+			double dist1 = Distance.getDist(this.locRestaurant, this); 
+			double dist2 = Distance.getDist(r, this); 
+			if(dist2 < dist1)
+				this.locRestaurant = r; 
+			}
+	}
+	
+	
+	public Restaurant getLocRes(){
+		return this.locRestaurant; 
+	}
+	
+	public Restaurant getNameRes(){
+		return this.nameRestaurant;
+	}
+	
+	public boolean conflict(){
+		return !locRestaurant.equals(nameRestaurant); 
+	}
+	
+	//used in scoring
+	public boolean hasVisited(){
+		return this.locRestaurant != null || this.nameRestaurant != null; 
+	}
+	
 }

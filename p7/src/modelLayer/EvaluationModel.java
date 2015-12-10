@@ -3,7 +3,7 @@ package modelLayer;
 public class EvaluationModel {
 	String evalMethod;
 	int foldNum, TP, TN, FP, FN;
-	double precision, recall, tpRate, fpRate;
+	double precision, recall, tpRate, fpRate, accuracy;
 
 	public EvaluationModel(String evalMethod, int foldNum, int TP, int TN, int FP, int FN) {
 		this.evalMethod = evalMethod;
@@ -15,7 +15,8 @@ public class EvaluationModel {
 		this.precision = calculatePrecision(TP, FP);
 		this.recall = calculateRecall(TP, FN);
 		this.tpRate = calculateTPRate(TP, FN);
-		this.fpRate = calcuateFPRate(FP, TN);
+		this.fpRate = calculateFPRate(FP, TN);
+		this.accuracy = calculateAccuracy(TP, TN, FP, FN);
 	}
 
 	public void printEvaluation() {
@@ -24,6 +25,7 @@ public class EvaluationModel {
 		System.out.println("Fold #:    " + this.foldNum);
 		System.out.println("Precision: " + this.precision);
 		System.out.println("Recall:    " + this.recall);
+		System.out.println("Accuracy:  " + this.accuracy);
 		System.out.println("TP Rate:   " + this.tpRate);
 		System.out.println("FP Rate:   " + this.fpRate);
 		System.out.println("# of TP:   " + this.TP);
@@ -69,6 +71,10 @@ public class EvaluationModel {
 		return this.fpRate;
 	}
 	
+	public double getAccuracy() {
+		return this.accuracy;
+	}
+	
 	private double calculatePrecision(double TP, double FP) {
 		return TP / (TP + FP);
 	}
@@ -81,7 +87,14 @@ public class EvaluationModel {
 		return calculateRecall(TP, FN);
 	}
 	
-	private double calcuateFPRate(double FP, double TN) {
+	private double calculateFPRate(double FP, double TN) {
 		return FP / (FP + TN);
 	}
+	
+	private double calculateAccuracy(double TP, double TN, double FP, double FN) {
+		double total = TP + TN + FP + FN;
+		double positives = TP + TN;
+		return positives / total;
+	}
+	
 }
