@@ -24,7 +24,8 @@ public class ExtractExperimentData {
 		System.out.println("Done fetching from DB");
 		int counter = 0; 
 		while (counter < tweets.size()) {
-			 Tweet tweet = tweets.get(counter);
+
+			Tweet tweet = tweets.get(counter);
 			if (Filter.passesFilter(tweet)) {
 				if (restAPI.limitReached) {
 					try {
@@ -39,10 +40,14 @@ public class ExtractExperimentData {
 				try {
 					TweetStorage ts = restAPI.getUserTimeline3days(tweet.getUserID(),new Date(),tweet);
 					result = TweetStorage.getUnion(result, ts);
+					if(!restAPI.limitReached)
+						counter++;
 				}
 				catch (TwitterException e) {
+
 					if (e.getStatusCode() == 420 || e.getStatusCode() == 429){
 						System.out.println("Too many requests");
+						restAPI.limitReached = true;
 						e.printStackTrace();
 					}
 					// server overloaded
@@ -51,9 +56,17 @@ public class ExtractExperimentData {
 						e.printStackTrace();
 					}
 
+					if(e.getStatusCode() == 401){
+						counter++;
+						e.printStackTrace();
+						System.out.println("processing tweet " + counter);
+					}
+
 					continue;
 				}
 			}
+			else
+				counter++;
 		}
 		
 		System.out.println("Done getting user timelines");

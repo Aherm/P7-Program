@@ -49,8 +49,9 @@ public final class TwitterRest {
 		DateTime startDate = new DateTime(_startdate);
 		do {
 			rateLimiter();
-			if(limitReached)
+			if(limitReached){
 				return tweets;
+			}
 			userTimeline = twitter.getUserTimeline(userId, page);
 			
 			// adds all tweets that are no more than 3 days old 
@@ -65,6 +66,9 @@ public final class TwitterRest {
 			}
 			pagenr++;
 			page.setPage(pagenr);
+			if(userTimeline.isEmpty()){
+				return tweets;
+			}
 			oldestTweetDate = new DateTime(userTimeline.get(userTimeline.size() - 1).getCreatedAt()); //get the oldest tweet from the usertimeline
 		} while (Days.daysBetween(oldestTweetDate, startDate).getDays() <= 3);
 		

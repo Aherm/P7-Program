@@ -4,6 +4,7 @@ import businessLogicLayer.Preprocessor;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 import naiveBayes.*;
+import utility.Utils;
 
 import java.io.*;
 import java.util.*;
@@ -53,13 +54,11 @@ public class TestNaiveBayes {
          * Initialization of data
          */
         //btc, consider using a HashSet to avoid duplicate classes
-        ArrayList<String> bookClassLabels = Data.initializeClassLabels();
         ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("not visited", "visited"));
-        String trainingFilePath = "Resturants_mentions2.csv";
+        //String trainingFilePath = "Resturants_mentions2.csv";
+        TweetStorage trainingSet = Utils.getDataFromFile("t");
 
-        TweetStorage bookTrainingSet = Data.initializeTrainingSet(bookClassLabels);
-
-        for (Tweet t : bookTrainingSet)
+        for (Tweet t : trainingSet)
             Preprocessor.processTweet(t);
 
         /*
@@ -77,25 +76,23 @@ public class TestNaiveBayes {
             Preprocessor.processTweet(t);
         */
 
-
-        TweetStorage bookTestSet = Data.initializeTestSet();
-        for (Tweet t : bookTestSet)
+        TweetStorage testSet = new TweetStorage();
+        for (Tweet t : testSet)
             Preprocessor.processTweet(t);
 
 
-        TweetStorage testSet = new TweetStorage();
-        testSet.add(new Tweet(1, 1, 1, 1, "I'm at HaterKing in New York, NY https://t.co/frLjcnL0zk", new Date()));
-        testSet.add(new Tweet(1, 1, 1, 1, "I'm at NoMad in New	 York, NY @LINK", new Date()));
-        testSet.add(new Tweet(1, 1, 1, 1, "I'm at Carstensen's Café in New York, NY", new Date()));
-        testSet.add(new Tweet(1, 1, 1, 1, "Happy hour lel mate at 2A", new Date()));
-        testSet.add(new Tweet(1, 1, 1, 1, "I'm at", new Date()));
-        testSet.add(new Tweet(1, 1, 1, 1, "HOOOOOOOOOOOOOOOODOOOOOOOOOOOOOOOOOR", new Date()));
-        testSet.add(new Tweet(1, 1, 1, 1, "fuck u bjørk", new Date()));
+
+
         Preprocessor.processTweets(testSet);
 
-        //testMultinomialProbability(classLabels, trainingSet, testSet);
-        testMultinomialBigDecimal(bookClassLabels, bookTrainingSet, bookTestSet);
+
+
     }
+
+    private static void classifierToFile(){
+
+    }
+
 
     private static void printResults(String resultClass, Tweet tweet){
         System.out.println("-----------------------------------------------------");
