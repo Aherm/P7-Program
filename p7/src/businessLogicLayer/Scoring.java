@@ -136,7 +136,7 @@ public class Scoring {
 		for (Tweet tweet : tweetsToClassify) {
 			//String predictedClass = multinomialNB.applyBigDecimal(classLabels, classifier, tweet);
 			try{
-				Tweet classifiedTweet = multinomialNB.applyGetProbability(new ArrayList<String>(Arrays.asList("0","1")), tweet);
+				Tweet classifiedTweet = multinomialNB.applyGetProbability(tweet);
 				classificationResults.add(classifiedTweet);
 			} catch (Exception ex){
 				System.out.println(ex);

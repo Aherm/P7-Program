@@ -23,9 +23,9 @@ public class TestNaiveBayes {
         TweetStorage resultTweets = new TweetStorage();
         for (Tweet tweet : testSet) {
             try {
-                String predictedClass = multinomialNBBD.applyBigDecimal(classLabels, tweet);
+                String predictedClass = multinomialNBBD.applyBigDecimal(tweet);
                 System.out.println("predicted class: " + predictedClass);
-                Tweet classifiedTweet = multinomialNBBD.applyGetProbability(classLabels, tweet);
+                Tweet classifiedTweet = multinomialNBBD.applyGetProbability(tweet);
                 resultTweets.add(classifiedTweet);
 
             } catch (Exception ex){
@@ -46,8 +46,8 @@ public class TestNaiveBayes {
         int counter = 0;
         for (Tweet tweet : testSet) {
             try {
-                String predictedClass = multinomialNB.applyProbability(classLabels, tweet);
-                Map<String, Double> score = multinomialNB.applyProbabilityGetScore(classLabels, tweet);
+                String predictedClass = multinomialNB.applyProbability(tweet);
+                Map<String, Double> score = multinomialNB.applyProbabilityGetScore(tweet);
                 results.add(score);
             } catch (Exception ex){
                 System.out.println();
@@ -55,11 +55,6 @@ public class TestNaiveBayes {
             //printResults(resultClass, tweet);
             counter++;
         }
-    }
-
-    public static void main(String[] args){
-        //testSickClassifier();
-        testVisitClassifier();
     }
 
     private static void testSickClassifier(){
@@ -112,6 +107,13 @@ public class TestNaiveBayes {
             System.out.println(ex);
         }
     }
+
+    public static void main(String[] args){
+        testSickClassifier();
+        //testVisitClassifier();
+    }
+
+
 
 
     private static void printResults(String resultClass, Tweet tweet){

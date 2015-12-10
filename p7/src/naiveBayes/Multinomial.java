@@ -8,6 +8,7 @@ import java.util.*;
 
 public class Multinomial extends NaiveBayes implements java.io.Serializable {
     ProbabilityModel probabilityModel = null;
+    ArrayList<String> C;
 
     /**
      *
@@ -17,6 +18,7 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
      */
     @Override
     public void train(ArrayList<String> C, TweetStorage D) {
+        this.C = C;
         Map<String, Double> prior = new HashMap<String, Double>();
         Map<ArrayList<String>, Double> condprob = new HashMap<ArrayList<String>, Double>();
 
@@ -43,13 +45,12 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
 
     /**
      *
-     * @param C : set of possible classes
      * @param tweet : is the tweet to classify
      * @return c : the class the provided tweet is set to
      */
     
     @Override
-    public String apply(ArrayList<String> C, Tweet tweet) throws Exception {
+    public String apply(Tweet tweet) throws Exception {
         if (this.probabilityModel == null)
             throw new Exception("Classifier needs to be trained before evaluation");
 
@@ -67,7 +68,7 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
     }
 
     @Override
-    public Map<String, Double> applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) throws Exception{
+    public Map<String, Double> applyGetScore(ProbabilityModel probability, Tweet tweet) throws Exception{
         if (this.probabilityModel == null)
             throw new Exception("Classifier needs to be trained before evaluation");
 
@@ -83,7 +84,7 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
         return score;
     }
 
-    public String applyProbability(ArrayList<String> C, Tweet tweet) throws Exception {
+    public String applyProbability(Tweet tweet) throws Exception {
         if (this.probabilityModel == null)
             throw new Exception("Classifier needs to be trained before evaluation");
 
@@ -101,7 +102,7 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
     }
 
 
-    public Map<String, Double> applyProbabilityGetScore(ArrayList<String> C, Tweet tweet) throws Exception {
+    public Map<String, Double> applyProbabilityGetScore(Tweet tweet) throws Exception {
         if (this.probabilityModel == null)
             throw new Exception("Classifier needs to be trained before evaluation");
 

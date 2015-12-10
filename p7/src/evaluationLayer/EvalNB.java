@@ -88,7 +88,7 @@ public class EvalNB {
 			for(Tweet tweet : testSet) {
 				try{
 					System.out.println("Testing for tweet: " + tweet.getTweetText());
-					tweet.setAssignedClassLabel(NB.apply(classLabels, tweet));
+					tweet.setAssignedClassLabel(NB.apply(tweet));
 					if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
 						TP++;
 					} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
@@ -161,7 +161,7 @@ public class EvalNB {
 			for(Tweet tweet : testSet) {
 				try {
 					System.out.println("Testing For Tweet " + tweet.getTweetText());
-					tweet.setAssignedClassLabel(NB.apply(classLabels, tweet));
+					tweet.setAssignedClassLabel(NB.apply(tweet));
 					//tweet.setAssignedClassLabel(NB.applyBigDecimal(classLabels, probModel, tweet));
 					if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
 						TP++;
@@ -222,7 +222,7 @@ public class EvalNB {
 			try {
 				System.out.println("Testing For Tweet: " + tweet.getTweetText());
 				//tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
-				tweet.setAssignedClassLabel(NB.applyBigDecimal(classLabels, tweet));
+				tweet.setAssignedClassLabel(NB.applyBigDecimal(tweet));
 				if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
 					TP++;
 				} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
