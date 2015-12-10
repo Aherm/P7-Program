@@ -1,5 +1,6 @@
 package businessLogicLayer;
 
+import java.io.ObjectOutputStream.PutField;
 import java.security.AllPermission;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,11 +15,11 @@ import utility.Constants;
 import utility.Distance;
 
 public class Scoring {
-	public static Map<Restaurant,Double> geoScore = new HashMap<Restaurant,Double>();
-	public static Map<Restaurant,Double> nameScore = new HashMap<Restaurant,Double>();
-	public static Map<Restaurant,Double> combinedScore = new HashMap<Restaurant,Double>(); 
-	private static Map<String,Integer> RestaurantNameCounter = new HashMap<String,Integer>(); 
-	private static Map<String,List<Restaurant>> restaurantsWithSameName = new HashMap<String,List<Restaurant>>();
+	public  Map<Restaurant,Double> geoScore = new HashMap<Restaurant,Double>();
+	public  Map<Restaurant,Double> nameScore = new HashMap<Restaurant,Double>();
+	public  Map<Restaurant,Double> combinedScore = new HashMap<Restaurant,Double>(); 
+	private  Map<String,Integer> RestaurantNameCounter = new HashMap<String,Integer>(); 
+	private  Map<String,List<Restaurant>> restaurantsWithSameName = new HashMap<String,List<Restaurant>>();
 	public  int   locTotalVisits = 0; 
 	public  int   locTotalSickVisits = 0; 
 	public  int   nameTotalVisits = 0; 
@@ -42,7 +43,9 @@ public class Scoring {
 				restaurantsWithSameName.get(r.getName()).add(r);
 			}
 			else{
-				restaurantsWithSameName.put(r.getName(), new ArrayList<Restaurant>());
+				List<Restaurant> res = new ArrayList<Restaurant>(); 
+				res.add(r); 
+				restaurantsWithSameName.put(r.getName(), res);
 			}
 		}
 		initScores(restaurants, geoScore);
@@ -58,13 +61,8 @@ public class Scoring {
 	}
 	
 	
-	private double geotaggedScore(Restaurant r, Grid grid) {
-		double result = 0;
+	private void setLocRes(Restaurant r, Grid grid) {
 		TweetStorage tweets = grid.rangeQuery(r, 25);
-		TweetStorage sickTweets = tweets.getSickTweets();
-		if(tweets.isEmpty()){
-			return 0; 
-		}
 		
 		for(Tweet t: tweets){
 			if(t.getLocRes() != null){
@@ -73,14 +71,35 @@ public class Scoring {
 			t.setLocRes(r);
 			
 		}
+	}
+	
+	private void calcGeotagged(TweetStorage ts, List<Restaurant> Allres){
+		Map<Restaurant,TweetStorage> mapper = new HashMap<>();
 		
-		locTotalSickVisits += sickTweets.size(); 
-		locTotalVisits += tweets.size(); 
-		result = (double)sickTweets.size() / (double)tweets.size();
+		for(Restaurant r : Allres){
+			mapper.put(r, new TweetStorage()); 
+		}
 		
-		geoScore.put(r, result);
+		for(Tweet t : ts ){
+			if(t.getLocRes() != null){
+				mapper.get(t.getLocRes()).add(t); 
+			}
+		}
 		
-		return result;
+		for(Restaurant r : mapper.keySet()){
+			TweetStorage t = mapper.get(r); 
+			if(t.isEmpty())
+				continue; 
+			
+			double visit = t.size(); 
+			double sickVisist = t.getSickTweets().size(); 
+			
+			locTotalSickVisits += sickVisist; 
+			locTotalVisits += visit; 
+			
+			double results = calcScore(sickVisist, visit); 
+			geoScore.put(r, results);
+		}
 	}
 	
 	private double nameScore(Restaurant r, InvertedIndex ii) {
@@ -99,10 +118,10 @@ public class Scoring {
 		nameTotalSickVisits += sickTweets.size(); 
 		nameTotalVisits += tweets.size(); 
 		
-		double adjustedVisit = (double)tweets.size() / RestaurantNameCounter.get(r.getName()).doubleValue(); 
-		double adjustedSickVisit = (double) sickTweets.size() / RestaurantNameCounter.get(r.getName()).doubleValue(); 
-		result = calcScore(adjustedSickVisit, adjustedVisit); 
-		
+		double visit = tweets.size(); 
+		double sickVisit = sickTweets.size(); 
+		result = calcScore(sickVisit, visit) * (1/RestaurantNameCounter.get(r.getName()).doubleValue()); 
+	
 		nameScore.put(r, result);
 		return result;
 	}
@@ -137,10 +156,10 @@ public class Scoring {
 		init(allRestaurants); 
 		System.out.println("starting geotagging score");
 		for(Restaurant r : allRestaurants ){
-			geotaggedScore(r, grid); 
+			setLocRes(r, grid); 
 			nameScore(r, ii); 
 		}
-		
+		calcGeotagged(allTweets, allRestaurants);
 	 
 		
 	
@@ -174,23 +193,31 @@ public class Scoring {
 					map.get(t.getLocRes()).add(t);
 			}		
 		}
+		
+		//handle name 
+		
+		
 		for(Restaurant r : map.keySet()){
 			TweetStorage tweets  = map.get(r);
 			TweetStorage sickTweets = tweets.getSickTweets();
-			if(!tweets.isEmpty()){
-				double adjustedSick = 0;
-				double adjustedNormal = 0; 
-				if(!nameCounter.get(r.getName()).isEmpty()){
-					double sick = nameCounter.get(r.getName()).getSickTweets().size(); 
-					double normal = nameCounter.get(r.getName()).size();
-					adjustedSick = sick / RestaurantNameCounter.get(r.getName()).doubleValue(); 
-					adjustedNormal = normal / RestaurantNameCounter.get(r.getName()).doubleValue(); 
+			if(tweets.isEmpty() && nameCounter.get(r.getName()).isEmpty())
+				continue; 
+			
+			double nameResults = 0; 
+			if(!nameCounter.get(r.getName()).isEmpty()){
+				double sick = nameCounter.get(r.getName()).getSickTweets().size(); 
+				double normal = nameCounter.get(r.getName()).size();
+				nameResults = calcScore(sick, normal) / RestaurantNameCounter.get(r.getName()).doubleValue();
 			}
 			
-				double results = calcScore((double)sickTweets.size() + adjustedSick,(double)tweets.size() + adjustedNormal);
-				combinedScore.put(r, results);
-			}
+			double results = 0; 
+			if(tweets.isEmpty())
+				results = nameResults; 
+			else
+				results = calcScore((double)sickTweets.size(),(double)tweets.size()) + nameResults;
+			combinedScore.put(r, results);
 		}
+		
 	}
 	
 	private double calcScore(double sick, double normal){
@@ -210,7 +237,7 @@ public class Scoring {
 				return r; 
 		}
 		
-		return t.getNameRes();	
+		return t.getLocRes();	
 	}
 
 }

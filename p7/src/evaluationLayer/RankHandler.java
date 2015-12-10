@@ -17,7 +17,7 @@ public class RankHandler {
 		this.dohmRanks = dohmh; 
 	}
 	
-	public void printRanks(){
+	public void printRanks(String filepath){
 		removeNotIn();  
 		Collections.sort(dohmRanks,new ScoreCompare());
 		Collections.sort(ourRanks, new ScoreCompare());
@@ -33,7 +33,7 @@ public class RankHandler {
 			}
 		}
 		
-		GenericPrint.PRINTER("ranks.csv", builder.toString());
+		GenericPrint.PRINTER("filepath", builder.toString());
 	}
 	
 	
