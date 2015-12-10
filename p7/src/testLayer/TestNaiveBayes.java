@@ -109,8 +109,8 @@ public class TestNaiveBayes {
     }
 
     public static void main(String[] args){
-        testSickClassifier();
-        //testVisitClassifier();
+        //testSickClassifier();
+        testVisitClassifier();
     }
 
 
