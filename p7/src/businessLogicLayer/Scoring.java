@@ -74,7 +74,7 @@ public class Scoring {
 	}
 	
 	private void calcGeotagged(TweetStorage ts, List<Restaurant> Allres){
-		Map<Restaurant,TweetStorage> mapper = new HashMap<>();
+		Map<Restaurant,TweetStorage> mapper = new HashMap<Restaurant, TweetStorage>();
 		
 		for(Restaurant r : Allres){
 			mapper.put(r, new TweetStorage()); 
@@ -135,8 +135,12 @@ public class Scoring {
 		MultinomialBigDecimal multinomialNB = new MultinomialBigDecimal();
 		for (Tweet tweet : tweetsToClassify) {
 			//String predictedClass = multinomialNB.applyBigDecimal(classLabels, classifier, tweet);
-			Tweet classifiedTweet = multinomialNB.applyGetProbability(new ArrayList<String>(Arrays.asList("0","1")), classifier, tweet);
-			classificationResults.add(classifiedTweet);
+			try{
+				Tweet classifiedTweet = multinomialNB.applyGetProbability(new ArrayList<String>(Arrays.asList("0","1")), tweet);
+				classificationResults.add(classifiedTweet);
+			} catch (Exception ex){
+				System.out.println(ex);
+			}
 		}
 		return classificationResults;
 	}

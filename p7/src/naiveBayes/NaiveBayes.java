@@ -6,9 +6,9 @@ import modelLayer.TweetStorage;
 import java.util.*;
 
 public abstract class NaiveBayes {
-    public abstract ProbabilityModel train(ArrayList<String> C, TweetStorage D);
-    public abstract String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet);
-    public abstract Map<String, Double> applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet);
+    public abstract void train(ArrayList<String> C, TweetStorage D);
+    public abstract String apply(ArrayList<String> C, Tweet tweet) throws Exception;
+    public abstract Map<String, Double> applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) throws Exception;
 
     protected List<String> extractTokens(List<String> vocabulary, Tweet tweet) {
         String[] tweetWords = tweet.getTweetText().split(" ");

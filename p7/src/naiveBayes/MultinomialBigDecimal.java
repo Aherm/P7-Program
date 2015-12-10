@@ -8,14 +8,16 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
-public class MultinomialBigDecimal extends NaiveBayes {
+public class MultinomialBigDecimal extends NaiveBayes implements java.io.Serializable {
+    ProbabilityModelBigDecimal probabilityModel = null;
+
     /**
      *
      * @param C : set of possible classes
      * @param D : the trainingset, aka the document set D, in this case a list of tweet
      * @return Probability object : the model used to later classify new stweets
      */
-    public ProbabilityModelBigDecimal trainBigDecimal(ArrayList<String> C, TweetStorage D) {
+    public void trainBigDecimal(ArrayList<String> C, TweetStorage D) {
         Map<String, BigDecimal> prior = new HashMap<String, BigDecimal>();
         Map<ArrayList<String>, BigDecimal> condprob = new HashMap<ArrayList<String>, BigDecimal>();
 
@@ -38,38 +40,43 @@ public class MultinomialBigDecimal extends NaiveBayes {
                         (T_ct.add(new BigDecimal(1))).divide(totalT_ct.add(new BigDecimal(V.size())), 2, RoundingMode.HALF_UP));
             }
         }
-        return new ProbabilityModelBigDecimal(V, prior, condprob);
+        probabilityModel = new ProbabilityModelBigDecimal(V, prior, condprob);
     }
 
     /**
      *
      * @param C : set of possible classes
-     * @param probability : the learned probabilistic model
      * @param tweet : is the tweet to classify
      * @return c : the class the provided tweet is set to
      */
 
-    public String applyBigDecimal(ArrayList<String> C, ProbabilityModelBigDecimal probability, Tweet tweet) {
+    public String applyBigDecimal(ArrayList<String> C, Tweet tweet) throws Exception{
+        if (this.probabilityModel == null)
+            throw new Exception("Classifier needs to be trained before evaluation");
+
         Map<String, BigDecimal> score = new HashMap<String, BigDecimal>();
-        List<String> W = extractTokens(probability.getVocabulary(), tweet);
+        List<String> W = extractTokens(this.probabilityModel.getVocabulary(), tweet);
 
         for (String c : C) {
-            score.put(c, probability.getPriorProbability(c));
+            score.put(c, this.probabilityModel.getPriorProbability(c));
             for (String t : W) {
-                score.put(c, score.get(c).multiply(probability.getConditionalProbability(t, c)));
+                score.put(c, score.get(c).multiply(this.probabilityModel.getConditionalProbability(t, c)));
             }
         }
         return classWHighestProbability(score);
     }
 
-    public Tweet applyGetProbability(ArrayList<String> C, ProbabilityModelBigDecimal probability, Tweet tweet) {
+    public Tweet applyGetProbability(ArrayList<String> C, Tweet tweet) throws Exception{
+        if (this.probabilityModel == null)
+            throw new Exception("Classifier needs to be trained before evaluation");
+        
         Map<String, BigDecimal> score = new HashMap<String, BigDecimal>();
-        List<String> W = extractTokens(probability.getVocabulary(), tweet);
+        List<String> W = extractTokens(this.probabilityModel.getVocabulary(), tweet);
 
         for (String c : C) {
-            score.put(c, probability.getPriorProbability(c));
+            score.put(c, this.probabilityModel.getPriorProbability(c));
             for (String t : W) {
-                score.put(c, score.get(c).multiply(probability.getConditionalProbability(t, c)));
+                score.put(c, score.get(c).multiply(this.probabilityModel.getConditionalProbability(t, c)));
             }
         }
 
@@ -113,12 +120,12 @@ public class MultinomialBigDecimal extends NaiveBayes {
 
 
     @Override
-    public ProbabilityModel train(ArrayList<String> C, TweetStorage D) {
-        return null;
+    public void train(ArrayList<String> C, TweetStorage D) {
+
     }
 
     @Override
-    public String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    public String apply(ArrayList<String> C, Tweet tweet) {
         return null;
     }
 
@@ -127,10 +134,10 @@ public class MultinomialBigDecimal extends NaiveBayes {
         return null;
     }
 
-    public static ProbabilityModelBigDecimal loadClassifier(String filePath){
+    public static MultinomialBigDecimal loadClassifier(String filePath){
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));
-            ProbabilityModelBigDecimal learnedClassifier = (ProbabilityModelBigDecimal) ois.readObject();
+            MultinomialBigDecimal learnedClassifier = (MultinomialBigDecimal) ois.readObject();
             ois.close();
             return learnedClassifier;
         } catch (Exception ex){
@@ -139,12 +146,15 @@ public class MultinomialBigDecimal extends NaiveBayes {
         }
     }
 
-    public static boolean saveClassifier(ProbabilityModelBigDecimal classifier, String filePath){
+    public boolean saveClassifier(String filePath) throws Exception{
+        if (this.probabilityModel == null)
+            throw new Exception("Classifier needs to be trained before evaluation");
+
         try {
             ObjectOutputStream oos = new ObjectOutputStream(
                     new FileOutputStream(filePath));
 
-            oos.writeObject(classifier);
+            oos.writeObject(this);
             oos.flush();
             oos.close();
             return true;

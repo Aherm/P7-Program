@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ProbabilityModel {
+public class ProbabilityModel implements java.io.Serializable {
 	List<String> vocabulary;
 	Map<String, Double> prior;
 	Map<ArrayList<String>, Double> condprop;

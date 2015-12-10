@@ -3,9 +3,12 @@ package naiveBayes;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
+import java.io.*;
 import java.util.*;
 
-public class Multinomial extends NaiveBayes {
+public class Multinomial extends NaiveBayes implements java.io.Serializable {
+    ProbabilityModel probabilityModel = null;
+
     /**
      *
      * @param C : set of possible classes
@@ -13,7 +16,7 @@ public class Multinomial extends NaiveBayes {
      * @return Probability object : the model used to later classify new stweets
      */
     @Override
-    public ProbabilityModel train(ArrayList<String> C, TweetStorage D) {
+    public void train(ArrayList<String> C, TweetStorage D) {
         Map<String, Double> prior = new HashMap<String, Double>();
         Map<ArrayList<String>, Double> condprob = new HashMap<ArrayList<String>, Double>();
 
@@ -35,26 +38,28 @@ public class Multinomial extends NaiveBayes {
                 condprob.put(new ArrayList<String>(Arrays.asList(t, c)), (T_ct + 1) / (totalT_ct + V.size()));
             }
         }
-        return new ProbabilityModel(V, prior, condprob);
+        this.probabilityModel = new ProbabilityModel(V, prior, condprob);
     }
 
     /**
      *
      * @param C : set of possible classes
-     * @param probability : the learned probabilistic model
      * @param tweet : is the tweet to classify
      * @return c : the class the provided tweet is set to
      */
     
     @Override
-    public String apply(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    public String apply(ArrayList<String> C, Tweet tweet) throws Exception {
+        if (this.probabilityModel == null)
+            throw new Exception("Classifier needs to be trained before evaluation");
+
         Map<String, Double> score = new HashMap<String, Double>();
-        List<String> W = extractTokens(probability.getVocabulary(), tweet);
+        List<String> W = extractTokens(this.probabilityModel.getVocabulary(), tweet);
 
         for (String c : C) {
-            score.put(c, Math.log10(probability.getPriorProbability(c)));
+            score.put(c, Math.log10(this.probabilityModel.getPriorProbability(c)));
             for (String t : W) {
-                score.put(c, score.get(c) + Math.log10(probability.getConditionalProbability(t, c)));
+                score.put(c, score.get(c) + Math.log10(this.probabilityModel.getConditionalProbability(t, c)));
             }
         }
         // return the class with the highest probability value
@@ -62,7 +67,10 @@ public class Multinomial extends NaiveBayes {
     }
 
     @Override
-    public Map<String, Double> applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    public Map<String, Double> applyGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) throws Exception{
+        if (this.probabilityModel == null)
+            throw new Exception("Classifier needs to be trained before evaluation");
+
         Map<String, Double> score = new HashMap<String, Double>();
         List<String> W = extractTokens(probability.getVocabulary(), tweet);
 
@@ -75,14 +83,17 @@ public class Multinomial extends NaiveBayes {
         return score;
     }
 
-    public String applyProbability(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    public String applyProbability(ArrayList<String> C, Tweet tweet) throws Exception {
+        if (this.probabilityModel == null)
+            throw new Exception("Classifier needs to be trained before evaluation");
+
         Map<String, Double> score = new HashMap<String, Double>();
-        List<String> W = extractTokens(probability.getVocabulary(), tweet);
+        List<String> W = extractTokens(this.probabilityModel.getVocabulary(), tweet);
 
         for (String c : C) {
-            score.put(c, probability.getPriorProbability(c));
+            score.put(c, this.probabilityModel.getPriorProbability(c));
             for (String t : W) {
-                score.put(c, score.get(c) * probability.getConditionalProbability(t, c));
+                score.put(c, score.get(c) * this.probabilityModel.getConditionalProbability(t, c));
             }
         }
         // return the class with the highest probability value
@@ -90,14 +101,17 @@ public class Multinomial extends NaiveBayes {
     }
 
 
-    public Map<String, Double> applyProbabilityGetScore(ArrayList<String> C, ProbabilityModel probability, Tweet tweet) {
+    public Map<String, Double> applyProbabilityGetScore(ArrayList<String> C, Tweet tweet) throws Exception {
+        if (this.probabilityModel == null)
+            throw new Exception("Classifier needs to be trained before evaluation");
+
         Map<String, Double> score = new HashMap<String, Double>();
-        List<String> W = extractTokens(probability.getVocabulary(), tweet);
+        List<String> W = extractTokens(this.probabilityModel.getVocabulary(), tweet);
 
         for (String c : C) {
-            score.put(c, probability.getPriorProbability(c));
+            score.put(c, this.probabilityModel.getPriorProbability(c));
             for (String t : W) {
-                score.put(c, score.get(c) * probability.getConditionalProbability(t, c));
+                score.put(c, score.get(c) * this.probabilityModel.getConditionalProbability(t, c));
             }
         }
         // return the class with the highest probability value
@@ -136,5 +150,35 @@ public class Multinomial extends NaiveBayes {
                 counter++;
         }
         return counter;
+    }
+
+    public static Multinomial loadClassifier(String filePath){
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));
+            Multinomial learnedClassifier = (Multinomial) ois.readObject();
+            ois.close();
+            return learnedClassifier;
+        } catch (Exception ex){
+            System.out.println(ex);
+            return null;
+        }
+    }
+
+    public boolean saveClassifier(String filePath) throws Exception{
+        if (this.probabilityModel == null)
+            throw new Exception("Classifier needs to be trained before evaluation");
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(
+                    new FileOutputStream(filePath));
+
+            oos.writeObject(this);
+            oos.flush();
+            oos.close();
+            return true;
+        } catch (IOException iex){
+            System.out.println(iex);
+            return false;
+        }
     }
 }

@@ -13,19 +13,24 @@ public class TestNaiveBayes {
 
     private static TweetStorage testMultinomialBigDecimal(ArrayList<String> classLabels, TweetStorage trainingSet, TweetStorage testSet){
         MultinomialBigDecimal multinomialNBBD = new MultinomialBigDecimal();
-        ProbabilityModelBigDecimal probabilityModelBigDecimal = multinomialNBBD.trainBigDecimal(classLabels, trainingSet);
+        multinomialNBBD.trainBigDecimal(classLabels, trainingSet);
 
         String filePath = "./classifiers/naiveBayes.model";
         //MultinomialBigDecimal.saveClassifier(probabilityModelBigDecimal, filePath);
-        ProbabilityModelBigDecimal classifier = MultinomialBigDecimal.loadClassifier(filePath);
+        //MultinomialBigDecimal.loadClassifier(filePath);
 
         //test
         TweetStorage resultTweets = new TweetStorage();
         for (Tweet tweet : testSet) {
-            String predictedClass = multinomialNBBD.applyBigDecimal(classLabels, classifier, tweet);
-            System.out.println("predicted class: " + predictedClass);
-            Tweet classifiedTweet = multinomialNBBD.applyGetProbability(classLabels, classifier, tweet);
-            resultTweets.add(classifiedTweet);
+            try {
+                String predictedClass = multinomialNBBD.applyBigDecimal(classLabels, tweet);
+                System.out.println("predicted class: " + predictedClass);
+                Tweet classifiedTweet = multinomialNBBD.applyGetProbability(classLabels, tweet);
+                resultTweets.add(classifiedTweet);
+
+            } catch (Exception ex){
+                System.out.println(ex);
+            }
 
             //printResults(resultClass, tweet);
         }
@@ -34,63 +39,78 @@ public class TestNaiveBayes {
 
     private static void testMultinomialProbability(ArrayList<String> classLabels, TweetStorage trainingSet, TweetStorage testSet){
         Multinomial multinomialNB = new Multinomial();
-        ProbabilityModel probabilityModel = multinomialNB.train(classLabels, trainingSet);
+        multinomialNB.train(classLabels, trainingSet);
 
         //test
         List<Map<String, Double>> results = new ArrayList<Map<String, Double>>();
         int counter = 0;
         for (Tweet tweet : testSet) {
-            String predictedClass = multinomialNB.applyProbability(classLabels, probabilityModel, tweet);
-            Map<String, Double> score = multinomialNB.applyProbabilityGetScore(classLabels, probabilityModel, tweet);
-            results.add(score);
-            System.out.println("index: " + counter + ", predicted class: " + predictedClass);
+            try {
+                String predictedClass = multinomialNB.applyProbability(classLabels, tweet);
+                Map<String, Double> score = multinomialNB.applyProbabilityGetScore(classLabels, tweet);
+                results.add(score);
+            } catch (Exception ex){
+                System.out.println();
+            }
             //printResults(resultClass, tweet);
             counter++;
         }
     }
 
     public static void main(String[] args){
+        //testSickClassifier();
+        testVisitClassifier();
+    }
+
+    private static void testSickClassifier(){
         /**
          * Initialization of data
          */
-        //btc, consider using a HashSet to avoid duplicate classes
-        ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("not visited", "visited"));
-        //String trainingFilePath = "Resturants_mentions2.csv";
-        TweetStorage trainingSet = Utils.getDataFromFile("t");
+        ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("0", "1"));
+        TweetStorage trainingSet = Utils.getDataFromFile("trainingData\\sickSet.csv");
+        Preprocessor.processTweets(trainingSet);
 
-        for (Tweet t : trainingSet)
-            Preprocessor.processTweet(t);
+        /**
+         * Training the classifier
+         */
+        Multinomial multinomialNB = new Multinomial();
+        multinomialNB.train(classLabels, trainingSet);
 
-        /*
-        TweetStorage trainingSet = new TweetStorage();
-        for (Document d : Data.initializeDataFromFile(trainingFilePath)){
-            Tweet tweet = new Tweet();
-            tweet.setTweetID(d.getID());
-            tweet.setTweetText(d.getText());
-            tweet.setExpectedClassLabel(d.getClassLabel());
-            trainingSet.add(tweet);
+        /**
+         * Saving the classifier
+         */
+        String filePath = "./classifiers/sickNaiveBayes.model";
+        try{
+            multinomialNB.saveClassifier(filePath);
+        } catch (Exception ex){
+            System.out.println(ex);
         }
-
-        // Preprocess the training data
-        for (Tweet t : trainingSet)
-            Preprocessor.processTweet(t);
-        */
-
-        TweetStorage testSet = new TweetStorage();
-        for (Tweet t : testSet)
-            Preprocessor.processTweet(t);
-
-
-
-
-        Preprocessor.processTweets(testSet);
-
-
-
+        //MultinomialBigDecimal.loadClassifier(filePath);
     }
 
-    private static void classifierToFile(){
+    private static void testVisitClassifier(){
+        /**
+         * Initialization of data
+         */
+        ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("0", "1"));
+        TweetStorage trainingSet = Utils.getDataFromFileWithGeo("trainingData\\RealSecondSet.csv");
+        Preprocessor.processTweets(trainingSet);
 
+        /**
+         * Training the classifier
+         */
+        Multinomial multinomialNB = new Multinomial();
+        multinomialNB.train(classLabels, trainingSet);
+
+        /**
+         * Saving the classifier
+         */
+        String filePath = "./classifiers/visitNaiveBayes.model";
+        try{
+            multinomialNB.saveClassifier(filePath);
+        } catch (Exception ex){
+            System.out.println(ex);
+        }
     }
 
 

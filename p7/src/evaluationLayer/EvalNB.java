@@ -82,20 +82,24 @@ public class EvalNB {
 			}
 			System.out.println("Training sets has been created...");
 			System.out.println("Starting to train model for iteration: " + (i + 1));
-			ProbabilityModel probModel = NB.train(classLabels, trainingSet);
+			NB.train(classLabels, trainingSet);
 			System.out.println("Model has been trained for iteration: " + (i + 1));
 			System.out.println("Starting to test model...");
 			for(Tweet tweet : testSet) {
-				System.out.println("Testing for tweet: " + tweet.getTweetText());
-				tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
-				if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
-					TP++;
-				} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
-					FP++;
-				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("0")) {
-					TN++;
-				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("1")) {
-					FN++;
+				try{
+					System.out.println("Testing for tweet: " + tweet.getTweetText());
+					tweet.setAssignedClassLabel(NB.apply(classLabels, tweet));
+					if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
+						TP++;
+					} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
+						FP++;
+					} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("0")) {
+						TN++;
+					} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("1")) {
+						FN++;
+					}
+				} catch (Exception ex){
+					System.out.println(ex);
 				}
 			}
 			System.out.println("Model has been tested...");
@@ -150,22 +154,26 @@ public class EvalNB {
 			}
 			System.out.println("Training Set For Iteration " + i + " Created...");
 			System.out.println("Starting To Train Model For Iteration " + i + "...");
-			ProbabilityModel probModel = NB.train(classLabels, trainingSet);
+			NB.train(classLabels, trainingSet);
 			//ProbabilityModelBigDecimal probModel = NB.trainBigDecimal(classLabels, trainingSet);
 			System.out.println("Model Has Been Trained...");
 			System.out.println("Starting To Test Model For Iteration " + i + "...");
 			for(Tweet tweet : testSet) {
-				System.out.println("Testing For Tweet " + tweet.getTweetText());
-				tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
-				//tweet.setAssignedClassLabel(NB.applyBigDecimal(classLabels, probModel, tweet));
-				if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
-					TP++;
-				} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
-					FP++;
-				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("0")) {
-					TN++;
-				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("1")) {
-					FN++;
+				try {
+					System.out.println("Testing For Tweet " + tweet.getTweetText());
+					tweet.setAssignedClassLabel(NB.apply(classLabels, tweet));
+					//tweet.setAssignedClassLabel(NB.applyBigDecimal(classLabels, probModel, tweet));
+					if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
+						TP++;
+					} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
+						FP++;
+					} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("0")) {
+						TN++;
+					} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("1")) {
+						FN++;
+					}
+				} catch (Exception ex){
+					System.out.println(ex);
 				}
 			}
 			System.out.println("Model Has Been Tested...");
@@ -207,21 +215,25 @@ public class EvalNB {
 		int FN = 0;
 		System.out.println("Starting To Train Model...");
 		//ProbabilityModel probModel = NB.train(classLabels, trainingSet);
-		ProbabilityModelBigDecimal probModel = NB.trainBigDecimal(classLabels, trainingSet);
+		NB.trainBigDecimal(classLabels, trainingSet);
 		System.out.println("The Model Has Been Trained...");
 		System.out.println("Starting To Test Model...");
 		for(Tweet tweet : testSet) {
-			System.out.println("Testing For Tweet: " + tweet.getTweetText());
-			//tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
-			tweet.setAssignedClassLabel(NB.applyBigDecimal(classLabels, probModel, tweet));
-			if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
-				TP++;
-			} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
-				FP++;
-			} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("0")) {
-				TN++;
-			} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("1")) {
-				FN++;
+			try {
+				System.out.println("Testing For Tweet: " + tweet.getTweetText());
+				//tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
+				tweet.setAssignedClassLabel(NB.applyBigDecimal(classLabels, tweet));
+				if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
+					TP++;
+				} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
+					FP++;
+				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("0")) {
+					TN++;
+				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("1")) {
+					FN++;
+				}
+			} catch (Exception ex){
+				System.out.println(ex);
 			}
 		}
 		System.out.println("The Model Has Been Tested...");
