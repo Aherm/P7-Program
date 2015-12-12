@@ -1,14 +1,13 @@
 package testLayer;
 
-import java.util.Arrays;
 import java.util.List;
-
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetRestaurants;
 import dataAccessLayer.DBGetTweets;
 import fileCreation.GenericPrint;
 import modelLayer.Grid;
 import modelLayer.Restaurant;
+import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
 public class GridTest {
@@ -20,6 +19,10 @@ public class GridTest {
 		grid.addTweets(tweets);
 		for (Restaurant r : restaurants) {
 			grid.rangeQuery(r, 25);
+		}
+		
+		for (Tweet t : tweets) {
+			grid.removeTweet(t);
 		}
 		long endTime = System.nanoTime();
 		
