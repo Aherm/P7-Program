@@ -12,7 +12,12 @@ import modelLayer.TweetStorage;
 
 public class GridTest {
 	private static long[][] results = new long[51][10];
-	
+
+
+	public static void main(String[] args) {
+		runTest();
+	}
+
 	public static long testCase(List<Restaurant> restaurants, TweetStorage tweets, int n) {
 		long startTime = System.nanoTime();
 		Grid grid = new Grid(-74, -73, 40, 41, n, n);
@@ -20,10 +25,10 @@ public class GridTest {
 		for (Restaurant r : restaurants) {
 			grid.rangeQuery(r, 25);
 		}
-		
+		/*
 		for (Tweet t : tweets) {
 			grid.removeTweet(t);
-		}
+		}*/
 		long endTime = System.nanoTime();
 		
 		return endTime - startTime;
@@ -46,7 +51,7 @@ public class GridTest {
 		}
 		
 		sb.append("Averages over the runs \n");
-		for (int i = 1; i <= 50; i++) {
+		for (int i = 1; i <= 40; i++) {
 			long averagetime = averageArray(results[i]);
 			sb.append("Time for size " + i*100 + " is: " + averagetime/1000000 + "ms \n");
 		}
