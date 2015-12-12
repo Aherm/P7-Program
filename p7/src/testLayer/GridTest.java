@@ -25,10 +25,9 @@ public class GridTest {
 		for (Restaurant r : restaurants) {
 			grid.rangeQuery(r, 25);
 		}
-		/*
 		for (Tweet t : tweets) {
 			grid.removeTweet(t);
-		}*/
+		}
 		long endTime = System.nanoTime();
 		
 		return endTime - startTime;
@@ -51,12 +50,12 @@ public class GridTest {
 		}
 		
 		sb.append("Averages over the runs \n");
-		for (int i = 1; i <= 40; i++) {
+		for (int i = 1; i <= 50; i++) {
 			long averagetime = averageArray(results[i]);
 			sb.append("Time for size " + i*100 + " is: " + averagetime/1000000 + "ms \n");
 		}
 		
-		GenericPrint.PRINTER("./statistics/gridTest.txt", sb.toString());
+		GenericPrint.PRINTER("./statistics/GridTest.txt", sb.toString());
 		
 		connection.closeConnection();
 	}
