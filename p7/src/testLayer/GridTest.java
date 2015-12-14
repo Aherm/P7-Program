@@ -19,8 +19,10 @@ public class GridTest {
 	}
 
 	public static long testCase(List<Restaurant> restaurants, TweetStorage tweets, int n) {
-		long startTime = System.nanoTime();
 		Grid grid = new Grid(-74, -73, 40, 41, n, n);
+		
+		long startTime = System.nanoTime();
+		
 		grid.addTweets(tweets);
 		for (Restaurant r : restaurants) {
 			grid.rangeQuery(r, 25);
