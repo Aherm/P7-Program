@@ -19,16 +19,17 @@ public class GridTest {
 	}
 
 	public static long testCase(List<Restaurant> restaurants, TweetStorage tweets, int n) {
-		long startTime = System.nanoTime();
 		Grid grid = new Grid(-74, -73, 40, 41, n, n);
+		
+		long startTime = System.nanoTime();
+		
 		grid.addTweets(tweets);
 		for (Restaurant r : restaurants) {
 			grid.rangeQuery(r, 25);
 		}
-		/*
 		for (Tweet t : tweets) {
 			grid.removeTweet(t);
-		}*/
+		}
 		long endTime = System.nanoTime();
 		
 		return endTime - startTime;
@@ -51,12 +52,12 @@ public class GridTest {
 		}
 		
 		sb.append("Averages over the runs \n");
-		for (int i = 1; i <= 40; i++) {
+		for (int i = 1; i <= 50; i++) {
 			long averagetime = averageArray(results[i]);
 			sb.append("Time for size " + i*100 + " is: " + averagetime/1000000 + "ms \n");
 		}
 		
-		GenericPrint.PRINTER("./statistics/gridTest.txt", sb.toString());
+		GenericPrint.PRINTER("./statistics/GridTest.txt", sb.toString());
 		
 		connection.closeConnection();
 	}
