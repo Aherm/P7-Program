@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import businessLogicLayer.Filter;
 import businessLogicLayer.Preprocessor;
 import naiveBayes.Multinomial;
 import naiveBayes.MultinomialBigDecimal;
@@ -240,6 +241,47 @@ public class EvalNB {
 		
 		EvaluationModel evalNB = new EvaluationModel("Seventy-Thirty Split", 1, TP, TN, FP, FN);
 		fullEvaluation.put("Fold1", evalNB);
+		return fullEvaluation;
+	}
+
+	public static Map<String, EvaluationModel> testSet(TweetStorage testSet, Multinomial NB) {
+		Collections.shuffle(testSet);
+		Preprocessor.processTweets(testSet);
+		ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("1", "0"));
+		Map<String, EvaluationModel> fullEvaluation = new HashMap<String, EvaluationModel>();
+		System.out.println("Starting To Create Training Data...");
+		System.out.println("Test Data Has Been Created...");
+		int TP = 0;
+		int FP = 0;
+		int TN = 0;
+		int FN = 0;
+		System.out.println("Starting To Train Model...");
+		System.out.println("The Model Has Been Trained...");
+		System.out.println("Starting To Test Model...");
+		for(Tweet tweet : testSet) {
+			try {
+				//System.out.println("Testing For Tweet: " + tweet.getTweetText());
+				//tweet.setAssignedClassLabel(NB.apply(classLabels, probModel, tweet));
+				tweet.setAssignedClassLabel(NB.apply(tweet));
+				if(tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("1")) {
+					TP++;
+
+				} else if (tweet.getAssignedClassLabel().equals("1") && tweet.getExpectedClassLabel().equals("0")) {
+					FP++;
+				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("0")) {
+					TN++;
+				} else if (tweet.getAssignedClassLabel().equals("0") && tweet.getExpectedClassLabel().equals("1")) {
+					FN++;
+				}
+			} catch (Exception ex){
+				System.out.println(ex);
+			}
+		}
+		System.out.println("The Model Has Been Tested...");
+
+		EvaluationModel evalNB = new EvaluationModel("Seventy-Thirty Split", 1, TP, TN, FP, FN);
+		fullEvaluation.put("Fold1", evalNB);
+		evalNB.printEvaluation();
 		return fullEvaluation;
 	}
 	

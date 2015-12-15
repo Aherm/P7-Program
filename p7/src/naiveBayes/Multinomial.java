@@ -153,6 +153,10 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
         return counter;
     }
 
+    public ProbabilityModel getLearnedProbabilityModel() {
+        return probabilityModel;
+    }
+
     public static Multinomial loadClassifier(String filePath){
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));
@@ -164,6 +168,8 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
             return null;
         }
     }
+
+
 
     public boolean saveClassifier(String filePath) throws Exception{
         if (this.probabilityModel == null)

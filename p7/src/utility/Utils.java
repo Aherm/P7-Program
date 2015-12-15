@@ -53,6 +53,7 @@ public class Utils {
 			initializedData.add(document);
 		}
 		dataSet = convertDataToTweet(initializedData);
+		System.out.println(dataSet.size() + "," + initializedData.size());
 		return dataSet;
 	}
 	

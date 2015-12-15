@@ -15,7 +15,10 @@ public class Preprocessor {
 		processTweetLinks(tweet);
 		processTweetSymbols(tweet);
 		// remove the last empty space character
-		tweet.setTweetText(tweet.getTweetText().substring(0, tweet.getTweetText().length() - 1));
+		if(tweet.getTweetText().length() == 0)
+			tweet.setTweetText("");
+		else
+			tweet.setTweetText(tweet.getTweetText().substring(0, tweet.getTweetText().length() - 1));
 	}
 
 	private static void processTweetMentions(Tweet tweet) {

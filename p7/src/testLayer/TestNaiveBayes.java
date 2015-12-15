@@ -57,14 +57,16 @@ public class TestNaiveBayes {
         }
     }
 
-    private static void testSickClassifier(){
+    public static void testSickClassifier(){
         /**
          * Initialization of data
          */
         ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("0", "1"));
         TweetStorage trainingSet = Utils.getDataFromFile("trainingData\\sickSet.csv");
         Preprocessor.processTweets(trainingSet);
+        TweetStorage correctSet = new TweetStorage();
 
+        System.out.println(correctSet.size());
         /**
          * Training the classifier
          */
