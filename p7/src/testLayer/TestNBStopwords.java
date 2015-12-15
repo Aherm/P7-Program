@@ -36,10 +36,10 @@ public class TestNBStopwords {
         Multinomial mlb = new Multinomial();
         mlb.setStopwords(stopwords);
         mlb.train(classLabels, trainingSet);
-        try{
+        try {
             mlb.saveClassifier("./classifiers/sickNaiveBayes.model");
             System.out.println("MLB saved\n");
-        } catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
 
@@ -71,18 +71,6 @@ public class TestNBStopwords {
         List<String> results = new ArrayList<String>();
         writeProbabilityResultsToList(topKCondProbFor0, results);
         writeProbabilityResultsToList(topKCondProbFor1, results);
-        /*
-        for (ConditionalProbability condProb : topKCondProbFor0){
-            String strResult = "token: '" + condProb.getToken() + "' class: " + condProb.getCls() + " Probability: " + condProb.getProbability();
-            results.add(strResult);
-            System.out.println(strResult);
-        }
-        for (ConditionalProbability condProb : topKCondProbFor1){
-            String strResult = "token: '" + condProb.getToken() + "' class: " + condProb.getCls() + " Probability: " + condProb.getProbability();
-            results.add(strResult);
-            System.out.println(strResult);
-        }
-        */
 
         StringBuilder finalStrToPrint = new StringBuilder();
         for (String res : results) {
@@ -97,6 +85,12 @@ public class TestNBStopwords {
         System.out.println("done with top k");
         System.out.println("-------------------------------");
 
+        findCondProbDiffs(topKCondProbFor0, topKCondProbFor1, conditionalProbabilitiesList0, conditionalProbabilitiesList1);
+    }
+
+    private static void findCondProbDiffs(
+            List<ConditionalProbability> topKCondProbFor0, List<ConditionalProbability> topKCondProbFor1,
+            List<ConditionalProbability> conditionalProbabilitiesList0, List<ConditionalProbability> conditionalProbabilitiesList1){
         try {
             System.out.println("Top k diff for non-sick");
             for (ConditionalProbability condProb0 : topKCondProbFor0) {
