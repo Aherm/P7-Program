@@ -1,0 +1,40 @@
+token: '' class: 0 Probability: 0.013871708782470401
+
+token: 'im' class: 0 Probability: 0.009939918713553632
+
+token: 'sick' class: 0 Probability: 0.00989574129704895
+
+token: 'of' class: 0 Probability: 0.008879660717441245
+
+token: 'on' class: 0 Probability: 0.008879660717441245
+
+token: 'you' class: 0 Probability: 0.008305354302880368
+
+token: 'me' class: 0 Probability: 0.007510160805796077
+
+token: 'in' class: 0 Probability: 0.00724509630676798
+
+token: '@LINK' class: 0 Probability: 0.00724509630676798
+
+token: 'is' class: 0 Probability: 0.006980031807739883
+
+token: 'stomach' class: 1 Probability: 0.017116524028966424
+
+token: 'feel' class: 1 Probability: 0.008558262014483212
+
+token: 'food' class: 1 Probability: 0.007636603028308098
+
+token: 'poisoning' class: 1 Probability: 0.0067149440421329825
+
+token: 'im' class: 1 Probability: 0.0065832784726793945
+
+token: 'sick' class: 1 Probability: 0.0064516129032258064
+
+token: 'up' class: 1 Probability: 0.005924950625411455
+
+token: 'nauseous' class: 1 Probability: 0.005661619486504279
+
+token: 'hurts' class: 1 Probability: 0.004871626069782752
+
+token: 'have' class: 1 Probability: 0.004608294930875576
+

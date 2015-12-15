@@ -1,10 +1,13 @@
 package naiveBayes;
 
+import Processing.Stopwords;
+
 import java.util.*;
 
 public class ProbabilityModel implements java.io.Serializable {
     List<String> vocabulary;
     Map<String, Double> prior;
+    Stopwords stopwords = new Stopwords();
 
     Map<ArrayList<String>, Double> condprop;
 
@@ -75,17 +78,25 @@ public class ProbabilityModel implements java.io.Serializable {
         for (Map.Entry<ArrayList<String>, Double> entry : condprop.entrySet()) {
             ArrayList<String> key = entry.getKey();
             double probability = entry.getValue();
-            //String token = key.get(0);
+            String token = key.get(0);
             String propCls = key.get(1);
 
             if (propCls.equals(cls)) {
-                condProbForCls.put(key, probability);
-                //System.out.println("token: " + token + " probability: " + probability);
+                if (this.stopwords.contains(token))
+                    continue;
+                else
+                    condProbForCls.put(key, probability);
             }
-
         }
-
         return condProbForCls;
+    }
+
+    public Stopwords getStopwords() {
+        return stopwords;
+    }
+
+    public void setStopwords(Stopwords stopwords) {
+        this.stopwords = stopwords;
     }
     /*
 	}

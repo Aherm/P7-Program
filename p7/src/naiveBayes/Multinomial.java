@@ -1,5 +1,6 @@
 package naiveBayes;
 
+import Processing.Stopwords;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 
@@ -9,9 +10,9 @@ import java.util.*;
 public class Multinomial extends NaiveBayes implements java.io.Serializable {
     ProbabilityModel probabilityModel = null;
     ArrayList<String> C;
+    Stopwords stopwords;
 
     /**
-     *
      * @param C : set of possible classes
      * @param D : the trainingset, aka the document set D, in this case a list of tweet
      * @return Probability object : the model used to later classify new stweets
@@ -44,11 +45,10 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
     }
 
     /**
-     *
      * @param tweet : is the tweet to classify
      * @return c : the class the provided tweet is set to
      */
-    
+
     @Override
     public String apply(Tweet tweet) throws Exception {
         if (this.probabilityModel == null)
@@ -60,7 +60,10 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
         for (String c : C) {
             score.put(c, Math.log10(this.probabilityModel.getPriorProbability(c)));
             for (String t : W) {
-                score.put(c, score.get(c) + Math.log10(this.probabilityModel.getConditionalProbability(t, c)));
+                if (this.stopwords.contains(t))
+                    continue;
+                else
+                    score.put(c, score.get(c) + Math.log10(this.probabilityModel.getConditionalProbability(t, c)));
             }
         }
         // return the class with the highest probability value
@@ -68,7 +71,7 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
     }
 
     @Override
-    public Map<String, Double> applyGetScore(ProbabilityModel probability, Tweet tweet) throws Exception{
+    public Map<String, Double> applyGetScore(ProbabilityModel probability, Tweet tweet) throws Exception {
         if (this.probabilityModel == null)
             throw new Exception("Classifier needs to be trained before evaluation");
 
@@ -132,8 +135,6 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
     }
 
 
-
-
     protected double countTweetsInClass(TweetStorage tweets, String c) {
         double counter = 0;
         for (Tweet tweet : tweets) {
@@ -157,21 +158,20 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
         return probabilityModel;
     }
 
-    public static Multinomial loadClassifier(String filePath){
+    public static Multinomial loadClassifier(String filePath) {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));
             Multinomial learnedClassifier = (Multinomial) ois.readObject();
             ois.close();
             return learnedClassifier;
-        } catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
             return null;
         }
     }
 
 
-
-    public boolean saveClassifier(String filePath) throws Exception{
+    public boolean saveClassifier(String filePath) throws Exception {
         if (this.probabilityModel == null)
             throw new Exception("Classifier needs to be trained before evaluation");
 
@@ -183,9 +183,17 @@ public class Multinomial extends NaiveBayes implements java.io.Serializable {
             oos.flush();
             oos.close();
             return true;
-        } catch (IOException iex){
+        } catch (IOException iex) {
             System.out.println(iex);
             return false;
         }
+    }
+
+    public Stopwords getStopwords() {
+        return stopwords;
+    }
+
+    public void setStopwords(Stopwords stopwords) {
+        this.stopwords = stopwords;
     }
 }
