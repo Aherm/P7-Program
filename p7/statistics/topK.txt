@@ -1,0 +1,40 @@
+token: 'i' class: 0 Probability: 0.021205159922247748
+
+token: 'the' class: 0 Probability: 0.018775402014490194
+
+token: 'to' class: 0 Probability: 0.015682982859162396
+
+token: '' class: 0 Probability: 0.013871708782470401
+
+token: 'a' class: 0 Probability: 0.013827531365965718
+
+token: 'and' class: 0 Probability: 0.012546386287329916
+
+token: 'im' class: 0 Probability: 0.009939918713553632
+
+token: 'sick' class: 0 Probability: 0.00989574129704895
+
+token: 'my' class: 0 Probability: 0.009321434882488072
+
+token: 'of' class: 0 Probability: 0.008879660717441245
+
+token: 'i' class: 1 Probability: 0.023304805793285057
+
+token: 'stomach' class: 1 Probability: 0.017116524028966424
+
+token: 'my' class: 1 Probability: 0.014746543778801843
+
+token: 'to' class: 1 Probability: 0.009611586570111916
+
+token: 'feel' class: 1 Probability: 0.008558262014483212
+
+token: 'food' class: 1 Probability: 0.007636603028308098
+
+token: 'poisoning' class: 1 Probability: 0.0067149440421329825
+
+token: 'im' class: 1 Probability: 0.0065832784726793945
+
+token: 'sick' class: 1 Probability: 0.0064516129032258064
+
+token: 'and' class: 1 Probability: 0.006056616194865042
+
