@@ -54,13 +54,13 @@ public class ProbabilityModel implements java.io.Serializable {
         //fill this with 10, save the token of the lowest and compare against it
         List<ConditionalProbability> allConditionalProbabilities = new ArrayList<ConditionalProbability>();
         List<ConditionalProbability> topK = new ArrayList<ConditionalProbability>();
-        ConditionalProbability lowestCondProb = new ConditionalProbability("", 0);
+        ConditionalProbability lowestCondProb = new ConditionalProbability("", "", 0);
         for (Map.Entry<ArrayList<String>, Double> entry : conditionalProbabilities.entrySet()) {
             ArrayList<String> key = entry.getKey();
             String token = key.get(0);
-            //String probCls = key.get(1);
+            String probCls = key.get(1);
             double probability = entry.getValue();
-            ConditionalProbability condProb = new ConditionalProbability(token, probability);
+            ConditionalProbability condProb = new ConditionalProbability(token, probCls, probability);
             allConditionalProbabilities.add(condProb);
         }
         Collections.sort(allConditionalProbabilities, new ConditionalProbabilityCompare());
@@ -73,9 +73,9 @@ public class ProbabilityModel implements java.io.Serializable {
     public Map<ArrayList<String>, Double> getConditionalProbabilitiesForClass(String cls) {
         Map<ArrayList<String>, Double> condProbForCls = new HashMap<ArrayList<String>, Double>();
         for (Map.Entry<ArrayList<String>, Double> entry : condprop.entrySet()) {
-            ArrayList<String> key = (ArrayList<String>) entry.getKey();
-            double probability = (Double) entry.getValue();
-            String token = key.get(0);
+            ArrayList<String> key = entry.getKey();
+            double probability = entry.getValue();
+            //String token = key.get(0);
             String propCls = key.get(1);
 
             if (propCls.equals(cls)) {
