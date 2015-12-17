@@ -1,5 +1,7 @@
 package modelLayer;
 
+import java.util.Map;
+
 public class EvaluationModel {
 	String evalMethod;
 	int foldNum, TP, TN, FP, FN;
@@ -97,4 +99,41 @@ public class EvaluationModel {
 		return positives / total;
 	}
 	
+	public static double getAveragePrecision(Map<String, EvaluationModel> evalModel) {
+		double totalPrec = 0;
+		double totalSize = evalModel.size();
+		
+		for(String fold : evalModel.keySet()) {
+			totalPrec += evalModel.get(fold).precision;
+		}
+		
+		double averagePrec = totalPrec / totalSize;
+		
+		return averagePrec;
+	}
+	
+	public static double getAverageRecall(Map<String, EvaluationModel> evalModel) {
+		double totalRec = 0;
+		double totalSize = evalModel.size();
+		
+		for(String fold : evalModel.keySet()) {
+			totalRec += evalModel.get(fold).recall;
+		}
+		
+		double averageRec = totalRec / totalSize;
+		
+		return averageRec;
+	}
+	
+	public static double getAverageAccuracy(Map<String, EvaluationModel> evalModel) {
+		double totalAcc = 0;
+		double totalSize = evalModel.size();
+		for(String fold : evalModel.keySet()) {
+			totalAcc += evalModel.get(fold).accuracy;
+		}
+		
+		double averageAcc = totalAcc / totalSize;
+		
+		return averageAcc;
+	}
 }
