@@ -283,6 +283,6 @@ public class Tweet implements OurLocation {
 	}
 	
 	public String toString(){
-		return this.tweetID + "  :  " + this.tweetText.replaceAll("\n","") + " (" + this.lon + ","+ this.lat + ")";
+		return this.tweetID + "  :  " + this.tweetText.replaceAll("\n","") + " (" + this.lat + ","+ this.lon + ")" + this.userID;
 	}
 }
