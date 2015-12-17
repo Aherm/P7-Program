@@ -282,4 +282,7 @@ public class Tweet implements OurLocation {
 		return this.locRestaurant != null || this.nameRestaurant != null; 
 	}
 	
+	public String toString(){
+		return this.tweetID + "  :  " + this.tweetText.replaceAll("\n","") + " (" + this.lon + ","+ this.lat + ")";
+	}
 }

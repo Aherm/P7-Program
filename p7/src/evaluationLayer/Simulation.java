@@ -48,7 +48,8 @@ public class Simulation {
 		nominal.setStopwords(stop1);
 		
 		for(Restaurant r: restaurants){
-    			invertedIndex.addEntry(r);
+    		if(!r.getName().contains("{iv}") && !r.getName().contains("floor)"))	
+    				invertedIndex.addEntry(r);
     	}
 		invertedIndex.init();
 		System.out.println("Starting");
@@ -132,7 +133,7 @@ public class Simulation {
 		}
 		
 		for(Restaurant r : score.conservative.keySet()){
-			if(score.conservative.get(r).doubleValue() < 0)
+			if(score.conservative.get(r).doubleValue() > 0)
 				conservative.add(new Rank(r, score.conservative.get(r)));
 				
 		}

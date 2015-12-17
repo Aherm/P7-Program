@@ -33,6 +33,8 @@ public class Scoring {
 	public int diff = 0;
 	public int conflictLoc = 0; 
 	public int conflictName = 0; 
+	public StringBuilder conLoc = new StringBuilder(); 
+	public StringBuilder conName = new StringBuilder();
  
 	private void init(List<Restaurant> restaurants){
 		
@@ -163,6 +165,7 @@ public class Scoring {
 			}
 		}
 	
+		statistics(allTweets,allRestaurants);
 		
 		combinedScore(allTweets,allRestaurants); 
 		
@@ -185,9 +188,104 @@ public class Scoring {
 		builder.append("Sick Tweets: " + ts.getSickTweets().size() + "\n" );
 		builder.append("GeoTagged: " + ts.getGeotaggedTweets().size() + "\n");
 		GenericPrint.PRINTER("counters.txt",builder.toString());
+		GenericPrint.PRINTER("ConflicsSolvedByLoc.txt", conLoc.toString());
+		GenericPrint.PRINTER("ConflicsSolvedByname.txt",conName.toString());
 		System.out.println(builder.toString());
+		
+		
 	}
 
+	public  void statistics(TweetStorage ts, List<Restaurant> restaurants){
+		
+		Map<Restaurant,TweetStorage> withLoc = new HashMap<Restaurant,TweetStorage>();
+		Map<String, TweetStorage> withName = new HashMap<String,TweetStorage>();
+		TweetStorage conflicts  = new TweetStorage(); 
+		TweetStorage same = new TweetStorage(); 
+		for(Restaurant r : restaurants){
+			withLoc.put(r, new TweetStorage());
+			withName.put(r.getName(), new TweetStorage());
+		}
+		
+		
+		for(Tweet t : ts){
+			if(t.hasVisited()){
+				if(t.uniqueLocation()){
+					withLoc.get(t.getLocRes()).add(t);
+				}
+				else if(t.uniqueMention()){
+					withName.get(t.getNameRes().getName()).add(t);
+				}
+				else if(t.conflict()){
+					conflicts.add(t);
+				}
+				else if(t.resSame()){
+					same.add(t);
+					}
+			}
+		}
+		
+		StringBuilder loc = new  StringBuilder(); 
+		StringBuilder name = new StringBuilder(); 
+		StringBuilder con = new StringBuilder(); 
+		StringBuilder sam = new StringBuilder(); 
+		
+		StringBuilder sickLoc = new  StringBuilder(); 
+		StringBuilder sickName = new StringBuilder(); 
+		
+		for(Restaurant r : withLoc.keySet()){
+			if(!withLoc.get(r).isEmpty()){
+				loc.append(r.getName() + "----------------------------------------------\n"); 
+				loc.append("count: " + withLoc.get(r).size() + "\n" );
+				
+				for(Tweet t : withLoc.get(r)){
+					loc.append(t.toString() + "\n");
+				}
+			}
+			if(!withLoc.get(r).getSickTweets().isEmpty()){
+				sickLoc.append(r.getName() + "----------------------------------------------\n"); 
+				sickLoc.append("count: " + withLoc.get(r).size() + "\n" );
+				sickLoc.append("sickCount: " + withLoc.get(r).getSickTweets().size() + "\n");
+				for(Tweet t : withLoc.get(r).getSickTweets()){
+					sickLoc.append(t.toString() + "\n");
+				}
+			}
+		}
+		
+		for(String s : withName.keySet()){
+			if(!withName.get(s).isEmpty()){
+				name.append(s + "----------------------------------------------\n"); 
+				name.append("count: " + withName.get(s).size() + "\n");
+				
+				for(Tweet t : withName.get(s)){
+					name.append(t.toString() + "\n"); 
+				}
+			}
+			if(!withName.get(s).getSickTweets().isEmpty()){
+				sickName.append(s + "----------------------------------------------\n");
+				sickName.append("count: " + withName.get(s).size() + "\n");
+				sickName.append("sickCount: " + withName.get(s).getSickTweets().size() + "\n");
+				for(Tweet t : withName.get(s).getSickTweets()){
+					sickName.append(t.toString() + "\n"); 
+				}
+			}
+		}
+		
+		for(Tweet t : conflicts){
+			con.append("Loc: " + t.getLocRes().getName() + "Name: " + t.getNameRes().getName() + t.toString() + "\n");
+		}
+		
+		for(Tweet t: same){
+			sam.append("Loc: " + t.getLocRes().getName() + "Name: " + t.getNameRes().getName() + t.toString() + "\n");
+		}	
+		
+		GenericPrint.PRINTER("SickLoc.txt", sickLoc.toString());
+		GenericPrint.PRINTER("SickName.txt", sickName.toString());
+		GenericPrint.PRINTER("location.txt", loc.toString() );
+		GenericPrint.PRINTER("name.txt", name.toString());
+		GenericPrint.PRINTER("same.txt",sam.toString());
+		GenericPrint.PRINTER("conflicts.txt", con.toString());
+	}
+	
 	
 	private void combinedScore(TweetStorage ts, List<Restaurant> restaurants){
 		Map<Restaurant,TweetStorage> map = new HashMap<Restaurant,TweetStorage>();
@@ -214,6 +312,8 @@ public class Scoring {
 					map.get(t.getLocRes()).add(t);
 			}		
 		}
+		
+		
 		for(Restaurant r : map.keySet()){
 			TweetStorage tweets  = map.get(r);
 			TweetStorage sickTweets = tweets.getSickTweets();
@@ -238,9 +338,7 @@ public class Scoring {
 				double results2 = calcScore((double)sickTweets.size() , (double)tweets.size()); 
 				combinedScore.put(r, results);
 				noOnlyMcombinedScore.put(r,results);
-				conservative.put(r, results2);
-				
-				
+				conservative.put(r, results2);	
 			}
 		}
 		
@@ -260,10 +358,12 @@ public class Scoring {
 		for(Restaurant r : restaurantsWithSameName.get(t.getNameRes().getName())){
 			if(Distance.getDist(r,t) < Constants.restaurantDistance){
 				conflictName++;
+				conName.append("name: " + t.getNameRes().getName() + " loc:" + t.getLocRes().getName() + ", tweet: "+ t.toString() + "\n");
 				return r; 
 			}
 		}
 		conflictLoc++; 
+		conLoc.append("name: " + t.getNameRes().getName() + " loc:" + t.getLocRes().getName() + ", tweet: "+ t.toString() + "\n");
 		return t.getLocRes();	
 	}
 }
