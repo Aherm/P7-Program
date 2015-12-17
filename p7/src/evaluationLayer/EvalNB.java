@@ -32,16 +32,6 @@ public class EvalNB {
 		Multinomial NB = new Multinomial();
 		ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("1", "0"));
 		Map<String, EvaluationModel> fullEvaluation = new HashMap<String, EvaluationModel>();
-		
-		Stopwords stopwords = new Stopwords(Arrays.asList("i", "the", "to", "a", "and", "my"));
-        stopwords.add("on");
-        stopwords.add("in");
-        stopwords.add("is");
-        stopwords.add("it");
-        stopwords.add("that");
-        stopwords.add("just");
-        NB.setStopwords(stopwords);
-		
 		System.out.println("Starting to create positive and negative sets...");
 		for(Tweet tweet : dataSet) {
 			if(tweet.getExpectedClassLabel().equals("1")) {

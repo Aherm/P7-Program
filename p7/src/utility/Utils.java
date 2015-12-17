@@ -161,9 +161,8 @@ public class Utils {
 				case 2:
 					break;
 				case 3:
-					break;
-				case 4:
-					// Classlabel
+					//Classlabel
+					/*
 					if (Integer.parseInt(token) == 10) {
 						System.out.println("W T F M8, CLASSLABEL WAS 10");
 					}
@@ -176,6 +175,24 @@ public class Utils {
 					if (Integer.parseInt(token) == 1) {
 						numPositives++;
 					}
+					*/
+					break;
+				case 4:
+					// Classlabel
+					
+					if (Integer.parseInt(token) == 10) {
+						System.out.println("W T F M8, CLASSLABEL WAS 10");
+					}
+					if (Integer.parseInt(token) == 11) {
+						System.out.println("W T F M8, CLASSLABEL WAS 11");
+					}
+					if (Integer.parseInt(token) == 0) {
+						numNegatives++;
+					}
+					if (Integer.parseInt(token) == 1) {
+						numPositives++;
+					}
+					
 					break;
 				}
 				counter++;
