@@ -1,9 +1,11 @@
 package evaluationLayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import Processing.Stopwords;
 import businessLogicLayer.Filter;
 import businessLogicLayer.Preprocessor;
 import businessLogicLayer.Scoring;
@@ -34,6 +36,7 @@ public class Simulation {
 	Multinomial nominal;   
 	
 	public void stream() throws Exception{
+
 		DBConnect connection = DBConnect.getInstance();
         connection.connectToServer("jdbc:postgresql://172.25.26.208/", "world" + "", "postgres", "21");
 		TweetStorage allTweet = DBGetTweets.getAllTweetsExperiment(); 
@@ -41,48 +44,20 @@ public class Simulation {
 		restaurants = tuple.x; 
 		ranks = tuple.y; 
 		nominal = Multinomial.loadClassifier("./classifiers/sickNaiveBayes.model");
-		/*
-		Restaurant r1 = new Restaurant("diner",40.726992, -74.000600); 
-		Restaurant r2 = new Restaurant("tasty",40.727048, -74.000688);
-		Restaurant r3 = new Restaurant("stuff",40.727007, -74.002197); 
-		Restaurant r4 = new Restaurant("last",40.728976, -74.001082);
-		Restaurant r5 = new Restaurant("stuff",1,1); 
-		
-		restaurants = new ArrayList<Restaurant>();
-		restaurants.add(r1);
-		restaurants.add(r2); 
-		restaurants.add(r3);
-		restaurants.add(r4);
-		restaurants.add(r5);
-		
-		TweetStorage allTweet = new TweetStorage(); 
-		Tweet t1 = new Tweet(1,1,1,1,"eating lol and feeling sick ",new Date(),40.727092, -74.000982); 
-		Tweet t2 = new Tweet(1,1,1,1,"eating at the tasty lol feeling sick",new Date(),40.727091, -74.000533);
-		Tweet t3 = new Tweet(1,1,1,1,"eating at stuff xD and feeling sick ",new Date());
-		Tweet t4 = new Tweet(1,1,1,1,"hating feeling sick the diner right now",new Date(),40.728976, -74.0010820);
-		allTweet.add(t1); 
-		allTweet.add(t2); 
-		allTweet.add(t3);
-		allTweet.add(t4);
-		
-		ranks.add(new Rank(r1, 1)); 
-		ranks.add(new Rank(r2,2)); 
-		ranks.add(new Rank(r3,3)); 
-		ranks.add(new Rank(r4,4)); 
-	
-		*/
+		Stopwords stop1 = new Stopwords(Arrays.asList("i","the","to","a","and","my","on","in","is","it","that","just"));
+		nominal.setStopwords(stop1);
 		
 		for(Restaurant r: restaurants){
-    		if(!r.getName().contains("v {iv}") && !r.getName().contains("floor)"))
     			invertedIndex.addEntry(r);
     	}
 		invertedIndex.init();
 		System.out.println("Starting");
 		long startTime = System.nanoTime(); 
 		for(Tweet t : allTweet){
-			onTweet(t);
+			if(!tweets.contains(t))
+				onTweet(t);
 		}
-		//tweets.addAll(allTweet);
+
 		long endTime = System.nanoTime();
 		System.out.println(endTime - startTime);
 		System.out.println(tweets.getSickTweets().size());
@@ -98,6 +73,7 @@ public class Simulation {
 		grid.addTweet(tweet);
 		invertedIndex.addIndex(tweet);
 		if(Filter.passesFilter(tweet)){
+			System.out.println("found this guy: " + tweet.getTweetText());
 			tweet.setSick(true);
 			TweetStorage userTimeLine = DBGetTweets.getUserExperiment(tweet.getUserID());
 			removeSeenTweets(userTimeLine);
@@ -105,16 +81,16 @@ public class Simulation {
 			tweets.addAll(userTimeLine); 
 			grid.addTweets(userTimeLine);
 		}
-		
 	}
 	
 	private void removeSeenTweets(TweetStorage ts){
 		for(int i = 0 ; i < ts.size(); i++){
-			ts.get(i).setSick(true);
 			if(tweets.contains(ts.get(i))){
 				tweets.getTweet(ts.get(i)).setSick(true);
 				ts.remove(ts.get(i));
 			}
+			else 
+				ts.get(i).setSick(true);
 		}
 	}
 	
@@ -126,32 +102,53 @@ public class Simulation {
 		List<Rank> geoRanks = new ArrayList<Rank>();
 		List<Rank> nameRanks = new ArrayList<Rank>(); 
 		List<Rank> combined = new ArrayList<Rank>();
+		List<Rank> augCombined = new ArrayList<Rank>(); 
+		List<Rank> conservative = new ArrayList<Rank>(); 
+		
+		
 		for(Restaurant r : score.geoScore.keySet()){
 			if(score.geoScore.get(r).doubleValue() > 0){
 				geoRanks.add(new Rank(r,score.geoScore.get(r).doubleValue())); 
 			}
-			//System.out.println(r.getName() + ":" + score.geoScore.get(r).doubleValue());
+			
 		}
 		
 		System.out.println("NAMES-----------------------------------------------");
 		for(Restaurant r : score.nameScore.keySet()){
 			if(score.nameScore.get(r).doubleValue() > 0)
 				nameRanks.add(new Rank(r, score.nameScore.get(r).doubleValue()));
-			//System.out.println(r.getName() + ":" + score.nameScore.get(r).doubleValue());
+			
 		}
 		System.out.println("COMBINED---------------------------------------------"); 
 		for(Restaurant r: score.combinedScore.keySet()){
 			if(score.combinedScore.get(r).doubleValue() > 0)
 				combined.add(new Rank(r,score.combinedScore.get(r)));
-			//System.out.println(r.getName() + ":" + score.combinedScore.get(r).doubleValue());
+		
+		}
+		
+		for(Restaurant r : score.noOnlyMcombinedScore.keySet()){
+			if(score.noOnlyMcombinedScore.get(r).doubleValue() > 0)
+				augCombined.add(new Rank(r, score.noOnlyMcombinedScore.get(r)));
+		}
+		
+		for(Restaurant r : score.conservative.keySet()){
+			if(score.conservative.get(r).doubleValue() < 0)
+				conservative.add(new Rank(r, score.conservative.get(r)));
+				
 		}
 		
 		RankHandler handler = new RankHandler(ranks,combined);
 		RankHandler handler2 = new RankHandler(ranks,nameRanks);
 		RankHandler handler3 = new RankHandler(ranks,geoRanks); 
+		RankHandler handler4 = new RankHandler(ranks, augCombined); 
+		RankHandler handler5 = new RankHandler(ranks, conservative); 
 		handler.printRanks("combineRanks.csv");
 		handler2.printRanks("nameRanks.csv");
-		handler3.printRanks("georanks.csv");
+		handler3.printRanks("geoRanks.csv");
+		handler4.printRanks("otherCombineRanks.csv");
+		handler5.printRanks("conservativeRanks.csv");
+		
+	
 	}
 	
 

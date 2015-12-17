@@ -10,6 +10,7 @@ import java.util.SortedSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import Processing.Stopwords;
 import naiveBayes.Multinomial;
 
 public class InvertedIndex extends HashMap<String, Set<Tweet>> {
@@ -28,9 +29,11 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     private Multinomial multinomial; 
     
     public void init(){
-    	patterns = new Pattern[this.keySet().size()]; 
+    	
+    	//patterns = new Pattern[this.keySet().size()]; 
     	stringList.addAll(this.keySet()); 
-     	int counter = 0; 
+     	/*
+    	int counter = 0; 
     	for(String word : stringList){
     		String newWord = word;
     		String regex = "(@|#|the|cafe|restaurant|\\s)" 
@@ -40,9 +43,10 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     		patterns[counter] = p; 
     		counter++; 
     	}
-    	
+    	*/
     	multinomial = Multinomial.loadClassifier("./classifiers/visitNaiveBayes.model");
-    	
+    	multinomial.setStopwords(new Stopwords());
+    			
     	for(String s: stringList){
     		spaceRemovedList.add(s.replaceAll("\\s+", ""));
     	}

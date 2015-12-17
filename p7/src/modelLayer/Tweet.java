@@ -255,7 +255,26 @@ public class Tweet implements OurLocation {
 	}
 	
 	public boolean conflict(){
-		return !locRestaurant.equals(nameRestaurant); 
+		return !locRestaurant.getName().equals(nameRestaurant.getName()); 
+	}
+	
+	public boolean resSame(){
+		return !conflict(); 
+	}
+	
+	public boolean uniqueMention(){
+		if(locRestaurant == null)
+			return true; 
+		else 
+			return false; 
+	}
+	
+	public boolean uniqueLocation(){
+		if(nameRestaurant == null){
+			return true; 
+		}
+		else 
+			return false; 
 	}
 	
 	//used in scoring

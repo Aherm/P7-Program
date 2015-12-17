@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fileCreation.GenericPrint;
 import modelLayer.*;
 import naiveBayes.MultinomialBigDecimal;
 import naiveBayes.ProbabilityModelBigDecimal;
@@ -17,13 +18,21 @@ import utility.Distance;
 public class Scoring {
 	public  Map<Restaurant,Double> geoScore = new HashMap<Restaurant,Double>();
 	public  Map<Restaurant,Double> nameScore = new HashMap<Restaurant,Double>();
-	public  Map<Restaurant,Double> combinedScore = new HashMap<Restaurant,Double>(); 
+	public  Map<Restaurant,Double> combinedScore = new HashMap<Restaurant,Double>();
+	public  Map<Restaurant,Double> conservative = new HashMap<Restaurant,Double>();
+	public  Map<Restaurant,Double> noOnlyMcombinedScore = new HashMap<Restaurant,Double>();
 	private  Map<String,Integer> RestaurantNameCounter = new HashMap<String,Integer>(); 
 	private  Map<String,List<Restaurant>> restaurantsWithSameName = new HashMap<String,List<Restaurant>>();
 	public  int   locTotalVisits = 0; 
 	public  int   locTotalSickVisits = 0; 
 	public  int   nameTotalVisits = 0; 
 	public  int   nameTotalSickVisits = 0; 
+	public int uniqueLoc = 0; 
+	public int uniqueMen = 0; 
+	public int equal = 0; 
+	public int diff = 0;
+	public int conflictLoc = 0; 
+	public int conflictName = 0; 
  
 	private void init(List<Restaurant> restaurants){
 		
@@ -51,6 +60,8 @@ public class Scoring {
 		initScores(restaurants, geoScore);
 		initScores(restaurants, nameScore);
 		initScores(restaurants, combinedScore);
+		initScores(restaurants, noOnlyMcombinedScore);
+		initScores(restaurants, conservative); 
 		
 	}
 	
@@ -106,12 +117,18 @@ public class Scoring {
 		if(tweets.isEmpty()){
 			return 0; 
 		}
-		
+		boolean flag = false; 
+		if(tweets.get(0).getNameRes() == null){
+			flag  = true; 
+		}
 		for(Tweet t: tweets){
 			t.setNameRes(r);
 		}
-		nameTotalSickVisits += sickTweets.size(); 
-		nameTotalVisits += tweets.size(); 
+		
+		if(flag){
+			nameTotalSickVisits += sickTweets.size(); 
+			nameTotalVisits += tweets.size(); 
+		}
 		
 		double visit = tweets.size(); 
 		double sickVisit = sickTweets.size(); 
@@ -121,35 +138,6 @@ public class Scoring {
 		return result;
 	}
 
-	private static TweetStorage filterVisitedTweets(ProbabilityModelBigDecimal classifier, TweetStorage tweetsToClassify){
-		return getVisitedTweets(classifyTweets(classifier, tweetsToClassify));
-	}
-
-	private static TweetStorage classifyTweets(ProbabilityModelBigDecimal classifier, TweetStorage tweetsToClassify){
-		TweetStorage classificationResults = new TweetStorage();
-		MultinomialBigDecimal multinomialNB = new MultinomialBigDecimal();
-		for (Tweet tweet : tweetsToClassify) {
-			//String predictedClass = multinomialNB.applyBigDecimal(classLabels, classifier, tweet);
-			try{
-				Tweet classifiedTweet = multinomialNB.applyGetProbability(tweet);
-				classificationResults.add(classifiedTweet);
-			} catch (Exception ex){
-				System.out.println(ex);
-			}
-		}
-		return classificationResults;
-	}
-
-	private static TweetStorage getVisitedTweets(TweetStorage tweets){
-		TweetStorage tS = new TweetStorage();
-		for (Tweet t : tweets)
-			if (t.getAssignedClassLabel().equals("1"))
-				tS.add(t);
-		return tS;
-	}
-	
-	
-	
 	public void ScoreSystem(Grid grid, InvertedIndex ii,TweetStorage allTweets, List<Restaurant> allRestaurants){
 		System.out.println("Starting init");
 		init(allRestaurants); 
@@ -160,11 +148,44 @@ public class Scoring {
 		}
 		calcGeotagged(allTweets, allRestaurants);
 	 
+
 		
+		for(Tweet t: allTweets){
+			if(t.hasVisited()){
+				if(t.uniqueLocation())
+					uniqueLoc++;
+				else if(t.uniqueMention())
+					uniqueMen++;
+				else if(t.conflict())
+					diff++;
+				else 
+					equal++; 
+			}
+		}
 	
 		
 		combinedScore(allTweets,allRestaurants); 
+		
+		printCounts(allTweets);
 		System.out.println("i am done now");
+	}
+	
+	public void printCounts(TweetStorage ts){
+		StringBuilder builder = new StringBuilder(); 
+		builder.append("Total Locations visists: " + locTotalVisits +"\n"); 
+		builder.append("Total Mentions visists: " + nameTotalVisits +"\n"); 
+		builder.append("Total Sick L:" + locTotalSickVisits + "\n");
+		builder.append("Total Sick M:" + nameTotalSickVisits + "\n"); 
+		builder.append("Unique L:" + uniqueLoc +"\n");
+		builder.append("Unique M:" + uniqueMen + "\n"); 
+		builder.append("Diff: " + diff + "\n"); 
+		builder.append("Equal: " + equal + "\n");
+		builder.append("Conflict solved with loc: " + conflictLoc + "\n");
+		builder.append("Conflict solved with name; " + conflictName + "\n");
+		builder.append("Sick Tweets: " + ts.getSickTweets().size() + "\n" );
+		builder.append("GeoTagged: " + ts.getGeotaggedTweets().size() + "\n");
+		GenericPrint.PRINTER("counters.txt",builder.toString());
+		System.out.println(builder.toString());
 	}
 
 	
@@ -174,6 +195,7 @@ public class Scoring {
 		for(Restaurant r : restaurants){
 			nameCounter.put(r.getName(), new TweetStorage());
 		}
+		
 		//INIT MAP
 		for(Restaurant r : restaurants){
 			map.put(r, new TweetStorage()); 
@@ -199,18 +221,27 @@ public class Scoring {
 				continue; 
 			
 			double nameResults = 0; 
+			double mSick = 0; 
+			double mTotal = 0; 
 			if(!nameCounter.get(r.getName()).isEmpty()){
-				double sick = nameCounter.get(r.getName()).getSickTweets().size(); 
-				double normal = nameCounter.get(r.getName()).size();
-				nameResults = calcScore(sick, normal) / RestaurantNameCounter.get(r.getName()).doubleValue();
+				mSick = nameCounter.get(r.getName()).getSickTweets().size() / RestaurantNameCounter.get(r.getName()).doubleValue(); 
+				mTotal = nameCounter.get(r.getName()).size() / RestaurantNameCounter.get(r.getName()).doubleValue();		
 			}
 			
 			double results = 0; 
-			if(tweets.isEmpty())
-				results = nameResults; 
-			else
-				results = calcScore((double)sickTweets.size(),(double)tweets.size()) + nameResults;
-			combinedScore.put(r, results);
+			if(tweets.isEmpty()){ //only from mentions
+				combinedScore.put(r,nameScore.get(r));
+				noOnlyMcombinedScore.put(r, new Double(0));
+			}
+			else{
+				results = calcScore((double)sickTweets.size() + mSick,(double)tweets.size() + mTotal);
+				double results2 = calcScore((double)sickTweets.size() , (double)tweets.size()); 
+				combinedScore.put(r, results);
+				noOnlyMcombinedScore.put(r,results);
+				conservative.put(r, results2);
+				
+				
+			}
 		}
 		
 	}
@@ -222,14 +253,17 @@ public class Scoring {
 	
 	private Restaurant handleConflict(Tweet t){
 		
-		if(t.getLocRes().getName().equals(t.getNameRes().getName()))
-				return t.getLocRes(); 
+		if(t.getLocRes().getName().equals(t.getNameRes().getName())){
+			return t.getLocRes(); 
+		}	
 		//second case
 		for(Restaurant r : restaurantsWithSameName.get(t.getNameRes().getName())){
-			if(Distance.getDist(r,t) < Constants.restaurantDistance)
+			if(Distance.getDist(r,t) < Constants.restaurantDistance){
+				conflictName++;
 				return r; 
+			}
 		}
+		conflictLoc++; 
 		return t.getLocRes();	
 	}
-
 }

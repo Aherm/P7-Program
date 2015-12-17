@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class DBGetTweets {
 
-	private static String db = "new_york_tweets"; 
+	private static String db = "tweets"; 
 	
     public DBGetTweets() {
     }
@@ -148,5 +148,10 @@ public class DBGetTweets {
     public static TweetStorage getUserExperiment(long userid){
     	return tsQuery("SELECT * FROM experiment WHERE userid = " + userid); 
     }
+    
+    public static TweetStorage getTestSet(){
+    	return tsQuery("SELECT * FROM new_york_tweets WHERE id > 1000 Order BY id LIMIT 200");
+    }
+    
 
 }
