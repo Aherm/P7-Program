@@ -25,7 +25,7 @@ public class Batch {
 
 		return ts;
 	}
-
+/*
 	public static Map<String, Integer> getTweets() {
 		Map<String, Integer> matchedKeywords = new HashMap<String, Integer>();
 		TweetStorage interval = new TweetStorage();
@@ -62,4 +62,5 @@ public class Batch {
 
 		return matchedKeywords;
 	}
+	*/
 }

@@ -48,7 +48,8 @@ public class Simulation {
 		nominal.setStopwords(stop1);
 		
 		for(Restaurant r: restaurants){
-    			invertedIndex.addEntry(r);
+    		if(!r.getName().contains("{iv}") && !r.getName().contains("floor)"))
+				invertedIndex.addEntry(r);
     	}
 		invertedIndex.init();
 		System.out.println("Starting");

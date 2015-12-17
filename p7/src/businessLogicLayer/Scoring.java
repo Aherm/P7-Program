@@ -32,8 +32,8 @@ public class Scoring {
 	public int equal = 0; 
 	public int diff = 0;
 	public int conflictLoc = 0; 
-	public int conflictName = 0; 
- 
+	public int conflictName = 0;
+	private StringBuilder test = new StringBuilder();
 	private void init(List<Restaurant> restaurants){
 		
 		for(Restaurant r : restaurants){
@@ -182,9 +182,9 @@ public class Scoring {
 		builder.append("Equal: " + equal + "\n");
 		builder.append("Conflict solved with loc: " + conflictLoc + "\n");
 		builder.append("Conflict solved with name; " + conflictName + "\n");
-		builder.append("Sick Tweets: " + ts.getSickTweets().size() + "\n" );
+		builder.append("Sick Tweets: " + ts.getSickTweets().size() + "\n");
 		builder.append("GeoTagged: " + ts.getGeotaggedTweets().size() + "\n");
-		GenericPrint.PRINTER("counters.txt",builder.toString());
+		GenericPrint.PRINTER("counters.txt", builder.toString());
 		System.out.println(builder.toString());
 	}
 
@@ -214,6 +214,9 @@ public class Scoring {
 					map.get(t.getLocRes()).add(t);
 			}		
 		}
+
+		GenericPrint.PRINTER("changedRes.txt",test.toString());
+
 		for(Restaurant r : map.keySet()){
 			TweetStorage tweets  = map.get(r);
 			TweetStorage sickTweets = tweets.getSickTweets();
@@ -260,6 +263,7 @@ public class Scoring {
 		for(Restaurant r : restaurantsWithSameName.get(t.getNameRes().getName())){
 			if(Distance.getDist(r,t) < Constants.restaurantDistance){
 				conflictName++;
+				test.append(t.getLocRes().getName() +" Changed to " + t.getNameRes().getName() + "\n");
 				return r; 
 			}
 		}

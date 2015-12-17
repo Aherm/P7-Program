@@ -85,12 +85,12 @@ public class TestNaiveBayes {
         //MultinomialBigDecimal.loadClassifier(filePath);
     }
 
-    private static void testVisitClassifier(){
+    public static void testVisitClassifier(){
         /**
          * Initialization of data
          */
         ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("0", "1"));
-        TweetStorage trainingSet = Utils.getDataFromFileWithGeo("trainingData\\RealSecondSet.csv");
+        TweetStorage trainingSet = Utils.getDataFromFileWithGeo("trainingData\\visitTraining.csv");
         Preprocessor.processTweets(trainingSet);
 
         /**
