@@ -72,8 +72,12 @@ public class Utils {
 					document.setMatchedToken(processedWord);
 					break;
 				case 1:
-					long processedID = parseTweetID(token);
-					document.setID(processedID);
+					long processedID = 0;
+					if(token.contains("E")) {
+						processedID = parseTweetID(token);
+					} else {
+						document.setID(Long.parseLong(token));
+					}
 					break;
 				case 2:
 					document.setText(token);
@@ -157,6 +161,8 @@ public class Utils {
 				case 2:
 					break;
 				case 3:
+					break;
+				case 4:
 					// Classlabel
 					if (Integer.parseInt(token) == 10) {
 						System.out.println("W T F M8, CLASSLABEL WAS 10");
@@ -170,9 +176,6 @@ public class Utils {
 					if (Integer.parseInt(token) == 1) {
 						numPositives++;
 					}
-					break;
-				case 4:
-					
 					break;
 				}
 				counter++;
