@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Processing.Stopwords;
 import businessLogicLayer.Filter;
 import businessLogicLayer.Preprocessor;
 import naiveBayes.Multinomial;
@@ -28,10 +29,9 @@ public class EvalNB {
 		TweetStorage[] folds = new TweetStorage[10];
 		TweetStorage positives = new TweetStorage();
 		TweetStorage negatives = new TweetStorage();
-		NaiveBayes NB = new Multinomial();
+		Multinomial NB = new Multinomial();
 		ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("1", "0"));
 		Map<String, EvaluationModel> fullEvaluation = new HashMap<String, EvaluationModel>();
-		
 		System.out.println("Starting to create positive and negative sets...");
 		for(Tweet tweet : dataSet) {
 			if(tweet.getExpectedClassLabel().equals("1")) {

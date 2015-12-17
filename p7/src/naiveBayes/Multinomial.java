@@ -10,7 +10,7 @@ import java.util.*;
 public class Multinomial extends NaiveBayes implements java.io.Serializable {
     ProbabilityModel probabilityModel = null;
     ArrayList<String> C;
-    Stopwords stopwords;
+    Stopwords stopwords = new Stopwords();
 
     /**
      * @param C : set of possible classes

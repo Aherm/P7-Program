@@ -29,10 +29,8 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     private Multinomial multinomial; 
     
     public void init(){
-    	
-    	patterns = new Pattern[this.keySet().size()]; 
+    	patterns = new Pattern[this.keySet().size()];
     	stringList.addAll(this.keySet()); 
-     	
     	int counter = 0; 
     	for(String word : stringList){
     		String newWord = word;
@@ -43,7 +41,7 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     		patterns[counter] = p; 
     		counter++; 
     	}
-    
+
     	multinomial = Multinomial.loadClassifier("./classifiers/visitNaiveBayes.model");
     	multinomial.setStopwords(new Stopwords());
     			
@@ -55,6 +53,7 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
        
     public void addIndex(Tweet tweet) throws Exception {
     	
+
     	int counter = 0; 
     	String lastString = "";
     	int lastCounter = 0; 
@@ -64,13 +63,12 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     		if(tweet.getTweetText().contains(word) || tweet.getTweetText().contains(spaceRemovedList.get(counter))){	
     				if(word.length() > lastString.length()){
     					lastString = word;
-    					lastCounter = counter; 
+    					lastCounter = counter;
     				}
 			}
     		counter++; 
     		}
     	}
-    	
     	if(!lastString.isEmpty()){
     		//Pattern p = patterns[lastCounter];
     		//Matcher m = p.matcher(tweet.getTweetText());
@@ -78,8 +76,6 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     			this.get(lastString).add(tweet); 
     	}
     }
-    
-    
     
     public void addIndices(TweetStorage tweets) throws Exception {
     	for(Tweet tweet : tweets) {

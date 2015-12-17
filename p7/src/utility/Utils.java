@@ -72,8 +72,12 @@ public class Utils {
 					document.setMatchedToken(processedWord);
 					break;
 				case 1:
-					long processedID = parseTweetID(token);
-					document.setID(processedID);
+					long processedID = 0;
+					if(token.contains("E")) {
+						processedID = parseTweetID(token);
+					} else {
+						document.setID(Long.parseLong(token));
+					}
 					break;
 				case 2:
 					document.setText(token);
@@ -137,8 +141,11 @@ public class Utils {
 
 	public static void printPositivesAndNegatives(String filePath) {
 		ArrayList<String> data = Data.fetchDataFromFile(filePath);
-		int numPositives = 0;
-		int numNegatives = 0;
+		double numPositives = 0;
+		double numNegatives = 0;
+		double totalNum = 0;
+		double percentagePositives = 0;
+		double percentageNegatives = 0;
 		List<String> tweetIDs = new ArrayList<String>();
 		for (String line : data) {
 			int counter = 0;
@@ -154,9 +161,8 @@ public class Utils {
 				case 2:
 					break;
 				case 3:
-					break;
-				case 4:
-					// Classlabel
+					//Classlabel
+					/*
 					if (Integer.parseInt(token) == 10) {
 						System.out.println("W T F M8, CLASSLABEL WAS 10");
 					}
@@ -169,15 +175,37 @@ public class Utils {
 					if (Integer.parseInt(token) == 1) {
 						numPositives++;
 					}
+					*/
+					break;
+				case 4:
+					// Classlabel
+					
+					if (Integer.parseInt(token) == 10) {
+						System.out.println("W T F M8, CLASSLABEL WAS 10");
+					}
+					if (Integer.parseInt(token) == 11) {
+						System.out.println("W T F M8, CLASSLABEL WAS 11");
+					}
+					if (Integer.parseInt(token) == 0) {
+						numNegatives++;
+					}
+					if (Integer.parseInt(token) == 1) {
+						numPositives++;
+					}
+					
 					break;
 				}
 				counter++;
 			}
 			counter = 0;
 		}
-
-		System.out.println("Number of positives: " + numPositives);
-		System.out.println("Number of negatives: " + numNegatives);
+		
+		totalNum = numPositives + numNegatives;
+		percentagePositives = numPositives / totalNum * 100;
+		percentageNegatives = numNegatives / totalNum * 100;
+		System.out.println("Number of positives: " + numPositives + " (" + percentagePositives + ")");
+		System.out.println("Number of negatives: " + numNegatives + " (" + percentageNegatives + ")");
+		System.out.println("Total instances:     " + totalNum);
 	}
 
 	// shit code please ignore

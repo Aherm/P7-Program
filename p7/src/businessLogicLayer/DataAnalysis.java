@@ -73,7 +73,7 @@ public class DataAnalysis {
 
 		return tweetsAnalysis + clusterAnalysis;
 	}
-
+/*
 	public String printKeywordAnalysis() {
 		String result = "";
 		Map<String, Integer> keywordMatches = Filter.countMatches(tweets);
@@ -82,6 +82,7 @@ public class DataAnalysis {
 		}
 		return result;
 	}
+	*/
 
 	public void clusterAnalysis(ClusterStorage clusters, int numbers){
 		int[] sizes = new int[numbers];

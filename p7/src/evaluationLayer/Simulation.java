@@ -50,6 +50,7 @@ public class Simulation {
 		for(Restaurant r: restaurants){
     		if(!r.getName().contains("{iv}") && !r.getName().contains("floor)"))	
     				invertedIndex.addEntry(r);
+
     	}
 		invertedIndex.init();
 		System.out.println("Starting");
