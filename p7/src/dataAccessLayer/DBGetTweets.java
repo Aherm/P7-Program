@@ -150,7 +150,7 @@ public class DBGetTweets {
     }
     
     public static TweetStorage getTestSet(){
-    	return tsQuery("SELECT * FROM new_york_tweets WHERE id > 1000 Order BY id LIMIT 200");
+    	return tsQuery("SELECT * FROM new_york_tweets WHERE id > 1200 Order BY id LIMIT 5000");
     }
     
 
