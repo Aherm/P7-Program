@@ -28,7 +28,7 @@ public class Program {
 
         //bounding box for new york
         double[][] locations = new double[][]{
-                {-74, 40},
+                {-74, 40}, //lon, lat
                 {-73, 41}
         };
 
