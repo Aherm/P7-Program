@@ -73,13 +73,12 @@ public class Preprocessor {
 			}
 			else
 			{
-				tweetWord = tweetWord.toLowerCase();
 				newTweetText += tweetWord + " ";
 			}
 			
 			tweetWord = "";
 		}
 
-		tweet.setTweetText(newTweetText);
+		tweet.setTweetText(newTweetText.toLowerCase());
 	}
 }
