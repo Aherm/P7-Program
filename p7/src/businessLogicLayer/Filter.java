@@ -91,15 +91,16 @@ public class Filter {
 
         String feelingReg = "fe(e|el|l|)(lin(g|))?";
         String sickReg = "si(ck|k)";
-        String stomacheReg = "stoma(ch|k)";
+        String stomachReg = "stoma(ch|k)";
         String excludeOfReg = "(?!\\sof)";
         regs.add(new Keyword("food poison", "fo(od|d|ood|ods|odd)\\s?pois(on|ons|en|ens|n|oning)", 10));
         regs.add(new Keyword("feeling sick", feelingReg + "\\s?" + sickReg + excludeOfReg, 10));
         regs.add(new Keyword("being sick", "be(ing|)\\s?" + sickReg, 10));
+        regs.add(new Keyword("stomachache", stomachReg + "a(ch|k)e", 10));
         //regs.add(new Keyword("sick of", "i('m|m)\\s?" + sickReg + excludeOfReg, 10));
         //regs.add(new Keyword("ill", feelingReg + "\\s?(ill|il)", 10));
-        regs.add(new Keyword("stomach flue", stomacheReg + "\\s?(is\\s)?(pain|flu|flue|hurt|hurts|hurting)", 10));
-        regs.add(new Keyword("bad stomach", "(bad|upset)\\s?" + stomacheReg, 10));
+        regs.add(new Keyword("stomach flue", stomachReg + "\\s?(is\\s)?(pain|flu|flue|hurt|hurts|hurting)", 10));
+        regs.add(new Keyword("bad stomach", "(bad|upset)\\s?" + stomachReg, 10));
         //regs.add(new Keyword("diarrhea", "dia(rrhea|rria|rhea|ria|hrrhea|hrhea)", 10));
         //regs.add(new Keyword("dehydration", "de(hy|hi)dra(tion|sion)", 10));
        // regs.add(new Keyword("salmonella", "salmonel(la|a)", 10));
