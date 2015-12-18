@@ -70,9 +70,6 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     		}
     	}
     	if(!lastString.isEmpty()){
-    		//Pattern p = patterns[lastCounter];
-    		//Matcher m = p.matcher(tweet.getTweetText());
-    		///if(m.find())
     			this.get(lastString).add(tweet); 
     	}
     }
