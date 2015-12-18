@@ -53,9 +53,15 @@ public class Simulation {
 		invertedIndex.init();
 		System.out.println("Starting");
 		long startTime = System.nanoTime(); 
+		int counter = 0; 
 		for(Tweet t : allTweet){
 			if(!tweets.contains(t))
 				onTweet(t);
+			counter++;
+			if(counter % 1000 == 0){
+				System.out.println("Done: " + counter);
+			}
+				
 		}
 
 		long endTime = System.nanoTime();
@@ -70,8 +76,9 @@ public class Simulation {
 	
 		Preprocessor.processTweet(tweet);
 		tweets.add(tweet); 
-		grid.addTweet(tweet);
+		//grid.addTweet(tweet);
 		invertedIndex.addIndex(tweet);
+		/*
 		if(nominal.apply(tweet).equals("1")){
 			System.out.println("found this guy: " + tweet.getTweetText());
 			tweet.setSick(true);
@@ -81,6 +88,7 @@ public class Simulation {
 			tweets.addAll(userTimeLine); 
 			grid.addTweets(userTimeLine);
 		}
+		*/
 	}
 	
 	private void removeSeenTweets(TweetStorage ts){

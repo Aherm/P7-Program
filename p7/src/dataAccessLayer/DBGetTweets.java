@@ -41,7 +41,7 @@ public class DBGetTweets {
     }
 
     public static TweetStorage getKTweets(int k) {
-        return tsQuery("SELECT * FROM " + db + " LIMIT " + k);
+        return tsQuery("SELECT * FROM " + db + " LIMIT " + k );
     }
 
 
@@ -151,6 +151,10 @@ public class DBGetTweets {
     
     public static TweetStorage getTestSet(){
     	return tsQuery("SELECT * FROM new_york_tweets WHERE id > 1200 Order BY id LIMIT 5000");
+    }
+    
+    public static TweetStorage lastThing(){
+    	return tsQuery("SELECT * FROM new_york_tweets WHERE extract(DAY from createdat::timestamp) > 5 AND EXTRACT(day FROM createdat::timestamp) < 12");
     }
     
 

@@ -3,6 +3,7 @@ package streaming;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
@@ -43,35 +44,49 @@ public final class TwitterRest {
 		TweetStorage tweets = new TweetStorage();		
 		int pagenr = 1;
 		
-		Paging page = new Paging(pagenr, 500);
+		Paging page = new Paging(pagenr, 200);
 		List<Status> userTimeline = new ArrayList<Status>();
 		DateTime oldestTweetDate = new DateTime();
 		DateTime startDate = new DateTime(_startdate);
-		do {
-			rateLimiter();
-			if(limitReached){
-				return tweets;
-			}
-			userTimeline = twitter.getUserTimeline(userId, page);
+		
+			
 			
 			// adds all tweets that are no more than 3 days old 
-			for (int i = 0; i < userTimeline.size(); i++) {
-				DateTime tweetDate = new DateTime(userTimeline.get(i).getCreatedAt());
-				if (Days.daysBetween(tweetDate,startDate).getDays() <= 3) {
-					if(tweet.getTweetID() != userTimeline.get(i).getId() && userTimeline.get(i).getGeoLocation() != null){
-						tweets.add(Tweet.createSickTweet(userTimeline.get(i)));	
-					}								
+			for(int z = 1; z<=15; z++ ){
+				page.setPage(z);
+				userTimeline = twitter.getUserTimeline(userId, page);
+				DateTime youngets = new DateTime(userTimeline.get(0).getCreatedAt());
+				rateLimiter();
+				
+				if(limitReached){
+					try {
+						System.out.println("Limit reached. Waiting 15 minutes.");
+						TimeUnit.MINUTES.sleep(16);
+						System.out.println("Continuing");
+					} 
+					catch (InterruptedException e1) {
+						System.out.println("Sleeping interrupted");
+					}	
 				}
-				else break;
+				if(youngets.isBefore(startTime) && Days.daysBetween(youngets,startDate).getDays() > 3){
+					break;
+				}
+				
+				for (int i = 0; i < userTimeline.size(); i++) {
+					DateTime tweetDate = new DateTime(userTimeline.get(i).getCreatedAt());
+					if (Days.daysBetween(tweetDate,startDate).getDays() <= 3 && tweetDate.isBefore(startDate)) {
+						if(tweet.getTweetID() != userTimeline.get(i).getId()){
+							tweets.add(Tweet.createSickTweet(userTimeline.get(i)));	
+						}								
+					}
+				}
 			}
-			pagenr++;
-			page.setPage(pagenr);
+				//id = userTimeline.get(userTimeline.size() - 1).getId();
+			
 			if(userTimeline.isEmpty()){
 				return tweets;
 			}
-			oldestTweetDate = new DateTime(userTimeline.get(userTimeline.size() - 1).getCreatedAt()); //get the oldest tweet from the usertimeline
-		} while (Days.daysBetween(oldestTweetDate, startDate).getDays() <= 3);
-		
+			
 		return tweets; 
 	}
 	
@@ -98,4 +113,5 @@ public final class TwitterRest {
 		rateLimiter();
 		System.out.println(twitter.getUserTimeline(id).get(0).getUser().getScreenName());
 	}
+
 }
