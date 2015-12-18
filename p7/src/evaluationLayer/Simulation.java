@@ -44,8 +44,6 @@ public class Simulation {
 		restaurants = tuple.x; 
 		ranks = tuple.y; 
 		nominal = Multinomial.loadClassifier("./classifiers/sickNaiveBayes.model");
-		Stopwords stop1 = new Stopwords(Arrays.asList("i","the","to","a","and","my","on","in","is","it","that","just"));
-		nominal.setStopwords(stop1);
 		
 		for(Restaurant r: restaurants){
     		if(!r.getName().contains("{iv}") && !r.getName().contains("floor)"))	
@@ -74,7 +72,7 @@ public class Simulation {
 		tweets.add(tweet); 
 		grid.addTweet(tweet);
 		invertedIndex.addIndex(tweet);
-		if(Filter.passesFilter(tweet)){
+		if(nominal.apply(tweet).equals("1")){
 			System.out.println("found this guy: " + tweet.getTweetText());
 			tweet.setSick(true);
 			TweetStorage userTimeLine = DBGetTweets.getUserExperiment(tweet.getUserID());
