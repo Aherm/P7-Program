@@ -282,12 +282,24 @@ public class Utils {
 			for (String token : line.split(";")) {
 				switch (counter) {
 				case 0:
-					name = token;
 					break;
 				case 1:
-					lat = Double.parseDouble(token);
+					name = token;
 					break;
 				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					break;
+				case 5:
+					break;
+				case 6:
+					break;
+				case 7:
+					lat = Double.parseDouble(token);
+					break;
+				case 8:
 					lon = Double.parseDouble(token);
 					break;
 				}
