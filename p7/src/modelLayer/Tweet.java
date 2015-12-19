@@ -242,6 +242,12 @@ public class Tweet implements OurLocation {
 			double dist2 = Distance.getDist(r, this); 
 			if(dist2 < dist1)
 				this.locRestaurant = r; 
+			else if(dist2 == dist1){
+				int random = (int) ( Math.random() * 2 + 1);
+				if(random % 2 == 0){
+					this.locRestaurant =r;
+				}
+			}
 			}
 	}
 	

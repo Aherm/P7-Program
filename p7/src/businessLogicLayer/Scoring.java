@@ -300,13 +300,13 @@ public class Scoring {
 		for(Restaurant r : restaurants){
 			map.put(r, new TweetStorage()); 
 		}
-		//Insert into map and handle it 
+		//Insert into map and handle conflicts
 		for(Tweet t : ts){
 			if(t.hasVisited()){
 				if(t.getNameRes() == null)
 					map.get(t.getLocRes()).add(t);
-				else if(t.getLocRes() == null)
-					nameCounter.get(t.getNameRes().getName()).add(t); 
+				else if(t.getLocRes() == null && !t.isGeotagged())
+					nameCounter.get(t.getNameRes().getName()).add(t);
 				else if(t.conflict()){
 					map.get(handleConflict(t)).add(t);
 				}
