@@ -279,7 +279,7 @@ public class Utils {
 			double lat = 0;
 			double lon = 0;
 			
-			for (String token : line.split(",")) {
+			for (String token : line.split(";")) {
 				switch (counter) {
 				case 0:
 					name = token;
