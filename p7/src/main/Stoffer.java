@@ -22,7 +22,7 @@ public class Stoffer {
         int counter = 0; 
         for(Tweet T : allTweets){
         	if(counter % 10000 == 0){
-    			System.out.println("Made it to:"  + counter + "\n" +"TimeLine" + usertimelines.size());		
+    			System.out.println("Made it to:"  + counter + "\n" +"TimeLine " + usertimelines.size());		
     		}
         	if(Filter.passesFilter(T)){
         		usertimelines.add(T); 

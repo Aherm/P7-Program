@@ -55,6 +55,7 @@ public final class TwitterRest {
 			for(int z = 1; z<=15; z++ ){
 				page.setPage(z);
 				userTimeline = twitter.getUserTimeline(userId, page);
+				if (userTimeline.isEmpty()) return tweets;
 				DateTime youngets = new DateTime(userTimeline.get(0).getCreatedAt());
 				rateLimiter();
 				
@@ -101,7 +102,7 @@ public final class TwitterRest {
 			limitReached = false; 
 		}
 		//TODO: MADS: maybe thrown an exception 
-		if(totalcalls == 175){
+		if(totalcalls == 170){
 			System.out.println("REST API limit reached: need to wait");
 			limitReached = true; 
 		}
