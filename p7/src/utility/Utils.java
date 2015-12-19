@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import businessLogicLayer.Preprocessor;
+import modelLayer.Restaurant;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 import naiveBayes.Data;
@@ -267,6 +268,34 @@ public class Utils {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public static ArrayList<Restaurant> getRestaurantsFromFile(String filePath) {
+		ArrayList<String> data = Data.fetchDataFromFile(filePath);
+		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+		for (String line : data) {
+			int counter = 0;
+			String name = "";
+			double lat = 0;
+			double lon = 0;
+			
+			for (String token : line.split(",")) {
+				switch (counter) {
+				case 0:
+					name = token;
+					break;
+				case 1:
+					lat = Double.parseDouble(token);
+					break;
+				case 2:
+					lon = Double.parseDouble(token);
+					break;
+				}
+				counter++;
+			}
+			restaurants.add(new Restaurant(name, lat, lon));
+		}
+		return restaurants;
 	}
 
 }
