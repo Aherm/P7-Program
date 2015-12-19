@@ -33,6 +33,7 @@ public class Scoring {
 	public int diff = 0;
 	public int conflictLoc = 0; 
 	public int conflictName = 0; 
+	public int geotaggedMentions = 0; 
 	public StringBuilder conLoc = new StringBuilder(); 
 	public StringBuilder conName = new StringBuilder();
  
@@ -122,6 +123,7 @@ public class Scoring {
 		boolean flag = false; 
 		if(tweets.get(0).getNameRes() == null){
 			flag  = true; 
+			geotaggedMentions += tweets.getGeotaggedTweets().size();
 		}
 		for(Tweet t: tweets){
 			t.setNameRes(r);
@@ -187,6 +189,7 @@ public class Scoring {
 		builder.append("Conflict solved with name; " + conflictName + "\n");
 		builder.append("Sick Tweets: " + ts.getSickTweets().size() + "\n");
 		builder.append("GeoTagged: " + ts.getGeotaggedTweets().size() + "\n");
+		builder.append("Geotagged mentions: " + geotaggedMentions + "\n");
 		GenericPrint.PRINTER("counters.txt",builder.toString());
 		GenericPrint.PRINTER("ConflicsSolvedByLoc.txt", conLoc.toString());
 		GenericPrint.PRINTER("ConflicsSolvedByname.txt",conName.toString());
