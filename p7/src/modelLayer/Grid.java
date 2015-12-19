@@ -94,6 +94,12 @@ public class Grid {
 			grid[i][j].remove(t);
 		}
 	}
+
+	public void removeTweets(TweetStorage ts){
+		for(Tweet t: ts){
+			removeTweet(t);
+		}
+	}
 	
 	public int geti(Tweet t) {
 		return geti(t.getLat());

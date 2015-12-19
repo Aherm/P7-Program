@@ -1,5 +1,7 @@
 package modelLayer;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import twitter4j.Status;
 import utility.Distance;
 
@@ -290,5 +292,14 @@ public class Tweet implements OurLocation {
 	
 	public String toString(){
 		return this.tweetID + "  :  " + this.tweetText.replaceAll("\n","") + " (" + this.lat + ","+ this.lon + ")" + this.userID;
+	}
+
+	public boolean oneDayOrMoreOlder(Tweet t){
+		DateTime t1 = new DateTime(t.createdAt);
+		DateTime t2 = new DateTime(this.createdAt);
+		if(Days.daysBetween(t1,t2).getDays() >= 1)
+			return true;
+
+		return false;
 	}
 }

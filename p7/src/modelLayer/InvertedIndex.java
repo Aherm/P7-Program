@@ -81,6 +81,20 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     	}
     }
 
+	public void removeTweet(Tweet tweet){
+		for(String s: this.keySet()){
+			if(this.get(s).contains(tweet)){
+				this.get(s).remove(tweet);
+			}
+		}
+	}
+
+	public void removeTweets(TweetStorage ts){
+		for(Tweet t: ts){
+			removeTweet(t);
+		}
+	}
+
 	public TweetStorage nameQuery(Restaurant restaurant) {
 	 
 	 TweetStorage values = new TweetStorage(); 
@@ -89,4 +103,6 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
 	 values.addAll(this.get(restaurant.getName()));
 	 return values; 
 	}
+
+
 }
