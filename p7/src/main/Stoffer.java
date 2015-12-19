@@ -20,9 +20,10 @@ public class Stoffer {
         TwitterRest rest = TwitterRest.getInstance(); 
         TweetStorage usertimelines = new  TweetStorage(); 
         int counter = 0; 
-        for(Tweet T : allTweets){
+
+		for(Tweet T : allTweets){
         	if(counter % 10000 == 0){
-    			System.out.println("Made it to:"  + counter + "\n" +"TimeLine" + usertimelines.size());		
+    			System.out.println("Made it to:"  + counter + "\n" +"TimeLine " + usertimelines.size());		
     		}
         	if(Filter.passesFilter(T)){
         		usertimelines.add(T); 
@@ -31,8 +32,10 @@ public class Stoffer {
         }
         
         TweetStorage allTimeLines = new TweetStorage();
+		int count = 0;
         for(Tweet t : usertimelines){
         	 try {
+				 count++;
         		 allTimeLines.addAll(rest.getUserTimeline3days(t.getUserID(), t.getCreatedAt(), t));
         	 }
         	 catch (TwitterException e) {
@@ -49,18 +52,19 @@ public class Stoffer {
 
      			if(e.getStatusCode() == 401){
      				e.printStackTrace();
-     				System.out.println("processing tweet ");
+     				System.out.println("count :" + count);
      			}
      		}
         }
-        
-        for(Tweet t : allTweets){
+
+		TweetStorage ts = new TweetStorage();
+        for(Tweet t : allTimeLines){
         	if(!allTweets.contains(t)){
-        		allTweets.add(t);
+				ts.add(t);
         	}
         }
         
-        DBInsert.insertTweets(allTweets,"experiment2");
+        DBInsert.insertTweets(ts,"experiment2");
         connection.closeConnection();
 	}
 
