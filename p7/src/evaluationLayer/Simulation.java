@@ -57,11 +57,6 @@ public class Simulation {
 		for(Tweet t : allTweet){
 			if(!tweets.contains(t))
 				onTweet(t,sickUsers);
-			counter++;
-			if(counter % 1000 == 0){
-				System.out.println("Done: " + counter);
-			}
-				
 		}
 		
 		for(Tweet t : allTweet){
