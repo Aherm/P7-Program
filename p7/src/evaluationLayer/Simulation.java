@@ -60,6 +60,9 @@ public class Simulation {
 		for(Tweet t : allTweet){
 			if(!tweets.contains(t))
 				onTweet(t,sickTweets);
+			if(counter % 10000 == 0)
+				System.out.println("Counter");
+			counter++;
 		}
 		
 		for(Tweet t : allTweet){
@@ -91,7 +94,6 @@ public class Simulation {
 		invertedIndex.addIndex(tweet);
 		
 		if(Filter.passesFilter(tweet)){
-			System.out.println("found this guy: " + tweet.getTweetText());
 			tweet.setSick(true);
 			ts.add(tweet);
 		}
