@@ -1,0 +1,87 @@
+Connecting to database
+Connected world
+Starting
+Counter: 0
+Counter: 10000
+Counter: 20000
+Counter: 30000
+Counter: 40000
+Counter: 50000
+Counter: 60000
+Counter: 70000
+Counter: 80000
+Counter: 90000
+Counter: 100000
+Counter: 110000
+Counter: 120000
+Counter: 130000
+Counter: 140000
+Counter: 150000
+Counter: 160000
+Counter: 170000
+Counter: 180000
+Counter: 190000
+Counter: 200000
+Counter: 210000
+Counter: 220000
+Counter: 230000
+Counter: 240000
+Counter: 250000
+Counter: 260000
+Counter: 270000
+Counter: 280000
+Counter: 290000
+Counter: 300000
+Counter: 310000
+Counter: 320000
+Counter: 330000
+Counter: 340000
+Counter: 350000
+Counter: 360000
+Counter: 370000
+Counter: 380000
+Counter: 390000
+Counter: 400000
+Counter: 410000
+Counter: 420000
+Counter: 430000
+Counter: 440000
+Counter: 450000
+Counter: 460000
+Counter: 470000
+Counter: 480000
+Counter: 490000
+Counter: 500000
+Counter: 510000
+Counter: 520000
+Counter: 530000
+Counter: 540000
+Counter: 550000
+Counter: 560000
+Counter: 570000
+Counter: 580000
+Counter: 590000
+Counter: 600000
+Counter: 610000
+5939950895736
+7893
+Starting Scoring
+Starting init
+starting geotagging score
+Total Locations visists: 28023
+Total Mentions visists: 11888
+Total Sick L:17
+Total Sick M:16
+Unique L:23071
+Unique M:6936
+Diff: 3104
+Equal: 1848
+Conflict solved with loc: 2545
+Conflict solved with name; 559
+Sick Tweets: 7893
+GeoTagged: 101351
+
+i am done now
+NAMES-----------------------------------------------
+COMBINED---------------------------------------------
+The connection is closed
