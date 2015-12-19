@@ -58,10 +58,9 @@ public class Simulation {
 		int counter = 0; 
 		TweetStorage sickTweets = new TweetStorage(); 
 		for(Tweet t : allTweet){
-			if(!tweets.contains(t))
-				onTweet(t,sickTweets);
+			onTweet(t,sickTweets);
 			if(counter % 10000 == 0)
-				System.out.println("Counter");
+				System.out.println("Counter: " + counter);
 			counter++;
 		}
 		

@@ -1,0 +1,12 @@
+Total Locations visists: 28023
+Total Mentions visists: 11888
+Total Sick L:17
+Total Sick M:16
+Unique L:23071
+Unique M:6936
+Diff: 3104
+Equal: 1848
+Conflict solved with loc: 2545
+Conflict solved with name; 559
+Sick Tweets: 7893
+GeoTagged: 101351
