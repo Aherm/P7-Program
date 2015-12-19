@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
 import Processing.Stopwords;
 import businessLogicLayer.Filter;
 import businessLogicLayer.Preprocessor;
@@ -53,15 +56,21 @@ public class Simulation {
 		System.out.println("Starting");
 		long startTime = System.nanoTime(); 
 		int counter = 0; 
-		List<Long> sickUsers = new ArrayList<>();
+		TweetStorage sickTweets = new TweetStorage(); 
 		for(Tweet t : allTweet){
 			if(!tweets.contains(t))
-				onTweet(t,sickUsers);
+				onTweet(t,sickTweets);
 		}
 		
 		for(Tweet t : allTweet){
-			if(sickUsers.contains(t.getUserID())){
-				t.setSick(true);
+			for(Tweet s : sickTweets){
+				if(t.getUserID() == s.getUserID()){
+					DateTime tdate = new DateTime(t.getCreatedAt());
+					DateTime sdate = new DateTime(s.getCreatedAt());
+					if(Days.daysBetween(tdate, sdate).getDays() <= 3 && tdate.isBefore(sdate)){
+						t.setSick(true);
+					}
+				}
 			}
 		}
 		
@@ -74,7 +83,7 @@ public class Simulation {
 		connection.closeConnection();
 	}
 
-	private void onTweet(Tweet tweet,List<Long> sick) throws Exception{
+	private void onTweet(Tweet tweet,TweetStorage ts) throws Exception{
 	
 		Preprocessor.processTweet(tweet);
 		tweets.add(tweet); 
@@ -83,7 +92,8 @@ public class Simulation {
 		
 		if(Filter.passesFilter(tweet)){
 			System.out.println("found this guy: " + tweet.getTweetText());
-			sick.add(tweet.getUserID());
+			tweet.setSick(true);
+			ts.add(tweet);
 		}
 		
 	}
