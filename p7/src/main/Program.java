@@ -12,8 +12,13 @@ import streaming.OurStatusListener;
 import twitter4j.FilterQuery;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
+import utility.Utils;
 
 import java.util.*;
+
+import javax.rmi.CORBA.Util;
+
+import org.postgresql.core.Utils;
 
 import streaming.TweetQueryThread;
 
@@ -34,19 +39,18 @@ public class Program {
                 {-73, 41}
         };
 
-       
         FilterQuery query = new FilterQuery();
         query.locations(locations);
         stream.filter(query);
 
         //Datbase stuff commented out 
-       // DBConnect connection = DBConnect.getInstance();
+        // DBConnect connection = DBConnect.getInstance();
         //connection.connectToLocal("world", "postgres", "21");
 
         TweetStorage newTweets = listener.getDBTweets();
         TweetStorage allTweets = listener.getTweets();
         Grid grid = listener.getGrid();
-        List<Restaurant> restaurants = DBGetRestaurants.getRestaurants().x;
+        List<Restaurant> restaurants = Utils.getRestaurantsFromFile("somePath");
         InvertedIndex invertedIndex = listener.getInvertedIndex();
         invertedIndex.init();
         //A minute in ms: 60000
