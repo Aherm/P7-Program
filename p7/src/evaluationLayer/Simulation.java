@@ -42,8 +42,7 @@ public class Simulation {
 		TweetStorage allTweet = DBGetTweets.getAllTweetsExperiment(); 
 		Tuple<List<Restaurant>,List<Rank>> tuple = DBGetRestaurants.getRestaurants(); 
 		restaurants = tuple.x; 
-		ranks = tuple.y; 
-		nominal = Multinomial.loadClassifier("./classifiers/sickNaiveBayes.model");
+		ranks = tuple.y;
 		
 		for(Restaurant r: restaurants){
     		if(!r.getName().contains("{iv}") && !r.getName().contains("floor)"))	
@@ -54,16 +53,24 @@ public class Simulation {
 		System.out.println("Starting");
 		long startTime = System.nanoTime(); 
 		int counter = 0; 
+		List<Long> sickUsers = new ArrayList<>();
 		for(Tweet t : allTweet){
 			if(!tweets.contains(t))
-				onTweet(t);
+				onTweet(t,sickUsers);
 			counter++;
 			if(counter % 1000 == 0){
 				System.out.println("Done: " + counter);
 			}
 				
 		}
-
+		
+		for(Tweet t : allTweet){
+			if(sickUsers.contains(t.getUserID())){
+				t.setSick(true);
+			}
+		}
+		
+		
 		long endTime = System.nanoTime();
 		System.out.println(endTime - startTime);
 		System.out.println(tweets.getSickTweets().size());
@@ -72,23 +79,18 @@ public class Simulation {
 		connection.closeConnection();
 	}
 
-	private void onTweet(Tweet tweet) throws Exception{
+	private void onTweet(Tweet tweet,List<Long> sick) throws Exception{
 	
 		Preprocessor.processTweet(tweet);
 		tweets.add(tweet); 
-		//grid.addTweet(tweet);
+		grid.addTweet(tweet);
 		invertedIndex.addIndex(tweet);
-		/*
-		if(nominal.apply(tweet).equals("1")){
+		
+		if(Filter.passesFilter(tweet)){
 			System.out.println("found this guy: " + tweet.getTweetText());
-			tweet.setSick(true);
-			TweetStorage userTimeLine = DBGetTweets.getUserExperiment(tweet.getUserID());
-			removeSeenTweets(userTimeLine);
-			invertedIndex.addIndices(userTimeLine);
-			tweets.addAll(userTimeLine); 
-			grid.addTweets(userTimeLine);
+			sick.add(tweet.getUserID());
 		}
-		*/
+		
 	}
 	
 	private void removeSeenTweets(TweetStorage ts){
@@ -134,9 +136,9 @@ public class Simulation {
 		
 		}
 		
-		for(Restaurant r : score.noOnlyMcombinedScore.keySet()){
-			if(score.noOnlyMcombinedScore.get(r).doubleValue() > 0)
-				augCombined.add(new Rank(r, score.noOnlyMcombinedScore.get(r)));
+		for(Restaurant r : score.noMcombinedScore.keySet()){
+			if(score.noMcombinedScore.get(r).doubleValue() > 0)
+				augCombined.add(new Rank(r, score.noMcombinedScore.get(r)));
 		}
 		
 		for(Restaurant r : score.conservative.keySet()){
