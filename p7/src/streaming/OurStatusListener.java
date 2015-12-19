@@ -26,35 +26,27 @@ public class OurStatusListener implements StatusListener {
 
     public void onStatus(Status status) {
         Tweet tweet = Tweet.createTweet(status);
-        dbTweets.add(tweet);
-
-        tweet = tweet.clone();
         Preprocessor.processTweet(tweet);
         tweets.add(tweet);
-        grid.addTweet(tweet);
+        grid.addTweet(tweet);      
         try {
-
-            invertedIndex.addIndex(tweet);
+        	invertedIndex.addIndex(tweet);
         } catch (Exception ex) {
             System.out.println(ex);
         }
+        
         if (Filter.passesFilter(tweet)) {
             try {
-                TweetStorage ts = restAPI.getUserTimeline3days(tweet.getUserID(), new Date(), tweet);
-                removeSeenTweets(ts);
-                Preprocessor.processTweets(ts);
-
+                TweetStorage userTimeLine = restAPI.getUserTimeline3days(tweet.getUserID(), new Date(), tweet);
+                removeSeenTweets(userTimeLine);
+                Preprocessor.processTweets(userTimeLine);
                 try {
-                    invertedIndex.addIndices(ts);
+                    invertedIndex.addIndices(userTimeLine);
                 } catch (Exception ex) {
                     System.out.println(ex);
                 }
-                tweets.addAll(ts);
-
-                //add userTimeLine tweets to grid
-                for (Tweet t : ts) {
-                    grid.addTweet(t);
-                }
+                tweets.addAll(userTimeLine);
+                grid.addTweets(userTimeLine);
             } catch (TwitterException e) {
                 if (e.getStatusCode() == 420 || e.getStatusCode() == 429) {
                     System.out.println("Too many requests");
