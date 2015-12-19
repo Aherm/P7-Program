@@ -61,7 +61,7 @@ public final class TwitterRest {
 				if(limitReached){
 					try {
 						System.out.println("Limit reached. Waiting 15 minutes.");
-						TimeUnit.MINUTES.sleep(16);
+						TimeUnit.MINUTES.sleep(15);
 						System.out.println("Continuing");
 					} 
 					catch (InterruptedException e1) {
