@@ -396,164 +396,164 @@ T:name: club bonafide loc:aki sushi, tweet: 674081690734710784  :  #fire #benin 
 T:name: market table loc:cafe blossom, tweet: 674081826726666240  :  3 birthday birthday celebrations 1 night only the the queen  #30before30 vmart13 @ market table @link (40.7298508,-74.003952)128978685
 T:name: subway loc:panda house i, tweet: 674092854046818304  :  im at @subway restaurant in brooklyn ny @link (40.67698241,-73.86980822)19243536
 M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674105328523456512  :  broken man @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)32444940
-name: white castle loc:subway, tweet: 674115933657554944  :  #latenightsnack #whitecastle @ white castle midtown manhattan @link (40.7537689,-73.9925079)572460900
-name: the bitter end loc:terra blues, tweet: 674122209204441088  :  welcome richie cannata bitterend @erencannata @ the bitter end @link (40.72833804,-73.9992379)2327111115
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674122985201094656  :  the best night @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)241307309
-name: ogliastro loc:tom's restaurant, tweet: 674145673923575808  :  #ogliastro pizza bar  @link outdoor upscale large last @link (40.67448376,-73.96330805)421095102
-name: inc lounge loc:serafina at time hotel, tweet: 674197726238650369  :  #betexecs #timehotel #bossladies #inclounge @ the time new york @link (40.7609596,-73.9854965)175857701
-name: culture espresso loc:pier 79/ny waterway seattle cafe, tweet: 674211813978996737  :  im at culture espresso in new york ny @link (40.75228555,-73.98580075)19724949
-name: bouley botanical loc:baked, tweet: 674212272860827648  :  #bouleybotanical  #beautifullocation #acselhealthholidayparty #newyork thanks @albypoo… @link (40.7186508,-74.0046616)494182454
-name: palm court loc:piada, tweet: 674212873732759552  :  her ladyship awaiting breakfast #palmcourt @ palm court at the plaza hotel @link (40.7644501,-73.974472)16072373
-name: whiskey social loc:burger joint, tweet: 674213035205115905  :  rolling thru the #purityvodka cluster w #friends #squad #whiskeysocial #exceptionaltaste @… @link (40.733181,-73.9980087)86372688
-name: sweet chick loc:dirty french, tweet: 674215028736831493  :  chicken  waffles #goodmornig #chickenandwaffles #breakfast #frühstück #sweetchick #waffles… @link (40.7218437,-73.9872589)90837226
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674232042960195585  :  soap balloons near the #met #centralpark #nyc @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)21284641
-name: waldorf astoria loc:sir harry's, tweet: 674237886053642240  :  worth the trip in itself #legend @ waldorf astoria new york @link (40.75652616,-73.97354189)989926412
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674241766334296064  :  jacqueline de ribes the art of style @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)370926628
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674241930339946496  :  jacqueline de ribes the art of style @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)370926628
-name: the bitter end loc:terra blues, tweet: 674250829151535104  :  playing #2nite at bitter end with jeremy schonfeld and co at 9pm  arrr matey @ the bitter end @link (40.72833804,-73.9992379)29880251
-name: gather loc:buttermilk bakeshop, tweet: 674263411887312896  :  eggs earl grey and gun control ???#tuesdaymorning @ gather park slope @link (40.666466,-73.981708)15499214
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674268868676751360  :  #charityball selfie @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)33263492
-name: sunswick loc:sweets first bakeshoppe & cafe, tweet: 674271946880786432  :  lunch (@ sunswick 3535 in astoria ny @link (40.75661389,-73.92547943)49133358
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674277204101087232  :   art moment #manhattan #newyork #instagood #instamood @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)193977329
-name: broome street bar loc:the cupping room, tweet: 674285958137839617  :  im at @broomestreetbar in new york ny @link (40.72301447,-74.00300503)14819061
-name: cafe duke loc:greenhouse cafe (557 broaday) scholastic building, tweet: 674289585334165504  :  foodzies (@ cafe duke in new york ny @link (40.72370936,-73.99851235)133415557
-name: shake shack loc:brooklyn ice cream factory, tweet: 674291779282300928  :  im at @shakeshack in brooklyn ny @link (40.70296752,-73.99411073)25018735
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674295650369069056  :  detail kwoma ceiling #metmuseum @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)21272564
-name: the bitter end loc:terra blues, tweet: 674296017349566464  :  just posted a photo @ the bitter end @link (40.72833804,-73.9992379)423484956
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674296982161244160  :  museum dates are pretty cool post interview activities  @ the metropolitan museum of art new @link (40.77912965,-73.96297384)170698927
-name: shanghai asian manor loc:hop kee restaurant, tweet: 674308278441123841  :  im at shanghai asian manor in new york ny @link (40.71448721,-73.99883945)257302717
-name: turmeric nyc loc:ocean dragon restaurant, tweet: 674312929940926464  :  a desi lunch with my coworkers good meal at a good price #turmericnyc #indian #desi… @link (40.76943,-73.98867)137127871
-name: mace loc:esperanto restaurant bar and jugo, tweet: 674315933029179396  :  enjoyed a few festive cocktails last night #miracle @ mace @link (40.72538734,-73.97821678)73980267
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674317051163484160  :   @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)33996243
-name: la flaca loc:wang's great wall, tweet: 674319733403942916  :  brunchin @ la flaca nyc @link (40.7164993,-73.9876328)40605903
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674328948340228096  :  #?? capitals or pillars @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)243342939
-name: palm court loc:piada, tweet: 674330776872181760  :  ive always wanted to be eloise @ palm court at the plaza hotel @link (40.7644501,-73.974472)445119591
-name: one world observatory loc:conde nast conference center, tweet: 674332325052829696  :  im at one world observatory  @oneworldnyc in new york ny w @natyscarcella @link @link (40.71302875,-74.01319742)24409777
-name: one world observatory loc:conde nast conference center, tweet: 674332932262240256  :   (@ one world observatory  @oneworldnyc in new york ny @link (40.71302875,-74.01319742)267307297
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674333222948466689  :  still #reflecting from last nights charityball at the #metropolitan museum of art in the temple @link (40.77912965,-73.96297384)16323388
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674338913515872260  :  observing a painter paint a painting at the met @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)19406650
-name: kilo bravo loc:wild ginger, tweet: 674343887754960896  :  meanwhile in williamsburg @ kilo bravo @link (40.71888966,-73.95536532)21636966
-name: stk loc:subrosa, tweet: 674349922624270336  :  love  #latergram @ stk downtown @link (40.73996,-74.00714)19133486
-name: keens steakhouse loc:5 boro burger, tweet: 674350935662075904  :  early birthday celebration #steak #hwmms #instabelly #nyc @ keens steakhouse @link (40.750854,-73.986537)111197664
-name: third floor cafe loc:baekjeong, tweet: 674353251576356864  :  #gno (@ third floor cafe in new york ny w @lindsaytabma) @link (40.74713594,-73.98529571)763371504
-name: third floor cafe loc:baekjeong, tweet: 674353413908512769  :  unlimited  (@ third floor cafe in new york ny w @daleknows @mamamareeuh @lindsaytabma @just1ny0ng) @link (40.74713594,-73.98529571)62451731
-name: bxl cafe loc:heartland brewery, tweet: 674365775021522945  :  preshow brews at @bxlcafe in new york ny @link (40.75608789,-73.98485954)17698746
-name: plant love house loc:asian taste 86, tweet: 674366637064232961  :  so were just gunna be thai today at @plantlovehouse in elmhurst ny w @diosoglenn) @link (40.74189112,-73.87873185)163977987
-name: spicy village loc:mei's coffee & bakery, tweet: 674368387364077568  :  waiting and waiting (@ spicy village ???  @spicyvillageny in new york ny @link (40.716989,-73.993426)16968765
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674372377313157120  :  astor court #metmuseum @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)21272564
-name: koko wings loc:macchina, tweet: 674373439990464518  :  feeding the beast my stomach at @kokowings in new york ny @link (40.80098739,-73.96749801)30254828
-name: the manhattan at times square loc:ellen's stardust diner, tweet: 674374128229605377  :   (@ the manhattan at times square hotel  @mtshotel in new york ny @link (40.76185347,-73.98313522)368556834
-name: the triad loc:soom soom, tweet: 674374700840169472  :  and gala with honoree janice goldberg (@ the triad in new york ny @link @link (40.77819151,-73.98106022)775489
-name: hill country chicken loc:orange leaf, tweet: 674374817215348737  :  rez sez i have a caption for that @ hill country chicken  brooklyn @link (40.6927109,-73.9884415)20537254
-name: studio 9c loc:au bon pain, tweet: 674376195891425280  :  #nbcu corporate communications holiday party (@ studio 9c  nbcuniversal in new york ny @link (40.75895285,-73.97909167)19057138
-name: studio 9c loc:au bon pain, tweet: 674380802113802240  :  holiday partying (@ studio 9c  nbcuniversal in new york ny @link (40.75895285,-73.97909167)784665217
-name: reserve cut loc:crumbs bake shop, tweet: 674383685425061889  :  im at @reservecut in new york ny @link @link (40.70602646,-74.01177049)2329188432
-name: new flushing bakery loc:yummy dim sum, tweet: 674384361421201409  :  im at new flushing bakery in flushing ny @link (40.75940012,-73.8304797)307583108
-name: dominies loc:ramen & yakitori, tweet: 674387722266611712  :  craft night dominiesastoria beer  scissors what could go wrong #dominies #dominiesastoria… @link (40.7656934,-73.91872224)2398163226
-name: the grey dog loc:cafe blossom, tweet: 674389035662446592  :  couples dinner #yesughgross (@ the grey dog in new york ny w @kylelynah) @link @link (40.729834,-74.004012)18394380
-name: westville loc:city cakes, tweet: 674392405798424576  :  im at westville chelsea in new york ny @link (40.74204,-73.99999)26372174
-name: waldorf astoria loc:sir harry's, tweet: 674394790901977088  :  got to hang with coach tressel today  @ waldorf astoria new york @link (40.75652616,-73.97354189)2471582838
-name: jackbar loc:little choc apothecary, tweet: 674395458672922624  :  im at jackbar in brooklyn ny @link (40.711873,-73.957187)47875656
-name: boilermaker loc:bluebird coffee shop, tweet: 674396664849965058  :  just a good veggie burger  @ boilermaker nyc @link (40.7234802,-73.9886322)385711852
-name: viv loc:viv restaurant, tweet: 674397494235787264  :  drinks then dinner (@ viv thai in new york ny @link (40.76284729,-73.98969179)83470741
-name: ivan ramen loc:brunswick, tweet: 674397769885458432  :  hard core research session at #ivanramen in #nyc; key takeaways #crazy, #crazy, #crazy… @link (40.720604,-73.98454934)3378775143
-name: shake shack loc:brooklyn ice cream factory, tweet: 674397919198371840  :   @ shake shack brooklyn bridge @link (40.70298046,-73.99422435)24304444
-name: ivan ramen loc:brunswick, tweet: 674399251259113472  :  hardcore research at #ivanramen in #nyc. key takeaways #crazy, #crazy, #crazy good #food… @link (40.720604,-73.98454934)3378775143
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674401676669952000  :  nyc with the bros the other day @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)757718364
-name: terra loc:gotan, tweet: 674402406646611968  :  im at terra in new york ny @link (40.719077,-74.006568)20802652
-name: buvette loc:l'aile ou la cuisse (l'a.o.c), tweet: 674405938812592129  :  im at buvette  @ilovebuvette in new york ny @link (40.73272229,-74.0041852)99586796
-name: houston hall loc:arbor bistro, tweet: 674408558084145152  :  im at houston hall in new york ny @link (40.72867347,-74.00473773)39554674
-name: kinfolk loc:kinfolk studios, tweet: 674408574387404801  :  myhusband has photos in the new @victoryjournal @ kinfolk @link (40.7217598,-73.9583435)104347049
-name: diamond horseshoe loc:paramount bar & grill, tweet: 674408698836553729  :  maestro #tumblr holiday festival #blaknyc @ diamond horseshoe @link (40.7596397,-73.9870071)19680822
-name: scarpetta loc:the diner, tweet: 674410734470713345  :  im at @scarpettanyc in new york ny @link (40.74106349,-74.00479037)140323856
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674411273094873090  :  xoxo gossip girl @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)1146565153
-name: sweetgreen  loc:hoomoos asli, tweet: 674412965257441281  :  nom nom at @sweetgreen in new york ny @link (40.7210276,-73.9972564)93274085
-name: pianos loc:bisous, ciao., tweet: 674414306226778116  :  im at @pianosnyc in new york ny @link (40.72111085,-73.98786106)45641277
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674415395508510720  :  xoxo gossip girl @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)1146565153
-name: fonda loc:dojo izakaya, tweet: 674419465564643328  :  im at @fondarestaurant in new york ny @link (40.72276055,-73.98283937)16650200
-name: yu sushi bar loc:360 lounge, tweet: 674423942631788544  :  sea urchin and sweet shrimp yu sushi #flushing #queens #worldsfair #yelpqueens @ yu sushi bar @link (40.76071604,-73.83340536)408726471
-name: oh taisho loc:papaya king, tweet: 674425025311543296  :  im at oh taisho in new york ny @link (40.72937852,-73.98937615)8687122
-name: yu sushi bar loc:360 lounge, tweet: 674429177697824768  :  tako wasa live octopus yu sushi #flushing #queens #worldsfair #yelpqueens @ yu sushi bar @link (40.76071604,-73.83340536)408726471
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674429889978716160  :  #metmuseum #ilovemuseums #baijieinusa @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)94648706
-name: yu sushi bar loc:360 lounge, tweet: 674432005195591680  :  octopus guts yu sushi #flushing #queens #worldsfair #yelpqueens @ yu sushi bar @link (40.76071604,-73.83340536)408726471
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674435719109156865  :  god i loved this place @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)879262376
-name: quality meats loc:angela's deli, tweet: 674439148967698432  :  pretty yummy @ quality meats @link (40.765049,-73.9762497)132687180
-name: dominies loc:ramen & yakitori, tweet: 674439587318599680  :  doorflakes dominiesastoria #dominies #dominiesastoria #snowflake #papersnowflake #bar #astoria… @link (40.7656934,-73.91872224)2398163226
-name: quality meats loc:angela's deli, tweet: 674440089418735616  :  happy birthday amy @ quality meats @link (40.765049,-73.9762497)32171665
-name: udon west loc:sing sing karaoke, tweet: 674444574799065092  :  oh yessss (@ udon west in new york ny @link (40.72931975,-73.98924)257494875
-name: the randolph at broome loc:randolph beer, tweet: 674448941279084545  :  im at the randolph at broome  @therandolphnyc in new york ny @link (40.71977014,-73.99493712)24651686
-name: phd loc:bodega negra, tweet: 674462868503441408  :  im at phd at dream downtown  @phdrooftopny in new york ny @link (40.74239352,-74.00330983)115281885
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674464329589215232  :  mind wandering @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)60617349
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674465507815260160  :  these beauties #charityball2015 repping @tgctribeca @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)25252152
-name: creperie loc:thelewala, tweet: 674474434384830464  :  @creperienyc #creperie #nyc photocredit mudd786 @ crêperie @link (40.7295494,-74.0005417)116343244
-name: fairfield inn loc:sky room, tweet: 674544776910368768  :  im at fairfield inn  suites new york manhattantimes square in new york ny @link (40.75640454,-73.9925015)924443485
-name: sullivan street bakery loc:company, tweet: 674575385128865792  :  just how i like it  #coffee #freelancelife @ sullivan street bakery 9th ave @link (40.74728318,-74.00053821)87512392
-name: sweet corner loc:wild, tweet: 674583382135726081  :  good morning beautiful  come have a cheesy breakfast with us @ sweet corner bakeshop @link (40.734627,-74.006409)123641235
-name: friend of a farmer loc:sushi chosi, tweet: 674599588129587201  :  the perfect start to a day #coffee #books @zenguin @ friend of a farmer @link (40.7369308,-73.9868164)15433233
-name: double dutch espresso loc:mess hall, tweet: 674601720706543616  :  i love my neighborhood #nyc @ double dutch espresso @link (40.8058357,-73.9541321)66521778
-name: essex loc:shopsins general store (store #16), tweet: 674604355199332352  :  lettuce heads @ essex street market @link (40.7193413,-73.9876022)500873016
-name: culture espresso loc:pier 79/ny waterway seattle cafe, tweet: 674610852100730880  :  im at culture espresso in new york ny w @hettonzo @link (40.75228555,-73.98580075)16361455
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674618391186030592  :  princesse de broglie @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)238446527
-name: dudleys loc:casa mezcal, tweet: 674620610723581952  :  #coffee #coffeeeveryday #counterculturecoffee #dudleys #les #nyc @ dudleys nyc @link (40.71810152,-73.99028333)82092897
-name: waldorf astoria loc:sir harry's, tweet: 674622907801329664  :  today seems like a good day to be awesome @ waldorf astoria new york @link (40.75652616,-73.97354189)62702549
-name: pret a manger loc:liquiteria, tweet: 674625993290735616  :  vanilla chai at @pret a manger in new york ny @link (40.73718516,-73.99058707)20450591
-name: little skips outpost loc:little mo, tweet: 674626901944700929  :  im at little skips outpost in brooklyn ny @link (40.697177,-73.93372)19415070
-name: stumptown coffee loc:lasani restaurant, tweet: 674633169610653697  :  getting a lil work done at @stumptowncoffee roasters in new york ny @link (40.74590156,-73.98814227)36143173
-name: conde nast loc:conde nast conference center, tweet: 674634202202161153  :  im at vogue magazine  @condenast in new york ny @link (40.71308371,-74.01336348)1398654900
-name: conde nast loc:conde nast conference center, tweet: 674634499993575424  :  im at vogue magazine  @condenast in new york ny w @3dbillionaire @link (40.71308371,-74.01336348)919860212
-name: phd loc:bodega negra, tweet: 674635562624622592  :   daniellekandel @ phd rooftop lounge at dream downtown @link (40.74237462,-74.00336432)54708669
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674641924461043713  :  xoxo gg @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)24177579
-name: tasty cafe loc:bella napoli, tweet: 674644357497122816  :  im at @tastycafe in new york ny @link (40.745678,-73.98454503)6938352
-name: lighthouse loc:wei williamsburg, tweet: 674644718874189824  :  cocktail class thanks again @insidehook @ lighthouse @link (40.71073648,-73.95365065)215450012
-name: magnolia bakery loc:forty carrots, tweet: 674654902845599745  :  im at magnolia bakery in new york ny @link (40.76183722,-73.96639824)184937439
-name: vapiano loc:bar 13, tweet: 674655857230094337  :  swift li aziz chris at @vapianonyc in new york ny @link (40.73448624,-73.99211361)67220142
-name: waldorf astoria loc:sir harry's, tweet: 674657092473458688  :  name that movie @ waldorf astoria new york @link (40.75652616,-73.97354189)2815212045
-name: jeepney loc:sao mai vietnamese cuisine, tweet: 674661436325367808  :  #filipina @ jeepney @link (40.73027872,-73.98338356)82306739
-name: smoocha loc:soju haus, tweet: 674669342584389632  :  #tea is always a good idea...#pumpkinspice #teabreak with @iamsheilaj @ smoocha @link (40.7468681,-73.9851837)460855541
-name: the manhattan at times square loc:ellen's stardust diner, tweet: 674670913900580865  :  im at the manhattan at times square hotel  @mtshotel in new york ny w @chum31 @link (40.76185347,-73.98313522)88247109
-name: kobeyaki loc:crisp, tweet: 674672957873102849  :  im at @kobeyaki in new york ny @link (40.75387,-73.98581)44814719
-name: smoocha loc:soju haus, tweet: 674673920755302400  :  daily perspective...#pumpkinspice #teabreak with @iamsheilaj @ smoocha @link (40.7468681,-73.9851837)460855541
-name: cachapas y mas loc:809 grill & bar restaurant, tweet: 674674643844886528  :  im at cachapas y mas in new york ny @link (40.86199719,-73.92503746)251648051
-name: crif dogs loc:acqua santa, tweet: 674676461182259200  :  im at @crifdogs in brooklyn ny @link (40.717006,-73.956565)53828573
-name: naya express loc:muldoons bar, tweet: 674676857523019776  :  im at @nayaexpress in new york ny @link (40.75180398,-73.97389756)93890121
-name: double dutch espresso loc:mess hall, tweet: 674684213799624704  :  #treatyoself  @ double dutch espresso @link (40.8058357,-73.9541321)262868081
-name: il corallo loc:spice, tweet: 674687529015226369  :  lunch in soho #nyc (@ il corallo trattoria in new york ny @link @link (40.726298,-74.001899)104757009
-name: shake shack loc:cafe frida, tweet: 674693793455677440  :  classics ???#shakeshack #nyc #newyork #foodphotography #foodpics #foodie #food #foodporn… @link (40.7809563,-73.9763947)267284252
-name: breads bakery loc:university market place, tweet: 674695710349094916  :  im at @breadsbakery in new york ny @link (40.73680337,-73.99171829)19848818
-name: sant ambroeus loc:extra virgin, tweet: 674701538019807232  :  domenico dolce sighting new york new york sant ambroeus @link (40.7354,-74.0031)81237494
-name: sony club loc:sony music employee cafeteria, tweet: 674705126767140864  :  p a r t y  (@ sony club in new york ny @link (40.76147701,-73.97332936)55137681
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674711826488287233  :  #nuecreative @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)20900388
-name: city swiggers loc:maz mezcal, tweet: 674712094416203776  :  christmas tree at city swiggers 320 e 86th street btwn 1st  2nd ave manhattan 900 craft beer @link (40.7772408,-73.9510269)395386243
-name: blind tiger loc:ghandi cafe, tweet: 674712804549632000  :  drinking a harlan by @hillfarmstead at @blindtigernyc  @link (40.7319,-74.0033)32414366
-name: 2 bros pizza loc:rogue, tweet: 674713775052890112  :  im at @2brospizza in new york ny @link (40.74419837,-73.99190127)14855916
-name: double dutch espresso loc:mess hall, tweet: 674717863677198337  :  study break @ double dutch espresso @link (40.8058357,-73.9541321)509013762
-name: black tap loc:chalk point kitchen, tweet: 674722267855773697  :  ?????#blacktop #itis @ black tap craft burgers  beer @link (40.723774,-74.0041504)301758076
-name: the new york palace hotel loc:villard michel richard, tweet: 674723248383401984  :  my bae under the palace tree  @ the new york palace hotel @link (40.7580735,-73.9752305)40432284
-name: fuku loc:tarallucci e vino, tweet: 674726999697526786  :  im at fuku  @momofuku in new york ny @link (40.72892517,-73.98461276)227384077
-name: fuku loc:tarallucci e vino, tweet: 674728230381707264  :  happy to present the #fuket @momofuku @ fuku @link (40.7290001,-73.9846725)227384077
-name: the new york palace hotel loc:villard michel richard, tweet: 674729852348588032  :  my bae under the palace tree #engaged @ the new york palace hotel @link (40.7580735,-73.9752305)40432284
-name: fuku loc:tarallucci e vino, tweet: 674730489429688323  :  jalapeño french fries love them #fuku @ fuku @link (40.7290001,-73.9846725)227384077
-name: neuehouse loc:the little beet table, tweet: 674731390328561664  :  her political body at @neuehouse in new york ny @link (40.74116062,-73.9850891)14057184
-name: hotel pennsylvania loc:little italy pizza, tweet: 674731681681657856  :  im at hotel pennsylvania  @nyhotelpenn in new york ny @link (40.7499717,-73.99113894)99584077
-name: juice generation loc:tres carnes, tweet: 674736822807867392  :  post workout stop @juicegeneration @ juice generation @link (40.7070007,-74.0068588)420850250
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674736992198856704  :  tbt to the city yesterday @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)614789329
-name: double dutch espresso loc:mess hall, tweet: 674737611450224640  :  words to live by @ double dutch espresso @link (40.8058357,-73.9541321)262868081
-name: contra loc:wildair, tweet: 674737623055917056  :  im at @contranyc in new york ny @link (40.719937,-73.98923842)45777588
-name: momofuku ssam bar loc:durden, tweet: 674740032784216065  :  red snapper with olive green coriander and jalapeno at momofuku ssam bar at @momofuku) @link @link (40.73171833,-73.98555397)145849870
-name: the milling room loc:starbucks coffee, tweet: 674740425404645376  :  celebration at @themillingroom in new york ny @link (40.78376511,-73.9746896)15997164
-name: capitale loc:double crispy bakery, tweet: 674742184348925952  :  im at capitale in new york ny @link (40.71880478,-73.99501746)414152196
-name: think coffee loc:the royal, tweet: 674746434374250496  :  coffee and work evenings current favorite thing to do @ think coffee @link (40.7331581,-73.9897461)394716538
-name: candle cafe loc:mckeown's, tweet: 674747338812854273  :  always #fresh. #candlecafe #tomatoes @ candle cafe @link (40.7714043,-73.9591904)57115575
-name: kgb bar loc:cucina di pesce, tweet: 674748404581466112  :  another fabulous reading wawesome authors inkwell romance night (@ kgb bar in new york ny @link (40.72641823,-73.98989839)40964217
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674750091060756481  :  wishing i was back at the met and not doing math @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)499030760
-name: subway loc:panda house i, tweet: 674759034545786880  :  im at @subway restaurant in brooklyn ny @link (40.67698241,-73.86980822)19243536
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674766814547746816  :  my mood tonight #purple #nostalgia #ilovenewyork @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)23794300
-name: minetta tavern loc:off the wagon, tweet: 674767950897917952  :  happy holidays from the elika team great dinner at minetta tavern #elikarealestate… @link (40.7299194,-74.0007553)17241184
-name: applewood loc:hugo and sons, tweet: 674772330778894336  :  im at @applewoodny in brooklyn ny @link (40.66562872,-73.98228267)19124285
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674772996884733952  :  private hours at the met @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)24079277
-name: poco loc:sigmund pretzel shop, tweet: 674775128388075520  :  shes a #wizardofoz beauty @ poco restaurant  bar @link (40.7223701,-73.9829712)320792090
-name: shinju loc:davidstea, tweet: 674775197350785024  :  im at shinju sushi in brooklyn ny @link (40.6698342,-73.97910315)375121650
-name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674778302708654081  :  astor court #metmuseum @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)21272564
-name: waldorf astoria loc:sir harry's, tweet: 674782865482190848  :  christmas at the waldorf @ waldorf astoria new york @link (40.75652616,-73.97354189)489847323
-name: rockwood music hall loc:rockwood music hall (stage zero), tweet: 674783470950989825  :  im at rockwood music hall in new york ny @link (40.72231512,-73.9886473)19222156
-name: pauls da burger joint loc:fasta pasta, tweet: 674783924682379264  :  now thats a burger @ pauls da burger joint @link (40.728611,-73.98806)52875435
+T:name: white castle loc:subway, tweet: 674115933657554944  :  #latenightsnack #whitecastle @ white castle midtown manhattan @link (40.7537689,-73.9925079)572460900
+T:name: the bitter end loc:terra blues, tweet: 674122209204441088  :  welcome richie cannata bitterend @erencannata @ the bitter end @link (40.72833804,-73.9992379)2327111115
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674122985201094656  :  the best night @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)241307309
+T:name: ogliastro loc:tom's restaurant, tweet: 674145673923575808  :  #ogliastro pizza bar  @link outdoor upscale large last @link (40.67448376,-73.96330805)421095102
+M:name: inc lounge loc:serafina at time hotel, tweet: 674197726238650369  :  #betexecs #timehotel #bossladies #inclounge @ the time new york @link (40.7609596,-73.9854965)175857701
+T:name: culture espresso loc:pier 79/ny waterway seattle cafe, tweet: 674211813978996737  :  im at culture espresso in new york ny @link (40.75228555,-73.98580075)19724949
+T:name: bouley botanical loc:baked, tweet: 674212272860827648  :  #bouleybotanical  #beautifullocation #acselhealthholidayparty #newyork thanks @albypoo… @link (40.7186508,-74.0046616)494182454
+T:name: palm court loc:piada, tweet: 674212873732759552  :  her ladyship awaiting breakfast #palmcourt @ palm court at the plaza hotel @link (40.7644501,-73.974472)16072373
+T:name: whiskey social loc:burger joint, tweet: 674213035205115905  :  rolling thru the #purityvodka cluster w #friends #squad #whiskeysocial #exceptionaltaste @… @link (40.733181,-73.9980087)86372688
+T:name: sweet chick loc:dirty french, tweet: 674215028736831493  :  chicken  waffles #goodmornig #chickenandwaffles #breakfast #frühstück #sweetchick #waffles… @link (40.7218437,-73.9872589)90837226
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674232042960195585  :  soap balloons near the #met #centralpark #nyc @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)21284641
+T:name: waldorf astoria loc:sir harry's, tweet: 674237886053642240  :  worth the trip in itself #legend @ waldorf astoria new york @link (40.75652616,-73.97354189)989926412
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674241766334296064  :  jacqueline de ribes the art of style @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)370926628
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674241930339946496  :  jacqueline de ribes the art of style @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)370926628
+T:name: the bitter end loc:terra blues, tweet: 674250829151535104  :  playing #2nite at bitter end with jeremy schonfeld and co at 9pm  arrr matey @ the bitter end @link (40.72833804,-73.9992379)29880251
+T:name: gather loc:buttermilk bakeshop, tweet: 674263411887312896  :  eggs earl grey and gun control ???#tuesdaymorning @ gather park slope @link (40.666466,-73.981708)15499214
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674268868676751360  :  #charityball selfie @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)33263492
+T:name: sunswick loc:sweets first bakeshoppe & cafe, tweet: 674271946880786432  :  lunch (@ sunswick 3535 in astoria ny @link (40.75661389,-73.92547943)49133358
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674277204101087232  :   art moment #manhattan #newyork #instagood #instamood @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)193977329
+T:name: broome street bar loc:the cupping room, tweet: 674285958137839617  :  im at @broomestreetbar in new york ny @link (40.72301447,-74.00300503)14819061
+T:name: cafe duke loc:greenhouse cafe (557 broaday) scholastic building, tweet: 674289585334165504  :  foodzies (@ cafe duke in new york ny @link (40.72370936,-73.99851235)133415557
+T:name: shake shack loc:brooklyn ice cream factory, tweet: 674291779282300928  :  im at @shakeshack in brooklyn ny @link (40.70296752,-73.99411073)25018735
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674295650369069056  :  detail kwoma ceiling #metmuseum @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)21272564
+T:name: the bitter end loc:terra blues, tweet: 674296017349566464  :  just posted a photo @ the bitter end @link (40.72833804,-73.9992379)423484956
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674296982161244160  :  museum dates are pretty cool post interview activities  @ the metropolitan museum of art new @link (40.77912965,-73.96297384)170698927
+T:name: shanghai asian manor loc:hop kee restaurant, tweet: 674308278441123841  :  im at shanghai asian manor in new york ny @link (40.71448721,-73.99883945)257302717
+T:name: turmeric nyc loc:ocean dragon restaurant, tweet: 674312929940926464  :  a desi lunch with my coworkers good meal at a good price #turmericnyc #indian #desi… @link (40.76943,-73.98867)137127871
+T:name: mace loc:esperanto restaurant bar and jugo, tweet: 674315933029179396  :  enjoyed a few festive cocktails last night #miracle @ mace @link (40.72538734,-73.97821678)73980267
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674317051163484160  :   @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)33996243
+T:name: la flaca loc:wang's great wall, tweet: 674319733403942916  :  brunchin @ la flaca nyc @link (40.7164993,-73.9876328)40605903
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674328948340228096  :  #?? capitals or pillars @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)243342939
+T:name: palm court loc:piada, tweet: 674330776872181760  :  ive always wanted to be eloise @ palm court at the plaza hotel @link (40.7644501,-73.974472)445119591
+T:name: one world observatory loc:conde nast conference center, tweet: 674332325052829696  :  im at one world observatory  @oneworldnyc in new york ny w @natyscarcella @link @link (40.71302875,-74.01319742)24409777
+T:name: one world observatory loc:conde nast conference center, tweet: 674332932262240256  :   (@ one world observatory  @oneworldnyc in new york ny @link (40.71302875,-74.01319742)267307297
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674333222948466689  :  still #reflecting from last nights charityball at the #metropolitan museum of art in the temple @link (40.77912965,-73.96297384)16323388
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674338913515872260  :  observing a painter paint a painting at the met @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)19406650
+T:name: kilo bravo loc:wild ginger, tweet: 674343887754960896  :  meanwhile in williamsburg @ kilo bravo @link (40.71888966,-73.95536532)21636966
+T:name: stk loc:subrosa, tweet: 674349922624270336  :  love  #latergram @ stk downtown @link (40.73996,-74.00714)19133486
+T:name: keens steakhouse loc:5 boro burger, tweet: 674350935662075904  :  early birthday celebration #steak #hwmms #instabelly #nyc @ keens steakhouse @link (40.750854,-73.986537)111197664
+T:name: third floor cafe loc:baekjeong, tweet: 674353251576356864  :  #gno (@ third floor cafe in new york ny w @lindsaytabma) @link (40.74713594,-73.98529571)763371504
+T:name: third floor cafe loc:baekjeong, tweet: 674353413908512769  :  unlimited  (@ third floor cafe in new york ny w @daleknows @mamamareeuh @lindsaytabma @just1ny0ng) @link (40.74713594,-73.98529571)62451731
+T:name: bxl cafe loc:heartland brewery, tweet: 674365775021522945  :  preshow brews at @bxlcafe in new york ny @link (40.75608789,-73.98485954)17698746
+T:name: plant love house loc:asian taste 86, tweet: 674366637064232961  :  so were just gunna be thai today at @plantlovehouse in elmhurst ny w @diosoglenn) @link (40.74189112,-73.87873185)163977987
+T:name: spicy village loc:mei's coffee & bakery, tweet: 674368387364077568  :  waiting and waiting (@ spicy village ???  @spicyvillageny in new york ny @link (40.716989,-73.993426)16968765
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674372377313157120  :  astor court #metmuseum @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)21272564
+T:name: koko wings loc:macchina, tweet: 674373439990464518  :  feeding the beast my stomach at @kokowings in new york ny @link (40.80098739,-73.96749801)30254828
+T:name: the manhattan at times square loc:ellen's stardust diner, tweet: 674374128229605377  :   (@ the manhattan at times square hotel  @mtshotel in new york ny @link (40.76185347,-73.98313522)368556834
+T:name: the triad loc:soom soom, tweet: 674374700840169472  :  and gala with honoree janice goldberg (@ the triad in new york ny @link @link (40.77819151,-73.98106022)775489
+T:name: hill country chicken loc:orange leaf, tweet: 674374817215348737  :  rez sez i have a caption for that @ hill country chicken  brooklyn @link (40.6927109,-73.9884415)20537254
+T:name: studio 9c loc:au bon pain, tweet: 674376195891425280  :  #nbcu corporate communications holiday party (@ studio 9c  nbcuniversal in new york ny @link (40.75895285,-73.97909167)19057138
+T:name: studio 9c loc:au bon pain, tweet: 674380802113802240  :  holiday partying (@ studio 9c  nbcuniversal in new york ny @link (40.75895285,-73.97909167)784665217
+T:name: reserve cut loc:crumbs bake shop, tweet: 674383685425061889  :  im at @reservecut in new york ny @link @link (40.70602646,-74.01177049)2329188432
+T:name: new flushing bakery loc:yummy dim sum, tweet: 674384361421201409  :  im at new flushing bakery in flushing ny @link (40.75940012,-73.8304797)307583108
+T:name: dominies loc:ramen & yakitori, tweet: 674387722266611712  :  craft night dominiesastoria beer  scissors what could go wrong #dominies #dominiesastoria… @link (40.7656934,-73.91872224)2398163226
+T:name: the grey dog loc:cafe blossom, tweet: 674389035662446592  :  couples dinner #yesughgross (@ the grey dog in new york ny w @kylelynah) @link @link (40.729834,-74.004012)18394380
+M:name: westville loc:city cakes, tweet: 674392405798424576  :  im at westville chelsea in new york ny @link (40.74204,-73.99999)26372174
+T:name: waldorf astoria loc:sir harry's, tweet: 674394790901977088  :  got to hang with coach tressel today  @ waldorf astoria new york @link (40.75652616,-73.97354189)2471582838
+T:name: jackbar loc:little choc apothecary, tweet: 674395458672922624  :  im at jackbar in brooklyn ny @link (40.711873,-73.957187)47875656
+T:name: boilermaker loc:bluebird coffee shop, tweet: 674396664849965058  :  just a good veggie burger  @ boilermaker nyc @link (40.7234802,-73.9886322)385711852
+M:name: viv loc:viv restaurant, tweet: 674397494235787264  :  drinks then dinner (@ viv thai in new york ny @link (40.76284729,-73.98969179)83470741
+T:name: ivan ramen loc:brunswick, tweet: 674397769885458432  :  hard core research session at #ivanramen in #nyc; key takeaways #crazy, #crazy, #crazy… @link (40.720604,-73.98454934)3378775143
+T:name: shake shack loc:brooklyn ice cream factory, tweet: 674397919198371840  :   @ shake shack brooklyn bridge @link (40.70298046,-73.99422435)24304444
+T:name: ivan ramen loc:brunswick, tweet: 674399251259113472  :  hardcore research at #ivanramen in #nyc. key takeaways #crazy, #crazy, #crazy good #food… @link (40.720604,-73.98454934)3378775143
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674401676669952000  :  nyc with the bros the other day @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)757718364
+T:name: terra loc:gotan, tweet: 674402406646611968  :  im at terra in new york ny @link (40.719077,-74.006568)20802652
+T:name: buvette loc:l'aile ou la cuisse (l'a.o.c), tweet: 674405938812592129  :  im at buvette  @ilovebuvette in new york ny @link (40.73272229,-74.0041852)99586796
+T:name: houston hall loc:arbor bistro, tweet: 674408558084145152  :  im at houston hall in new york ny @link (40.72867347,-74.00473773)39554674
+M:name: kinfolk loc:kinfolk studios, tweet: 674408574387404801  :  myhusband has photos in the new @victoryjournal @ kinfolk @link (40.7217598,-73.9583435)104347049
+T:name: diamond horseshoe loc:paramount bar & grill, tweet: 674408698836553729  :  maestro #tumblr holiday festival #blaknyc @ diamond horseshoe @link (40.7596397,-73.9870071)19680822
+T:name: scarpetta loc:the diner, tweet: 674410734470713345  :  im at @scarpettanyc in new york ny @link (40.74106349,-74.00479037)140323856
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674411273094873090  :  xoxo gossip girl @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)1146565153
+T:name: sweetgreen  loc:hoomoos asli, tweet: 674412965257441281  :  nom nom at @sweetgreen in new york ny @link (40.7210276,-73.9972564)93274085
+T:name: pianos loc:bisous, ciao., tweet: 674414306226778116  :  im at @pianosnyc in new york ny @link (40.72111085,-73.98786106)45641277
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674415395508510720  :  xoxo gossip girl @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)1146565153
+T:name: fonda loc:dojo izakaya, tweet: 674419465564643328  :  im at @fondarestaurant in new york ny @link (40.72276055,-73.98283937)16650200
+T:name: yu sushi bar loc:360 lounge, tweet: 674423942631788544  :  sea urchin and sweet shrimp yu sushi #flushing #queens #worldsfair #yelpqueens @ yu sushi bar @link (40.76071604,-73.83340536)408726471
+T:name: oh taisho loc:papaya king, tweet: 674425025311543296  :  im at oh taisho in new york ny @link (40.72937852,-73.98937615)8687122
+T:name: yu sushi bar loc:360 lounge, tweet: 674429177697824768  :  tako wasa live octopus yu sushi #flushing #queens #worldsfair #yelpqueens @ yu sushi bar @link (40.76071604,-73.83340536)408726471
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674429889978716160  :  #metmuseum #ilovemuseums #baijieinusa @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)94648706
+T:name: yu sushi bar loc:360 lounge, tweet: 674432005195591680  :  octopus guts yu sushi #flushing #queens #worldsfair #yelpqueens @ yu sushi bar @link (40.76071604,-73.83340536)408726471
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674435719109156865  :  god i loved this place @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)879262376
+T:name: quality meats loc:angela's deli, tweet: 674439148967698432  :  pretty yummy @ quality meats @link (40.765049,-73.9762497)132687180
+T:name: dominies loc:ramen & yakitori, tweet: 674439587318599680  :  doorflakes dominiesastoria #dominies #dominiesastoria #snowflake #papersnowflake #bar #astoria… @link (40.7656934,-73.91872224)2398163226
+T:name: quality meats loc:angela's deli, tweet: 674440089418735616  :  happy birthday amy @ quality meats @link (40.765049,-73.9762497)32171665
+T:name: udon west loc:sing sing karaoke, tweet: 674444574799065092  :  oh yessss (@ udon west in new york ny @link (40.72931975,-73.98924)257494875
+T:name: the randolph at broome loc:randolph beer, tweet: 674448941279084545  :  im at the randolph at broome  @therandolphnyc in new york ny @link (40.71977014,-73.99493712)24651686
+T:name: phd loc:bodega negra, tweet: 674462868503441408  :  im at phd at dream downtown  @phdrooftopny in new york ny @link (40.74239352,-74.00330983)115281885
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674464329589215232  :  mind wandering @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)60617349
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674465507815260160  :  these beauties #charityball2015 repping @tgctribeca @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)25252152
+T:name: creperie loc:thelewala, tweet: 674474434384830464  :  @creperienyc #creperie #nyc photocredit mudd786 @ crêperie @link (40.7295494,-74.0005417)116343244
+T:name: fairfield inn loc:sky room, tweet: 674544776910368768  :  im at fairfield inn  suites new york manhattantimes square in new york ny @link (40.75640454,-73.9925015)924443485
+T:name: sullivan street bakery loc:company, tweet: 674575385128865792  :  just how i like it  #coffee #freelancelife @ sullivan street bakery 9th ave @link (40.74728318,-74.00053821)87512392
+T:name: sweet corner loc:wild, tweet: 674583382135726081  :  good morning beautiful  come have a cheesy breakfast with us @ sweet corner bakeshop @link (40.734627,-74.006409)123641235
+T:name: friend of a farmer loc:sushi chosi, tweet: 674599588129587201  :  the perfect start to a day #coffee #books @zenguin @ friend of a farmer @link (40.7369308,-73.9868164)15433233
+T:name: double dutch espresso loc:mess hall, tweet: 674601720706543616  :  i love my neighborhood #nyc @ double dutch espresso @link (40.8058357,-73.9541321)66521778
+T:name: essex loc:shopsins general store (store #16), tweet: 674604355199332352  :  lettuce heads @ essex street market @link (40.7193413,-73.9876022)500873016
+T:name: culture espresso loc:pier 79/ny waterway seattle cafe, tweet: 674610852100730880  :  im at culture espresso in new york ny w @hettonzo @link (40.75228555,-73.98580075)16361455
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674618391186030592  :  princesse de broglie @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)238446527
+T:name: dudleys loc:casa mezcal, tweet: 674620610723581952  :  #coffee #coffeeeveryday #counterculturecoffee #dudleys #les #nyc @ dudleys nyc @link (40.71810152,-73.99028333)82092897
+T:name: waldorf astoria loc:sir harry's, tweet: 674622907801329664  :  today seems like a good day to be awesome @ waldorf astoria new york @link (40.75652616,-73.97354189)62702549
+T:name: pret a manger loc:liquiteria, tweet: 674625993290735616  :  vanilla chai at @pret a manger in new york ny @link (40.73718516,-73.99058707)20450591
+T:name: little skips outpost loc:little mo, tweet: 674626901944700929  :  im at little skips outpost in brooklyn ny @link (40.697177,-73.93372)19415070
+T:name: stumptown coffee loc:lasani restaurant, tweet: 674633169610653697  :  getting a lil work done at @stumptowncoffee roasters in new york ny @link (40.74590156,-73.98814227)36143173
+T:name: conde nast loc:conde nast conference center, tweet: 674634202202161153  :  im at vogue magazine  @condenast in new york ny @link (40.71308371,-74.01336348)1398654900
+T:name: conde nast loc:conde nast conference center, tweet: 674634499993575424  :  im at vogue magazine  @condenast in new york ny w @3dbillionaire @link (40.71308371,-74.01336348)919860212
+T:name: phd loc:bodega negra, tweet: 674635562624622592  :   daniellekandel @ phd rooftop lounge at dream downtown @link (40.74237462,-74.00336432)54708669
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674641924461043713  :  xoxo gg @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)24177579
+T:name: tasty cafe loc:bella napoli, tweet: 674644357497122816  :  im at @tastycafe in new york ny @link (40.745678,-73.98454503)6938352
+T:name: lighthouse loc:wei williamsburg, tweet: 674644718874189824  :  cocktail class thanks again @insidehook @ lighthouse @link (40.71073648,-73.95365065)215450012
+T:name: magnolia bakery loc:forty carrots, tweet: 674654902845599745  :  im at magnolia bakery in new york ny @link (40.76183722,-73.96639824)184937439
+T:name: vapiano loc:bar 13, tweet: 674655857230094337  :  swift li aziz chris at @vapianonyc in new york ny @link (40.73448624,-73.99211361)67220142
+T:name: waldorf astoria loc:sir harry's, tweet: 674657092473458688  :  name that movie @ waldorf astoria new york @link (40.75652616,-73.97354189)2815212045
+T:name: jeepney loc:sao mai vietnamese cuisine, tweet: 674661436325367808  :  #filipina @ jeepney @link (40.73027872,-73.98338356)82306739
+T:name: smoocha loc:soju haus, tweet: 674669342584389632  :  #tea is always a good idea...#pumpkinspice #teabreak with @iamsheilaj @ smoocha @link (40.7468681,-73.9851837)460855541
+T:name: the manhattan at times square loc:ellen's stardust diner, tweet: 674670913900580865  :  im at the manhattan at times square hotel  @mtshotel in new york ny w @chum31 @link (40.76185347,-73.98313522)88247109
+T:name: kobeyaki loc:crisp, tweet: 674672957873102849  :  im at @kobeyaki in new york ny @link (40.75387,-73.98581)44814719
+T:name: smoocha loc:soju haus, tweet: 674673920755302400  :  daily perspective...#pumpkinspice #teabreak with @iamsheilaj @ smoocha @link (40.7468681,-73.9851837)460855541
+T:name: cachapas y mas loc:809 grill & bar restaurant, tweet: 674674643844886528  :  im at cachapas y mas in new york ny @link (40.86199719,-73.92503746)251648051
+T:name: crif dogs loc:acqua santa, tweet: 674676461182259200  :  im at @crifdogs in brooklyn ny @link (40.717006,-73.956565)53828573
+T:name: naya express loc:muldoons bar, tweet: 674676857523019776  :  im at @nayaexpress in new york ny @link (40.75180398,-73.97389756)93890121
+T:name: double dutch espresso loc:mess hall, tweet: 674684213799624704  :  #treatyoself  @ double dutch espresso @link (40.8058357,-73.9541321)262868081
+T:name: il corallo loc:spice, tweet: 674687529015226369  :  lunch in soho #nyc (@ il corallo trattoria in new york ny @link @link (40.726298,-74.001899)104757009
+T:name: shake shack loc:cafe frida, tweet: 674693793455677440  :  classics ???#shakeshack #nyc #newyork #foodphotography #foodpics #foodie #food #foodporn… @link (40.7809563,-73.9763947)267284252
+T:name: breads bakery loc:university market place, tweet: 674695710349094916  :  im at @breadsbakery in new york ny @link (40.73680337,-73.99171829)19848818
+T:name: sant ambroeus loc:extra virgin, tweet: 674701538019807232  :  domenico dolce sighting new york new york sant ambroeus @link (40.7354,-74.0031)81237494
+T:name: sony club loc:sony music employee cafeteria, tweet: 674705126767140864  :  p a r t y  (@ sony club in new york ny @link (40.76147701,-73.97332936)55137681
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674711826488287233  :  #nuecreative @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)20900388
+T:name: city swiggers loc:maz mezcal, tweet: 674712094416203776  :  christmas tree at city swiggers 320 e 86th street btwn 1st  2nd ave manhattan 900 craft beer @link (40.7772408,-73.9510269)395386243
+T:name: blind tiger loc:ghandi cafe, tweet: 674712804549632000  :  drinking a harlan by @hillfarmstead at @blindtigernyc  @link (40.7319,-74.0033)32414366
+T:name: 2 bros pizza loc:rogue, tweet: 674713775052890112  :  im at @2brospizza in new york ny @link (40.74419837,-73.99190127)14855916
+T:name: double dutch espresso loc:mess hall, tweet: 674717863677198337  :  study break @ double dutch espresso @link (40.8058357,-73.9541321)509013762
+T:name: black tap loc:chalk point kitchen, tweet: 674722267855773697  :  ?????#blacktop #itis @ black tap craft burgers  beer @link (40.723774,-74.0041504)301758076
+T:name: the new york palace hotel loc:villard michel richard, tweet: 674723248383401984  :  my bae under the palace tree  @ the new york palace hotel @link (40.7580735,-73.9752305)40432284
+T:name: fuku loc:tarallucci e vino, tweet: 674726999697526786  :  im at fuku  @momofuku in new york ny @link (40.72892517,-73.98461276)227384077
+T:name: fuku loc:tarallucci e vino, tweet: 674728230381707264  :  happy to present the #fuket @momofuku @ fuku @link (40.7290001,-73.9846725)227384077
+T:name: the new york palace hotel loc:villard michel richard, tweet: 674729852348588032  :  my bae under the palace tree #engaged @ the new york palace hotel @link (40.7580735,-73.9752305)40432284
+T:name: fuku loc:tarallucci e vino, tweet: 674730489429688323  :  jalapeño french fries love them #fuku @ fuku @link (40.7290001,-73.9846725)227384077
+T:name: neuehouse loc:the little beet table, tweet: 674731390328561664  :  her political body at @neuehouse in new york ny @link (40.74116062,-73.9850891)14057184
+T:name: hotel pennsylvania loc:little italy pizza, tweet: 674731681681657856  :  im at hotel pennsylvania  @nyhotelpenn in new york ny @link (40.7499717,-73.99113894)99584077
+T:name: juice generation loc:tres carnes, tweet: 674736822807867392  :  post workout stop @juicegeneration @ juice generation @link (40.7070007,-74.0068588)420850250
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674736992198856704  :  tbt to the city yesterday @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)614789329
+T:name: double dutch espresso loc:mess hall, tweet: 674737611450224640  :  words to live by @ double dutch espresso @link (40.8058357,-73.9541321)262868081
+T:name: contra loc:wildair, tweet: 674737623055917056  :  im at @contranyc in new york ny @link (40.719937,-73.98923842)45777588
+T:name: momofuku ssam bar loc:durden, tweet: 674740032784216065  :  red snapper with olive green coriander and jalapeno at momofuku ssam bar at @momofuku) @link @link (40.73171833,-73.98555397)145849870
+T:name: the milling room loc:starbucks coffee, tweet: 674740425404645376  :  celebration at @themillingroom in new york ny @link (40.78376511,-73.9746896)15997164
+T:name: capitale loc:double crispy bakery, tweet: 674742184348925952  :  im at capitale in new york ny @link (40.71880478,-73.99501746)414152196
+T:name: think coffee loc:the royal, tweet: 674746434374250496  :  coffee and work evenings current favorite thing to do @ think coffee @link (40.7331581,-73.9897461)394716538
+T:name: candle cafe loc:mckeown's, tweet: 674747338812854273  :  always #fresh. #candlecafe #tomatoes @ candle cafe @link (40.7714043,-73.9591904)57115575
+T:name: kgb bar loc:cucina di pesce, tweet: 674748404581466112  :  another fabulous reading wawesome authors inkwell romance night (@ kgb bar in new york ny @link (40.72641823,-73.98989839)40964217
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674750091060756481  :  wishing i was back at the met and not doing math @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)499030760
+T:name: subway loc:panda house i, tweet: 674759034545786880  :  im at @subway restaurant in brooklyn ny @link (40.67698241,-73.86980822)19243536
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674766814547746816  :  my mood tonight #purple #nostalgia #ilovenewyork @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)23794300
+T:name: minetta tavern loc:off the wagon, tweet: 674767950897917952  :  happy holidays from the elika team great dinner at minetta tavern #elikarealestate… @link (40.7299194,-74.0007553)17241184
+T:name: applewood loc:hugo and sons, tweet: 674772330778894336  :  im at @applewoodny in brooklyn ny @link (40.66562872,-73.98228267)19124285
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674772996884733952  :  private hours at the met @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)24079277
+T:name: poco loc:sigmund pretzel shop, tweet: 674775128388075520  :  shes a #wizardofoz beauty @ poco restaurant  bar @link (40.7223701,-73.9829712)320792090
+T:name: shinju loc:davidstea, tweet: 674775197350785024  :  im at shinju sushi in brooklyn ny @link (40.6698342,-73.97910315)375121650
+M:name: metropolitan museum of art loc:members dining room @ the met museum, tweet: 674778302708654081  :  astor court #metmuseum @ the metropolitan museum of art new york @link (40.77912965,-73.96297384)21272564
+T:name: waldorf astoria loc:sir harry's, tweet: 674782865482190848  :  christmas at the waldorf @ waldorf astoria new york @link (40.75652616,-73.97354189)489847323
+M:name: rockwood music hall loc:rockwood music hall (stage zero), tweet: 674783470950989825  :  im at rockwood music hall in new york ny @link (40.72231512,-73.9886473)19222156
+T:name: pauls da burger joint loc:fasta pasta, tweet: 674783924682379264  :  now thats a burger @ pauls da burger joint @link (40.728611,-73.98806)52875435
