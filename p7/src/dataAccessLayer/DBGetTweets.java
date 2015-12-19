@@ -142,7 +142,7 @@ public class DBGetTweets {
     //USED IN SIMULATION DO NOT TOUCH 
     
     public static TweetStorage getAllTweetsExperiment(){
-    	return tsQuery("SELECT * FROM experiment" );
+    	return tsQuery("SELECT * FROM experiment2" );
     }
     
     public static TweetStorage getUserExperiment(long userid){

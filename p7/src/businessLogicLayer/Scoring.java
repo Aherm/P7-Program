@@ -20,7 +20,7 @@ public class Scoring {
 	public  Map<Restaurant,Double> nameScore = new HashMap<Restaurant,Double>();
 	public  Map<Restaurant,Double> combinedScore = new HashMap<Restaurant,Double>();
 	public  Map<Restaurant,Double> conservative = new HashMap<Restaurant,Double>();
-	public  Map<Restaurant,Double> noOnlyMcombinedScore = new HashMap<Restaurant,Double>();
+	public  Map<Restaurant,Double> noMcombinedScore = new HashMap<Restaurant,Double>();
 	private  Map<String,Integer> RestaurantNameCounter = new HashMap<String,Integer>(); 
 	private  Map<String,List<Restaurant>> restaurantsWithSameName = new HashMap<String,List<Restaurant>>();
 	public  int   locTotalVisits = 0; 
@@ -62,7 +62,7 @@ public class Scoring {
 		initScores(restaurants, geoScore);
 		initScores(restaurants, nameScore);
 		initScores(restaurants, combinedScore);
-		initScores(restaurants, noOnlyMcombinedScore);
+		initScores(restaurants, noMcombinedScore);
 		initScores(restaurants, conservative); 
 		
 	}
@@ -293,15 +293,14 @@ public class Scoring {
 	private void combinedScore(TweetStorage ts, List<Restaurant> restaurants){
 		Map<Restaurant,TweetStorage> map = new HashMap<Restaurant,TweetStorage>();
 		Map<String,TweetStorage> nameCounter = new HashMap<String,TweetStorage>();
+		//INIT MAP
 		for(Restaurant r : restaurants){
 			nameCounter.put(r.getName(), new TweetStorage());
 		}
-		
-		//INIT MAP
 		for(Restaurant r : restaurants){
 			map.put(r, new TweetStorage()); 
 		}
-		
+		//Insert into map and handle it 
 		for(Tweet t : ts){
 			if(t.hasVisited()){
 				if(t.getNameRes() == null)
@@ -331,20 +330,23 @@ public class Scoring {
 			}
 			
 			double results = 0; 
+			
 			if(tweets.isEmpty()){ //only from mentions
 				combinedScore.put(r,nameScore.get(r));
-				noOnlyMcombinedScore.put(r, new Double(0));
+				noMcombinedScore.put(r, new Double(0));
 			}
 			else{
 				results = calcScore((double)sickTweets.size() + mSick,(double)tweets.size() + mTotal);
 				double results2 = calcScore((double)sickTweets.size() , (double)tweets.size()); 
 				combinedScore.put(r, results);
-				noOnlyMcombinedScore.put(r,results);
+				noMcombinedScore.put(r,results);
 				conservative.put(r, results2);	
 			}
 		}
 		
 	}
+	
+	
 	
 	private double calcScore(double sick, double normal){
 		return  sick / normal;
@@ -360,7 +362,6 @@ public class Scoring {
 		for(Restaurant r : restaurantsWithSameName.get(t.getNameRes().getName())){
 			if(Distance.getDist(r,t) < Constants.restaurantDistance){
 				conflictName++;
-
 				conName.append("name: " + t.getNameRes().getName() + " loc:" + t.getLocRes().getName() + ", tweet: "+ t.toString() + "\n");
 				return r; 
 			}

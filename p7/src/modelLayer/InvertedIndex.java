@@ -52,8 +52,6 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     
        
     public void addIndex(Tweet tweet) throws Exception {
-    	
-
     	int counter = 0; 
     	String lastString = "";
     	int lastCounter = 0; 
@@ -70,6 +68,9 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     		}
     	}
     	if(!lastString.isEmpty()){
+    		Pattern p = patterns[lastCounter];
+    		Matcher m = p.matcher(tweet.getTweetText());	
+    		if(m.find())
     			this.get(lastString).add(tweet); 
     	}
     }
@@ -80,7 +81,6 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     	}
     }
 
-
 	public TweetStorage nameQuery(Restaurant restaurant) {
 	 
 	 TweetStorage values = new TweetStorage(); 
@@ -88,40 +88,5 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
 		 return values; 
 	 values.addAll(this.get(restaurant.getName()));
 	 return values; 
-		
-		/*
-		List<Set<Tweet>> tweetSet = new ArrayList<Set<Tweet>>();
-	    TweetStorage tweetStorage = new TweetStorage();
-	    String[] restaurantWords = restaurant.getName().split(" ");
-	    for (String restaurantWord : restaurantWords) {
-	        String resWord = restaurantWord;
-	        for (String word : this.keySet()) {
-	            String w = word;
-	            if (resWord.equals(w)) {
-	                tweetSet.add(this.get(word));
-	                break;
-	            }
-	        }
-	    }
-	    
-	    //if no words in inverted index matched a word of a restaurant
-	    if (restaurantWords.length != tweetSet.size()) 
-	        return tweetStorage;
-	
-	    for (int i = 1; i < tweetSet.size(); i++) {
-	        tweetSet.get(0).retainAll(tweetSet.get(i));
-	    }
-	
-	    //if the intersection results in an empty list
-	    if (tweetSet.isEmpty())
-	        return tweetStorage;
-	
-	    for (Tweet tweet : tweetSet.get(0)) {
-	        if (tweet.getTweetText().contains(restaurant.getName()))
-	        	tweetStorage.add(tweet);
-	    }
-	
-	    return tweetStorage;
-	    */
 	}
 }
