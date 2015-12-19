@@ -18,7 +18,7 @@ import java.util.*;
 
 import javax.rmi.CORBA.Util;
 
-import org.postgresql.core.Utils;
+
 
 import streaming.TweetQueryThread;
 
@@ -50,7 +50,7 @@ public class Program {
         TweetStorage newTweets = listener.getDBTweets();
         TweetStorage allTweets = listener.getTweets();
         Grid grid = listener.getGrid();
-        List<Restaurant> restaurants = Utils.getRestaurantsFromFile("somePath");
+        List<Restaurant> restaurants = Utils.getRestaurantsFromFile("restaurantData/resData.csv");
         InvertedIndex invertedIndex = listener.getInvertedIndex();
         invertedIndex.init();
         //A minute in ms: 60000
