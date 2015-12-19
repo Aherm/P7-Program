@@ -154,7 +154,7 @@ public class DBGetTweets {
     }
     
     public static TweetStorage lastThing(){
-    	return tsQuery("SELECT * FROM new_york_tweets WHERE extract(DAY from createdat::timestamp) > 5 AND EXTRACT(day FROM createdat::timestamp) < 12");
+    	return tsQuery("SELECT * from experiment2");
     }
     
 
