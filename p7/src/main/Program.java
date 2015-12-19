@@ -3,6 +3,7 @@ package main;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetRestaurants;
 import modelLayer.ClusterStorage;
+import modelLayer.Grid;
 import modelLayer.InvertedIndex;
 import modelLayer.Restaurant;
 import modelLayer.TweetStorage;
@@ -19,12 +20,13 @@ import streaming.TweetQueryThread;
 public class Program {
 
     public static void main(String[] args) {
-        TwitterStreamFactory tsf = new TwitterStreamFactory(Oauth.createConfigBuilder().build());
+        
+    	//SETTING UP TWITTER STREAM 
+    	TwitterStreamFactory tsf = new TwitterStreamFactory(Oauth.createConfigBuilder().build());
         TwitterStream stream = tsf.getInstance();
 
         OurStatusListener listener = new OurStatusListener();
-        stream.addListener(listener);
-        //stream.sample();
+        stream.addListener(listener);;
 
         //bounding box for new york
         double[][] locations = new double[][]{
@@ -32,33 +34,27 @@ public class Program {
                 {-73, 41}
         };
 
-        //bounding box for the whole of us		
-        //double[][] locations = new double[][]{
-        //    {-167.276413, 5.49955},
-        //    {-52.23304, 83.162102}
-        //};
-
+       
         FilterQuery query = new FilterQuery();
-        //query.language("en");
         query.locations(locations);
         stream.filter(query);
 
-        DBConnect connection = DBConnect.getInstance();
-        connection.connectToLocal("world", "postgres", "21");
+        //Datbase stuff commented out 
+       // DBConnect connection = DBConnect.getInstance();
+        //connection.connectToLocal("world", "postgres", "21");
 
         TweetStorage newTweets = listener.getDBTweets();
         TweetStorage allTweets = listener.getTweets();
-        ClusterStorage clusters = listener.getClusters();
+        Grid grid = listener.getGrid();
         List<Restaurant> restaurants = DBGetRestaurants.getRestaurants().x;
         InvertedIndex invertedIndex = listener.getInvertedIndex();
         invertedIndex.init();
         //A minute in ms: 60000
         //An hour in ms: 3600000
-        TimerTask insertTweetsTask = new RunMeTask(newTweets, "new_york_tweets");
-        Timer timer = new Timer();
-        timer.schedule(insertTweetsTask, 1000, 60000);
-        //TweetQueryThread t = new TweetQueryThread(allTweets, clusters, restaurants, invertedIndex);
-        TweetQueryThread t = new TweetQueryThread(allTweets, clusters);
+        //TimerTask insertTweetsTask = new RunMeTask(newTweets, "new_york_tweets");
+        //Timer timer = new Timer();
+        //timer.schedule(insertTweetsTask, 1000, 60000);
+        TweetQueryThread t = new TweetQueryThread(allTweets, restaurants,invertedIndex,grid);
         t.start();
 
         //connection.closeConnection();
