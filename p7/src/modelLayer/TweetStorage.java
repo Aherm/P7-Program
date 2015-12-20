@@ -1,6 +1,7 @@
 package modelLayer;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.ArrayList;
 
 public class TweetStorage extends ArrayList<Tweet> {
@@ -71,6 +72,32 @@ public class TweetStorage extends ArrayList<Tweet> {
 			}
 		}
 		return res;
+	}
+	
+	public int countVisits(){
+		List<Long> uids = new ArrayList<Long>();
+		TweetStorage userTweets = new TweetStorage();
+		int visits = 0;
+		for(Tweet t: this){
+			if(!uids.contains(t.getUserID())){
+				uids.add(t.getUserID());
+				visits++;
+				userTweets.add(t); 
+			}
+			else{
+				boolean flag = true; 
+				for(Tweet z : userTweets)
+					if(t.getUserID() == z.getUserID()){
+						flag = flag && t.oneDayOrMoreOlder(z);
+				}
+				if(flag){
+					visits++;
+					userTweets.add(t); 
+				}
+			}
+		}
+		
+		return visits;
 	}
 	
 	public TweetStorage getSickTweets() {

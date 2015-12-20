@@ -1,0 +1,58 @@
+juice----------------------------------------------
+count: 31
+sickCount: 2
+673527241159086080  :  im addicted to drinking juice #badhabits (0.0,0.0)1532075162
+674107485754642432  :  white grape juice  (0.0,0.0)1145980616
+almond----------------------------------------------
+count: 5
+sickCount: 1
+673629422696734720  :  these with potato bread  nom nom nom ps i meant almond butter you perverts (0.0,0.0)756144762
+joe----------------------------------------------
+count: 29
+sickCount: 1
+674446410876641280  :  boba fatt joe #hiphopstarwars @midnight (0.0,0.0)196540524
+wonderful----------------------------------------------
+count: 30
+sickCount: 1
+673292369173848064  :  happy birthday to the most wonderful boyfriend ever happy birthday @spectrumthepony.  (0.0,0.0)386598623
+dishes----------------------------------------------
+count: 4
+sickCount: 1
+674716482274750464  :  gotta wash dishes #z100jingleball (0.0,0.0)727686794
+legend----------------------------------------------
+count: 20
+sickCount: 1
+673995176315105280  :  @grantgust @playerstribune @nba @celtics absolutely larry legend @link (0.0,0.0)22784479
+1 oak----------------------------------------------
+count: 20
+sickCount: 1
+673787913067438080  :  this kind of night @ 1 oak nyc @link (40.7439995,-74.0061111)55867005
+princess----------------------------------------------
+count: 19
+sickCount: 1
+674041794242330625  :  missing my princess night more than ever @ island hills golf club @link (40.7574692,-73.0961227)1302070375
+stk----------------------------------------------
+count: 8
+sickCount: 1
+673731645208403968  :  sunday dinner @ stk rooftop meatpacking district @link (40.73994451,-74.00740183)55867005
+island----------------------------------------------
+count: 388
+sickCount: 2
+673519706721140736  :  just woke up in long island im gonna miss these nights (0.0,0.0)278887047
+673632111669084160  :  tis the season of love @ ronkonkoma long island ny @link (40.81440407,-73.13607225)1302070375
+spring----------------------------------------------
+count: 45
+sickCount: 1
+674015015217811457  :  brb spring awakening (0.0,0.0)1241708570
+cream----------------------------------------------
+count: 47
+sickCount: 1
+673537326325374977  :  whipped cream on ice coffee is a lot wyd @link (0.0,0.0)2441996595
+talent----------------------------------------------
+count: 9
+sickCount: 1
+674763092526538755  :  gills talent is licking dangerous items #wcw @gillisneat @link (0.0,0.0)987511177
+aurora----------------------------------------------
+count: 1
+sickCount: 1
+673312508376125440  :  at @lacasaazulbooks w aurora helena maría  @vgrise. @link (0.0,0.0)2221894836

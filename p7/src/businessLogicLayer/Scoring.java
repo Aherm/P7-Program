@@ -23,19 +23,24 @@ public class Scoring {
 	public  Map<Restaurant,Double> noMcombinedScore = new HashMap<Restaurant,Double>();
 	private  Map<String,Integer> RestaurantNameCounter = new HashMap<String,Integer>(); 
 	private  Map<String,List<Restaurant>> restaurantsWithSameName = new HashMap<String,List<Restaurant>>();
-	public  int   locTotalVisits = 0; 
-	public  int   locTotalSickVisits = 0; 
-	public  int   nameTotalVisits = 0; 
-	public  int   nameTotalSickVisits = 0; 
-	public int uniqueLoc = 0; 
-	public int uniqueMen = 0; 
-	public int equal = 0; 
-	public int diff = 0;
-	public int conflictLoc = 0; 
+	private  int   locTotalVisits = 0; 
+	private  int   locTotalSickVisits = 0; 
+	private  int   nameTotalVisits = 0; 
+	private  int   nameTotalSickVisits = 0; 
+	private int uniqueLoc = 0; 
+	private int uniqueMen = 0; 
+	private int equal = 0; 
+	private int diff = 0;
+	private int conflictLoc = 0; 
 	public int conflictName = 0; 
-	public int geotaggedMentions = 0; 
-	public StringBuilder conLoc = new StringBuilder(); 
-	public StringBuilder conName = new StringBuilder();
+	private int geotaggedMentions = 0; 
+	private StringBuilder conLoc = new StringBuilder(); 
+	private StringBuilder conName = new StringBuilder();
+	private int locTotalTweets = 0;
+	private int locTotalSickTweets = 0;
+	private int nameTotalTweets = 0;
+	private int nameTotalSickTweets = 0;
+	
  
 	private void init(List<Restaurant> restaurants){
 		
@@ -100,11 +105,13 @@ public class Scoring {
 			if(t.isEmpty())
 				continue; 
 			
-			double visit = t.size(); 
-			double sickVisist = t.getSickTweets().size(); 
+			double visit = t.countVisits(); 
+			double sickVisist = t.getSickTweets().countVisits(); 
 			
 			locTotalSickVisits += sickVisist; 
 			locTotalVisits += visit; 
+			locTotalTweets += t.size();
+			locTotalSickTweets += t.getSickTweets().size();
 			
 			double results = calcScore(sickVisist, visit); 
 			geoScore.put(r, results);
@@ -130,12 +137,14 @@ public class Scoring {
 		}
 		
 		if(flag){
-			nameTotalSickVisits += sickTweets.size(); 
-			nameTotalVisits += tweets.size(); 
+			nameTotalSickVisits += sickTweets.countVisits(); 
+			nameTotalVisits += tweets.countVisits(); 
+			nameTotalTweets += tweets.size();
+			nameTotalSickTweets += tweets.getSickTweets().size();
 		}
 		
-		double visit = tweets.size(); 
-		double sickVisit = sickTweets.size(); 
+		double visit = tweets.countVisits(); 
+		double sickVisit = sickTweets.countVisits(); 
 		result = calcScore(sickVisit, visit) * (1/RestaurantNameCounter.get(r.getName()).doubleValue()); 
 	
 		nameScore.put(r, result);
@@ -177,10 +186,18 @@ public class Scoring {
 	
 	public void printCounts(TweetStorage ts){
 		StringBuilder builder = new StringBuilder(); 
+		
+		builder.append("VISIT STATS" + "\n");
 		builder.append("Total Locations visists: " + locTotalVisits +"\n"); 
 		builder.append("Total Mentions visists: " + nameTotalVisits +"\n"); 
 		builder.append("Total Sick L:" + locTotalSickVisits + "\n");
 		builder.append("Total Sick M:" + nameTotalSickVisits + "\n"); 
+		
+		builder.append("TWEET STATS" + "\n");
+		builder.append("Total mentions tweets: " + nameTotalTweets + "\n");
+		builder.append("Total sick name tweets: " + nameTotalSickTweets + "\n");
+		builder.append("Total loc tweets: " + locTotalTweets + "\n");
+		builder.append("Total mentions loc tweets: " + locTotalSickTweets + "\n");
 		builder.append("Unique L:" + uniqueLoc +"\n");
 		builder.append("Unique M:" + uniqueMen + "\n"); 
 		builder.append("Diff: " + diff + "\n"); 
@@ -223,9 +240,13 @@ public class Scoring {
 				}
 				else if(t.conflict()){
 					conflicts.add(t);
+					withLoc.get(t.getLocRes()).add(t);
+					withName.get(t.getNameRes().getName()).add(t);
 				}
 				else if(t.resSame()){
 					same.add(t);
+					withLoc.get(t.getLocRes()).add(t);
+					withName.get(t.getNameRes().getName()).add(t);
 					}
 			}
 		}
@@ -310,6 +331,9 @@ public class Scoring {
 					map.get(t.getLocRes()).add(t);
 				else if(t.getLocRes() == null && !t.isGeotagged())
 					nameCounter.get(t.getNameRes().getName()).add(t);
+				else if(t.getLocRes() == null && t.isGeotagged()){
+					continue;
+				}
 				else if(t.conflict()){
 					map.get(handleConflict(t)).add(t);
 				}
@@ -328,8 +352,8 @@ public class Scoring {
 			double mSick = 0; 
 			double mTotal = 0; 
 			if(!nameCounter.get(r.getName()).isEmpty()){
-				mSick = nameCounter.get(r.getName()).getSickTweets().size() / RestaurantNameCounter.get(r.getName()).doubleValue(); 
-				mTotal = nameCounter.get(r.getName()).size() / RestaurantNameCounter.get(r.getName()).doubleValue();		
+				mSick = nameCounter.get(r.getName()).getSickTweets().countVisits() / RestaurantNameCounter.get(r.getName()).doubleValue(); 
+				mTotal = nameCounter.get(r.getName()).countVisits() / RestaurantNameCounter.get(r.getName()).doubleValue();		
 			}
 			
 			double results = 0; 
@@ -339,8 +363,8 @@ public class Scoring {
 				noMcombinedScore.put(r, new Double(0));
 			}
 			else{
-				results = calcScore((double)sickTweets.size() + mSick,(double)tweets.size() + mTotal);
-				double results2 = calcScore((double)sickTweets.size() , (double)tweets.size()); 
+				results = calcScore((double)sickTweets.countVisits() + mSick,(double)tweets.countVisits() + mTotal);
+				double results2 = calcScore((double)sickTweets.countVisits() , (double)tweets.countVisits()); 
 				combinedScore.put(r, results);
 				noMcombinedScore.put(r,results);
 				conservative.put(r, results2);	
@@ -349,8 +373,7 @@ public class Scoring {
 		
 	}
 	
-	
-	
+
 	private double calcScore(double sick, double normal){
 		return  sick / normal;
 	}
