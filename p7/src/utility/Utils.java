@@ -270,6 +270,28 @@ public class Utils {
 
 	}
 	
+	public static void printConflictSolveByNameResults(String filePath) {
+		ArrayList<String> data = Data.fetchDataFromFile(filePath);
+		int T = 0;
+		int F = 0;
+		int M = 0;
+		for (String line : data) {
+			if(line.charAt(0) == 'T') {
+				T++;
+			}
+			if(line.charAt(0) == 'F') {
+				F++;
+			}
+			if(line.charAt(0) == 'M') {
+				M++;
+			}
+		}
+		
+		System.out.println("# of T: " + T);
+		System.out.println("# of F: " + F);
+		System.out.println("# of M: " + M);
+	}
+	
 	public static ArrayList<Restaurant> getRestaurantsFromFile(String filePath) {
 		ArrayList<String> data = Data.fetchDataFromFile(filePath);
 		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
