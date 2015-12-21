@@ -29,8 +29,18 @@ public class Program {
     	//SETTING UP TWITTER STREAM 
     	TwitterStreamFactory tsf = new TwitterStreamFactory(Oauth.createConfigBuilder().build());
         TwitterStream stream = tsf.getInstance();
+        InvertedIndex invertedIndex = new InvertedIndex();
+        List<Restaurant> restaurants = Utils.getRestaurantsFromFile("restaurantData/resData.csv");
+        for(Restaurant r: restaurants){
+            r.setName(r.getName().toLowerCase());
+            if (!r.getName().toLowerCase().contains("{iv}") && !r.getName().toLowerCase().contains("floor)"))
+                invertedIndex.addEntry(r);
 
+        }
+
+        invertedIndex.init();
         OurStatusListener listener = new OurStatusListener();
+        listener.setInvertedIndex(invertedIndex);
         stream.addListener(listener);;
 
         //bounding box for new york
@@ -47,12 +57,9 @@ public class Program {
         // DBConnect connection = DBConnect.getInstance();
         //connection.connectToLocal("world", "postgres", "21");
 
-        TweetStorage newTweets = listener.getDBTweets();
         TweetStorage allTweets = listener.getTweets();
         Grid grid = listener.getGrid();
-        List<Restaurant> restaurants = Utils.getRestaurantsFromFile("restaurantData/resData.csv");
-        InvertedIndex invertedIndex = listener.getInvertedIndex();
-        invertedIndex.init();
+
         //A minute in ms: 60000
         //An hour in ms: 3600000
         //TimerTask insertTweetsTask = new RunMeTask(newTweets, "new_york_tweets");

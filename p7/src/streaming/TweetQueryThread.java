@@ -25,7 +25,7 @@ public class TweetQueryThread extends Thread {
 	private List<Restaurant> restaurants; 
 	private InvertedIndex invertedIndex;
 	private Grid grid; 
-	private Scoring scoring; 
+	private Scoring scoring = new Scoring();
 
 	
 	public TweetQueryThread(TweetStorage tweets, List<Restaurant> restaurants, InvertedIndex invertedIndex,Grid grid) {

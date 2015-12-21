@@ -18,10 +18,8 @@ import twitter4j.*;
 public class OurStatusListener implements StatusListener {
     private TweetStorage dbTweets = new TweetStorage();
     private TweetStorage tweets = new TweetStorage();
-    private ClusterStorage clusters = new ClusterStorage();
     private TwitterRest restAPI = TwitterRest.getInstance();
     private InvertedIndex invertedIndex = new InvertedIndex();
-    // TODO: Determine the best number of rows and columns. Maybe pass them as argument instead.
     private Grid grid = new Grid(-74, -73, 40, 41, 1000, 1000);
 
     public void onStatus(Status status) {
@@ -32,7 +30,7 @@ public class OurStatusListener implements StatusListener {
         try {
         	invertedIndex.addIndex(tweet);
         } catch (Exception ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
         }
         
         if (Filter.passesFilter(tweet)) {
@@ -72,17 +70,11 @@ public class OurStatusListener implements StatusListener {
             int tweetAge = Days.daysBetween(new DateTime(tweet.getCreatedAt()), new DateTime(today)).getDays();
             if (tweetAge >= days) {
                 removalList.add(tweet);
-
-                Cluster c = tweet.getCluster();
-                if (c != null) {
-                    if (c.getCenter() == tweet) {
-                        clusters.remove(c);
-                    }
-                    c.removeTweet(tweet);
-                }
             }
         }
         tweets.removeAll(removalList);
+        grid.removeTweets(removalList);
+        invertedIndex.removeTweets(removalList);
     }
 
     private void removeSeenTweets(TweetStorage ts) {
@@ -118,9 +110,6 @@ public class OurStatusListener implements StatusListener {
         return tweets;
     }
 
-    public ClusterStorage getClusters() {
-        return clusters;
-    }
 
     public Grid getGrid() {
         return grid;
@@ -128,5 +117,9 @@ public class OurStatusListener implements StatusListener {
 
     public InvertedIndex getInvertedIndex() {
         return invertedIndex;
+    }
+
+    public void setInvertedIndex(InvertedIndex ii){
+        this.invertedIndex = ii;
     }
 }
