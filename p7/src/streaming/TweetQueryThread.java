@@ -48,7 +48,6 @@ public class TweetQueryThread extends Thread {
 							break;
 						case 2:
 							scoring.ScoreSystem(grid, invertedIndex, tweets, restaurants);
-							System.out.println("Printing scores to directory:");
 							handleScores();
 							break;
 						default:

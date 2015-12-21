@@ -82,18 +82,6 @@ public class TweetStorage extends ArrayList<Tweet> {
 			if(!uids.contains(t.getUserID())){
 				uids.add(t.getUserID());
 				visits++;
-				userTweets.add(t); 
-			}
-			else{
-				boolean flag = true; 
-				for(Tweet z : userTweets)
-					if(t.getUserID() == z.getUserID()){
-						flag = flag && t.oneDayOrMoreOlder(z);
-				}
-				if(flag){
-					visits++;
-					userTweets.add(t); 
-				}
 			}
 		}
 		
