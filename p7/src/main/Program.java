@@ -66,7 +66,10 @@ public class Program {
         //Timer timer = new Timer();
         //timer.schedule(insertTweetsTask, 1000, 60000);
         TweetQueryThread t = new TweetQueryThread(allTweets, restaurants,invertedIndex,grid);
+
         t.start();
+
+
 
         //connection.closeConnection();
     }
