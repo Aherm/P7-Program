@@ -1,0 +1,19 @@
+VISIT STATS
+Total Locations visists: 11277
+Total Mentions visists: 4817
+Total Sick L:2
+Total Sick M:3
+TWEET STATS
+Total mentions tweets: 5786
+Total sick name tweets: 3
+Total loc tweets: 14673
+Total mentions loc tweets: 2
+Unique L:12318
+Unique M:3431
+Diff: 1509
+Equal: 846
+Conflict solved with loc: 1235
+Conflict solved with name; 274
+Sick Tweets: 2723
+GeoTagged: 53824
+Geotagged mentions: 5091
