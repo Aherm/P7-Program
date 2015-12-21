@@ -25,9 +25,8 @@ public class TweetQueryThread extends Thread {
 	private List<Restaurant> restaurants; 
 	private InvertedIndex invertedIndex;
 	private Grid grid; 
-	private Scoring scoring; 
+	private Scoring scoring = new Scoring();
 
-	
 	public TweetQueryThread(TweetStorage tweets, List<Restaurant> restaurants, InvertedIndex invertedIndex,Grid grid) {
 		this.tweets = tweets;
 		this.restaurants = restaurants;
@@ -37,25 +36,33 @@ public class TweetQueryThread extends Thread {
 
 	public void run() {
 		System.out.println("Press 1 to get amount of tweets in main memory, 2 Score tweets in main memory");
-		Scanner sc = new Scanner(System.in);
-		boolean running = true;
-
-		while (running) {
-			int i = sc.nextInt();
-			switch (i) {
-			case 1:
-				System.out.println("Tweet size is " + tweets.size());
-				break;
-			case 2:
-				scoring.ScoreSystem(grid, invertedIndex, tweets, restaurants);
-				System.out.println("Printing scores to directory:");
-				handleScores(); 
-				break;
-			default:
-				running = false;
+		try	{
+			Scanner sc = new Scanner(System.in);
+			boolean running = true;
+			while (running) {
+				int i = sc.nextInt();
+				if (i == 1 || i == 2) {
+					switch (i) {
+						case 1:
+							System.out.println("Tweet size is " + tweets.size());
+							break;
+						case 2:
+							scoring.ScoreSystem(grid, invertedIndex, tweets, restaurants);
+							System.out.println("Printing scores to directory:");
+							handleScores();
+							break;
+						default:
+							running = false;
+					}
+				}
+				else
+					System.out.println("Only 1 or 2 are accepted as input");
 			}
+			sc.close();
+		} catch (Exception e){
+			System.out.println(e);
+			run();
 		}
-		sc.close();
 	}
 	
 	private void handleScores(){
