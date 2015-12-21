@@ -142,7 +142,7 @@ public class DBGetTweets {
     //USED IN SIMULATION DO NOT TOUCH 
     
     public static TweetStorage getAllTweetsExperiment(){
-    	return tsQuery("SELECT * FROM experiment2 LIMIT 3000" );
+    	return tsQuery("SELECT * FROM experiment2 where extract(day FROM createdat::timestamp) > 8" );
     }
     
     public static TweetStorage getUserExperiment(long userid){
