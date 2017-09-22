@@ -1,37 +1,39 @@
 package modelLayer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import Processing.Stopwords;
-import naiveBayes.Multinomial;
-
+/** 
+ * @author Mads
+ * InvertedIndex to index tweets eg. Mcdonalds -> tweet1, tweet2..
+ * 
+ * keys are always resturant names  
+ * 
+ * A tweet is only added if any tweet text mathces
+ * the regex in the precomputeResturantPatterns() function
+ */
 public class InvertedIndex extends HashMap<String, Set<Tweet>> {
 	// This field has to be there. We don't use it.
 	private static final long serialVersionUID = -9190464032994889522L;
     private Pattern[] patterns; 
     private ArrayList<String> stringList = new ArrayList<String>(); 
 	private ArrayList<String> spaceRemovedList = new ArrayList<String>();
-    public void addEntry(Restaurant restaurant) {
+
+	public void addEntry(Restaurant restaurant) {
     	if(!(this.containsKey(restaurant.getName()))) {
         	Set<Tweet> tweetSet = new HashSet<Tweet>();
         	put(restaurant.getName(), tweetSet);
     	}
     }
-    
-    private Multinomial multinomial; 
-    
-    public void init(){
+ 
+    public void precomputeResturantPatterns(){
     	patterns = new Pattern[this.keySet().size()];
     	stringList.addAll(this.keySet()); 
     	int counter = 0; 
+    	
     	for(String word : stringList){
     		String newWord = word;
     		String regex = "(@|#|the|cafe|restaurant|\\s)" 
@@ -39,23 +41,18 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     				       "(restaurant|cafe|nyc|ny|\\s?)\\s";
     		Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
     		patterns[counter] = p; 
+    		spaceRemovedList.add(word.replaceAll("\\s+", ""));
     		counter++; 
-    	}
-
-    	multinomial = Multinomial.loadClassifier("./classifiers/visitNaiveBayes.model");
-    	multinomial.setStopwords(new Stopwords());
-    			
-    	for(String s: stringList){
-    		spaceRemovedList.add(s.replaceAll("\\s+", ""));
     	}
     }
     
-       
-    public void addIndex(Tweet tweet) throws Exception {
+    public void addIndex(Tweet tweet){
     	int counter = 0; 
     	String lastString = "";
     	int lastCounter = 0; 
-    	if(multinomial.apply(tweet).equals("1")){
+    	
+    	// First determine whether the tweet includes one of the key names (resturant names) 
+    	// Only match the longest resturant name
     	for(String word : stringList)
     	{
     		if(tweet.getTweetText().contains(word) || tweet.getTweetText().contains(spaceRemovedList.get(counter))){	
@@ -65,8 +62,9 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     				}
 			}
     		counter++; 
-    		}
     	}
+    	
+    	//Determine wheter the tweet matches the resurant regex
     	if(!lastString.isEmpty()){
     		Pattern p = patterns[lastCounter];
     		Matcher m = p.matcher(tweet.getTweetText());	
@@ -75,7 +73,7 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
     	}
     }
     
-    public void addIndices(TweetStorage tweets) throws Exception {
+    public void addIndices(TweetStorage tweets){
     	for(Tweet tweet : tweets) {
     		addIndex(tweet);
     	}
@@ -96,7 +94,6 @@ public class InvertedIndex extends HashMap<String, Set<Tweet>> {
 	}
 
 	public TweetStorage nameQuery(Restaurant restaurant) {
-	 
 	 TweetStorage values = new TweetStorage(); 
 	 if(this.get(restaurant.getName()) == null)
 		 return values; 

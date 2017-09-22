@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evaluationLayer.Rank;
-import utility.Tuple;
 import modelLayer.Restaurant;
-import modelLayer.Tweet;
-import modelLayer.TweetStorage;
+import utility.Tuple;
 
 public class DBGetRestaurants {
 	private static Tuple<List<Restaurant>, List<Rank>> listQuery(String query) { // Give this a proper name

@@ -1,11 +1,11 @@
 package dataAccessLayer;
 
-import modelLayer.Tweet;
-import modelLayer.TweetStorage;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
+
+import modelLayer.Tweet;
+import modelLayer.TweetStorage;
 
 public class DBInsert {
 

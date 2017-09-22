@@ -1,10 +1,9 @@
 package businessLogicLayer;
 
+import java.util.Date;
+
 import dataAccessLayer.DBGetTweets;
 import modelLayer.TweetStorage;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Batch {
 

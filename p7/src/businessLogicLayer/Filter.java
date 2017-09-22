@@ -1,10 +1,5 @@
 package businessLogicLayer;
 
-import modelLayer.InvertedIndex;
-import modelLayer.Keyword;
-import modelLayer.Tweet;
-import modelLayer.TweetStorage;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +9,14 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import modelLayer.InvertedIndex;
+import modelLayer.Keyword;
+import modelLayer.Tweet;
+import modelLayer.TweetStorage;
+/**
+ * Simple regex filter to discover sick tweets 
+ *
+ */
 public class Filter {
     static String reg1 = ".*?";     // Any character 0-many times
     static String reg2 = "\\s?@?";  // space followed by a @ zero or one time

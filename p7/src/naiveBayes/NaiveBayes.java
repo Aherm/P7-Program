@@ -1,9 +1,11 @@
 package naiveBayes;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
-
-import java.util.*;
 
 public abstract class NaiveBayes {
     public abstract void train(ArrayList<String> C, TweetStorage D);

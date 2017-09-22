@@ -1,18 +1,17 @@
 package modelLayer;
 
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-import twitter4j.Status;
-import utility.Distance;
-
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
-import java.util.ArrayList;
-import java.util.Date;
+import twitter4j.Status;
+import utility.Distance;
 
 public class Tweet implements OurLocation {
 	private long tweetID, userID, responseID, retweetID;

@@ -1,25 +1,19 @@
 package evaluationLayer;
 
-import java.awt.geom.Point2D;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import Processing.Stopwords;
-import businessLogicLayer.Filter;
 import businessLogicLayer.Preprocessor;
-import naiveBayes.Multinomial;
-import naiveBayes.MultinomialBigDecimal;
-import naiveBayes.NaiveBayes;
-import naiveBayes.ProbabilityModel;
-import naiveBayes.ProbabilityModelBigDecimal;
 import modelLayer.EvaluationModel;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
+import naiveBayes.Multinomial;
+import naiveBayes.MultinomialBigDecimal;
+import naiveBayes.NaiveBayes;
 
 public class EvalNB {
 

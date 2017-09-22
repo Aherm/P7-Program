@@ -7,44 +7,47 @@ import org.joda.time.Days;
 
 import businessLogicLayer.Filter;
 import businessLogicLayer.Preprocessor;
-import modelLayer.Cluster;
-import modelLayer.ClusterStorage;
 import modelLayer.Grid;
 import modelLayer.InvertedIndex;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
-import twitter4j.*;
+import naiveBayes.Multinomial;
+import twitter4j.StallWarning;
+import twitter4j.Status;
+import twitter4j.StatusDeletionNotice;
+import twitter4j.StatusListener;
+import twitter4j.TwitterException;
 
 public class OurStatusListener implements StatusListener {
-    private TweetStorage dbTweets = new TweetStorage();
     private TweetStorage tweets = new TweetStorage();
     private TwitterRest restAPI = TwitterRest.getInstance();
     private InvertedIndex invertedIndex = new InvertedIndex();
     private Grid grid = new Grid(-74, -73, 40, 41, 1000, 1000);
+    private Multinomial visitMultinomial; 
 
+    public OurStatusListener(InvertedIndex invertedIndex, Multinomial visit) {
+    	this.visitMultinomial = visit; 
+    	this.invertedIndex = invertedIndex;
+    	
+    }
     public void onStatus(Status status) {
         Tweet tweet = Tweet.createTweet(status);
         Preprocessor.processTweet(tweet);
         tweets.add(tweet);
-        grid.addTweet(tweet);      
-        try {
-        	invertedIndex.addIndex(tweet);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        grid.addTweet(tweet); 
+        this.addTweetToInvertedIndex(tweet);
+        
         
         if (Filter.passesFilter(tweet)) {
             try {
                 TweetStorage userTimeLine = restAPI.getUserTimeline3days(tweet.getUserID(), new Date(), tweet);
                 removeSeenTweets(userTimeLine);
                 Preprocessor.processTweets(userTimeLine);
-                try {
-                    invertedIndex.addIndices(userTimeLine);
-                } catch (Exception ex) {
-                    System.out.println(ex);
-                }
+                
+                this.addTweetsToInvertedIndex(userTimeLine);
                 tweets.addAll(userTimeLine);
                 grid.addTweets(userTimeLine);
+                
             } catch (TwitterException e) {
                 if (e.getStatusCode() == 420 || e.getStatusCode() == 429) {
                     System.out.println("Too many requests");
@@ -55,14 +58,14 @@ public class OurStatusListener implements StatusListener {
                     System.out.println("Twitter is overloaded");
                     e.printStackTrace();
                 }
-
+                //TODO Find better way to handle twitter exceptions than just stopping the listener
                 return;
             }
         }
-        removeOldTweetsFromTweetStorage(3);
+        removeOldTweets(3);
     }
 
-    public void removeOldTweetsFromTweetStorage(int days) {
+    public void removeOldTweets(int days) {
         TweetStorage removalList = new TweetStorage();
         Date today = new Date();
 
@@ -85,27 +88,23 @@ public class OurStatusListener implements StatusListener {
             }
         }
     }
-
-    public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
+    
+    private void addTweetToInvertedIndex(Tweet tweet){
+    	  try {
+    	        if(visitMultinomial.apply(tweet).equals("1")){
+    	        	invertedIndex.addIndex(tweet);
+    	        	}
+    	        }
+    	        catch (Exception e) {
+    	        	e.printStackTrace();
+    	        }
     }
-
-    public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
+    private void addTweetsToInvertedIndex(TweetStorage tweets) {
+    	for(Tweet t : tweets) {
+    		addTweetToInvertedIndex(t);
+    	}
     }
-
-    public void onException(Exception ex) {
-        ex.printStackTrace();
-    }
-
-    public void onScrubGeo(long x, long y) {
-    }
-
-    public void onStallWarning(StallWarning warning) {
-    }
-
-    public TweetStorage getDBTweets() {
-        return dbTweets;
-    }
-
+    
     public TweetStorage getTweets() {
         return tweets;
     }
@@ -118,8 +117,22 @@ public class OurStatusListener implements StatusListener {
     public InvertedIndex getInvertedIndex() {
         return invertedIndex;
     }
-
-    public void setInvertedIndex(InvertedIndex ii){
-        this.invertedIndex = ii;
+    
+    public void onException(Exception ex) {
+        ex.printStackTrace();
     }
+    
+    public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
+    }
+
+    public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
+    }
+
+    public void onScrubGeo(long x, long y) {
+    }
+
+    public void onStallWarning(StallWarning warning) {
+    }
+
+    
 }

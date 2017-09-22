@@ -1,13 +1,16 @@
 package testLayer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 import businessLogicLayer.Preprocessor;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
-import naiveBayes.*;
+import naiveBayes.Multinomial;
+import naiveBayes.MultinomialBigDecimal;
 import utility.Utils;
-
-import java.io.*;
-import java.util.*;
 
 public class TestNaiveBayes {
 

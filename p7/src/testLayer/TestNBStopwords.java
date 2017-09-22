@@ -1,5 +1,11 @@
 package testLayer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import Processing.Stopwords;
 import businessLogicLayer.Preprocessor;
 import fileCreation.GenericPrint;
@@ -8,8 +14,6 @@ import naiveBayes.ConditionalProbability;
 import naiveBayes.Multinomial;
 import naiveBayes.ProbabilityModel;
 import utility.Utils;
-
-import java.util.*;
 
 public class TestNBStopwords {
     static ArrayList<String> classLabels = new ArrayList<String>(Arrays.asList("0", "1"));

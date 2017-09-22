@@ -1,14 +1,24 @@
 package naiveBayes;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 import testLayer.TestNaiveBayes;
 import utility.Utils;
-
-import java.io.*;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.*;
 
 public class Data {
     public static String[] readLines(URL url) throws IOException {

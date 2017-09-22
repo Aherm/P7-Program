@@ -1,8 +1,9 @@
 package main;
 
+import java.util.TimerTask;
+
 import dataAccessLayer.DBInsert;
 import modelLayer.TweetStorage;
-import java.util.TimerTask;
 
 public class RunMeTask extends TimerTask
 {

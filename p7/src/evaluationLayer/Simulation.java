@@ -27,6 +27,10 @@ import twitter4j.Status;
 import twitter4j.TwitterException;
 import utility.Tuple;
 
+/**
+ * @author Mads
+ * Class made to simulate the stream with tweets from a database
+ */
 public class Simulation {
 	
 	private TweetStorage tweets = new TweetStorage();
@@ -39,7 +43,6 @@ public class Simulation {
 	Multinomial nominal;   
 	
 	public void stream() throws Exception{
-
 		DBConnect connection = DBConnect.getInstance();
         connection.connectToServer("jdbc:postgresql://172.25.26.208/", "world" + "", "postgres", "21");
 		TweetStorage allTweet = DBGetTweets.getAllTweetsExperiment(); 
@@ -52,7 +55,7 @@ public class Simulation {
     				invertedIndex.addEntry(r);
 
     	}
-		invertedIndex.init();
+		invertedIndex.precomputeResturantPatterns();
 		System.out.println("Starting");
 		long startTime = System.nanoTime(); 
 		int counter = 0; 
@@ -163,8 +166,6 @@ public class Simulation {
 		handler3.printRanks("geoRanks.csv");
 		handler4.printRanks("otherCombineRanks.csv");
 		handler5.printRanks("conservativeRanks.csv");
-		
-	
 	}
 	
 

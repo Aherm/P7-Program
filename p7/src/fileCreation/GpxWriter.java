@@ -1,18 +1,23 @@
 package fileCreation;
 
-import modelLayer.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-public class GpxCreator {
+import modelLayer.Cluster;
+import modelLayer.ClusterStorage;
+import modelLayer.Tweet;
+import modelLayer.TweetStorage;
+
+public class GpxWriter {
 	private static XMLOutputFactory factory = XMLOutputFactory.newInstance();
 	private static XMLStreamWriter writer;
 
-	public GpxCreator() {}
+	public GpxWriter() {}
 
 	public static void createGpxFile(TweetStorage storage, String name, String outPutPath) {
 		try {

@@ -1,12 +1,20 @@
 package naiveBayes;
 
-import modelLayer.Tweet;
-import modelLayer.TweetStorage;
-
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import modelLayer.Tweet;
+import modelLayer.TweetStorage;
 
 public class MultinomialBigDecimal extends NaiveBayes implements java.io.Serializable {
     ProbabilityModelBigDecimal probabilityModel = null;

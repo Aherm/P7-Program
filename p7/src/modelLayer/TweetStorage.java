@@ -1,8 +1,8 @@
 package modelLayer;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
 
 public class TweetStorage extends ArrayList<Tweet> {
 	// This field has to be there. We don't use it.

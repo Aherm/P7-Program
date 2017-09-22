@@ -1,8 +1,12 @@
 package naiveBayes;
 
-import Processing.Stopwords;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
+import Processing.Stopwords;
 
 public class ProbabilityModel implements java.io.Serializable {
     List<String> vocabulary;

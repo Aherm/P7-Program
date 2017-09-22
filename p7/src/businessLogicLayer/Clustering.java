@@ -1,12 +1,12 @@
 package businessLogicLayer;
 
+import java.util.Random;
+
 import modelLayer.Cluster;
 import modelLayer.ClusterStorage;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
 import utility.Distance;
-
-import java.util.Random;
 
 public class Clustering {
 

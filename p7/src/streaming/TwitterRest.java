@@ -5,12 +5,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import modelLayer.Tweet;
-import modelLayer.TweetStorage;
-
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import modelLayer.Tweet;
+import modelLayer.TweetStorage;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;

@@ -3,7 +3,6 @@ package businessLogicLayer;
 import modelLayer.Cluster;
 import modelLayer.ClusterStorage;
 import modelLayer.TweetStorage;
-import java.util.Map;
 
 public class DataAnalysis {
 	private TweetStorage tweets;

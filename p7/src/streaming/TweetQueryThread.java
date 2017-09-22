@@ -1,24 +1,13 @@
 package streaming;
 
-import businessLogicLayer.Clustering;
-import businessLogicLayer.DataAnalysis;
-import businessLogicLayer.Filter;
+import java.util.List;
+import java.util.Scanner;
+
 import businessLogicLayer.Scoring;
-import evaluationLayer.Rank;
-import fileCreation.GenericPrint;
-import fileCreation.GpxCreator;
-import fileCreation.StatisticsWriter;
-import modelLayer.ClusterStorage;
 import modelLayer.Grid;
 import modelLayer.InvertedIndex;
 import modelLayer.Restaurant;
 import modelLayer.TweetStorage;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
 
 public class TweetQueryThread extends Thread {
 	private TweetStorage tweets;
@@ -41,23 +30,19 @@ public class TweetQueryThread extends Thread {
 			boolean running = true;
 			while (running) {
 				int i = sc.nextInt();
-				if (i == 1 || i == 2) {
-					switch (i) {
-						case 1:
-							System.out.println("Tweet size is " + tweets.size());
-							break;
-						case 2:
-							scoring.ScoreSystem(grid, invertedIndex, tweets, restaurants);
-							handleScores();
-							break;
-						default:
-							running = false;
+				switch (i) {
+					case 1:
+						System.out.println("Tweet size is " + tweets.size());
+						break;
+					case 2:
+						scoring.ScoreSystem(grid, invertedIndex, tweets, restaurants);
+						handleScores();
+						break;
+					default:
+						System.out.println("Only 1 or 2 are accepted as input");
 					}
-				}
-				else
-					System.out.println("Only 1 or 2 are accepted as input");
 			}
-			sc.close();
+		sc.close();
 		} catch (Exception e){
 			System.out.println(e);
 			run();

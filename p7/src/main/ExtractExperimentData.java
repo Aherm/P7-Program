@@ -4,12 +4,12 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import businessLogicLayer.Filter;
-import streaming.TwitterRest;
 import dataAccessLayer.DBConnect;
 import dataAccessLayer.DBGetTweets;
 import dataAccessLayer.DBInsert;
 import modelLayer.Tweet;
 import modelLayer.TweetStorage;
+import streaming.TwitterRest;
 import twitter4j.TwitterException;
 
 public class ExtractExperimentData {
